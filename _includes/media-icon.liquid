@@ -1,0 +1,56 @@
+{% assign icon_type = include.type %}
+{% assign icon_link = include.link %}
+{% for icon in site.data.icon-types %}
+    {% if icon_type == icon.type %}
+        {% case icon.type %}
+            {% when 'email' %}
+                {% assign icon_link = icon_link | prepend: 'mailto:' %}
+                {% assign alt_text = 'Email link' %}
+            {% when 'phone' %}
+                {% assign icon_link = icon_link | prepend: 'tel:' %}
+                {% assign alt_text = 'Phone link' %}
+            {% when 'twitter' %}
+                {% assign first_char = icon_link | slice: 0 %}
+                {% if first_char == '@' %}
+                    {% assign icon_link = icon_link | remove: '@' | prepend: 'https://twitter.com/' %}
+                {% endif %}
+                {% capture alt_text %}'Visit our twitter page'{% endcapture %}
+            {% else %}
+                {% capture alt_text %}'Visit our {{ icon_type }} page'{% endcapture %}
+        {% endcase %}
+
+        {% unless icon.type == 'phone' %}
+            {% assign new_tab = true %}
+        {% else %}
+            {% assign new_tab = false %}
+        {% endunless %}
+
+        {% assign icon_class = icon.fa-icon %}
+        {% if include.style != nil %}
+            {% assign match_style = false %}
+            {% for style in icon.fa-styles %}
+                {% if style == include.style %}
+                    {% assign match_style = true %}
+                {% endif %}
+            {% endfor %}
+            {% if match_style %}
+                {% capture icon_class %}{{ icon_class }}-{{ include.style }}{% endcapture %}
+            {% endif %}
+        {% endif %}
+
+        {% if include.link_text %}
+            {% assign link_text = include.link_text %}
+        {% else %}
+            {% assign link_text = include.link %}
+        {% endif %}
+
+        <a class="{% if include.list %}subtle-link {% else %}subtle-icon {% endif %}media-icon {{ icon.type }}-icon" href="{{ icon_link }}" 
+          {% if new_tab %}target="_blank" {% endif %}
+          {% if icon.type == 'email' %}itemprop="email" {% endif %}
+          {% if icon.type == 'phone' %}itemprop="telephone" {% endif %}
+          aria-label="{{ alt_text }}">
+            <i class="fa fa-{{ icon_class }}{% if include.list %} fa-li{% endif %}" aria-hidden="true"></i>{% if include.show_link %}<span class="media-icon-text">{{ link_text }}</span>{% endif %}
+        </a>
+
+    {% endif %}
+{% endfor %}
