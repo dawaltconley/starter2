@@ -1,0 +1,10 @@
+_site/
+node_modules/
+assets/test/
+.sass-cache/
+.jekyll-metadata
+.DS_Store
+*~
+*.swp
+*.swo
+sh.exe.stackdump
