@@ -4,6 +4,16 @@ title: More Tongues Than Teeth
 description: A Mouthful of Fun
 baseurl: "/mt3"
 url: "https://dawaltconley.github.io"
+contact:
+  email:
+  phone:
+  twitter:
+  google-plus:
+  facebook: "https://www.facebook.com/MoreTonguesThanTeeth/"
+  youtube: "https://www.youtube.com/channel/UCXUKrkDX88zx1bL4Xu8qZYw"
+  linkedin:
+  vimeo:
+  instagram:
 permalink: /:title/
 
 # Build settings
