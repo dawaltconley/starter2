@@ -32,3 +32,174 @@ body {
     font-kerning: normal;
     overflow-x: hidden;
 }
+
+/*
+ * Set `margin-bottom` to maintain vertical rhythm
+ */
+
+h1, h2, h3, h4, h5, h6,
+p, blockquote, pre,
+ul, ol, dl, figure,
+%vertical-rhythm {
+    margin-bottom: $spacing-unit;
+}
+
+
+
+/**
+ * Media
+ */
+img {
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+iframe {
+    border: 0;
+}
+
+/**
+ * Figures
+ */
+
+figure > img {
+    display: block;
+}
+
+figcaption {
+    font-size: $small-font-size;
+}
+
+/**
+ * Lists
+ */
+
+ul, ol {
+    margin-left: ($spacing-unit * 2);
+
+    @media screen and (max-width: $on-palm) {
+        margin-left: $spacing-unit;
+    }
+}
+
+li {
+    > ul,
+    > ol,
+    > p:only-child {
+         margin-bottom: 0;
+    }
+}
+
+.unlist {
+    margin-left: 0;
+    list-style: none;
+}
+
+/**
+ * Headings
+ */
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: $base-font-weight;
+    line-height: 1;
+    text-decoration: none;
+}
+
+h2 {
+    font-size: 2em;
+
+    @media screen and (max-width: $on-laptop) {
+        font-size: 1.8em;
+    }
+}
+
+h3 {
+    font-size: 1.75em;
+
+    @media screen and (max-width: $on-laptop) {
+        font-size: 1.5em;
+    }
+}
+
+h4 {
+    font-size: 1.5em;
+
+    @media screen and (max-width: $on-laptop) {
+        font-size: 1.2em;
+    }
+}
+
+hr {
+    margin: ($spacing-unit * 2) 0;
+}
+
+/**
+ * Links
+ */
+
+a {
+    color: $brand-color;
+    text-decoration: none;
+
+    &:visited {
+        color: darken($brand-color, 25%);
+    }
+
+    &:hover {
+        color: darken($brand-color, 15%);
+        text-decoration: underline;
+    }
+}
+
+/*
+ * Blockquotes
+ */
+
+blockquote {
+    color: $gray-color;
+    border-left: 4px solid $gray-color-light;
+    padding-left: $spacing-unit;
+    font-size: 18px;
+    letter-spacing: -1px;
+    font-style: italic;
+
+    > :last-child {
+        margin-bottom: 0;
+    }
+}
+
+/*
+ * Code formatting
+ */
+
+pre,
+code {
+    font-size: 15px;
+    border: 1px solid $gray-color-light;
+    border-radius: 3px;
+    background-color: #eef;
+}
+
+code {
+    padding: 1px 5px;
+}
+
+pre {
+    padding: 8px 12px;
+    overflow-x: auto;
+
+    > code {
+        border: 0;
+        padding-right: 0;
+        padding-left: 0;
+    }
+}
+
+/*
+ * Icons
+ */
+
+svg {
+    display: inline; // for ie and others
+    display: initial;
+}

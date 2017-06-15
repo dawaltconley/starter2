@@ -6,12 +6,30 @@ $base-font-size:        1em;
 $base-font-weight:      400;
 $base-line-height:      1.4;
 
+$small-font-size:       smaller;
+
 $text-color:            black;
 $background-color:      white;
+$brand-color:           gray;
+$shadow-color:          rgba(0, 0, 0, 0.6);
+
+$gray-color:            #828282;
+$gray-color-light:      lighten($gray-color, 40%);
+$gray-color-dark:       darken($gray-color, 25%);
 
 $spacing-unit:          30px;
 
+$fa-icons:          ({% for icon in site.data.icon-types %}
+                        {{ icon.type }}: {{ icon.color }},{% endfor %}
+                    );
+
+// Breakpoints
+
+$on-laptop:             800px;
+$on-palm:               600px;
+
 @import
     "base",
-    "layout"
+    "layout",
+    "modules"
 ;

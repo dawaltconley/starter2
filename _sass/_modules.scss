@@ -1,0 +1,84 @@
+/*
+ * Icons
+ */
+
+@each $icon-name, $color in $fa-icons {
+    .#{$icon-name}-icon {
+        .fa:hover {
+            color: $color;
+        }
+
+        .fa:hover::before {
+            background-color: $color !important;
+            border-color: $color !important;
+        }
+    }
+}
+
+.media-icon .fa::before {
+    @extend .no-select;
+    user-select: none;
+    transition: .5s;
+}
+
+%media-icon-basic {
+    .fa:hover::before {
+        background-color: inherit !important;
+        border-color: inherit !important;
+    }
+}
+
+%media-icon-background {
+    .fa:hover {
+        color: inherit;
+    }
+}
+
+.fa-icon-circle {
+    line-height: 1.5;
+    text-align: center;
+
+    &::before {
+        display: inline-block;
+        margin: 0 ;
+        width: 1.5em;
+        height: 1.5em;
+        border-radius: 50%;
+        border-width: 2px;
+        border-style: solid;
+        border-color: inherit;
+    }
+}
+
+
+.media-icon-circle .fa {
+    @extend .fa-icon-circle;
+
+    &:hover {
+        color: white;
+        text-shadow: none;
+
+        &::before {
+            box-shadow: none;
+        }
+    }
+}
+
+.media-icon-big {
+    margin-bottom: $spacing-unit;
+    font-size: 2em;
+    @extend %media-icon-basic;
+    @extend %media-icon-background;
+
+    .fa {
+        margin: 0 .25em;
+
+        &:hover::before {
+            background-color: $brand-color !important;
+        }
+    }
+}
+
+.media-icon-shadow .fa::before {
+    box-shadow: 2px 1px 6px rgba(0, 0, 0, 0.4), 2px 1px 6px rgba(0, 0, 0, 0.4) inset;
+}
