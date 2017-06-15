@@ -1,0 +1,17 @@
+---
+---
+
+$base-font-family:      sans-serif;
+$base-font-size:        1em;
+$base-font-weight:      400;
+$base-line-height:      1.4;
+
+$text-color:            black;
+$background-color:      white;
+
+$spacing-unit:          30px;
+
+@import
+    "base",
+    "layout"
+;
