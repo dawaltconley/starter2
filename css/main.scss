@@ -32,6 +32,16 @@ $fa-icons:          ({% for icon in site.data.icon-types %}
 $on-laptop:             800px;
 $on-palm:               600px;
 
+// Mixins
+
+@mixin fixed-ratio ($x, $y, $width: 100%) {
+    @extend %fixed-ratio; // found in _layout partial
+    width: $width;
+    padding-top: $y/$x * $width;
+}
+
+// Partials
+
 @import
     "base",
     "layout",
