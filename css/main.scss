@@ -34,6 +34,35 @@ $on-palm:               600px;
 
 // Mixins
 
+@mixin wrapper ($breakpoints, $min-margins: $spacing-unit) {
+    $bp-first: nth($breakpoints, 1);
+    $bp-last: nth($breakpoints, length($breakpoints));
+
+    @if length($breakpoints) < 2 {
+        @error "Invalid breakpoint list: must contain at least two values.";
+    } @else if $bp-first < $bp-last {
+        @error "Invalid breakpoint list: values should proceed from highest to lowest";
+    }
+
+    @extend .center, .clearfix;
+    max-width: $bp-first - ($min-margins * 2);
+
+    @for $i from 1 to length($breakpoints) {
+        $bp: nth($breakpoints, $i);
+        $bp-next: nth($breakpoints, $i + 1);
+        $query: null;
+        $invalid: null;
+
+        @if $bp < $bp-next {
+            @error "Invalid breakpoint list: order must be consistent.";
+        }
+
+        @media screen and (max-width: $bp) {
+            max-width: $bp-next - ($min-margins * 2);
+        }
+    }
+}
+
 @mixin fixed-ratio ($x, $y, $width: 100%) {
     @extend %fixed-ratio; // found in _layout partial
     width: $width;
