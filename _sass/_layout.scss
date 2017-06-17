@@ -22,6 +22,28 @@
 }
 
 /*
+ * Wrapper
+ */
+
+#page-wrapper {
+    @include wrapper($page-wrapper, 30px);
+    padding-left: $spacing-unit;
+    padding-right: $spacing-unit;
+}
+
+.unwrap {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+}
+
+.stretch {
+    @extend .unwrap;
+    padding-left: calc(50vw - 50%);
+    padding-right: calc(50vw - 50%);
+}
+
+/*
  * Text
  */
 
@@ -88,6 +110,6 @@
 }
 
 #logo-container {
-    @include fixed-ratio(1714.69, 1313.48, $width: 50%);
+    @include fixed-ratio(1714.69, 1313.48);
 }
 

@@ -29,6 +29,8 @@ $fa-icons:          ({% for icon in site.data.icon-types %}
 
 // Breakpoints
 
+$page-wrapper:          1000px, 800px, 600px;
+
 $on-laptop:             800px;
 $on-palm:               600px;
 
