@@ -60,6 +60,10 @@
     transition: .5s;
 }
 
+.media-icon-space {
+    display: none;
+}
+
 .media-icon-basic .media-icon:hover::before {
     background-color: inherit !important;
     border-color: inherit !important;

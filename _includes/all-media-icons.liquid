@@ -1,20 +1,20 @@
-<span class="no-select">
-    {% capture blank %} 
-        {% assign return = nil %}
-        {% for contact in include.icon_set %}
-            {% if include.collection %}
-                {% assign icon_type = contact %}
-                {% assign icon_link = include.icon_set[contact] %}
-            {% else %}
-                {% assign icon_type = contact[0] %}
-                {% assign icon_link = contact[1] %}
-            {% endif %}
-            {% assign icon_style = include.style %}
-            {% if icon_link != nil %}
-                {% capture return %}<!--
-                    -->{{ return }}{% include media-icon.liquid type=icon_type link=icon_link style=icon_style %}<!--
-             -->{% endcapture %}
-            {% endif %}
-        {% endfor %}
-    {% endcapture %}{{ return | strip | strip_newlines }}
-</span>
+{% capture blank %} 
+    {% assign return = nil %}
+    {% for contact in include.icon_set %}
+        {% if include.collection %}
+            {% assign icon_type = contact %}
+            {% assign icon_link = include.icon_set[contact] %}
+        {% else %}
+            {% assign icon_type = contact[0] %}
+            {% assign icon_link = contact[1] %}
+        {% endif %}
+        {% assign icon_style = include.style %}
+        {% if icon_link != nil %}
+            {% capture return %}<!--
+                -->{{ return }}<!--
+                -->{% include media-icon.liquid type=icon_type link=icon_link style=icon_style %}<!--
+                --><span class="media-icon-space no-select"> </span><!--
+         -->{% endcapture %}
+        {% endif %}
+    {% endfor %}
+{% endcapture %}{{ return | strip | strip_newlines }}
