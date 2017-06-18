@@ -21,10 +21,16 @@
 .text-justify-full {
     @extend .text-justify;
 
-    &::after {
-        content: "";
-        display: inline-block;
-        width: 100%;
+    @supports (text-align-last: justify) {
+        text-align-last: justify;
+    }
+
+    @supports (not (text-align-last: justify)) {
+        &::after {
+            content: "";
+            display: inline-block;
+            width: 100%;
+        }
     }
 }
 
