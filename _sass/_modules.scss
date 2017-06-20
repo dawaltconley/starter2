@@ -66,11 +66,14 @@
 
 .media-icon-basic .media-icon:hover::before {
     background-color: inherit !important;
+    background-color: unset !important;
     border-color: inherit !important;
+    border-color: unset !important;
 }
 
 .media-icon-button .media-icon:hover {
     color: inherit;
+    color: unset;
 }
 
 .fa-icon-circle {
