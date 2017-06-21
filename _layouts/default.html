@@ -3,7 +3,11 @@
 
   {% include head.html %}
 
-  <body>
+  {% if page.itemtype %}
+    <body itemscope itemtype="{{ page.itemtype }}">
+  {% else %}
+    <body>
+  {% endif %}
 
     <div id="page-wrapper">
       {{ content }}
