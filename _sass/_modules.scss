@@ -128,11 +128,6 @@
     transition: .3s;
 }
 
-.media-icon-space {
-    @extend .no-select;
-    display: none;
-}
-
 .media-icon-basic .media-icon:hover::before {
     background-color: inherit !important;
     background-color: unset !important;
@@ -157,11 +152,8 @@
 }
 
 .media-icon-stretch {
-    @extend .text-justify-full;
-
-    .media-icon-space {
-        display: inline;
-    }
+    display: flex;
+    justify-content: space-around;
 }
 
 .media-icon-circle .media-icon {
