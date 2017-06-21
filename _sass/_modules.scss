@@ -94,6 +94,24 @@
     color: unset;
 }
 
+.media-icon-bloat .media-icon {
+    min-width: 1.2em;
+    padding: .2em .4em;
+    text-align: center;
+    text-align-last: auto;
+}
+
+.media-icon-list .media-icon {
+    margin: 0 .25em;
+}
+
+.media-icon-stretch {
+    @extend .text-justify-full;
+
+    .media-icon-space {
+        display: inline;
+    }
+}
 
 .media-icon-circle .media-icon {
     @extend .fa-icon-circle;
