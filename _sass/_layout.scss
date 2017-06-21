@@ -26,9 +26,17 @@
  */
 
 #page-wrapper {
-    @include wrapper($page-wrapper, 30px);
+    $wrapper-width: 600px;
+    width: 50%;
+    min-width: $wrapper-width;
+    margin: 0 auto;
     padding-left: $spacing-unit;
     padding-right: $spacing-unit;
+
+    @media screen and (max-width: $wrapper-width) {
+        width: 100%;
+        min-width: 0;
+    }
 }
 
 .unwrap {
