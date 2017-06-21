@@ -39,13 +39,12 @@
  */
 
 #page-wrapper {
-    $wrapper-width: 600px;
     @extend .text-margins;
-    width: 50%;
-    min-width: $wrapper-width;
+    width: $page-wrapper-width;
+    min-width: $page-wrapper-bp;
     margin: 0 auto;
 
-    @media screen and (max-width: $wrapper-width) {
+    @media screen and (max-width: $page-wrapper-bp) {
         width: 100%;
         min-width: 0;
     }

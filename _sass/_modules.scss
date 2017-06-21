@@ -75,19 +75,9 @@
     }
 }
 
-.max-columns {
+.mobile-columns {
     @extend %columns;
-    @include columns-reset(nth($page-wrapper, 1));
-}
-
-.mid-columns {
-    @extend %columns;
-    @include columns-reset(nth($page-wrapper, 2));
-}
-
-.min-columns {
-    @extend %columns;
-    @include columns-reset(nth($page-wrapper, 3));
+    @include columns-reset($page-wrapper-bp);
 }
 
 /*
@@ -193,7 +183,7 @@
 #social-media {
     $base-icon-size: 2em;
     $bp-small: 27em;
-    $bp-large: 75em;
+    $bp-large: $page-wrapper-bp * (100% / $page-wrapper-width) / 16px * 1em;
 
     font-size: $base-icon-size;
 
