@@ -49,8 +49,8 @@
                 <a class="media-icon {{ icon.type }}-icon fa fa-{{ icon_class }}
                   {% if include.list %}fa-li subtle-link{% else %}subtle-icon{% endif %}" 
                   {% if new_tab %}target="_blank"{% endif %}
-                  {% if icon.type == 'email' %}itemprop="email"{% endif %}
-                  {% if icon.type == 'phone' %}itemprop="telephone"{% endif %}
+                  {% if include.microdata and icon.type == 'email' %}itemprop="email"{% endif %}
+                  {% if include.microdata and icon.type == 'phone' %}itemprop="telephone"{% endif %}
                   href="{{ icon_link }}" aria-label="{{ alt_text }}"><!--
                     {% if include.show_link %}--><span class="media-icon-text">{{ link_text }}</span><!--{% endif %}
              --></a>
