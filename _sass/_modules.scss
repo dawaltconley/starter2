@@ -61,6 +61,7 @@
 }
 
 .media-icon-space {
+    @extend .no-select;
     display: none;
 }
 
