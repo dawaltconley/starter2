@@ -125,3 +125,9 @@
     @include fixed-ratio(1714.69, 1313.48);
 }
 
+#splash-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+}
