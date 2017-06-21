@@ -57,7 +57,7 @@
 .media-icon::before {
     @extend .no-select;
     user-select: none;
-    transition: .5s;
+    transition: .3s;
 }
 
 .media-icon-space {
@@ -107,15 +107,18 @@
 }
 
 .media-icon-big {
-    margin-bottom: $spacing-unit;
+    @extend .media-icon-basic;
     font-size: 2em;
-    @extend .media-icon-basic, .media-icon-button;
 
-    .media-icon {
-        margin: 0 .25em;
+    &.media-icon-circle {
+        @extend .media-icon-button;
 
-        &:hover::before {
-            background-color: $brand-color !important;
+        .media-icon {
+            transition: .5s;
+
+            &:hover::before {
+                background-color: $brand-color !important;
+            }
         }
     }
 }
