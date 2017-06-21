@@ -10,6 +10,11 @@
     margin-bottom: $spacing-unit * 2;
 }
 
+.text-margins {
+    padding-left: $spacing-unit;
+    padding-right: $spacing-unit;
+}
+
 .hidden {
     display: none;
 }
@@ -35,11 +40,10 @@
 
 #page-wrapper {
     $wrapper-width: 600px;
+    @extend .text-margins;
     width: 50%;
     min-width: $wrapper-width;
     margin: 0 auto;
-    padding-left: $spacing-unit;
-    padding-right: $spacing-unit;
 
     @media screen and (max-width: $wrapper-width) {
         width: 100%;
