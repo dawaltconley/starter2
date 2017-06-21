@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+{% if page.itemtype %}
+  <html lang="en" itemscope itemtype="{{ page.itemtype }}">
+{% else %}
+  <html lang="en">
+{% endif %}
 
   {% include head.html %}
 
-  {% if page.itemtype %}
-    <body itemscope itemtype="{{ page.itemtype }}">
-  {% else %}
-    <body>
-  {% endif %}
+  <body>
 
     <div id="page-wrapper">
       {{ content }}
