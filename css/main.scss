@@ -71,6 +71,31 @@ $on-palm:               600px;
     padding-top: $y/$x * $width;
 }
 
+@mixin columns-reset ($break-point) {
+    //mobile reset
+    @media screen and (max-width: $break-point) {
+        .cell {
+            display: block;
+
+            .button {
+                position: static;
+                margin: 0 auto $spacing-unit;
+            }
+        }
+
+        &.button-columns .cell {
+            padding-bottom: 0;
+        }
+    }
+
+    //desktop only: remove bottom margin of all last elements
+    @media screen and (min-width: $break-point + 1px) {
+        .cell > :last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
 @mixin background-image ($image: none, $x: center, $y: center, $lighten: 0, $darken: 0) {
 
     @if $image != none {
