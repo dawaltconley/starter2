@@ -189,3 +189,21 @@
 .media-icon-shadow .media-icon::before {
     box-shadow: 2px 1px 6px rgba(0, 0, 0, 0.4), 2px 1px 6px rgba(0, 0, 0, 0.4) inset;
 }
+
+#social-media {
+    $base-icon-size: 2em;
+    $bp-small: 27em;
+    $bp-large: 75em;
+
+    font-size: $base-icon-size;
+
+    @media screen and (max-width: $bp-small) {
+        display: flex;
+        justify-content: space-around;
+        font-size: $base-icon-size / $bp-small * 100vw;
+    }
+
+    @media screen and (min-width: $bp-large) {
+        font-size: $base-icon-size / $bp-large * 100vw;
+    }
+}
