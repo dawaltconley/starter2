@@ -4,9 +4,9 @@ layout: default
 
 <div id="splash-container">
 
-  <div id="logo-container" class="v-rhythm">
-    {% include logo.svg %}
-  </div>
+  <h1 id="logo-container">
+    <img src="{{ site.baseurl | append: '/assets/logo.svg/' }}" alt="{{ site.title }}">
+  </h1>
 
   <div class="media-icon-list media-icon-big media-icon-bloat text-center">
     {% include all-media-icons.liquid icon_set=site.contact style="o" %}
