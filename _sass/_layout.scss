@@ -2,6 +2,14 @@
  * Basic
  */
 
+.v-rhythm {
+    @extend %vertical-rhythm;
+}
+
+.v-rhythm-2 {
+    margin-bottom: $spacing-unit * 2;
+}
+
 .hidden {
     display: none;
 }
