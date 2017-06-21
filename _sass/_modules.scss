@@ -43,6 +43,23 @@
  * Icons
  */
 
+.fa-icon-circle {
+    $circle-size: 1.5;
+    line-height: $circle-size;
+    text-align: center;
+
+    &::before {
+        display: inline-block;
+        margin: 0;
+        width: $circle-size * 1em;
+        height: $circle-size * 1em;
+        border-radius: 50%;
+        border-width: 2px;
+        border-style: solid;
+        border-color: inherit;
+    }
+}
+
 @each $icon-name, $color in $fa-icons {
     .#{$icon-name}-icon:hover {
         color: $color;
@@ -75,22 +92,6 @@
 .media-icon-button .media-icon:hover {
     color: inherit;
     color: unset;
-}
-
-.fa-icon-circle {
-    line-height: 1.5;
-    text-align: center;
-
-    &::before {
-        display: inline-block;
-        margin: 0 ;
-        width: 1.5em;
-        height: 1.5em;
-        border-radius: 50%;
-        border-width: 2px;
-        border-style: solid;
-        border-color: inherit;
-    }
 }
 
 
