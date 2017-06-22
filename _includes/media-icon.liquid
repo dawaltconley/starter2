@@ -1,4 +1,3 @@
-{% capture blank %}
     {% assign icon_type = include.type %}
     {% assign icon_link = include.link %}
     {% for icon in site.data.icon-types %}
@@ -29,13 +28,22 @@
             {% assign icon_class = icon.fa-icon %}
             {% if include.style != nil %}
                 {% assign match_style = false %}
-                {% for style in icon.fa-styles %}
-                    {% if style == include.style %}
-                        {% assign match_style = true %}
-                    {% endif %}
+                {% assign icon_styles = include.style | split: ', ' %}
+                {% if icon_styles.size == 1 %}
+                    {% assign icon_styles = include.style | split: ' ' %}
+                {% endif %}
+                {% if icon_styles.size == 1 %}
+                    {% assign icon_styles = include.style | split: ',' %}
+                {% endif %}
+                {% for style in icon_styles %}
+                    {% for fa_style in icon.fa-styles %}
+                        {% if fa_style == style %}
+                            {% assign match_style = style %}
+                        {% endif %}
+                    {% endfor %}
                 {% endfor %}
                 {% if match_style %}
-                    {% capture icon_class %}{{ icon_class }}-{{ include.style }}{% endcapture %}
+                    {% capture icon_class %}{{ icon_class }}-{{ match_style }}{% endcapture %}
                 {% endif %}
             {% endif %}
 
@@ -55,7 +63,7 @@
                     {% if include.show_link %}--><span class="media-icon-text">{{ link_text }}</span><!--{% endif %}
              --></a>
             {% endcapture %}
+            {{ return }}
 
         {% endif %}
     {% endfor %}
-{% endcapture %}{{ return | strip | strip_newlines }}
