@@ -187,10 +187,13 @@
 
     font-size: $base-icon-size;
 
+    @media screen and (max-height: $bp-small), screen and (max-width: $bp-small) {
+        font-size: $base-icon-size / $bp-small * 100vmin;
+    }
+
     @media screen and (max-width: $bp-small) {
         display: flex;
         justify-content: space-around;
-        font-size: $base-icon-size / $bp-small * 100vw;
     }
 
     @media screen and (min-width: $bp-large) {
