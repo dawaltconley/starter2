@@ -3,12 +3,11 @@ layout: default
 itemtype: "http://schema.org/MusicGroup"
 ---
 
-<meta itemprop="name" content="{{ site.title }}">
 <meta itemprop="url" content="{{ site.url | append: site.baseurl }}">
 
 <div id="splash-container">
 
-  <h1 class="hidden">{{ site.title }}</h1>
+  <h1 class="hidden" itemprop="name">{{ site.title }}</h1>
 
   <img class="v-rhythm" itemprop="logo" src="{{ site.baseurl | append: '/assets/logo.svg' }}" alt="{{ site.title }}">
 
