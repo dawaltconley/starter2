@@ -132,13 +132,10 @@
     @include fixed-ratio(16, 9);
 }
 
-#logo-container {
-    @include fixed-ratio(1714.69, 1313.48);
-}
-
 #splash-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: 100vh;
+    padding: $spacing-unit 0;
 }
