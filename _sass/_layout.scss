@@ -106,6 +106,29 @@
 }
 
 /*
+ * Themes
+ */
+
+@each $name, $styles in $themes {
+    .#{$name} {
+        background-color: map-get($styles, "background-color");
+        color: map-get($styles, "text-color");
+        border-color: map-get($styles, "text-color");
+
+        @if map-has-key($styles, "font-smoothing") {
+            $fs: map-get($styles, "font-smoothing");
+            @if $fs == "normal" {
+                @extend .font-smoothing-normal;
+            } @else if $fs == "dark" {
+                @extend .font-smoothing-dark;
+            } @else {
+                @error "Bad font-smoothing value in #{$name} theme."
+            }
+        }
+    }
+}
+
+/*
  * Links
  */
 

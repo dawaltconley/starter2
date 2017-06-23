@@ -27,6 +27,21 @@ $fa-icons:          ({% for icon in site.data.icon-types %}
                         {{ icon.type }}: {{ icon.color }},{% endfor %}
                     );
 
+// Themes
+
+$themes: (
+    main: (
+        background-color: white,
+        text-color: black,
+        font-smoothing: normal
+    ),
+    dark: (
+        background-color: black,
+        text-color: white,
+        font-smoothing: dark
+    )
+);
+
 // Breakpoints
 
 $page-wrapper-bp:       600px;
