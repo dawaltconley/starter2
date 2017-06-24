@@ -113,6 +113,7 @@
     }
 }
 
+// loops through all icon classes, passes their brand color to all relevant styles. this can be unset later.
 @each $icon-name, $color in $fa-icons {
     .#{$icon-name}-icon {
         &, &:hover {
@@ -123,6 +124,7 @@
     }
 }
 
+// styling resets, including inherit fallback for older browsers
 %reset-color {
     color: inherit;
     color: unset;
@@ -138,6 +140,7 @@
     border-color: unset !important;
 }
 
+// universal styling for the anchor tags that contain social-media fa-icons.
 .media-icon {
     display: inline-block;
     position: relative;
@@ -161,6 +164,7 @@
     }
 }
 
+// basic icons inherit their text color. hovering reveals their brand color.
 .media-icon-basic .media-icon {
     &:not(:hover) {
         @extend %reset-color;
@@ -171,6 +175,7 @@
     }
 }
 
+// square buttons. white icons with brand-color background. hovering animates to white background with icons in their brand color.
 .media-icon-button .media-icon {
     @extend .media-icon-bloat;
 
@@ -189,6 +194,7 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
     @extend .unlist;
 }
 
+// forces icon links to fill a certain size, with icon hovering in the middle
 .media-icon-bloat .media-icon {
     @extend .flex-center;
     display: inline-flex;
@@ -200,6 +206,7 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
     margin: 0 .25em;
 }
 
+// expands a list of icons; icons get 2em of space, and links expand to maintain contact.
 .media-icon-button-list {
     @extend .media-icon-bloat;
 
@@ -223,6 +230,7 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
     }
 }
 
+// stretches icons to evenly fill space of container
 .media-icon-stretch {
     &.flex-row, &.flex-col {
         > * {
