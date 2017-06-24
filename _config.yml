@@ -5,15 +5,11 @@ description: A Mouthful of Fun
 baseurl: "/mt3"
 url: "https://dawaltconley.github.io"
 contact:
-  email: "moretonguesthanteeth@gmail.com"
-  phone:
-  twitter: "@moretongues"
-  google-plus:
   facebook: "https://www.facebook.com/MoreTonguesThanTeeth/"
-  youtube: "https://www.youtube.com/channel/UCXUKrkDX88zx1bL4Xu8qZYw"
-  linkedin:
-  vimeo:
   instagram: "https://www.instagram.com/moretonguesthanteeth"
+  twitter: "@moretongues"
+  youtube: "https://www.youtube.com/channel/UCXUKrkDX88zx1bL4Xu8qZYw"
+  email: "moretonguesthanteeth@gmail.com"
 permalink: /:title/
 
 # Build settings
