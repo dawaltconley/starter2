@@ -17,6 +17,42 @@ itemtype: "http://schema.org/MusicGroup"
 
 </div>
 
+{% assign has_future = false %}
+{% for show in site.data.shows %}
+  {% assign show_date = show.date | date: '%s' | plus: 0 %}
+  {% assign current_date = 'now' | date: '%s' | plus: 0 %}
+  {% if show_date > current_date %}
+    {% assign has_future = true %}
+  {% endif %}
+{% endfor %}
+{% if has_future %}
+
+  <div>
+
+    <h2>Upcoming Shows</h2>
+
+    <ul class="unlist">
+      {% for show in site.data.shows %}
+        {% assign show_date = show.date | date: '%s' | plus: 0 %}
+        {% assign current_date = 'now' | date: '%s' | plus: 0 %}
+        {% if show_date > current_date %}
+          <li class="show-info">
+            {{ show.date | date: "%a %b %e" }}
+            {{ show.venue }}
+            {{ show.street }}
+            {{ show.city }}
+            {{ show.state }}
+            {{ show.postal }}
+            {% include all-media-icons.liquid icon_set=show.links style="square" %}
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+
+  </div>
+
+{% endif %}
+
 <div class="dark">
 
   <div class="media-wrapper content-padding fullscreen flex-col flex-center">

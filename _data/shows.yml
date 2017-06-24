@@ -1,0 +1,16 @@
+- date: 2017-07-08 19:00:00 -0500
+  venue:  "Arlene's Grocery"
+  street: "95 Stanton St"
+  city:   "New York"
+  state:  "NY"
+  postal: "10002"
+  links:
+    facebook: "https://www.facebook.com/events/431655490538878/"
+- date: 2017-07-21 20:00:00 -0500
+  venue:  "The Red Room"
+  street: "85 E 4th St"
+  city:   "New York"
+  state:  "NY"
+  postal: "10003"
+  links:
+    facebook: "https://www.facebook.com/events/255291808273733/"
