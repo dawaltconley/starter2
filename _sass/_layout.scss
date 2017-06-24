@@ -205,6 +205,18 @@
     @extend .flex-justify-center, .flex-align-center;
 }
 
+.fill-flex-parent {
+    flex-grow: 1;
+}
+
+.flex-space-between {
+    justify-content: space-between;
+}
+
+.flex-space-around {
+    justify-content: space-around;
+}
+
 .media-columns {
     & > * {
         @extend %vertical-rhythm;
@@ -213,6 +225,9 @@
 
     @media screen and (min-width: $bp-media-columns) {
         flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 0;
 
         & > * {
             flex-basis: 0;
