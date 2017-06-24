@@ -92,47 +92,6 @@
 }
 
 /*
- * Tables
- */
-
-.table {
-    display: table;
-}
-
-.column {
-    display: column;
-}
-
-.row {
-    display: table-row;
-}
-
-.cell {
-    display: table-cell;
-}
-
-.v-center {
-    vertical-align: middle;
-}
-
-%columns {
-    display: table;
-    width: calc(100% + (#{$spacing-unit} * 2));
-    margin: -$spacing-unit;
-    border-spacing: $spacing-unit;
-    table-layout: fixed;
-
-    &:last-child > :last-child {
-        margin-bottom: 0;
-    }
-}
-
-.mobile-columns {
-    @extend %columns;
-    @include columns-reset($bp-mobile);
-}
-
-/*
  * Icons
  */
 
