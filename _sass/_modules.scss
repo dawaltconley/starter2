@@ -138,10 +138,27 @@
     border-color: unset !important;
 }
 
-.media-icon::before {
-    @extend .no-select;
-    user-select: none;
-    transition: .3s;
+.media-icon {
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+
+    &::before {
+        @extend .no-select;
+        position: relative;
+        user-select: none;
+        transition: .3s;
+        z-index: 3;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0; bottom: 0;
+        left: 50%; right: 50%;
+        transition: .3s;
+        z-index: 2;
+    }
 }
 
 .media-icon-basic .media-icon {
@@ -159,6 +176,12 @@
 
     &:not(:hover) {
         color: white;
+    }
+
+    &:hover::after {
+        left: 0; right: 0;
+        background-color: rgba(255, 255, 255, 0.8);
+        background-color: white;
     }
 }
 
