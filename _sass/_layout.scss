@@ -52,7 +52,7 @@
 }
 
 /*
- * Wrapper
+ * Wrappers
  */
 
 .splash-wrapper {
@@ -63,6 +63,19 @@
     @media screen and (max-width: $bp-mobile) {
         width: 100%;
         min-width: 0;
+    }
+}
+
+.media-wrapper {
+    width: 100%;
+    margin: 0 auto;
+
+    @media screen and (max-width: $bp-media-columns) {
+        width: $media-wrapper-width;
+    }
+
+    @media screen and (max-width: $media-wrapper-width) {
+        width: 100%;
     }
 }
 
