@@ -40,6 +40,31 @@
 }
 
 /*
+ * Links
+ */
+
+.subtle-link {
+    color: inherit;
+    text-decoration: none;
+
+    &:visited {
+        color: inherit;
+    }
+
+    &:hover {
+        color: inherit;
+    }
+}
+
+.subtle-icon {
+    @extend .subtle-link;
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+/*
  * Tables
  */
 
