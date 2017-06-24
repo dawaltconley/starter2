@@ -162,6 +162,10 @@
     }
 }
 
+ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
+    @extend .unlist;
+}
+
 .media-icon-bloat .media-icon {
     min-width: 1.2em;
     padding: .2em .4em;
