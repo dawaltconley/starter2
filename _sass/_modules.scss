@@ -190,10 +190,10 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
 }
 
 .media-icon-bloat .media-icon {
+    @extend .flex-center;
+    display: inline-flex;
     min-width: 1.2em;
-    padding: .2em .4em;
-    text-align: center;
-    text-align-last: auto;
+    min-height: 1.2em;
 }
 
 .media-icon-list .media-icon {
