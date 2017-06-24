@@ -206,7 +206,7 @@
 }
 
 .fill-flex-parent {
-    flex-grow: 1;
+    flex: 1 0 100%;
 }
 
 .flex-space-between {
@@ -230,8 +230,7 @@
         flex-grow: 0;
 
         & > * {
-            flex-basis: 0;
-            flex-grow: 1;
+            flex: 1 1 0;
             margin: $spacing-unit;
         }
     }
