@@ -44,11 +44,9 @@ $themes: (
 
 // Breakpoints
 
-$page-wrapper-bp:       600px;
-$page-wrapper-width:    50%;
-
-$on-laptop:             800px;
-$on-palm:               600px;
+$bp-laptop:             800px;
+$bp-mobile:             600px;
+$splash-wrapper-width:  50%;
 
 // Mixins
 

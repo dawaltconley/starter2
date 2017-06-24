@@ -55,12 +55,12 @@
  * Wrapper
  */
 
-.page-wrapper {
-    width: $page-wrapper-width;
-    min-width: $page-wrapper-bp;
+.splash-wrapper {
+    width: $splash-wrapper-width;
+    min-width: $bp-mobile;
     margin: 0 auto;
 
-    @media screen and (max-width: $page-wrapper-bp) {
+    @media screen and (max-width: $bp-mobile) {
         width: 100%;
         min-width: 0;
     }

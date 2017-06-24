@@ -77,7 +77,7 @@
 
 .mobile-columns {
     @extend %columns;
-    @include columns-reset($page-wrapper-bp);
+    @include columns-reset($bp-mobile);
 }
 
 /*
@@ -183,7 +183,7 @@
 #social-media {
     $base-icon-size: 2em;
     $bp-small: 27em;
-    $bp-large: $page-wrapper-bp * (100% / $page-wrapper-width) / 16px * 1em;
+    $bp-large: $bp-mobile * (100% / $splash-wrapper-width) / 16px * 1em;
 
     font-size: $base-icon-size;
 
