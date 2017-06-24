@@ -125,13 +125,17 @@
     height: 100%;
 }
 
-%fixed-ratio { // extended by the fixed-ratio mixin
+.expand-child {
     position: relative;
-    height: 0;
 
     & > :only-child {
         @extend .fill-parent;
     }
+}
+
+%fixed-ratio { // extended by the fixed-ratio mixin
+    @extend .expand-child;
+    height: 0;
 }
 
 .aspect-16-9 {
