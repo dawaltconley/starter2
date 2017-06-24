@@ -138,12 +138,6 @@
     @include fixed-ratio(16, 9);
 }
 
-#splash-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
 /*
  * Tables
  */
@@ -189,16 +183,24 @@
  * Flexbox
  */
 
-.flex-columns {
+.flex-row {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
+}
 
-    & > * {
-        flex-basis: 0;
-        flex-grow: 1;
-        margin: $spacing-unit;
-        width: 100%;
-    }
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-justify-center {
+    justify-content: center;
+}
+
+.flex-align-center {
+    align-items: center;
+}
+
+.flex-center {
+    @extend .flex-justify-center, .flex-align-center;
 }
