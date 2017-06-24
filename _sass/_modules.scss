@@ -113,14 +113,28 @@
 }
 
 @each $icon-name, $color in $fa-icons {
-    .#{$icon-name}-icon:hover {
-        color: $color;
-
-        &::before {
+    .#{$icon-name}-icon {
+        &, &:hover {
+            color: $color;
             background-color: $color !important;
             border-color: $color !important;
         }
     }
+}
+
+%reset-color {
+    color: inherit;
+    color: unset;
+}
+
+%reset-background-color {
+    background-color: inherit !important;
+    background-color: unset !important;
+}
+
+%reset-border-color {
+    border-color: inherit !important;
+    border-color: unset !important;
 }
 
 .media-icon::before {
@@ -129,16 +143,22 @@
     transition: .3s;
 }
 
-.media-icon-basic .media-icon:hover::before {
-    background-color: inherit !important;
-    background-color: unset !important;
-    border-color: inherit !important;
-    border-color: unset !important;
+.media-icon-basic .media-icon {
+    &:not(:hover) {
+        @extend %reset-color;
+    }
+
+    &, &:hover {
+        @extend %reset-background-color, %reset-border-color;
+    }
 }
 
-.media-icon-button .media-icon:hover {
-    color: inherit;
-    color: unset;
+.media-icon-button .media-icon {
+    @extend .media-icon-bloat;
+
+    &:not(:hover) {
+        color: white;
+    }
 }
 
 .media-icon-bloat .media-icon {
@@ -159,6 +179,10 @@
 
 .media-icon-circle .media-icon {
     @extend .fa-icon-circle;
+
+    &:not(:hover) {
+        @extend %reset-color, %reset-background-color, %reset-border-color;
+    }
 
     &:hover {
         color: white;
