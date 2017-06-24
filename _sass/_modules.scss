@@ -224,8 +224,11 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
 }
 
 .media-icon-stretch {
-    display: flex;
-    justify-content: space-around;
+    &.flex-row, &.flex-col {
+        > * {
+            flex: 1 1 0;
+        }
+    }
 }
 
 .media-icon-circle .media-icon {
