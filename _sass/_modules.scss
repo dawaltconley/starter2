@@ -177,6 +177,29 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
     margin: 0 .25em;
 }
 
+.media-icon-button-list {
+    @extend .media-icon-bloat;
+
+    > * {
+        margin: 0;
+    }
+
+    &.flex-row, &.flex-col {
+        > * {
+            flex: 0 1 2em;
+        }
+    }
+
+    > li {
+        @extend .flex-row;
+
+        > .media-icon:only-child {
+            display: flex;
+            @extend .flex-center, .fill-flex-parent;
+        }
+    }
+}
+
 .media-icon-stretch {
     display: flex;
     justify-content: space-around;
