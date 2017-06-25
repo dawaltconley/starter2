@@ -23,15 +23,18 @@ itemtype: "http://schema.org/MusicGroup"
 
     <h2 class="hidden">Media</h2>
 
-    <div class="fill-flex-parent flex-col flex-space-around media-columns">
+    <div class="fill-flex-parent flex-col flex-space-around media-columns" itemprop="track" itemscope itemtype="http://schema.org/MusicRecording">
 
       <div>
-        <img src="{{ site.baseurl | append: '/assets/machine-title-card-inverted.png' }}" alt="I Wanna Be A Machine">
+        <meta itemprop="name" content="I Wanna Be A Machine">
+        <img itemprop="image" src="{{ site.baseurl | append: '/assets/machine-title-card-inverted.png' }}" alt="I Wanna Be A Machine">
       </div>
 
       <div>
-        <div class="aspect-16-9">
-          <iframe src="https://www.youtube.com/embed/4Ihh8SwPg80" allowfullscreen></iframe>
+        <div class="aspect-16-9" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
+          <meta itemprop="name" content="I Wanna Be A Machine">
+          <meta itemprop="thumbnailUrl" content="https://i.ytimg.com/vi_webp/4Ihh8SwPg80/maxresdefault.webp">
+          <iframe itemprop="url" src="https://www.youtube.com/embed/4Ihh8SwPg80" allowfullscreen></iframe>
         </div>
       </div>
 
