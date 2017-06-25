@@ -42,7 +42,7 @@ itemtype: "http://schema.org/MusicGroup"
               <span class="meta">{{ show.date | date: "%b %e" }}</span>
               <span class="meta explicit">{{ show.date | date: "%a" }}</span>
             </time>
-            <span class="show-location flex-row flex-even fill-flex-parent" itemprop="location" itemscope itemtype="http://schema.org/Place">
+            <span class="show-location flex-row flex-center flex-even fill-flex-parent" itemprop="location" itemscope itemtype="http://schema.org/Place">
               <span class="venue" itemprop="name">{{ show.venue }}</span>
               <span class="venue-address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
                 <span class="hidden" itemprop="streetAddress">{{ show.street }}</span>
