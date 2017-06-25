@@ -242,6 +242,10 @@
     justify-content: space-around;
 }
 
+/*
+ * Specific
+ */
+
 .media-columns {
     & > * {
         @extend %vertical-rhythm;
@@ -260,3 +264,12 @@
         }
     }
 }
+
+.show-time > * {
+    width: 3.5em;
+}
+
+.show-links {
+    font-size: 1.35em;
+}
+

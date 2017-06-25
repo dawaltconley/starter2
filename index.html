@@ -29,28 +29,29 @@ itemtype: "http://schema.org/MusicGroup"
 
   <div class="content-wrapper content-padding">
 
-    <h2>Upcoming Shows</h2>
+    <h2 class="text-center">Upcoming Shows</h2>
 
     <ul class="unlist">
       {% for show in site.data.shows %}
         {% assign show_date = show.date | date: '%s' | plus: 0 %}
         {% assign current_date = 'now' | date: '%s' | plus: 0 %}
         {% if show_date > current_date %}
-          <li class="show-info" itemprop="event" itemscope itemtype="http://schema.org/Event">
+          <li class="show full-width flex-row flex-align-center" itemprop="event" itemscope itemtype="http://schema.org/Event">
             <meta itemprop="name" content="Show at {{ show.venue }}">
-            <time datetime="{{ show.date | date_to_xmlschema }}" itemprop="startDate doorTime">
-              {{ show.date | date: "%b %e, %a" }}
+            <time class="show-time flex-row" datetime="{{ show.date | date_to_xmlschema }}" itemprop="startDate doorTime">
+              <span>{{ show.date | date: "%b %e" }}</span>
+              <span>{{ show.date | date: "%a" }}</span>
             </time>
-            <span itemprop="location" itemscope itemtype="http://schema.org/Place">
+            <span class="show-location flex-row flex-even fill-flex-parent" itemprop="location" itemscope itemtype="http://schema.org/Place">
               <span itemprop="name">{{ show.venue }}</span>
               <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-                <span itemprop="streetAddress">{{ show.street }}</span>
-                <span itemprop="addressLocality">{{ show.city }}</span>
+                <span class="hidden" itemprop="streetAddress">{{ show.street }}</span>
+                <span itemprop="addressLocality">{{ show.city }}</span>,
                 <span itemprop="addressRegion">{{ show.state }}</span>
-                <span itemprop="postalCode">{{ show.postal }}</span>
+                <span class="hidden" itemprop="postalCode">{{ show.postal }}</span>
               </span>
             </span>
-            <span class="media-icon-basic media-icon-bloat">
+            <span class="show-links media-icon-basic media-icon-bloat">
               {% include all-media-icons.liquid icon_set=show.links style="square" %}
             </span>
           </li>
