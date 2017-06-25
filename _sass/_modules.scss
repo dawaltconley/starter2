@@ -256,23 +256,6 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
     }
 }
 
-.media-icon-big {
-    @extend .media-icon-basic;
-    font-size: 2em;
-
-    &.media-icon-circle {
-        @extend .media-icon-button;
-
-        .media-icon {
-            transition: .5s;
-
-            &:hover::before {
-                background-color: $brand-color !important;
-            }
-        }
-    }
-}
-
 .media-icon-shadow .media-icon::before {
     box-shadow: 2px 1px 6px rgba(0, 0, 0, 0.4), 2px 1px 6px rgba(0, 0, 0, 0.4) inset;
 }
