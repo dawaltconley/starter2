@@ -19,3 +19,6 @@ markdown: kramdown
 exclude:
   - "README.md"
   - "Gemfile*"
+  - "node*"
+  - "package*.json"
+  - "gulpfile.js"
