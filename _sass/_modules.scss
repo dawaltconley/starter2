@@ -202,10 +202,6 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
     min-height: 1.2em;
 }
 
-.media-icon-list .media-icon {
-    margin: 0 .25em;
-}
-
 // expands a list of icons; icons get 2em of space, and links expand to maintain contact.
 .media-icon-button-list {
     @extend .media-icon-bloat;
@@ -220,8 +216,17 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
         }
     }
 
-    > li {
-        @extend .flex-row;
+    &.media-icon-circle .media-icon {
+        flex: 0 1 auto;
+        margin: 0 .25em
+    }
+
+    &:not(.flex-row):not(.flex-col) {
+        min-width: 2em;
+    }
+
+    &:not(.media-icon-circle) > li {
+        display: inline-flex;
 
         > .media-icon:only-child {
             display: flex;
