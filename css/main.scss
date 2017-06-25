@@ -1,16 +1,19 @@
 ---
 ---
 
+// Google Fonts
+@import url('https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900');
+
 // Basic Variables
 
 $spacing-unit:          30px;
 
-$base-font-family:      sans-serif;
+$base-font-family:      "Raleway", sans-serif;
 $base-font-size:        1.25em;
-$base-font-weight:      400;
+$base-font-weight:      200;
 $base-line-height:      1.4;
 
-$small-font-size:       smaller;
+$header-font-weight:    900;
 
 // Colors
 
