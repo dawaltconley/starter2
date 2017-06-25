@@ -203,7 +203,7 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
 }
 
 // expands a list of icons; icons get 2em of space, and links expand to maintain contact.
-.media-icon-button-list {
+.media-icon-list {
     @extend .media-icon-bloat;
 
     > * {
