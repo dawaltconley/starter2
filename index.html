@@ -37,6 +37,7 @@ itemtype: "http://schema.org/MusicGroup"
         {% assign current_date = 'now' | date: '%s' | plus: 0 %}
         {% if show_date > current_date %}
           <li class="show-info" itemprop="event" itemscope itemtype="http://schema.org/Event">
+            <meta itemprop="name" content="Show at {{ show.venue }}">
             <time datetime="{{ show.date | date_to_xmlschema }}" itemprop="startDate doorTime">
               {{ show.date | date: "%b %e, %a" }}
             </time>
