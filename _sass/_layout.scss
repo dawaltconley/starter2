@@ -2,6 +2,14 @@
  * Basic
  */
 
+.full-width {
+    width: 100%;
+}
+
+.full-height {
+    height: 100%;
+}
+
 .v-rhythm {
     @extend %vertical-rhythm;
 }
@@ -154,6 +162,11 @@
     display: table;
 }
 
+.table-fixed {
+    display: table;
+    table-layout: fixed;
+}
+
 .column {
     display: column;
 }
@@ -214,7 +227,11 @@
 }
 
 .fill-flex-parent {
-    flex: 1 0 100%;
+    flex: 1 1 auto;
+}
+
+.flex-even > * {
+    flex: 1 1 0;
 }
 
 .flex-space-between {
