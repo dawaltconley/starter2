@@ -17,6 +17,30 @@ itemtype: "http://schema.org/MusicGroup"
 
 </div>
 
+<div class="dark">
+
+  <div class="media-wrapper content-padding fullscreen flex-col flex-center">
+
+    <h2 class="hidden">Media</h2>
+
+    <div class="fill-flex-parent flex-col flex-space-around media-columns">
+
+      <div>
+        <img src="{{ site.baseurl | append: '/assets/machine-title-card-inverted.png' }}" alt="I Wanna Be A Machine">
+      </div>
+
+      <div>
+        <div class="aspect-16-9">
+          <iframe src="https://www.youtube.com/embed/4Ihh8SwPg80" allowfullscreen></iframe>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
 {% assign has_future = false %}
 {% for show in site.data.shows %}
   {% assign show_date = show.date | date: '%s' | plus: 0 %}
@@ -27,7 +51,7 @@ itemtype: "http://schema.org/MusicGroup"
 {% endfor %}
 {% if has_future %}
 
-  <div class="content-wrapper content-padding">
+  <div class="content-wrapper content-padding fullscreen flex-col flex-justify-center">
 
     <h2 class="text-center">Upcoming Shows</h2>
 
@@ -62,27 +86,3 @@ itemtype: "http://schema.org/MusicGroup"
   </div>
 
 {% endif %}
-
-<div class="dark">
-
-  <div class="media-wrapper content-padding fullscreen flex-col flex-center">
-
-    <h2 class="hidden">Media</h2>
-
-    <div class="fill-flex-parent flex-col flex-space-around media-columns">
-
-      <div>
-        <img src="{{ site.baseurl | append: '/assets/machine-title-card-inverted.png' }}" alt="I Wanna Be A Machine">
-      </div>
-
-      <div>
-        <div class="aspect-16-9">
-          <iframe src="https://www.youtube.com/embed/4Ihh8SwPg80" allowfullscreen></iframe>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
