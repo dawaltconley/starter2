@@ -1,4 +1,11 @@
-- date: 2017-07-08 19:00:00 -0500
+- date:   2017-06-18 12:00:00 -0500
+  venue:  "Twin Star Orchards"
+  street: "155 N Ohioville Rd"
+  city:   "New Paltz"
+  state:  "NY"
+  postal: "12561"
+  links:
+- date:   2017-07-08 19:00:00 -0500
   venue:  "Arlene's Grocery"
   street: "95 Stanton St"
   city:   "New York"
@@ -6,7 +13,7 @@
   postal: "10002"
   links:
     facebook: "https://www.facebook.com/events/431655490538878/"
-- date: 2017-07-21 20:00:00 -0500
+- date:   2017-07-21 20:00:00 -0500
   venue:  "The Red Room"
   street: "85 E 4th St"
   city:   "New York"
