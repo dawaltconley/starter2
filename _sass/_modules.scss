@@ -119,6 +119,11 @@
     }
 }
 
+.scroll-arrow {
+    font-size: 2em;
+    padding: .2em;
+}
+
 // loops through all icon classes, passes their brand color to all relevant styles. this can be unset later.
 @each $icon-name, $color in $fa-icons {
     .#{$icon-name}-icon {

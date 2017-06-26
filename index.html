@@ -5,25 +5,27 @@ itemtype: "http://schema.org/MusicGroup"
 
 <meta itemprop="url" content="{{ site.url | append: site.baseurl }}">
 
-<div class="splash-wrapper flex-col flex-justify-center fullscreen-fixed content-padding">
+<div id="splash" class="splash-wrapper flex-col flex-center fullscreen-fixed content-padding">
 
   <h1 class="hidden" itemprop="name">{{ site.title }}</h1>
 
-  <img class="v-rhythm" itemprop="logo" src="{{ site.baseurl | append: '/assets/logo.svg' }}" alt="{{ site.title }}">
+  <img class="auto-top v-rhythm" itemprop="logo" src="{{ site.baseurl | append: '/assets/logo.svg' }}" alt="{{ site.title }}">
 
-  <ul id="social-media" class="flex-row flex-center media-icon-basic media-icon-list">
+  <ul id="social-media" class="auto-bottom full-width flex-row flex-center media-icon-basic media-icon-list">
     {% include all-media-icons.liquid icon_set=site.contact style="o play" list="true" microdata=true %}
   </ul>
 
+  <a href="#media" class="auto-top fa fa-chevron-down subtle-icon scroll-arrow"></a>
+
 </div>
 
-<div class="dark">
+<div id="media" class="dark">
 
   <div class="media-wrapper content-padding fullscreen flex-col flex-center">
 
     <h2 class="hidden">Media</h2>
 
-    <div class="fill-flex-parent flex-col flex-space-around media-columns" itemprop="track" itemscope itemtype="http://schema.org/MusicRecording">
+    <div class="auto-vert fill-flex-parent flex-col flex-space-around media-columns" itemprop="track" itemscope itemtype="http://schema.org/MusicRecording">
 
       <div>
         <meta itemprop="name" content="I Wanna Be A Machine">
@@ -40,6 +42,8 @@ itemtype: "http://schema.org/MusicGroup"
 
     </div>
 
+    <a href="#shows" class="auto-top fa fa-chevron-down subtle-icon scroll-arrow"></a>
+
   </div>
 
 </div>
@@ -54,7 +58,7 @@ itemtype: "http://schema.org/MusicGroup"
 {% endfor %}
 {% if has_future %}
 
-  <div class="content-wrapper content-padding fullscreen flex-col flex-justify-center">
+  <div id="shows" class="content-wrapper content-padding fullscreen flex-col flex-justify-center">
 
     <h2 class="text-center">Upcoming Shows</h2>
 
