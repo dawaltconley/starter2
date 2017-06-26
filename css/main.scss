@@ -65,7 +65,7 @@ $bp-media-columns:      1025px;
         @error "Invalid breakpoint list: values should proceed from highest to lowest";
     }
 
-    @extend .center, .clearfix;
+    @extend .auto-horz, .clearfix;
     max-width: $bp-first - ($min-margins * 2);
 
     @for $i from 1 to length($breakpoints) {

@@ -40,9 +40,28 @@
     height: 100vh;
 }
 
-.center {
+.auto-top {
+    margin-top: auto;
+}
+
+.auto-left {
     margin-left: auto;
+}
+
+.auto-right {
     margin-right: auto;
+}
+
+.auto-bottom {
+    margin-bottom: auto;
+}
+
+.auto-horz {
+    @extend .auto-left, .auto-right;
+}
+
+.auto-vert {
+    @extend .auto-top, .auto-bottom;
 }
 
 .hidden {
