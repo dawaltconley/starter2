@@ -4,9 +4,11 @@
 (function() {
 
     let page = document.querySelector(".parallax-page");
+    let win = page;
 
     if (!page) {
         page = document.body;
+        win = window;
     }
 
 /*
@@ -164,7 +166,7 @@
         if (page.scrollTop == elementTop || (scrollBottom(page) == 0 && page.scrollTop < elementTop)) {
             window.location.hash = element.id;
         } else {
-            page.addEventListener("scroll", function setHashWhenReady() {
+            win.addEventListener("scroll", function setHashWhenReady() {
                 const stop = this.removeEventListener.bind(this, "scroll", setHashWhenReady, false);
                 const abort = window.setTimeout(stop, 1200);
                 if (page.scrollTop == elementTop ||
@@ -173,8 +175,20 @@
                     window.location.hash = element.id;
                     stop();
                 }
-            }, false);
+            }, {passive: true});
         }
+    }
+
+    const elementsToHideOnScroll = toArray(document.querySelectorAll('[data-script="hide-on-scroll"]'));
+
+    const hideOnScroll = function (element) {
+        win.addEventListener("scroll", function killOffScreen() {
+            const stop = this.removeEventListener.bind(this, "scroll", killOffScreen, false);
+            if (element.getBoundingClientRect().bottom < 0) {
+                element.style.display = "none";
+                stop();
+            }
+        }, {passive: true});
     }
 
 /*
@@ -190,6 +204,15 @@
                 smoothScrollTo(target);
             }, false);
         });
-    }();
+    }
+
+    const addHideOnScrollListeners = function () {
+        elementsToHideOnScroll.forEach( function (element) {
+            hideOnScroll(element);
+        });
+    }
+
+    addSmoothScrollListeners();
+    addHideOnScrollListeners();
 
 })();
