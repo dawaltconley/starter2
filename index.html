@@ -5,17 +5,21 @@ itemtype: "http://schema.org/MusicGroup"
 
 <meta itemprop="url" content="{{ site.url | append: site.baseurl }}">
 
-<div id="splash" class="splash-wrapper flex-col flex-center fullscreen-fixed content-padding">
+<div id="splash">
 
-  <h1 class="hidden" itemprop="name">{{ site.title }}</h1>
+  <div class="splash-wrapper content-padding fullscreen-fixed flex-col flex-center">
 
-  <img class="auto-top v-rhythm" itemprop="logo" src="{{ site.baseurl | append: '/assets/logo.svg' }}" alt="{{ site.title }}">
+    <h1 class="hidden" itemprop="name">{{ site.title }}</h1>
 
-  <ul id="social-media" class="auto-bottom full-width flex-row flex-center media-icon-basic media-icon-list">
-    {% include all-media-icons.liquid icon_set=site.contact style="o play" list="true" microdata=true %}
-  </ul>
+    <img class="auto-top v-rhythm" itemprop="logo" src="{{ site.baseurl | append: '/assets/logo.svg' }}" alt="{{ site.title }}">
 
-  <a href="#media" class="fa fa-chevron-down subtle-icon scroll-arrow" data-scroll="smooth" data-script="hide-on-scroll"></a>
+    <ul id="social-media" class="auto-bottom full-width flex-row flex-center media-icon-basic media-icon-list">
+      {% include all-media-icons.liquid icon_set=site.contact style="o play" list="true" microdata=true %}
+    </ul>
+
+    <a href="#media" class="fa fa-chevron-down subtle-icon scroll-arrow mobile-pos-br" data-scroll="smooth" data-script="hide-on-scroll"></a>
+
+  </div>
 
 </div>
 
