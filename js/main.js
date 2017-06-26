@@ -158,25 +158,13 @@
         }
     }
 
-    const smoothScrollTo = function (element) {
-        element.scrollIntoView({
+    const smoothScrollToLinkTarget = function (link) {
+        const hash = getHash(link);
+        const target = document.querySelector(hash);
+        window.history.pushState({ hasFocus: hash }, hash.slice(1), hash);
+        target.scrollIntoView({
             behavior: "smooth"
         });
-        const elementTop = Math.floor(element.getBoundingClientRect().top + page.scrollTop);
-        if (page.scrollTop == elementTop || (scrollBottom(page) == 0 && page.scrollTop < elementTop)) {
-            window.location.hash = element.id;
-        } else {
-            win.addEventListener("scroll", function setHashWhenReady() {
-                const stop = this.removeEventListener.bind(this, "scroll", setHashWhenReady, false);
-                const abort = window.setTimeout(stop, 1200);
-                if (page.scrollTop == elementTop ||
-                    scrollBottom(page) == 0) {
-                    window.clearTimeout(abort);
-                    window.location.hash = element.id;
-                    stop();
-                }
-            }, {passive: true});
-        }
     }
 
 /*
@@ -186,10 +174,9 @@
     const addSmoothScrollListeners = function () {
         if (pageScrollBehavior == "smooth") {return false};
         smoothLinks.forEach( function (link) {
-            const target = document.querySelector(getHash(link));
             link.addEventListener("click", function (event) {
                 event.preventDefault();
-                smoothScrollTo(target);
+                smoothScrollToLinkTarget(link);
             }, false);
         });
     }
