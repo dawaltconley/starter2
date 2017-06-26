@@ -179,18 +179,6 @@
         }
     }
 
-    const elementsToHideOnScroll = toArray(document.querySelectorAll('[data-script="hide-on-scroll"]'));
-
-    const hideOnScroll = function (element) {
-        win.addEventListener("scroll", function killOffScreen() {
-            const stop = this.removeEventListener.bind(this, "scroll", killOffScreen, false);
-            if (element.getBoundingClientRect().bottom < 0) {
-                element.style.display = "none";
-                stop();
-            }
-        }, {passive: true});
-    }
-
 /*
  * Event Listeners
  */
@@ -206,13 +194,25 @@
         });
     }
 
-    const addHideOnScrollListeners = function () {
-        elementsToHideOnScroll.forEach( function (element) {
-            hideOnScroll(element);
-        });
+    let elementsToHideOnScroll = toArray(document.querySelectorAll('[data-script="hide-on-scroll"]'));
+
+    const addPageScrollListener = function () {
+        win.addEventListener("scroll", function hideOnScroll() {
+            const stop = this.removeEventListener.bind(this, "scroll", hideOnScroll, false);
+            if (elementsToHideOnScroll.length == 0) {
+                stop();
+            } else {
+                elementsToHideOnScroll.forEach( function (element, i) {
+                    if (element.getBoundingClientRect().bottom < 0) {
+                        element.style.display = "none";
+                        elementsToHideOnScroll.splice(i, 1);
+                    }
+                });
+            }
+        }, {passive: true});
     }
 
     addSmoothScrollListeners();
-    addHideOnScrollListeners();
+    addPageScrollListener();
 
 })();
