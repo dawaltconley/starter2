@@ -158,13 +158,24 @@
         }
     }
 
+    const smoothScrollToTop = function () {
+        win.scroll({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+    const smoothScrollTo = function (element) {
+        element.scrollIntoView({
+            behavior: "smooth"
+        });
+    }
+
     const smoothScrollToLinkTarget = function (link) {
         const hash = getHash(link);
         const target = document.querySelector(hash);
         window.history.pushState({ hasFocus: hash }, hash.slice(1), hash);
-        target.scrollIntoView({
-            behavior: "smooth"
-        });
+        smoothScrollTo(target);
     }
 
 /*
@@ -179,6 +190,17 @@
                 smoothScrollToLinkTarget(link);
             }, false);
         });
+    }
+
+    const addPopStateListener = function () {
+        window.addEventListener("popstate", function () {
+            if (event.state) {
+                const target = document.querySelector(event.state.hasFocus);
+                smoothScrollTo(target);
+            } else {
+                smoothScrollToTop();
+            }
+        }, { passive: true });
     }
 
     let elementsToHideOnScroll = toArray(document.querySelectorAll('[data-script="hide-on-scroll"]'));
@@ -196,10 +218,11 @@
                     }
                 });
             }
-        }, {passive: true});
+        }, { passive: true });
     }
 
     addSmoothScrollListeners();
+    addPopStateListener();
     addPageScrollListener();
 
 })();
