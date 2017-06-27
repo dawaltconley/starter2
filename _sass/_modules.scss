@@ -124,6 +124,14 @@
     padding: .2em;
 }
 
+@media screen and (max-height: $bp-mobile) and (min-width: 450px) {
+    .fullscreen-fixed .scroll-arrow {
+        position: absolute;
+        bottom: $spacing-unit;
+        right: $spacing-unit;
+    }
+}
+
 // loops through all icon classes, passes their brand color to all relevant styles. this can be unset later.
 @each $icon-name, $color in $fa-icons {
     .#{$icon-name}-icon {
