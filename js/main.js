@@ -179,6 +179,27 @@
     }
 
 /*
+ * Fullscreen
+ */
+
+    const fullscreenElements = toArray(document.querySelectorAll('[data-script="force-fullscreen"]'));
+
+    const forceFullscreen = function (element) {
+        const viewHeight = document.documentElement.clientHeight;
+        if (element.clientHeight != viewHeight) {
+            element.style.height = viewHeight;
+            console.log("resizing");
+        }
+    }
+
+    const forceFullscreenAll = function () {
+        fullscreenElements.forEach( function (element) {
+            forceFullscreen(element);
+        });
+    }
+
+
+/*
  * Event Listeners
  */
 
@@ -221,8 +242,25 @@
         }, { passive: true });
     }
 
+    const addWindowResizeListener = function () {
+        let initHeight = document.documentElement.clientHeight;
+        if (fullscreenElements.length > 0) {
+            window.addEventListener("resize", function () {
+                let newHeight = document.documentElement.clientHeight;
+                if (newHeight != initHeight) {
+                    initHeight = newHeight;
+                    forceFullscreenAll();
+                    console.log(newHeight);
+                }
+            }, { passive: true });
+        }
+    }
+
+
     addSmoothScrollListeners();
     addPopStateListener();
     addPageScrollListener();
+    forceFullscreenAll();
+    addWindowResizeListener();
 
 })();
