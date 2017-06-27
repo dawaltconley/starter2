@@ -244,23 +244,9 @@
         }, { passive: true });
     }
 
-    const addWindowResizeListener = function () {
-        let initHeight = window.innerHeight;
-        if (fullscreenElements.length > 0) {
-            window.addEventListener("resize", function () {
-                let newHeight = window.innerHeight;
-                if (newHeight != initHeight) {
-                    initHeight = newHeight;
-                    forceFullscreenAll();
-                }
-            }, { passive: true });
-        }
-    }
-
     addSmoothScrollListeners();
     addPopStateListener();
     addPageScrollListener();
     forceFullscreenAll();
-    addWindowResizeListener();
 
 })();
