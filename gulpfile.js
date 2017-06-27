@@ -4,6 +4,7 @@ var child = require('child_process');
 var autoprefixer = require('gulp-autoprefixer');
 var babel = require('gulp-babel');
 var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
 var runSequence = require('run-sequence');
 
 function jekyllBuild(env = 'development') {
@@ -29,9 +30,15 @@ gulp.task('concat', function () {
         .pipe(gulp.dest('./_site/js'))
 });
 
+gulp.task('uglify', function () {
+    return gulp.src('./_site/js/*.js')
+        .pipe(uglify())
+        .pipe(gulp.dest('./_site/js'))
+});
+
 gulp.task('deploy', function () {
     jekyllBuild('production');
-    runSequence(['prefix', 'babel'], 'concat');
+    runSequence(['prefix', 'babel'], 'concat', 'uglify');
     return gulp.src('./_site/**/*')
         .pipe(ghPages());
 });
