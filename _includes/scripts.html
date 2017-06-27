@@ -1,4 +1,6 @@
-<script src="{{ site.baseurl }}/js/rAF.js"></script>
-<script src="{{ site.baseurl }}/js/smoothscroll.js"></script>
-<script src="{{ site.baseurl }}/js/EventListenerOptions.polyfill.js"></script>
+{% if jekyll.environment == 'development' %}
+  <script src="{{ site.baseurl }}/js/rAF.polyfill.js"></script>
+  <script src="{{ site.baseurl }}/js/smoothscroll.polyfill.js"></script>
+  <script src="{{ site.baseurl }}/js/EventListenerOptions.polyfill.js"></script>
+{% endif %}
 <script src="{{ site.baseurl }}/js/main.js"></script>

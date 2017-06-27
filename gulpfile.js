@@ -3,6 +3,7 @@ var ghPages = require('gulp-gh-pages');
 var child = require('child_process');
 var autoprefixer = require('gulp-autoprefixer');
 var babel = require('gulp-babel');
+var concat = require('gulp-concat');
 var runSequence = require('run-sequence');
 
 function jekyllBuild(env = 'development') {
@@ -22,9 +23,15 @@ gulp.task('babel', function () {
         .pipe(gulp.dest('./_site/js'));
 });
 
+gulp.task('concat', function () {
+    return gulp.src(['./_site/js/*.polyfill.js', './_site/js/main.js'])
+        .pipe(concat('main.js'))
+        .pipe(gulp.dest('./_site/js'))
+});
+
 gulp.task('deploy', function () {
     jekyllBuild('production');
-    runSequence(['prefix', 'babel']);
+    runSequence(['prefix', 'babel'], 'concat');
     return gulp.src('./_site/**/*')
         .pipe(ghPages());
 });
