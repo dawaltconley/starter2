@@ -185,7 +185,7 @@
     const fullscreenElements = toArray(document.querySelectorAll('[data-script="force-fullscreen"]'));
 
     const forceFullscreen = function (element) {
-        const viewHeight = document.documentElement.clientHeight;
+        const viewHeight = window.innerHeight;
         if (element.clientHeight != viewHeight) {
             element.style.height = viewHeight;
             console.log("resizing");
@@ -243,10 +243,10 @@
     }
 
     const addWindowResizeListener = function () {
-        let initHeight = document.documentElement.clientHeight;
+        let initHeight = window.innerHeight;
         if (fullscreenElements.length > 0) {
             window.addEventListener("resize", function () {
-                let newHeight = document.documentElement.clientHeight;
+                let newHeight = window.innerHeight;
                 if (newHeight != initHeight) {
                     initHeight = newHeight;
                     forceFullscreenAll();
@@ -255,7 +255,6 @@
             }, { passive: true });
         }
     }
-
 
     addSmoothScrollListeners();
     addPopStateListener();
