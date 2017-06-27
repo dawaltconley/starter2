@@ -187,8 +187,7 @@
     const forceFullscreen = function (element) {
         const viewHeight = window.innerHeight;
         if (element.clientHeight != viewHeight) {
-            element.style.height = viewHeight;
-            console.log("resizing");
+            element.style.height = viewHeight.toString() + "px";
         }
     }
 
@@ -250,7 +249,6 @@
                 if (newHeight != initHeight) {
                     initHeight = newHeight;
                     forceFullscreenAll();
-                    console.log(newHeight);
                 }
             }, { passive: true });
         }
