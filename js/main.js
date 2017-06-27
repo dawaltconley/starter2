@@ -187,7 +187,11 @@
     const forceFullscreen = function (element) {
         const viewHeight = window.innerHeight;
         if (element.clientHeight != viewHeight) {
-            element.style.height = viewHeight.toString() + "px";
+            if (element.classList.contains("fullscreen-fixed")) {
+                element.style.height = viewHeight.toString() + "px";
+            } else if (element.classList.contains("fullscreen")) {
+                element.style.minHeight = viewHeight.toString() + "px";
+            }
         }
     }
 
@@ -196,7 +200,6 @@
             forceFullscreen(element);
         });
     }
-
 
 /*
  * Event Listeners
