@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var ghPages = require('gulp-gh-pages');
 var child = require('child_process');
 var autoprefixer = require('gulp-autoprefixer');
+var babel = require('gulp-babel');
 var runSequence = require('run-sequence');
 
 function jekyllBuild(env = 'development') {
@@ -12,12 +13,18 @@ function jekyllBuild(env = 'development') {
 gulp.task('prefix', function () {
     return gulp.src('./_site/css/main.css')
         .pipe(autoprefixer())
-        .pipe(gulp.dest('./_site/css'))
+        .pipe(gulp.dest('./_site/css'));
+});
+
+gulp.task('babel', function () {
+    return gulp.src('./_site/js/main.js')
+        .pipe(babel())
+        .pipe(gulp.dest('./_site/js'));
 });
 
 gulp.task('deploy', function () {
     jekyllBuild('production');
-    runSequence(['prefix']);
+    runSequence(['prefix', 'babel']);
     return gulp.src('./_site/**/*')
         .pipe(ghPages());
 });
