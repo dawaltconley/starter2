@@ -99,7 +99,7 @@
         if (fullscreenElements.length > 0) {
             window.addEventListener("resize", function () {
                 const newOrientation = window.innerHeight > window.innerWidth;
-                if (newOrientation != oldOrientation) {
+                if (newOrientation != initOrientation) {
                     forceFullscreenAll();
                 }
                 initOrientation = newOrientation;
