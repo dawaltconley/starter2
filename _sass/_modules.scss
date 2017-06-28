@@ -73,6 +73,35 @@
 }
 
 /*
+ * Block Styles
+ */
+
+$all-sides: "top", "left", "right", "bottom";
+@each $side in $all-sides {
+    %border-#{$side}-basic {
+        border-#{$side}-width: 1px;
+        border-#{$side}-style: solid;
+        border-#{$side}-color: inherit;
+    }
+}
+
+.border-between {
+    @extend %border-bottom-basic;
+
+    &:last-of-type {
+        border-bottom: 0;
+    }
+}
+
+.border-around {
+    @extend %border-bottom-basic;
+
+    &:first-of-type {
+        @extend %border-top-basic;
+    }
+}
+
+/*
  * Links
  */
 

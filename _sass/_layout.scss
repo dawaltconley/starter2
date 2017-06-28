@@ -168,10 +168,18 @@ $padding-sizes: (
         }
 
         & .text-light {
-            @if lightness($text-color) < 50 {
+            @if lightness($text-color) < lightness($background-color) {
                 color: lighten($text-color, 40%);
             } @else {
                 color: darken($text-color, 40%);
+            }
+        }
+
+        & .border-light {
+            @if lightness($text-color) < lightness($background-color) {
+                border-color: darken($background-color, 10%);
+            } @else {
+                border-color: lighten($background-color, 10%);
             }
         }
     }
