@@ -27,7 +27,7 @@
     const smoothLinks = toArray(document.querySelectorAll('[data-scroll="smooth"]'));
 
     const smoothScrollToTop = function () {
-        win.scroll({
+        window.scroll({
             top: 0,
             behavior: "smooth"
         });
@@ -39,7 +39,7 @@
         });
     }
 
-    const smoothScrollToLinkTarget = function (link) {
+    const smoothScrollToHref = function (link) {
         const hash = link.hash;
         const target = document.querySelector(hash);
         window.history.pushState({ hasFocus: hash }, hash.slice(1), hash);
@@ -78,7 +78,7 @@
         smoothLinks.forEach( function (link) {
             link.addEventListener("click", function (event) {
                 event.preventDefault();
-                smoothScrollToLinkTarget(link);
+                smoothScrollToHref(link);
             }, false);
         });
     }
