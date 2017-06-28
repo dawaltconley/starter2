@@ -348,8 +348,12 @@ $padding-sizes: (
 }
 
 @media screen and (max-width: $bp-laptop) {
-    .show-time .explicit {
-        display: none !important;
+    .show-time {
+        flex-direction: column;
+    }
+
+    .show-day {
+        order: -1;
     }
 }
 
@@ -357,27 +361,23 @@ $padding-sizes: (
     .show {
         font-size: 0.9em;
     }
+
+    .venue-address {
+        flex: 0 1 auto;
+    }
 }
 
-@media screen and (max-width: 32em) {
-    .show-time > *:first-child {
-        width: 4em;
+@media screen and (max-width: 28em) {
+    .show-day {
+        margin-bottom: .1em;
     }
 
     .show-location {
-        justify-content: space-between;
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
-        > * {
-            margin-right: 1em;
-            text-align: center;
-        }
-
-        .venue-address {
-            flex: 0 1 30%;
-        }
-
-        .explicit {
-            display: none;
-        }
+    .venue {
+        margin-bottom: .2em;
     }
 }

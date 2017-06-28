@@ -74,10 +74,10 @@ itemtype: "http://schema.org/MusicGroup"
           <li class="show full-width v-padding-x-small border-between border-light flex-row flex-align-center" itemprop="event" itemscope itemtype="http://schema.org/Event">
             <meta itemprop="name" content="Show at {{ show.venue }}">
             <time class="show-time flex-row" datetime="{{ show.date | date_to_xmlschema }}" itemprop="startDate doorTime">
-              <span class="meta">{{ show.date | date: "%b %e" }}</span>
-              <span class="meta explicit">{{ show.date | date: "%a" }}</span>
+              <span class="meta show-date">{{ show.date | date: "%b %e" }}</span>
+              <span class="meta show-day">{{ show.date | date: "%a" }}</span>
             </time>
-            <span class="show-location flex-row flex-center flex-even fill-flex-parent" itemprop="location" itemscope itemtype="http://schema.org/Place">
+            <span class="show-location flex-row flex-align-center flex-space-between fill-flex-parent" itemprop="location" itemscope itemtype="http://schema.org/Place">
               <span class="venue" itemprop="name">{{ show.venue }}</span>
               <span class="venue-address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
                 <span class="hidden" itemprop="streetAddress">{{ show.street }}</span>
