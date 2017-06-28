@@ -94,6 +94,20 @@
         }, { passive: true });
     }
 
+    const addOrientationChangeListener = function () {
+        let initOrientation = window.innerHeight > window.innerWidth;
+        window.addEventListener("resize", function () {
+            const newOrientation = window.innerHeight > window.innerWidth;
+            if (newOrientation != oldOrientation) {
+                forceFullscreenAll();
+            }
+            initOrientation = newOrientation;
+        });
+    }
+
+
+            
+
     let elementsToHideOnScroll = toArray(document.querySelectorAll('[data-script="hide-on-scroll"]'));
 
     const addPageScrollListener = function () {
