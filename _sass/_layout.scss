@@ -32,6 +32,23 @@
     padding-bottom: $spacing-unit;
 }
 
+$padding-sizes: (
+    "x-small":   10px,
+    "small":     15px
+);
+@each $name, $size in $padding-sizes {
+    // $i: index($padding-sizes, $size);
+    .h-padding-#{$name} {
+        padding-left: $size;
+        padding-right: $size;
+    }
+
+    .v-padding-#{$name} {
+        padding-top: $size;
+        padding-bottom: $size;
+    }
+}
+
 .content-padding {
     @extend .content-padding-horz, .content-padding-vert;
 }
