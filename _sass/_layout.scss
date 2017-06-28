@@ -336,6 +336,10 @@
 }
 
 @media screen and (max-width: 32em) {
+    .show-time > *:first-child {
+        width: 4em;
+    }
+
     .show-location {
         justify-content: space-between;
 
