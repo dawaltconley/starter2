@@ -21,3 +21,9 @@
   postal: "10003"
   links:
     facebook: "https://www.facebook.com/events/255291808273733/"
+- date:   2017-09-06 20:00:00 -0500
+  venue:  "LIC Bar"
+  street: "45-58 Vernon Blvd"
+  city:   "Long Island City"
+  state:  "NY"
+  postal: "11101"
