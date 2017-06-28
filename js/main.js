@@ -128,6 +128,7 @@
     addSmoothScrollListeners();
     addPopStateListener();
     addPageScrollListener();
+    addOrientationChangeListener();
     forceFullscreenAll();
 
 })();
