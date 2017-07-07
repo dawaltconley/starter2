@@ -27,3 +27,9 @@
   city:   "Long Island City"
   state:  "NY"
   postal: "11101"
+- date:   2017-10-08 12:00:00 -0500
+  venue:  "Twin Star Orchards"
+  street: "155 N Ohioville Rd"
+  city:   "New Paltz"
+  state:  "NY"
+  postal: "12561"
