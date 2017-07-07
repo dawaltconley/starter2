@@ -119,9 +119,9 @@ $bp-media-columns:      1025px;
 
     @if $image != none {
         @if $lighten > 0 {
-            background: linear-gradient(rgba(255, 255, 255, $lighten), rgba(255, 255, 255, lighten)), $image;
+            background: linear-gradient(rgba(white, $lighten), rgba(white, $lighten)), $image;
         } @else if $darken > 0 {
-            background: linear-gradient( rgba(0, 0, 0, $darken), rgba(0, 0, 0, $darken) ), $image;
+            background: linear-gradient( rgba(black, $darken), rgba(black, $darken) ), $image;
         } @else {
             background-image: $image;
         }
