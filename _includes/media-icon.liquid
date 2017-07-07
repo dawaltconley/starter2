@@ -1,3 +1,4 @@
+{% capture blank %}
     {% assign icon_type = include.type %}
     {% assign icon_link = include.link %}
     {% for icon in site.data.icon-types %}
@@ -63,7 +64,7 @@
                     {% if include.show_link %}--><span class="media-icon-text">{{ link_text }}</span><!--{% endif %}
              --></a>
             {% endcapture %}
-            {{ return }}
 
         {% endif %}
     {% endfor %}
+{% endcapture %}{{ return }}
