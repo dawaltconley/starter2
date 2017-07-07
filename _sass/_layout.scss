@@ -337,9 +337,12 @@ $padding-sizes: (
     }
 }
 
+.venue, .venue-address {
+    margin-right: 1em;
+}
+
 .venue-address {
     flex: 0 1 40%;
-    margin-right: 1em;
 }
 
 .show-links {
