@@ -10,7 +10,8 @@ keywords:
   - Brooklyn
 logo:
   svg: "/assets/logo.svg"
-  png: "/assets/logo-hq.png"
+  png: "/assets/logo.png"
+  og:  "/assets/logo-og.jpg"
 baseurl: ""
 url: "http://www.moretongues.com"
 google_analytics: "UA-101639062-1"
