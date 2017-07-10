@@ -9,6 +9,10 @@
   fa-icon: 'phone'
   fa-styles:
     - square
+- type: location
+  color: '#208000'
+  fa-icon: 'map-marker'
+  fa-styles:
 - type: google-plus
   color: '#dd4b39'
   fa-icon: 'google-plus'
