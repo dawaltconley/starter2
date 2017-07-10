@@ -26,11 +26,10 @@
   <meta property="og:locale" content="en_US">
   <meta property="og:type" content="website">
   <meta property="og:url" content="{{ page_url }}">
-  {% unless page_url == site_url %}<meta property="og:site_url" content="{{ site_url }}">{% endunless %}
   <meta property="og:title" content="{{ title }}">
   <meta property="og:description" content="{{ description }}">
   <meta property="og:image" content="{{ site.logo.png | prepend: site_url }}">
-  <meta property="fb:page_id" content"{{ fb_page_id }}">
+  <meta property="fb:pages" content"{{ fb_page_id }}">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
