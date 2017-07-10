@@ -28,7 +28,7 @@
   state:  "NY"
   postal: "11101"
   links:
-    location: "https://www.google.com/location/place/LIC+BAR/@40.7470424,-73.955076,17z/data=!3m1!4b1!4m5!3m4!1s0x89c25926b7946003:0xfe67c3d642d43212!8m2!3d40.7470424!4d-73.9528873"
+    location: "https://www.google.com/maps/place/LIC+BAR/@40.7470464,-73.955076,17z/data=!3m1!4b1!4m5!3m4!1s0x89c25926b7946003:0xfe67c3d642d43212!8m2!3d40.7470424!4d-73.9528873"
 - date:   2017-10-08 12:00:00 -0500
   venue:  "Twin Star Orchards"
   street: "155 N Ohioville Rd"
@@ -36,4 +36,4 @@
   state:  "NY"
   postal: "12561"
   links:
-    location: "https://www.google.com/location/place/Twin+Star+Orchards/@41.7570972,-74.0528673,17z/data=!3m1!4b1!4m5!3m4!1s0x89dd1813590f9a55:0xfca8cb5a358db205!8m2!3d41.7570972!4d-74.0506786"
+    location: "https://www.google.com/maps/place/Twin+Star+Orchards/@41.7571012,-74.0528673,17z/data=!3m1!4b1!4m5!3m4!1s0x89dd1813590f9a55:0xfca8cb5a358db205!8m2!3d41.7570972!4d-74.0506786"
