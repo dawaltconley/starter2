@@ -11,7 +11,7 @@ keywords:
 logo:
   svg: "/assets/logo.svg"
   png: "/assets/logo.png"
-  og:  "/assets/logo-og.jpg"
+og_image: "/assets/logo-og.jpg"
 baseurl: ""
 url: "http://www.moretongues.com"
 google_analytics: "UA-101639062-1"
