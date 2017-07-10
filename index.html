@@ -11,7 +11,7 @@ itemtype: "http://schema.org/MusicGroup"
 
     <h1 class="hidden" itemprop="name">{{ site.title }}</h1>
 
-    <img class="auto-top v-rhythm" itemprop="logo" src="{{ site.baseurl | append: '/assets/logo.svg' }}" alt="{{ site.title }}">
+    <img class="auto-top v-rhythm" itemprop="logo" src="{{ site.logo.svg | prepend: site.baseurl }}" alt="{{ site.title }}">
 
     <ul id="social-media" class="auto-bottom full-width flex-row flex-center media-icon-basic media-icon-list">
       {% include all-media-icons.liquid icon_set=site.contact style="o play" list="true" microdata=true %}

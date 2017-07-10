@@ -8,6 +8,9 @@ keywords:
   - rock
   - indie rock
   - Brooklyn
+logo:
+  svg: "/assets/logo.svg"
+  png: "/assets/logo-hq.png"
 baseurl: ""
 url: "http://www.moretongues.com"
 google_analytics: "UA-101639062-1"
