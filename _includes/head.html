@@ -4,12 +4,26 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
-  <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+  {% if page.title %}
+    {% assign title = page.title | escape %}
+  {% else %}
+    {% assign title = site.title | escape %}
+  {% endif %}
+
+  {% if page.excerpt %}
+    {% assign description = page.excerpt | strip_html | strip_newlines | truncate: 160 %}
+  {% else %}
+    {% assign description = site.description %}
+  {% endif %}
+
+  {% assign page_url = page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url %}
+
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ description }}">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
-  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+  <link rel="canonical" href="{{ page_url }}">
 
   {% if site.google_analytics and jekyll.environment == 'production' %}
     {% include analytics.html %}
