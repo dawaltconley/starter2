@@ -175,17 +175,14 @@ $all-sides: "top", "left", "right", "bottom";
 // styling resets, including inherit fallback for older browsers
 %reset-color {
     color: inherit;
-    color: unset;
 }
 
 %reset-background-color {
     background-color: inherit !important;
-    background-color: unset !important;
 }
 
 %reset-border-color {
     border-color: inherit !important;
-    border-color: unset !important;
 }
 
 // universal styling for the anchor tags that contain social-media fa-icons.
