@@ -129,6 +129,9 @@
     addPopStateListener();
     addPageScrollListener();
     addOrientationChangeListener();
-    forceFullscreenAll();
+
+    window.onload = function () {
+        forceFullscreenAll();
+    }
 
 })();
