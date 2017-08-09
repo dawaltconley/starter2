@@ -29,6 +29,14 @@
   postal: "11101"
   links:
     location: "https://www.google.com/maps/place/LIC+BAR/@40.7470464,-73.955076,17z/data=!3m1!4b1!4m5!3m4!1s0x89c25926b7946003:0xfe67c3d642d43212!8m2!3d40.7470424!4d-73.9528873"
+- date:   2017-09-29 11:00:00 -0500
+  venue:  "The Well"
+  street: "272 Meserole St"
+  city:   "Brooklyn"
+  state:  "NY"
+  postal: "11206"
+  links:
+    location: "https://www.google.com/maps/place/The+Well/@40.7085237,-73.9398895,17z/data=!3m1!4b1!4m5!3m4!1s0x89c25bffdd72d423:0xfc20fc3b75dbb288!8m2!3d40.7085197!4d-73.9377008"
 - date:   2017-10-08 12:00:00 -0500
   venue:  "Twin Star Orchards"
   street: "155 N Ohioville Rd"
