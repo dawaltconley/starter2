@@ -28,7 +28,7 @@
   state:  "NY"
   postal: "11101"
   links:
-    location: "https://www.google.com/maps/place/LIC+BAR/@40.7470464,-73.955076,17z/data=!3m1!4b1!4m5!3m4!1s0x89c25926b7946003:0xfe67c3d642d43212!8m2!3d40.7470424!4d-73.9528873"
+    facebook: "https://www.facebook.com/events/140138483244171/"
 - date:   2017-09-29 11:00:00 -0500
   venue:  "The Well"
   street: "272 Meserole St"
