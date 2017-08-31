@@ -36,7 +36,7 @@
   state:  "NY"
   postal: "11206"
   links:
-    location: "https://www.google.com/maps/place/The+Well/@40.7085237,-73.9398895,17z/data=!3m1!4b1!4m5!3m4!1s0x89c25bffdd72d423:0xfc20fc3b75dbb288!8m2!3d40.7085197!4d-73.9377008"
+    facebook: "https://www.facebook.com/events/136400413635046/"
 - date:   2017-10-08 12:00:00 -0500
   venue:  "Twin Star Orchards"
   street: "155 N Ohioville Rd"
