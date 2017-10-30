@@ -3,6 +3,15 @@ layout: default
 itemtype: "http://schema.org/MusicGroup"
 ---
 
+{% assign has_future = false %}
+{% for show in site.data.shows %}
+  {% assign show_date = show.date | date: '%s' | plus: 0 %}
+  {% assign current_date = 'now' | date: '%s' | plus: 0 %}
+  {% if show_date > current_date %}
+    {% assign has_future = true %}
+  {% endif %}
+{% endfor %}
+
 <meta itemprop="url" content="{{ site.url | append: site.baseurl }}">
 
 <div id="splash" class="pos-relative">
@@ -46,20 +55,14 @@ itemtype: "http://schema.org/MusicGroup"
 
     </div>
 
-    <a href="#shows" class="fa fa-chevron-down subtle-icon scroll-arrow" data-scroll="smooth" data-script="hide-on-scroll"></a>
+    {% if has_future %}
+      <a href="#shows" class="fa fa-chevron-down subtle-icon scroll-arrow" data-scroll="smooth" data-script="hide-on-scroll"></a>
+    {% endif %}
 
   </div>
 
 </div>
 
-{% assign has_future = false %}
-{% for show in site.data.shows %}
-  {% assign show_date = show.date | date: '%s' | plus: 0 %}
-  {% assign current_date = 'now' | date: '%s' | plus: 0 %}
-  {% if show_date > current_date %}
-    {% assign has_future = true %}
-  {% endif %}
-{% endfor %}
 {% if has_future %}
 
   <div id="shows" class="content-wrapper content-padding fullscreen flex-col flex-justify-center">
