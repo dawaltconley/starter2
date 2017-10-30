@@ -50,3 +50,7 @@
   color: '#c13584'
   fa-icon: 'instagram'
   fa-styles:
+- type: bandcamp
+  color: '#629aa9'
+  fa-icon: 'bandcamp'
+  fa-styles:
