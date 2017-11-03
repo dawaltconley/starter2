@@ -1,5 +1,4 @@
 var gulp = require("gulp");
-var ghPages = require("gulp-gh-pages");
 var child = require("child_process");
 var autoprefixer = require("gulp-autoprefixer");
 var babel = require("gulp-babel");
