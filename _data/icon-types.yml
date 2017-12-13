@@ -54,3 +54,7 @@
   color: '#629aa9'
   fa-icon: 'bandcamp'
   fa-styles:
+- type: soundcloud
+  color: '#ff8800'
+  fa-icon: 'soundcloud'
+  fa-styles:
