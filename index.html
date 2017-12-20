@@ -14,15 +14,15 @@ itemtype: "http://schema.org/MusicGroup"
 
 <meta itemprop="url" content="{{ site.url | append: site.baseurl }}">
 
-<div id="splash" class="pos-relative">
+<div id="splash" class="relative">
 
-  <div class="splash-wrapper content-padding fullscreen-fixed flex-col flex-center" data-script="force-fullscreen">
+  <div class="splash-wrapper padding-m screen-height flex-col flex-center" data-script="force-fullscreen">
 
     <h1 class="hidden" itemprop="name">{{ site.title }}</h1>
 
-    <img class="auto-top v-rhythm" itemprop="logo" src="{{ site.logo.svg | prepend: site.baseurl }}" alt="{{ site.title }}">
+    <img class="margin-auto-t margin-m-b" itemprop="logo" src="{{ site.logo.svg | prepend: site.baseurl }}" alt="{{ site.title }}">
 
-    <ul id="social-media" class="auto-bottom full-width flex-row flex-center media-icon-basic media-icon-list">
+    <ul id="social-media" class="margin-auto-b full-width flex-row flex-center media-icon-basic media-icon-list">
       {% include all-media-icons.liquid icon_set=site.contact style="o play" list="true" microdata=true %}
     </ul>
 
@@ -34,11 +34,11 @@ itemtype: "http://schema.org/MusicGroup"
 
 <div id="music" class="dark">
 
-  <div class="media-wrapper content-padding fullscreen flex-col flex-center" data-script="force-fullscreen">
+  <div class="media-wrapper padding-m screen-height-min flex-col flex-center" data-script="force-fullscreen">
 
     <h2 class="hidden">Music</h2>
 
-    <div class="auto-vert fill-flex-parent flex-col flex-space-around media-columns" itemprop="track" itemscope itemtype="http://schema.org/MusicRecording">
+    <div class="margin-auto-v fill-flex-parent flex-col flex-space-around media-columns" itemprop="track" itemscope itemtype="http://schema.org/MusicRecording">
 
       <div>
         <meta itemprop="name" content="I Wanna Be A Machine">
@@ -65,7 +65,7 @@ itemtype: "http://schema.org/MusicGroup"
 
 {% if has_future %}
 
-  <div id="shows" class="content-wrapper content-padding fullscreen flex-col flex-justify-center">
+  <div id="shows" class="content-wrapper padding-m screen-height-min flex-col flex-justify-center">
 
     <h2 class="text-center">Upcoming Shows</h2>
 
@@ -74,7 +74,7 @@ itemtype: "http://schema.org/MusicGroup"
         {% assign show_date = show.date | date: '%s' | plus: 0 %}
         {% assign current_date = 'now' | date: '%s' | plus: 0 %}
         {% if show_date > current_date %}
-          <li class="show full-width v-padding-x-small border-between border-light flex-row flex-align-center" itemprop="event" itemscope itemtype="http://schema.org/Event">
+          <li class="show full-width padding-xs-v border-between border-light flex-row flex-align-center" itemprop="event" itemscope itemtype="http://schema.org/Event">
             <meta itemprop="name" content="Show at {{ show.venue }}">
             <time class="show-time flex-row" datetime="{{ show.date | date_to_xmlschema }}" itemprop="startDate doorTime">
               <span class="meta show-date">{{ show.date | date: "%b %e" }}</span>

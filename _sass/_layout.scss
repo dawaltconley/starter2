@@ -1,102 +1,141 @@
 /*
+ * Generated
+ */
+
+@each $name, $size in $sizes {
+    $width: null;
+    $height: null;
+
+    @if length($size) == 1 {
+        $width: $size;
+        $height: $size;
+    } @else if length($size) == 2 {
+        $width: nth($size, 1);
+        $height: nth($size, 2);
+    } @else {
+        @error "Wrong number of values in #{$name} size.";
+    }
+
+    .#{$name} {
+        &-size, &-width {
+            width: $width;
+        }
+        &-size, &-height {
+            height: $height;
+        }
+        &-size-min, &-width-min {
+            min-width: $width;
+        }
+        &-size-min, &-height-min {
+            min-height: $height;
+        }
+        &-size-max, &-width-max {
+            max-width: $width;
+        }
+        &-size-max, &-height-max {
+            max-height: $height;
+        }
+    }
+}
+
+@each $name, $size in $margins {
+    @include all-sides("margin-" + $name) {
+        margin-#{$side}: $size;
+    }
+}
+
+@each $name, $size in $paddings {
+    @include all-sides("padding-" + $name) {
+        padding-#{$side}: $size;
+    }
+}
+
+@each $name, $styles in $borders {
+    @include all-sides("border-" + $name) {
+        border-#{$side}-width: map-get($styles, width);
+        border-#{$side}-style: map-get($styles, style);
+        border-#{$side}-color: map-get($styles, color);
+    }
+}
+
+@each $name, $styles in $themes {
+    .#{$name} {
+        @include theme-styles($styles);
+    }
+}
+
+/*
  * Basic
  */
 
-.pos-relative {
+.block {
+    display: block;
+}
+
+.inline {
+    display: inline;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.relative {
     position: relative;
 }
 
-.full-width {
-    width: 100%;
+.absolute {
+    position: absolute;
 }
 
-.full-height {
-    height: 100%;
+.top-left {
+    @extend .absolute;
+    top: 0; left: 0;
 }
 
-.v-rhythm {
+.top-right {
+    @extend .absolute;
+    top: 0; right: 0;
+}
+
+.bottom-left {
+    @extend .absolute;
+    bottom: 0; left: 0;
+}
+
+.bottom-right {
+    @extend .absolute;
+    bottom: 0; right: 0;
+}
+
+@for $i from 0 through 9 {
+    .z-#{$i} {
+        @extend .relative;
+        z-index: $i;
+    }
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.v-rhythm > * {
     @extend %vertical-rhythm;
-}
-
-.v-rhythm-2 {
-    margin-bottom: $spacing-unit * 2;
-}
-
-.content-padding-horz {
-    padding-left: $spacing-unit;
-    padding-right: $spacing-unit;
-}
-
-.content-padding-vert {
-    padding-top: $spacing-unit;
-    padding-bottom: $spacing-unit;
-}
-
-$padding-sizes: (
-    "x-small":   10px,
-    "small":     15px
-);
-@each $name, $size in $padding-sizes {
-    // $i: index($padding-sizes, $size);
-    .h-padding-#{$name} {
-        padding-left: $size;
-        padding-right: $size;
-    }
-
-    .v-padding-#{$name} {
-        padding-top: $size;
-        padding-bottom: $size;
-    }
-}
-
-.content-padding {
-    @extend .content-padding-horz, .content-padding-vert;
-}
-
-.fullscreen {
-    min-height: 100vh;
-}
-
-.fullscreen-fixed {
-    height: 100vh;
-}
-
-.auto-top {
-    margin-top: auto;
-}
-
-.auto-left {
-    margin-left: auto;
-}
-
-.auto-right {
-    margin-right: auto;
-}
-
-.auto-bottom {
-    margin-bottom: auto;
-}
-
-.auto-horz {
-    @extend .auto-left, .auto-right;
-}
-
-.auto-vert {
-    @extend .auto-top, .auto-bottom;
 }
 
 .hidden {
     display: none;
 }
 
-.clearfix {
-
-    &:after {
-        content: "";
-        display: table;
-        clear: both;
-        border-spacing: 0;
-    }
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+    border-spacing: 0;
 }
 
 /*
@@ -116,6 +155,12 @@ $padding-sizes: (
 
 .content-wrapper {
     @include wrapper($bp-laptop $bp-mobile);
+}
+
+.text-wrapper {
+    @each $length in $base-line-length {
+        max-width: $length;
+    }
 }
 
 .media-wrapper {
@@ -144,73 +189,51 @@ $padding-sizes: (
 }
 
 /*
- * Themes
- */
-
-@each $name, $styles in $themes {
-    $text-color: map-get($styles, "text-color");
-    $background-color: map-get($styles, "background-color");
-
-    .#{$name} {
-        background-color: $background-color;
-        color: $text-color;
-        border-color: $text-color;
-
-        @if map-has-key($styles, "font-smoothing") {
-            $fs: map-get($styles, "font-smoothing");
-            @if $fs == "normal" {
-                @extend .font-smoothing-normal;
-            } @else if $fs == "dark" {
-                @extend .font-smoothing-dark;
-            } @else {
-                @error "Bad font-smoothing value in #{$name} theme."
-            }
-        }
-
-        & .text-light {
-            @if lightness($text-color) < lightness($background-color) {
-                color: lighten($text-color, 40%);
-            } @else {
-                color: darken($text-color, 40%);
-            }
-        }
-
-        & .border-light {
-            @if lightness($text-color) < lightness($background-color) {
-                border-color: darken($background-color, 10%);
-            } @else {
-                border-color: lighten($background-color, 10%);
-            }
-        }
-    }
-}
-
-/*
  * Containers
  */
 
-.fill-parent {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
+.overflow-v {
+    overflow: visible;
 }
 
-.expand-child {
+.overflow-h {
+    overflow: hidden;
+}
+
+.fill-parent {
+    @extend .full-size !optional;
+    position: absolute;
+    top: 0; left: 0;
+}
+
+.expand-children {
     position: relative;
 
-    & > :only-child {
+    & > * {
         @extend .fill-parent;
     }
 }
 
 %fixed-ratio { // extended by the fixed-ratio mixin
-    @extend .expand-child;
+    @extend .expand-children;
     height: 0;
 }
 
 .aspect-16-9 {
     @include fixed-ratio(16, 9);
+}
+
+.contains-3d {
+    -webkit-perspective: $perspective;
+    perspective: $perspective;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+
+    &-deep * {
+        @extend .contains-3d;
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+    }
 }
 
 /*
@@ -222,7 +245,7 @@ $padding-sizes: (
 }
 
 .table-fixed {
-    display: table;
+    @extend .table;
     table-layout: fixed;
 }
 
@@ -254,9 +277,32 @@ $padding-sizes: (
     }
 }
 
-.mobile-columns {
-    @extend %columns;
-    @include columns-reset($bp-mobile);
+@each $name, $breakpoint in $bp {
+    .#{$name}-columns {
+        @extend %columns;
+        @include columns-reset($breakpoint);
+    }
+}
+
+/*
+ * Inline Layouts
+ */
+
+.font-0 {
+    font-size: 0;
+
+    > * {
+        font-size: $base-font-size;
+    }
+}
+
+.inline-row {
+    white-space: nowrap;
+
+    > * {
+        display: inline-block;
+        white-space: normal;
+    }
 }
 
 /*
@@ -285,12 +331,16 @@ $padding-sizes: (
     @extend .flex-justify-center, .flex-align-center;
 }
 
+.flex-align-bottom {
+    align-items: flex-end;
+}
+
 .fill-flex-parent {
     flex: 1 1 auto;
 }
 
 .flex-even > * {
-    flex: 1 1 0;
+    flex: 1 1 0%;
 }
 
 .flex-space-between {
@@ -307,7 +357,7 @@ $padding-sizes: (
 
 .media-columns {
     & > * {
-        @extend %vertical-rhythm;
+        margin-bottom: $spacing-unit;
         width: 100%;
     }
 

@@ -17,14 +17,21 @@ dl, dd, ol, ul, figure {
 }
 
 /*
+ * Prevent Horizontal Scrolling
+ */
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/*
  * Basic styling
  */
 
 body {
-    @extend .main;
+    @extend .#{$base-theme} !optional;
     font: $base-font-weight #{$base-font-size}/#{$base-line-height} $base-font-family;
-    // color: $text-color;
-    // background-color: $background-color;
     -webkit-text-size-adjust: 100%;
     -webkit-font-feature-settings: "kern" 1;
     -moz-font-feature-settings: "kern" 1;
@@ -44,6 +51,10 @@ p, blockquote, pre,
 ul, ol, dl, figure,
 %vertical-rhythm {
     margin-bottom: $spacing-unit;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
 /**
@@ -56,6 +67,7 @@ img {
 
 iframe {
     border: 0;
+    overflow: hidden;
 }
 
 /**
@@ -126,7 +138,7 @@ h4 {
 }
 
 hr {
-    margin: ($spacing-unit * 2) 0;
+    margin: $spacing-unit 0;
 }
 
 /**

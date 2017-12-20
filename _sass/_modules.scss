@@ -39,16 +39,35 @@
     font-weight: 600;
 }
 
+@for $i from 1 through 9 {
+    $weight: $i * 100;
+    .fw-#{$weight} {
+        font-weight: $weight;
+    }
+}
+
+.font-size-large {
+    font-size: 1.5em;
+}
+
+.font-size-double {
+    font-size: 2em;
+}
+
 .shadow {
     text-shadow: 2px 1px 6px $shadow-color;
 }
 
-.font-smoothing-normal, .font-smoothing-dark .font-smoothing-normal {
-    -webkit-font-smoothing: auto;
+.full-shadow {
+    text-shadow: 0 0 0.24em black;
+}
+
+.font-smoothing-normal {
+    -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
 }
 
-.font-smoothing-dark, .font-smoothing-normal .font-smoothing-dark {
+.font-smoothing-dark {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -76,17 +95,8 @@
  * Block Styles
  */
 
-$all-sides: "top", "left", "right", "bottom";
-@each $side in $all-sides {
-    %border-#{$side}-basic {
-        border-#{$side}-width: 1px;
-        border-#{$side}-style: solid;
-        border-#{$side}-color: inherit;
-    }
-}
-
 .border-between {
-    @extend %border-bottom-basic;
+    @extend .border-basic-b;
 
     &:last-of-type {
         border-bottom: 0;
@@ -94,10 +104,10 @@ $all-sides: "top", "left", "right", "bottom";
 }
 
 .border-around {
-    @extend %border-bottom-basic;
+    @extend .border-basic-b;
 
     &:first-of-type {
-        @extend %border-top-basic;
+        @extend .border-basic-t;
     }
 }
 
@@ -115,6 +125,7 @@ $all-sides: "top", "left", "right", "bottom";
 
     &:hover {
         color: inherit;
+        text-decoration: underline;
     }
 }
 
@@ -127,8 +138,38 @@ $all-sides: "top", "left", "right", "bottom";
 }
 
 /*
+ * Images
+ */
+
+.bg-img {
+    @include background-image;
+}
+
+.object-fit-cover {
+    @extend .relative, .bg-img;
+
+    & > img {
+        @extend .fill-parent;
+        object-fit: cover;
+    }
+}
+
+/*
  * Icons
  */
+
+.scroll-arrow {
+    font-size: 36px;
+    padding: 4px;
+}
+
+@media screen and (max-height: $bp-mobile) and (min-width: 450px) {
+    .fullscreen-fixed .scroll-arrow {
+        position: absolute;
+        bottom: $spacing-unit;
+        right: $spacing-unit;
+    }
+}
 
 .fa-icon-circle {
     $circle-size: 1.5;
@@ -145,19 +186,6 @@ $all-sides: "top", "left", "right", "bottom";
         width: $circle-size * 1em;
         height: $circle-size * 1em;
         margin: 0;
-    }
-}
-
-.scroll-arrow {
-    font-size: 2em;
-    padding: .2em;
-}
-
-@media screen and (max-height: $bp-mobile) and (min-width: 450px) {
-    .fullscreen-fixed .scroll-arrow {
-        position: absolute;
-        bottom: $spacing-unit;
-        right: $spacing-unit;
     }
 }
 
@@ -189,22 +217,22 @@ $all-sides: "top", "left", "right", "bottom";
 .media-icon {
     display: inline-block;
     position: relative;
+    line-height: inherit;
+    transition: .3s;
     z-index: 1;
 
     &::before {
         @extend .no-select;
         position: relative;
         user-select: none;
-        transition: .3s;
         z-index: 3;
     }
 
     &::after {
         content: "";
         position: absolute;
-        top: 0; bottom: 0;
-        left: 50%; right: 50%;
-        transition: .3s;
+        top: 0; left: 0; right: 0; bottom: 0;
+        transition: inherit;
         z-index: 2;
     }
 }
@@ -223,14 +251,26 @@ $all-sides: "top", "left", "right", "bottom";
 // square buttons. white icons with brand-color background. hovering animates to white background with icons in their brand color.
 .media-icon-button .media-icon {
     @extend .media-icon-bloat;
+    color: white;
+
+    &:hover::after {
+        background-color: rgba(white, 0.2);
+    }
+}
+
+.media-icon-shutter .media-icon {
+    @extend .media-icon-bloat;
 
     &:not(:hover) {
         color: white;
     }
 
+    &::after {
+        left: 50%; right: 50%;
+    }
+
     &:hover::after {
         left: 0; right: 0;
-        background-color: rgba(255, 255, 255, 0.8);
         background-color: white;
     }
 }
@@ -263,10 +303,10 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
 
     &.media-icon-circle .media-icon {
         flex: 0 1 auto;
-        margin: 0 .25em
+        margin: 0 .25em;
     }
 
-    &:not(.flex-row):not(.flex-col) {
+    &:not(.flex-row):not(.flex-col):not(.media-icon-circle) .media-icon {
         min-width: 2em;
     }
 
@@ -328,5 +368,122 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
 
     @media screen and (min-width: $bp-large) {
         font-size: $base-icon-size / $bp-large * 100vw;
+    }
+}
+
+/*
+ * Transforms
+ */
+
+.hw-accel {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+.translate-x-left {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+}
+
+.translate-x-right {
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+}
+
+.translate-x-none {
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%);
+}
+
+.flip-x {
+    -webkit-transform: rotate3d(1, 0, 0, 180deg);
+    transform: rotate3d(1, 0, 0, 180deg);
+}
+
+.no-backface {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/*
+ * Transitions
+ */
+
+.t-default {
+    -webkit-transition: $trans-default;
+    transition: $trans-default;
+}
+
+.t-inherit {
+    -webkit-transition: inherit;
+    transition: inherit;
+}
+
+.t-deep > * {
+    @extend .t-inherit;
+}
+
+.t-none {
+    -webkit-transition: 0s;
+    transition: 0s;
+}
+
+/*
+ * Hover
+ */
+
+.hover-fade-in {
+    opacity: 0;
+    -webkit-transition: opacity $trans-default;
+    transition: opacity $trans-default;
+
+    @include hover {
+        opacity: 1;
+    }
+}
+
+.hover-scale {
+    transform: scale(1) translateZ(0);
+
+    @include hover {
+        transform: scale(1.05) translateZ(0);
+    }
+}
+
+.hover-lighten {
+    @extend .relative;
+
+    &::after {
+        @extend .fill-parent, .t-inherit;
+        content: "";
+        background-color: rgba(white, 0);
+    }
+
+    @include hover {
+        &::after {
+            background-color: rgba(white, 0.1);
+        }
+    }
+}
+
+.hover-blur {
+    @include blur(0);
+    -webkit-transition: -webkit-filter $trans-default;
+    transition: filter $trans-default;
+
+    @include hover {
+        @include blur(5px);
+    }
+}
+
+/*
+ * Target
+ */
+
+.target-display {
+    display: none;
+
+    &:target {
+        display: inherit;
     }
 }

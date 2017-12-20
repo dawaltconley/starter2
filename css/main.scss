@@ -12,13 +12,14 @@ $base-font-family:      "Raleway", sans-serif;
 $base-font-size:        1.25em;
 $base-font-weight:      200;
 $base-line-height:      1.4;
+$base-line-length:      36em;
 
 $header-font-weight:    900;
 
+$perspective:           2000px;
+
 // Colors
 
-$text-color:            black;
-$background-color:      white;
 $brand-color:           gray;
 $shadow-color:          rgba(0, 0, 0, 0.6);
 
@@ -26,11 +27,47 @@ $gray-color:            #828282;
 $gray-color-light:      lighten($gray-color, 40%);
 $gray-color-dark:       darken($gray-color, 25%);
 
-$fa-icons:          ({% for icon in site.data.icon-types %}
-                        {{ icon.type }}: {{ icon.color }},{% endfor %}
-                    );
+$fa-icons:              ({% for icon in site.data.icon-types %}
+                            {{ icon.type }}: {{ icon.color }},{% endfor %}
+                        );
 
-// Themes
+// Images
+
+$splash-image:          url({{ site.baseurl | append: 'assets/test/temper-tantrum-36-cropped-desktop.jpg' }});
+$image-bp:              ({% if jekyll.environment == 'netlify' %}
+                            {% for size in site.image_bp %}
+                                ({% for dimension in size %}
+                                    {{ dimension[0] }}: {{ dimension[1] }},
+                                {% endfor %}),
+                            {% endfor %}
+                        {% endif %});
+
+// Layouts
+
+$sizes: (
+    "full":             100%,
+    "screen":           100vw 100vh,
+    "no":               0,
+);
+
+$margins: (
+    "auto":     auto,
+    "0":        0,
+    "m":        30px,
+);
+
+$paddings: (
+    "xs":       10px,
+    "m":        30px,
+);
+
+$borders: (
+    "basic": (
+        width: 1px,
+        style: solid,
+        color: inherit
+    ),
+);
 
 $themes: (
     main: (
@@ -45,15 +82,162 @@ $themes: (
     )
 );
 
+$base-theme: main;
+
+$trans-default: .3s;
+
 // Breakpoints
 
-$bp-laptop:             800px;
-$bp-mobile:             600px;
+$bp: (
+    //"x-large":  1800px,
+    "large":    1000px,
+    "laptop":   800px,
+    "mobile":   600px,
+);
+$bp-laptop: map-get($bp, "laptop");
+$bp-mobile: map-get($bp, "mobile");
 $splash-wrapper-width:  50%;
 $media-wrapper-width:   800px;
 $bp-media-columns:      1025px;
 
 // Mixins
+
+$sides: "top", "bottom", "left", "right";
+$side: null;
+
+@function get-orientation($side) {
+    @if $side == "top" or $side == "bottom" {
+        @return "vertical";
+    } @else if $side == "left" or $side == "right" {
+        @return "horizontal";
+    } @else {
+        @error "Not a valid side."
+    }
+}
+
+@mixin all-sides($class-name) {
+    .#{$class-name} {
+        @each $name in $sides {
+            $side: $name !global;
+            $o: str-slice(get-orientation($side), 1, 1);
+            &, &-#{$o}, &-#{str-slice($side, 1, 1)} {
+                @content;
+            }
+        }
+    }
+}
+
+@function file-suffix ($file-name, $suffix, $extension: ".") {
+    $return: ();
+    $separator: list-separator($file-name);
+    @each $name in $file-name {
+        $ext-index: null;
+        $i: 1;
+        @while ($i <= length($extension)) and not($ext-index) {
+            $ext: nth($extension, $i);
+            @if str-slice($ext, 1, 1) != "." { $ext: ".#{$ext}"; }
+            $ext-index: str-index(to-lower-case($name), to-lower-case($ext));
+            $i: $i + 1;
+        }
+        @if $ext-index {
+            $return: append($return, str-insert($name, $suffix, $ext-index), $separator);
+        } @else {
+            $return: append($return, $name, $separator);
+        }
+    }
+    @return $return;
+}
+
+@mixin theme-styles($styles, $background-color: null, $text-color: null) {
+    @if map-has-key($styles, "background-color") or map-has-key($styles, "text-color") {
+        @if map-has-key($styles, "background-color") {
+            $background-color: map-get($styles, "background-color");
+        }
+        @if map-has-key($styles, "text-color") {
+            $text-color: map-get($styles, "text-color");
+        }
+        $light-theme: lightness($text-color) < lightness($background-color);
+        $styles: map-remove($styles, "background-color", "text-color");
+
+        background-color: $background-color;
+        color: $text-color;
+        border-color: $text-color;
+
+        @if $light-theme {
+            -webkit-font-smoothing: subpixel-antialiased;
+            -moz-osx-font-smoothing: auto;
+        } @else {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+
+        .theme-link {
+            @if $light-theme {
+                &:visited {
+                    color: darken($brand-color, 25%);
+                }
+
+                &:hover {
+                    color: darken($brand-color, 15%);
+                }
+            } @else {
+                &:visited {
+                    color: lighten($brand-color, 25%);
+                }
+
+                &:hover {
+                    color: lighten($brand-color, 15%);
+                }
+            }
+        }
+
+        .text-light  &.text-light {
+            @if $light-theme {
+                color: lighten($text-color, 40%);
+            } @else {
+                color: darken($text-color, 40%);
+            }
+        }
+
+        .border-light, &.border-light {
+            @if $light-theme {
+                border-color: darken($background-color, 10%);
+            } @else {
+                border-color: lighten($background-color, 10%);
+            }
+        }
+
+        .border-x-light, &.border-x-light {
+            @if $light-theme {
+                border-color: darken($background-color, 5%);
+            } @else {
+                border-color: lighten($background-color, 5%);
+            }
+        }
+    }
+
+    @each $property, $value in $styles {
+        @if type-of($value) == "map" {
+            @if $property == "headings" or $property == "h" {
+                & h1, h2, h3, h4, h5, h6 {
+                    @include theme-styles($value, $background-color, $text-color);
+                }
+            } @else {
+                @each $bp-name, $bp-value in $bp {
+                    @if $property == $bp-name {
+                        @media screen and (max-width: $bp-value) {
+                            @include theme-styles($value, $background-color, $text-color);
+                        }
+                    }
+                }
+            }
+        } @else {
+            #{$property}: $value;
+        }
+    }
+
+}
 
 @mixin wrapper ($breakpoints, $min-margins: $spacing-unit) {
     $bp-first: nth($breakpoints, 1);
@@ -65,7 +249,9 @@ $bp-media-columns:      1025px;
         @error "Invalid breakpoint list: values should proceed from highest to lowest";
     }
 
-    @extend .auto-horz, .clearfix;
+    @extend .clearfix;
+    margin-left: auto;
+    margin-right: auto;
     max-width: $bp-first - ($min-margins * 2);
 
     @for $i from 1 to length($breakpoints) {
@@ -115,46 +301,147 @@ $bp-media-columns:      1025px;
     }
 }
 
-@mixin background-image ($image: none, $x: center, $y: center, $lighten: 0, $darken: 0) {
+@mixin inline-columns ($columns, $spacing: 0) {
+    @if not($columns > 1) { @error "inline-columns mixin must have more than one column." }
+    $width: 100% / $columns;
+    $row-end: $columns + "n";
+    display: inline-block;
+    width: calc(#{$width} - (#{$spacing} * (#{$columns} - 1) / #{$columns}));
+    margin-right: $spacing;
+    margin-bottom: $spacing;
 
-    @if $image != none {
+    &:nth-child(#{$row-end}), &:last-child {
+        margin-right: 0;
+    }
+}
+
+@mixin blur($blur) {
+    -webkit-filter: blur($blur);
+    filter: blur($blur);
+}
+
+@mixin responsive-image ($image, $breakpoints: $image-bp) {
+    @if $breakpoints and length($breakpoints) > 0 {
+        $file-types: jpg, jpeg, png, gif, svg, webp;
+
+        // wrap image files in url if they are not yet
+        @each $bg in $image {
+            $i: index($image, $bg);
+            $is-img: null;
+            $n: 1;
+            @while ($n <= length($file-types)) and not($is-img) {
+                $ext: nth($file-types, $n);
+                @if str-slice($ext, 1, 1) != "." { $ext: ".#{$ext}"; }
+                $is-img: str-index(to-lower-case($bg), to-lower-case($ext));
+                $n: $n + 1;
+            }
+            @if $is-img and (str-slice($bg, 1, 4) != "url(") {
+                $bg: url(#{unquote($bg)});
+                $image: set-nth($image, $i, $bg);
+            }
+        }
+
+        // first
+        $first: nth($breakpoints, 1);
+        $x: map-get($first, x) + 1;
+        $y: map-get($first, y) + 1;
+        @media screen and (min-width: #{$x}px), screen and (min-height: #{$y}px) {
+            background-image: $image;
+        }
+
+        // array values
+        @for $i from 1 to length($breakpoints) {
+            $current: nth($breakpoints, $i);
+            $x: map-get($current, x);
+            $y: map-get($current, y);
+            $next: nth($breakpoints, $i + 1);
+            $nx: map-get($next, x) + 1;
+            $ny: map-get($next, y) + 1;
+            @media screen and (max-width: #{$x}px) and (max-height: #{$y}px) and (min-width: #{$nx}px),
+              screen and (max-width: #{$x}px) and (max-height: #{$y}px) and (min-height: #{$ny}px) {
+                $suffix: "-#{$x}x#{$y}";
+                background-image: file-suffix($image, $suffix, $file-types);
+            }
+        }
+
+        //last
+        $last: nth($breakpoints, -1);
+        $x: map-get($last, x);
+        $y: map-get($last, y);
+        @media screen and (max-width: #{$x}px) and (max-height: #{$y}px) {
+            $suffix: "-#{$x}x#{$y}";
+            background-image: file-suffix($image, $suffix, $file-types);
+        }
+    } @else {
+        background-image: $image;
+    }
+}
+
+@mixin background-image ($image: none, $x: center, $y: center, $lighten: 0, $darken: 0, $blur: null, $responsive: false) {
+
+    @if $blur {
+        @extend .relative, .overflow-h;
+
+        &::after {
+            $blur-offset: -$blur * 2;
+            content: "";
+            position: absolute;
+            top: $blur-offset; left: $blur-offset; right: $blur-offset; bottom: $blur-offset;
+            @include blur($blur);
+            @include background-image($image, $x, $y, $lighten, $darken, $responsive: $responsive);
+            z-index: -1;
+        }
+    } @else if $image != none {
         @if $lighten > 0 {
-            background: linear-gradient(rgba(white, $lighten), rgba(white, $lighten)), $image;
+            $image: (linear-gradient(rgba(white, $lighten), rgba(white, $lighten)), $image);
         } @else if $darken > 0 {
-            background: linear-gradient( rgba(black, $darken), rgba(black, $darken) ), $image;
+            $image: (linear-gradient(rgba(black, $darken), rgba(black, $darken)), $image);
+        }
+        @if $responsive {
+            @include responsive-image($image);
         } @else {
             background-image: $image;
         }
     } @else {
         @if $lighten > 0 {
-            position: relative;
+            @extend .relative;
 
-            &::after {
+            &::before {
                 content: "";
                 position: absolute;
                 top: 0; left: 0; right: 0; bottom: 0;
                 background-color: rgba(255, 255, 255, $lighten);
-                z-index: -1;
+                z-index: 0;
             }
         } @else if $darken > 0 {
-            position: relative;
+            @extend .relative;
 
-            &::after {
+            &::before {
                 content: "";
                 position: absolute;
                 top: 0; left: 0; right: 0; bottom: 0;
-                background-color: rgba(0, 0, 0, $lighten);
-                z-index: -1;
+                background-color: rgba(0, 0, 0, $darken);
+                z-index: 0;
             }
         }
     }
 
-    background-position: $x $y;
-    background-repeat: no-repeat;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+    @if not($blur) {
+        background-position: $x $y;
+        background-repeat: no-repeat;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+}
+
+// This mixin applies the effects its contents when a element
+// with class "hover" (either same element or a parent) is hovered
+@mixin hover($hover-class: "hover") {
+    &.#{$hover-class}:hover, .#{$hover-class}:hover & {
+        @content
+    }
 }
 
 // Partials
