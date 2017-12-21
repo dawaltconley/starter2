@@ -16,7 +16,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "build": "echo $(date) ; gulp"
+    "build": "gulp"
   },
   "repository": {
     "type": "git",
