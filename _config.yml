@@ -23,6 +23,7 @@ contact:
   youtube: "https://www.youtube.com/channel/UCXUKrkDX88zx1bL4Xu8qZYw"
   email: "moretonguesthanteeth@gmail.com"
 permalink: /:title/
+timezone: America/New_York
 
 # Build settings
 
