@@ -4,6 +4,7 @@ var autoprefixer = require("gulp-autoprefixer");
 var babel = require("gulp-babel");
 var concat = require("gulp-concat");
 var uglify = require("gulp-uglify");
+var clean = require("gulp-clean");
 
 function jekyllBuild(env = "development") {
     env = "JEKYLL_ENV=" + env + " ";
@@ -37,4 +38,12 @@ gulp.task("uglify", ["babel"], function () {
         .pipe(gulp.dest("./_site/js"))
 });
 
-gulp.task("default", ["build", "prefix", "babel", "uglify"]);
+gulp.task("clean-js", ["uglify"], function () {
+    return gulp.src([
+            "./_site/js/*",
+            "!./_site/js/all.js"
+        ], { read: false })
+        .pipe(clean())
+});
+
+gulp.task("default", ["build", "prefix", "babel", "uglify", "clean-js"]);
