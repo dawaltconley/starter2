@@ -31,6 +31,7 @@ $fa-icons:              ({% for icon in site.data.icon-types %}
 // Images
 
 $splash-image:          url({{ site.baseurl | append: 'assets/test/temper-tantrum-36-cropped-desktop.jpg' }});
+
 $image-bp:              ({% if jekyll.environment == 'netlify' %}
                             {% for size in site.image_bp %}
                                 ({% for dimension in size %}

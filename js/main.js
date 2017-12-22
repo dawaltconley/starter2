@@ -1,13 +1,15 @@
 ---
 ---
 
-(function() {
+{% unless jekyll.environment == "development" %}
+(function () {
+{% endunless %}
 
-    let page = document.querySelector(".parallax-page");
-    let win = page;
+    var page = document.querySelector(".parallax-page");
+    var win = page;
 
-    if (!page) {
-        page = document.body;
+    if (!page || window.getComputedStyle(page).getPropertyValue("perspective") == "none") {
+        page = getScrollableChild(document.documentElement);
         win = window;
     }
 
@@ -15,57 +17,118 @@
  * General-purpose functions
  */
 
-    const toArray = function (collection) {
+    function toArray(collection) {
         return Array.prototype.slice.call(collection);
-    }
+    };
+
+    function getScrollableChild(element) {
+        var maxDepth = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+        var currentDepth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+
+        if (element.scrollHeight > element.clientHeight) {
+            return element;
+        }
+        for (var i = 0; i < element.children.length && maxDepth > currentDepth; i++) {
+            var child = element.children[i];
+            var childMatch = getScrollableChild(child, maxDepth, currentDepth += currentDepth);
+            if (childMatch) {
+                return childMatch;
+            }
+        }
+        return null;
+    };
+
+    function pushState(hash) {
+        window.history.pushState({ hasFocus: hash}, hash.slice(1), hash);
+    };
 
 /*
  * Scrolling
  */
 
-    const pageScrollBehavior = window.getComputedStyle(page).getPropertyValue("scroll-behavior");
-    const smoothLinks = toArray(document.querySelectorAll('[data-scroll="smooth"]'));
+    var pageScrollBehavior = window.getComputedStyle(page).getPropertyValue("scroll-behavior");
+    var smoothLinks = toArray(document.querySelectorAll("[data-smooth-scroll]"));
 
-    const smoothScrollToTop = function () {
+    function smoothScrollToTop() {
         window.scroll({
             top: 0,
             behavior: "smooth"
         });
     }
 
-    const smoothScrollTo = function (element) {
+    function receivesSmoothScroll(element) {
+        smoothLinks.forEach(function (link) {
+            var linkTarget = document.querySelector(link.hash);
+            if (element === linkTarget) {
+                return true;
+            }
+        });
+        return false;
+    };
+
+    function smoothScrollTo(element) {
         element.scrollIntoView({
             behavior: "smooth"
         });
     }
 
-    const smoothScrollToHref = function (link) {
-        const hash = link.hash;
-        const target = document.querySelector(hash);
-        window.history.pushState({ hasFocus: hash }, hash.slice(1), hash);
+    function smoothScrollToHref(link) {
+        var hash = link.hash;
+        var target = document.querySelector(hash);
+        pushState(hash);
         smoothScrollTo(target);
-    }
+    };
 
 /*
  * Fullscreen
  */
 
-    const fullscreenElements = toArray(document.querySelectorAll('[data-script="force-fullscreen"]'));
+    var fullscreenElements = toArray(document.querySelectorAll("[data-force-fullscreen]"));
 
-    const forceFullscreen = function (element) {
-        const viewHeight = window.innerHeight;
+    function forceFullscreen(element) {
+        var viewHeight = window.innerHeight;
         if (element.clientHeight != viewHeight) {
-            if (element.classList.contains("fullscreen-fixed")) {
+            if (element.classList.contains("screen-height") || element.classList.contains("screen-size")) {
                 element.style.height = viewHeight.toString() + "px";
-            } else if (element.classList.contains("fullscreen")) {
+            } else if (element.classList.contains("screen-height-min") || element.classList.contains("screen-size-min")) {
                 element.style.minHeight = viewHeight.toString() + "px";
             }
         }
+    };
+
+    function forceFullscreenAll() {
+        fullscreenElements.forEach(function (element) {
+            forceFullscreen(element);
+        });
+    };
+
+/*
+ * Object Fit Fallback
+ */
+
+    var objectFitElements = toArray(document.querySelectorAll('[class*="object-fit"]'));
+    var objectFitObjects = [];
+
+    objectFitElements.forEach(function (element) {
+        var newObjectFit = new ObjectFit(element);
+        objectFitObjects.push(newObjectFit);
+    });
+
+    function ObjectFit(element) {
+        this.container = element;
+        this.img = getChildBySelector(element, "img", 1);
     }
 
-    const forceFullscreenAll = function () {
-        fullscreenElements.forEach( function (element) {
-            forceFullscreen(element);
+    ObjectFit.prototype.fallback = function () {
+        if (this.img) {
+            this.container.style.backgroundImage = "url(" + this.img.src + ")";
+            this.img.parentNode.removeChild(this.img);
+        }
+    }
+
+    function objectFitFallback() {
+        objectFitObjects.forEach(function (object) {
+            object.fallback();
         });
     }
 
@@ -73,62 +136,85 @@
  * Event Listeners
  */
 
-    const addSmoothScrollListeners = function () {
-        if (pageScrollBehavior == "smooth") {return false};
-        smoothLinks.forEach( function (link) {
+    var passive = false;
+
+    try {
+        var options = Object.defineProperty({}, "passive", {
+            get: function() {
+                passive = { passive: true };
+            }
+        });
+
+        window.addEventListener("test", null, options);
+    } catch(err) {}
+
+    function addSmoothScrollListeners() {
+        smoothLinks.forEach(function (link) {
             link.addEventListener("click", function (event) {
                 event.preventDefault();
                 smoothScrollToHref(link);
-            }, false);
+            });
         });
-    }
-
-    const addPopStateListener = function () {
-        window.addEventListener("popstate", function () {
+        window.addEventListener("popstate", function (event) {
             if (event.state) {
-                const target = document.querySelector(event.state.hasFocus);
-                smoothScrollTo(target);
+                var target = document.querySelector(event.state.hasFocus);
+                if (receivesSmoothScroll(target)) {
+                    smoothScrollTo(target);
+                }
             } else {
                 smoothScrollToTop();
             }
-        }, { passive: true });
-    }
+        }, passive);
+    };
 
-    const addOrientationChangeListener = function () {
-        let initOrientation = window.innerHeight > window.innerWidth;
+    function addOrientationChangeListener() {
+        var initOrientation = window.innerHeight > window.innerWidth;
         if (fullscreenElements.length > 0) {
             window.addEventListener("resize", function () {
-                const newOrientation = window.innerHeight > window.innerWidth;
+                var newOrientation = window.innerHeight > window.innerWidth;
                 if (newOrientation != initOrientation) {
                     forceFullscreenAll();
                 }
                 initOrientation = newOrientation;
-            });
+            }, passive);
         }
-    }
+    };
 
-    let elementsToHideOnScroll = toArray(document.querySelectorAll('[data-script="hide-on-scroll"]'));
+    var elementsToHideOnScroll = toArray(document.querySelectorAll("[data-hide-on-scroll]"));
 
-    const addPageScrollListener = function () {
+    function addHideOnScrollListener() {
         win.addEventListener("scroll", function hideOnScroll() {
-            const stop = this.removeEventListener.bind(this, "scroll", hideOnScroll, false);
+            var stop = this.removeEventListener.bind(this, "scroll", hideOnScroll, false);
             if (elementsToHideOnScroll.length == 0) {
                 stop();
             } else {
-                elementsToHideOnScroll.forEach( function (element, i) {
+                elementsToHideOnScroll.forEach(function (element, i) {
                     if (element.getBoundingClientRect().bottom < 0) {
                         element.style.display = "none";
                         elementsToHideOnScroll.splice(i, 1);
                     }
                 });
             }
-        }, { passive: true });
+        }, passive);
     }
 
-    addSmoothScrollListeners();
-    addPopStateListener();
-    addPageScrollListener();
-    addOrientationChangeListener();
-    forceFullscreenAll();
+    if (smoothLinks.length > 0 && pageScrollBehavior != "smooth") {
+        addSmoothScrollListeners();
+    }
 
+    if (fullscreenElements.length > 0) {
+        addOrientationChangeListener();
+        forceFullscreenAll();
+    }
+
+    if (objectFitObjects.length > 0 && window.getComputedStyle(objectFitObjects[0].img).getPropertyValue("object-fit") == "") {
+        objectFitFallback();
+    }
+
+    if (elementsToHideOnScroll.length > 0) {
+        addHideOnScrollListener();
+    }
+
+{% unless jekyll.environment == "development" %}
 })();
+{% endunless %}

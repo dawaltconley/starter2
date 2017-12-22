@@ -16,7 +16,7 @@ itemtype: "http://schema.org/MusicGroup"
 
 <div id="splash" class="relative">
 
-  <div class="splash-wrapper padding-m screen-height flex-col flex-center" data-script="force-fullscreen">
+  <div class="splash-wrapper padding-m screen-height flex-col flex-center" data-force-fullscreen>
 
     <h1 class="hidden" itemprop="name">{{ site.title }}</h1>
 
@@ -26,7 +26,7 @@ itemtype: "http://schema.org/MusicGroup"
       {% include all-media-icons.liquid icon_set=site.contact style="o play" list="true" microdata=true %}
     </ul>
 
-    <a href="#music" class="fa fa-chevron-down subtle-icon scroll-arrow" data-scroll="smooth" data-script="hide-on-scroll"></a>
+    <a href="#music" class="fa fa-chevron-down subtle-icon scroll-arrow" data-smooth-scroll data-hide-on-scroll></a>
 
   </div>
 
@@ -34,7 +34,7 @@ itemtype: "http://schema.org/MusicGroup"
 
 <div id="music" class="dark">
 
-  <div class="media-wrapper padding-m screen-height-min flex-col flex-center" data-script="force-fullscreen">
+  <div class="media-wrapper padding-m screen-height-min flex-col flex-center" data-force-fullscreen>
 
     <h2 class="hidden">Music</h2>
 
@@ -56,7 +56,7 @@ itemtype: "http://schema.org/MusicGroup"
     </div>
 
     {% if has_future %}
-      <a href="#shows" class="fa fa-chevron-down subtle-icon scroll-arrow" data-scroll="smooth" data-script="hide-on-scroll"></a>
+      <a href="#shows" class="fa fa-chevron-down subtle-icon scroll-arrow" data-smooth-scroll data-hide-on-scroll></a>
     {% endif %}
 
   </div>
