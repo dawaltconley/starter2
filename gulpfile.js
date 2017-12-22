@@ -31,4 +31,4 @@ gulp.task("uglify", ["babel"], function () {
         .pipe(gulp.dest("./_site/js"))
 });
 
-gulp.task("default", ["build", "babel", "uglify"]);
+gulp.task("default", ["build", "prefix", "babel", "uglify"]);
