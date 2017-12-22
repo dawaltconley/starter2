@@ -1,6 +1,8 @@
-{% if jekyll.environment == 'development' %}
-  <script src="{{ site.baseurl }}/js/rAF.polyfill.js"></script>
-  <script src="{{ site.baseurl }}/js/smoothscroll.polyfill.js"></script>
-  <script src="{{ site.baseurl }}/js/EventListenerOptions.polyfill.js"></script>
+<script>window.noZensmooth = true</script>
+{% if jekyll.environment == 'netlify' %}
+  <script src="{{ site.baseurl }}/js/all.js"></script>
+{% else %}
+  <script src="{{ site.baseurl }}/js/polyfills/scroll-restoration-polyfill.browser.js"></script>
+  <script src="{{ site.baseurl }}/js/lib/zenscroll.min.js"></script>
+  <script src="{{ site.baseurl }}/js/main.js"></script>
 {% endif %}
-<script src="{{ site.baseurl }}/js/main.js"></script>

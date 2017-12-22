@@ -48,35 +48,35 @@
 
     var pageScrollBehavior = window.getComputedStyle(page).getPropertyValue("scroll-behavior");
     var smoothLinks = toArray(document.querySelectorAll("[data-smooth-scroll]"));
+    // make objects
 
-    function smoothScrollToTop() {
-        window.scroll({
-            top: 0,
-            behavior: "smooth"
-        });
-    }
+    zenscroll.setup(500, 0);
 
     function receivesSmoothScroll(element) {
-        smoothLinks.forEach(function (link) {
+        for (var i=0; i < smoothLinks.length; i++) {
+            var link = smoothLinks[i];
             var linkTarget = document.querySelector(link.hash);
             if (element === linkTarget) {
                 return true;
             }
-        });
+        }
         return false;
     };
 
     function smoothScrollTo(element) {
-        element.scrollIntoView({
-            behavior: "smooth"
-        });
-    }
+        var dur = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+        var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+        zenscroll.to(element, dur, offset);
+    };
 
     function smoothScrollToHref(link) {
+        var dur = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+        var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
         var hash = link.hash;
         var target = document.querySelector(hash);
         pushState(hash);
-        smoothScrollTo(target);
+        zenscroll.to(target, dur, offset);
     };
 
 /*
@@ -156,15 +156,16 @@
             });
         });
         window.addEventListener("popstate", function (event) {
+            event.preventDefault();
             if (event.state) {
                 var target = document.querySelector(event.state.hasFocus);
                 if (receivesSmoothScroll(target)) {
                     smoothScrollTo(target);
                 }
             } else {
-                smoothScrollToTop();
+                zenscroll.toY(0);
             }
-        }, passive);
+        });
     };
 
     function addOrientationChangeListener() {

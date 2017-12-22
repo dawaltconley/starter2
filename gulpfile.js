@@ -25,8 +25,14 @@ gulp.task("babel", ["build"], function () {
 });
 
 gulp.task("uglify", ["babel"], function () {
-    return gulp.src(["./_site/js/*.polyfill.js", "./_site/js/main.js"])
-        .pipe(concat("main.js"))
+    return gulp.src([
+            "./_site/js/polyfills/*.js",
+            "./_site/js/lib/*.js",
+            "./_site/js/main.js",
+            "!./_site/**/*.min.js",
+            "!./_site/**/*.map"
+        ])
+        .pipe(concat("all.js"))
         .pipe(uglify())
         .pipe(gulp.dest("./_site/js"))
 });
