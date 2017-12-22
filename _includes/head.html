@@ -36,7 +36,7 @@
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
   <link rel="canonical" href="{{ page_url }}">
 
-  {% if site.google_analytics and jekyll.environment == 'production' %}
+  {% if site.google_analytics and jekyll.environment == 'netlify' %}
     {% include analytics.html %}
   {% endif %}
 </head>

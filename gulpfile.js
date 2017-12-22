@@ -10,7 +10,7 @@ function jekyllBuild(env = "development") {
     child.execSync(env + "jekyll build", { stdio: "inherit" });
 }
 
-gulp.task("build", jekyllBuild.bind(null, "production"));
+gulp.task("build", jekyllBuild.bind(null, "netlify"));
 
 gulp.task("prefix", ["build"], function () {
     return gulp.src("./_site/css/main.css")
