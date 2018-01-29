@@ -61,6 +61,14 @@
   postal: "11206"
   links:
     location: "https://www.google.com/maps/place/Wayward+Social/@40.7070883,-73.9346902,17z/data=!3m1!4b1!4m5!3m4!1s0x89c25c01b63a33c5:0xebaa549e95ab65bb!8m2!3d40.7070883!4d-73.9325015"
+- date:   2018-02-03 23:00:00 -0500
+  venue:  "Wayward Social"
+  street: "35 Ingraham St"
+  city:   "Brooklyn"
+  state:  "NY"
+  postal: "11206"
+  links:
+    facebook: "https://www.facebook.com/events/563259477342466"
 - date:   2018-03-10 20:00:00 -0500
   venue:  "Our Wicked Lady"
   street: "153 Morgan Ave"
