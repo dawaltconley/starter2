@@ -223,6 +223,10 @@
     @include fixed-ratio(16, 9);
 }
 
+.aspect-spaghetti {
+    @include fixed-ratio(5063, 2361);
+}
+
 .contains-3d {
     -webkit-perspective: $perspective;
     perspective: $perspective;

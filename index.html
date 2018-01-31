@@ -68,37 +68,47 @@ itemtype: "http://schema.org/MusicGroup"
 
 {% if has_future %}
 
-  <div id="shows" class="content-wrapper padding-m screen-height-min flex-col flex-justify-center">
+  <div id="shows" class="light screen-height-min flex-col">
 
-    <h2 class="text-center">Upcoming Shows</h2>
+    <div class="content-wrapper padding-m-h padding-l-t half-height-min fill-flex-parent flex-col flex-justify-center">
 
-    <ul class="unlist">
-      {% for show in site.data.shows %}
-        {% assign show_date = show.date | date: '%s' | plus: 0 %}
-        {% assign current_date = 'now' | date: '%s' | plus: 0 %}
-        {% if show_date > current_date %}
-          <li class="show full-width padding-xs-v border-between border-light flex-row flex-align-center" itemprop="event" itemscope itemtype="http://schema.org/Event">
-            <meta itemprop="name" content="Show at {{ show.venue }}">
-            <time class="show-time flex-row" datetime="{{ show.date | date_to_xmlschema }}" itemprop="startDate doorTime">
-              <span class="meta show-date">{{ show.date | date: "%b %-d" }}</span>
-              <span class="meta show-day">{{ show.date | date: "%a" }}</span>
-            </time>
-            <span class="show-location flex-row flex-align-center flex-space-between fill-flex-parent" itemprop="location" itemscope itemtype="http://schema.org/Place">
-              <span class="venue" itemprop="name">{{ show.venue }}</span>
-              <span class="venue-address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-                <span class="hidden" itemprop="streetAddress">{{ show.street }}</span>
-                <span itemprop="addressLocality">{{ show.city }}</span><span class="explicit">,&nbsp;</span
-                ><span class="explicit" itemprop="addressRegion">{{ show.state }}</span>
-                <span class="hidden" itemprop="postalCode">{{ show.postal }}</span>
+      <h2 class="text-center">Upcoming Shows</h2>
+
+      <ul class="unlist">
+        {% for show in site.data.shows %}
+          {% assign show_date = show.date | date: '%s' | plus: 0 %}
+          {% assign current_date = 'now' | date: '%s' | plus: 0 %}
+          {% if show_date > current_date %}
+            <li class="show full-width padding-xs-v border-between border-light flex-fill-parent flex-row flex-align-center" itemprop="event" itemscope itemtype="http://schema.org/Event">
+              <meta itemprop="name" content="Show at {{ show.venue }}">
+              <time class="show-time flex-row" datetime="{{ show.date | date_to_xmlschema }}" itemprop="startDate doorTime">
+                <span class="meta show-date">{{ show.date | date: "%b %-d" }}</span>
+                <span class="meta show-day">{{ show.date | date: "%a" }}</span>
+              </time>
+              <span class="show-location flex-row flex-align-center flex-space-between fill-flex-parent" itemprop="location" itemscope itemtype="http://schema.org/Place">
+                <span class="venue" itemprop="name">{{ show.venue }}</span>
+                <span class="venue-address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+                  <span class="hidden" itemprop="streetAddress">{{ show.street }}</span>
+                  <span itemprop="addressLocality">{{ show.city }}</span><span class="explicit">,&nbsp;</span
+                  ><span class="explicit" itemprop="addressRegion">{{ show.state }}</span>
+                  <span class="hidden" itemprop="postalCode">{{ show.postal }}</span>
+                </span>
               </span>
-            </span>
-            <span class="show-links text-right media-icon-basic media-icon-bloat">
-              {% include all-media-icons.liquid icon_set=show.links style="square" %}
-            </span>
-          </li>
-        {% endif %}
-      {% endfor %}
-    </ul>
+              <span class="show-links text-right media-icon-basic media-icon-bloat">
+                {% include all-media-icons.liquid icon_set=show.links style="square" %}
+              </span>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+
+    </div>
+
+    <div class="half-screen-height-max overflow-h">
+      <div class="aspect-spaghetti">
+        <img src="{{ site.baseurl | append: '/assets/images/spaghetti-floor.jpg' }}" alt="">
+      </div>
+    </div>
 
   </div>
 
