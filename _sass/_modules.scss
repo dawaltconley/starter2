@@ -154,6 +154,10 @@
     }
 }
 
+.splash-background {
+    @include background-image($splash-image, $responsive: true);
+}
+
 /*
  * Icons
  */
