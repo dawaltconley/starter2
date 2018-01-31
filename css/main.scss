@@ -44,6 +44,7 @@ $image-bp:              ({% if jekyll.environment == 'netlify' %}
 
 $sizes: (
     "full":             100%,
+    "p84":              84%,
     "screen":           100vw 100vh,
     "no":               0,
 );
