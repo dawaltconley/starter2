@@ -67,8 +67,32 @@ gulp.task("image-min", ["build"], function (cb) {
     ], cb);
 });
 
+var imageBreakpoints = YAML.safeLoad(fs.readFileSync("_config.yml", "utf8"))["image_bp"];
+
+gulp.task("images", ["image-min"], function () {
+    var src = "./_site/assets/images/*";
+    var dest = "./_site/assets/images";
+    var merged = merge();
+    imageBreakpoints.forEach(function (bp) {
+        var stream = gulp.src(src)
+            .pipe(
+                imageResize({
+                    width: bp.x,
+                    height: bp.y,
+                    cover: false,
+                    upscale: false,
+                    filter: "Catrom",
+                    interlace: true
+                })
+            )
+            .pipe(rename({ suffix: "-" + bp.x + "x" + bp.y }))
+            .pipe(gulp.dest(dest));
+        merged.add(stream);
+    });
+    return merged.isEmpty() ? null : merged;
+});
+
 gulp.task("bg-images", ["image-min"], function () {
-    var imageBreakpoints = YAML.safeLoad(fs.readFileSync("_config.yml", "utf8"))["image_bp"];
     var src = "./_site/assets/backgrounds/*";
     var dest = "./_site/assets/backgrounds";
     var merged = merge();
@@ -91,4 +115,6 @@ gulp.task("bg-images", ["image-min"], function () {
     return merged.isEmpty() ? null : merged;
 });
 
-gulp.task("default", ["build", "css", "js", "clean-js", "image-min", "bg-images"]);
+gulp.task("responsive-images", ["images", "bg-images"]);
+
+gulp.task("default", ["build", "css", "js", "clean-js", "image-min", "responsive-images"]);

@@ -16,8 +16,15 @@ itemtype: "http://schema.org/MusicGroup"
 
 <div id="splash" class="relative dark splash-background">
 
-  <img class="absolute p84-height bottom-left translate-x-left-p10 dylan-mq" src="{{ site.baseurl }}/assets/images/bucket-dylan.png" alt"">
-  <img class="absolute p84-height bottom-right translate-x-right-p10 rob-mq" src="{{ site.baseurl }}/assets/images/bucket-rob.png" alt"">
+  {% capture dylan_img %}
+    <img class="absolute p84-height bottom-left translate-x-left-p10 dylan-mq" src="{{ site.baseurl }}/assets/images/bucket-dylan.png" alt"">
+  {% endcapture %}
+  {% capture rob_img %}
+    <img class="absolute p84-height bottom-right translate-x-right-p10 rob-mq" src="{{ site.baseurl }}/assets/images/bucket-rob.png" alt"">
+  {% endcapture %}
+
+  {% include responsive-picture.html img=dylan_img %}
+  {% include responsive-picture.html img=rob_img %}
 
   <div class="relative splash-wrapper padding-m screen-height flex-col flex-center" data-force-fullscreen>
 
@@ -105,9 +112,11 @@ itemtype: "http://schema.org/MusicGroup"
     </div>
 
     <div class="half-screen-height-max overflow-h">
-      <div class="aspect-spaghetti">
-        <img src="{{ site.baseurl | append: '/assets/images/spaghetti-floor.jpg' }}" alt="">
-      </div>
+      <!-- <div class="contact&#45;background aspect&#45;spaghetti"></div> -->
+      {% capture contact_background %}
+        <img class="full-width auto-height" src="{{ site.baseurl | append: '/assets/images/spaghetti-floor.jpg' }}" alt="">
+      {% endcapture %}
+      {% include responsive-picture.html img=contact_background %}
     </div>
 
   </div>

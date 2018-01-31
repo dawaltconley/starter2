@@ -1,0 +1,5 @@
+{% capture blank %}
+    {% assign file_name = include.file_name | split: '.' %}
+    {% assign file_suffixed = file_name[0] | append: include.suffix %}
+    {% assign file_name = file_suffixed | append: '.' | append: file_name[1] %}
+{% endcapture %}{{ file_name }}
