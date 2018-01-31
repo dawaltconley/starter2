@@ -380,7 +380,7 @@ $side: null;
     }
 }
 
-@mixin background-image ($image: none, $x: center, $y: center, $lighten: 0, $darken: 0, $blur: null, $responsive: false) {
+@mixin background-image ($image: none, $x: center, $y: center, $size: cover, $repeat: no-repeat, $lighten: 0, $darken: 0, $blur: null, $responsive: false) {
 
     @if $blur {
         @extend .relative, .overflow-h;
@@ -431,11 +431,8 @@ $side: null;
 
     @if not($blur) {
         background-position: $x $y;
-        background-repeat: no-repeat;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
+        background-size: $size;
+        background-repeat: $repeat;
     }
 }
 
