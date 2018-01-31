@@ -63,13 +63,6 @@
         return false;
     };
 
-    function smoothScrollTo(element) {
-        var dur = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-        var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-
-        zenscroll.to(element, dur, offset);
-    };
-
     function smoothScrollToHref(link) {
         var dur = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
         var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
@@ -160,7 +153,7 @@
             if (event.state) {
                 var target = document.querySelector(event.state.hasFocus);
                 if (receivesSmoothScroll(target)) {
-                    smoothScrollTo(target);
+                    zenscroll.to(target);
                 }
             } else {
                 zenscroll.toY(0);
