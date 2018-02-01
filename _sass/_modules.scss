@@ -393,22 +393,22 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
     transform: translateZ(0);
 }
 
-.translate-x-left {
+.translate-left {
     -webkit-transform: translateX(-100%);
     transform: translateX(-100%);
 }
 
-.translate-x-left-p10 {
+.translate-left-p10 {
     -webkit-transform: translateX(-10%);
     transform: translateX(-10%);
 }
 
-.translate-x-right {
+.translate-right {
     -webkit-transform: translateX(100%);
     transform: translateX(100%);
 }
 
-.translate-x-right-p10 {
+.translate-right-p10 {
     -webkit-transform: translateX(10%);
     transform: translateX(10%);
 }
