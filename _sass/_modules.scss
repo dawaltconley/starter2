@@ -398,6 +398,11 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
     transform: translateX(-100%);
 }
 
+.translate-left-half {
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
 .translate-left-p10 {
     -webkit-transform: translateX(-10%);
     transform: translateX(-10%);
@@ -406,6 +411,11 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
 .translate-right {
     -webkit-transform: translateX(100%);
     transform: translateX(100%);
+}
+
+.translate-right-half {
+    -webkit-transform: translateX(50%);
+    transform: translateX(50%);
 }
 
 .translate-right-p10 {
