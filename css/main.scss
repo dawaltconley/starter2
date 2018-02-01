@@ -81,7 +81,7 @@ $borders: (
 );
 
 $themes: (
-    main: (
+    light: (
         background-color: white,
         text-color: black,
         // font-smoothing: normal
@@ -90,10 +90,14 @@ $themes: (
         background-color: black,
         text-color: white,
         // font-smoothing: dark
+    ),
+    fixed-bg: (
+        background-color: transparent,
+        text-color: white,
     )
 );
 
-$base-theme: main;
+$base-theme: light;
 
 $trans-default: .3s;
 
