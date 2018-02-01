@@ -241,6 +241,17 @@
     @include fixed-ratio(5063, 2361);
 }
 
+.bandcamp-ratio {
+    @extend %fixed-ratio;
+    width: 100%;
+    max-width: 700px;
+    padding-top: calc(100% + 118px);
+
+    @media screen and (max-width: 300px + ($spacing-unit * 2) - 1px) {
+        padding-top: calc(100% + 143px);
+    }
+}
+
 .contains-3d {
     -webkit-perspective: $perspective;
     perspective: $perspective;
