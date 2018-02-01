@@ -14,7 +14,9 @@ itemtype: "http://schema.org/MusicGroup"
 
 <meta itemprop="url" content="{{ site.url | append: site.baseurl }}">
 
-<div id="splash" class="relative dark splash-background">
+<div class="splash-background fill-window z-neg-1"></div>
+
+<div id="splash" class="relative fixed-bg">
 
   {% capture dylan_img %}
     <img class="absolute p84-height bottom-left translate-left-p10 dylan-mq" src="{{ site.baseurl }}/assets/images/bucket-dylan.png" alt"">
@@ -36,23 +38,29 @@ itemtype: "http://schema.org/MusicGroup"
       {% include all-media-icons.liquid icon_set=site.contact style="o play" list="true" microdata=true %}
     </ul>
 
-    <a href="#music" class="fa fa-chevron-down subtle-icon scroll-arrow" data-smooth-scroll data-hide-on-scroll></a>
+    <a href="#temper-tantrum" class="fa fa-chevron-down subtle-icon scroll-arrow" data-smooth-scroll data-hide-on-scroll></a>
 
   </div>
 
 </div>
 
-<div id="temper-tantrum" class="light content-wrapper v-rhythm padding-m text-center">
+<div id="temper-tantrum" class="relative screen-height-min fixed-bg">
 
-  <h2 class="avenir-hand font-size-triple">New Album: Temper Tantrum</h2>
+  <img class="absolute p84-height bottom left-quarter translate-left-half" src="{{ site.baseurl }}/assets/images/bucket-off.png" alt="">
 
-  <div class="bandcamp-ratio margin-auto-h">
-    <iframe src="https://bandcamp.com/EmbeddedPlayer/album=2871722682/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless>
-      <a href="http://moretongues.bandcamp.com/album/temper-tantrum">Temper Tantrum by More Tongues Than Teeth</a>
-    </iframe>
+  <div class="content-wrapper padding-m text-center avenir-hand shadow">
+
+    <h2 class="margin-m-b font-size-triple">New Album: Temper Tantrum</h2>
+
+    <div class="margin-half-l v-rhythm">
+      <iframe class="full-width px373-height" src="https://bandcamp.com/EmbeddedPlayer/album=2871722682/size=large/bgcol=ffffff/linkcol=0687f5/artwork=small/transparent=true/" seamless>
+        <a href="http://moretongues.bandcamp.com/album/temper-tantrum">Temper Tantrum by More Tongues Than Teeth</a>
+      </iframe>
+
+      <p class="font-size-double">Now available on iTunes and Spotify.</p>
+    </div>
+
   </div>
-
-  <p class="avenir-hand font-size-double">Now available on iTunes and Spotify.</p>
 
 </div>
 
