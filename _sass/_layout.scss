@@ -88,6 +88,10 @@
     position: absolute;
 }
 
+.fixed {
+    position: fixed;
+}
+
 .top-left {
     @extend .absolute;
     top: 0; left: 0;
@@ -198,6 +202,12 @@
 
 .overflow-h {
     overflow: hidden;
+}
+
+.fill-window {
+    @extend .full-size !optional;
+    position: fixed;
+    top: 0; left: 0;
 }
 
 .fill-parent {
