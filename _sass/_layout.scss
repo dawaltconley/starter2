@@ -92,24 +92,40 @@
     position: fixed;
 }
 
+.top {
+    top: 0;
+}
+
+.left {
+    left: 0;
+}
+
+.right {
+    right: 0;
+}
+
+.bottom {
+    bottom: 0;
+}
+
 .top-left {
-    @extend .absolute;
-    top: 0; left: 0;
+    @extend .absolute, .top, .left;
 }
 
 .top-right {
-    @extend .absolute;
-    top: 0; right: 0;
+    @extend .absolute, .top, .right;
 }
 
 .bottom-left {
-    @extend .absolute;
-    bottom: 0; left: 0;
+    @extend .absolute, .bottom, .left;
 }
 
 .bottom-right {
-    @extend .absolute;
-    bottom: 0; right: 0;
+    @extend .absolute, .bottom, .right;
+}
+
+.left-quarter {
+    left: 25%;
 }
 
 @for $i from -1 through 9 {
