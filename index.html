@@ -46,7 +46,11 @@ itemtype: "http://schema.org/MusicGroup"
 
 <div id="temper-tantrum" class="relative screen-height-min fixed-bg">
 
-  <img class="absolute p84-height bottom left-quarter translate-left-half" src="{{ site.baseurl }}/assets/images/bucket-off.png" alt="">
+  {% capture cover_art %}
+    <img class="absolute p84-height bottom left-quarter translate-left-half" src="{{ site.baseurl }}/assets/images/bucket-off.png" alt="">
+  {% endcapture %}
+
+  {% include responsive-picture.html img=cover_art %}
 
   <div class="content-wrapper padding-m text-center avenir-hand shadow">
 
