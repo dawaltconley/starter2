@@ -1,6 +1,13 @@
 ---
 ---
 
+// Custom Fonts
+
+@font-face {
+    font-family: Avenir-Condensed-Hand;
+    src: url({{ site.baseurl }}/assets/AvenirCondensedHand.ttf);
+}
+
 // Basic Variables
 
 $spacing-unit:          30px;
