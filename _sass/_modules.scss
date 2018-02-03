@@ -178,9 +178,7 @@
 
 @media screen and (max-height: $bp-mobile) and (min-width: 450px) {
     [data-force-fullscreen].screen-height .scroll-arrow {
-        position: absolute;
-        bottom: $spacing-unit;
-        right: $spacing-unit;
+        display: none;
     }
 }
 
