@@ -51,10 +51,6 @@ p, blockquote, pre,
 ul, ol, dl, figure,
 %vertical-rhythm {
     margin-bottom: $spacing-unit;
-
-    &:last-child {
-        margin-bottom: 0;
-    }
 }
 
 /**

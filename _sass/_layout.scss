@@ -147,7 +147,7 @@
     float: right;
 }
 
-.v-rhythm > * {
+.v-rhythm > *:not(:last-child) {
     @extend %vertical-rhythm;
 }
 
