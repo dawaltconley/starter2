@@ -48,3 +48,7 @@
 - type: spotify
   color: '#1db954'
   fa-default: 'fab fa-spotify'
+- type: apple_music
+  color: 'inherit'
+  fa-default: 'fab fa-itunes-note'
+  fa-square: 'fab fa-itunes'
