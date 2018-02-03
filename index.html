@@ -30,12 +30,9 @@ itemtype: "http://schema.org/MusicGroup"
 
   <div class="relative splash-wrapper padding-m screen-height flex-col flex-center" data-force-fullscreen>
 
-    <meta itemprop="name" content="{{ site.title }}">
+    <h1 class="hidden" itemprop="name">{{ site.title }}</h1>
     <meta itemprop="logo" content="{{ site.logo.png | prepend: site.baseurl }}">
-
-    <h1 class="full-width margin-auto-t margin-m-b aspect-logo mq-logo">
-      {% include logo.svg %}
-    </h1>
+    <img class="margin-auto-t margin-m-b mq-logo" itemprop="logo" src="{{ site.logo.svg | prepend: site.baseurl }}" alt="{{ site.title }}">
 
     <ul id="social-media" class="margin-auto-b full-width flex-row flex-center media-icon-basic media-icon-list">
       {% include all-media-icons.liquid icon_set=site.contact style="o play" list="true" microdata=true %}
