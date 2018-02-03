@@ -195,19 +195,19 @@ $side: null;
         .theme-link {
             @if $light-theme {
                 &:visited {
-                    color: darken($brand-color, 15%);
+                    color: lighten($text-color, 25%);
                 }
 
                 &:hover {
-                    color: darken($brand-color, 10%);
+                    color: lighten($text-color, 15%);
                 }
             } @else {
                 &:visited {
-                    color: lighten($brand-color, 15%);
+                    color: darken($text-color, 25%);
                 }
 
                 &:hover {
-                    color: lighten($brand-color, 10%);
+                    color: darken($text-color, 15%);
                 }
             }
         }
