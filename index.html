@@ -44,69 +44,73 @@ itemtype: "http://schema.org/MusicGroup"
 
 </div>
 
-<div id="temper-tantrum" class="light small-screen-height px350-height-min flex-col title-mq">
-  <div class="content-wrapper padding-m margin-auto">
-    <h2 class="font-size-triple text-center">New Album: Temper Tantrum</h2>
+<span itemprop="album" itemscope itemtype="http://schema.org/MusicAlbum">
+
+  <div id="temper-tantrum" class="light small-screen-height px350-height-min flex-col title-mq">
+    <div class="content-wrapper padding-m margin-auto">
+      <h2 class="font-size-triple text-center" itemprop="name">Temper Tantrum</h2>
+    </div>
   </div>
-</div>
 
-<div class="relative fixed-bg overflow-h" data-rob-container>
+  <div class="relative fixed-bg overflow-h" data-rob-container>
 
-  {% capture cover_art %}
-    <img id="rob-2" class="absolute person-height container-84-height-min bottom left-quarter z-neg-1 translate-left-65 mq-rob-2" src="{{ site.baseurl }}/assets/images/bucket-off.png" alt="">
-  {% endcapture %}
+    {% capture cover_art %}
+      <img id="rob-2" class="absolute person-height container-84-height-min bottom left-quarter z-neg-1 translate-left-65 mq-rob-2" src="{{ site.baseurl }}/assets/images/bucket-off.png" alt="">
+    {% endcapture %}
 
-  {% include responsive-picture.html img=cover_art %}
+    {% include responsive-picture.html img=cover_art %}
 
-  <div class="content-wrapper padding-m-h padding-l-v text-center">
+    <div class="content-wrapper padding-m-h padding-l-v text-center">
 
-    <div class="margin-half-l v-rhythm mq-temper-tantrum">
-      <iframe class="full-width px373-height" src="https://bandcamp.com/EmbeddedPlayer/album=2871722682/size=large/bgcol=ffffff/linkcol=0687f5/artwork=small/transparent=true/" seamless>
-        <a href="http://moretongues.bandcamp.com/album/temper-tantrum">Temper Tantrum by More Tongues Than Teeth</a>
-      </iframe>
+      <div class="margin-half-l v-rhythm mq-temper-tantrum">
+        <iframe class="full-width px373-height" src="https://bandcamp.com/EmbeddedPlayer/album=2871722682/size=large/bgcol=ffffff/linkcol=0687f5/artwork=small/transparent=true/" seamless itemprop="audio">
+          <a href="http://moretongues.bandcamp.com/album/temper-tantrum">Temper Tantrum by More Tongues Than Teeth</a>
+        </iframe>
 
-      <p class="font-size-double">Now available everywhere.</p>
+        <p class="font-size-double">New <span itemprop="albumReleaseType">album</span>, available everywhere.</p>
 
-      <p>
+        <p>
         <a href="https://geo.itunes.apple.com/us/album/temper-tantrum/1339448765?mt=1&app=music&itscg=30200&itsct=afftoolset_1&ls=1" style="display:inline-block;overflow:hidden;background:url(https://tools.applemusic.com/embed/v1/app-icon.svg?hex=FFFFFF) no-repeat;width:40px;height:40px;" target="_blank"></a>
         <a href="https://open.spotify.com/album/2atIKJg8Z1BrjYpL4Wk56a" target="_blank">
           <i class="fa fa-spotify"></i>
         </a>
-      </p>
+        </p>
+      </div>
+
     </div>
 
   </div>
 
-</div>
+  <div class="dark">
 
-<div class="dark">
+    <div class="media-wrapper padding-m flex-col flex-center">
 
-  <div class="media-wrapper padding-m flex-col flex-center">
+      <div class="margin-auto-v fill-flex-parent flex-col flex-space-around media-columns" itemprop="track" itemscope itemtype="http://schema.org/MusicRecording">
 
-    <div class="margin-auto-v fill-flex-parent flex-col flex-space-around media-columns" itemprop="track" itemscope itemtype="http://schema.org/MusicRecording">
-
-      <div>
-        {% capture machine_img %}
-          <h2 itemprop="name">
-            <img itemprop="image" src="{{ site.baseurl | append: '/assets/images/machine.png' }}" alt="I Wanna Be A Machine">
-          </h2>
-        {% endcapture %}
-        {% include responsive-picture.html img=machine_img %}
-      </div>
-
-      <div itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
-        <meta itemprop="name" content="I Wanna Be A Machine">
-        <meta itemprop="thumbnailUrl" content="https://i.ytimg.com/vi_webp/4Ihh8SwPg80/maxresdefault.webp">
-        <div class="aspect-16-9">
-          <iframe itemprop="url" src="https://www.youtube.com/embed/4Ihh8SwPg80" allowfullscreen></iframe>
+        <div>
+          {% capture machine_img %}
+            <h2 itemprop="name">
+              <img itemprop="image" src="{{ site.baseurl | append: '/assets/images/machine.png' }}" alt="I Wanna Be A Machine">
+            </h2>
+          {% endcapture %}
+          {% include responsive-picture.html img=machine_img %}
         </div>
+
+        <div itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
+          <meta itemprop="name" content="I Wanna Be A Machine">
+          <meta itemprop="thumbnailUrl" content="https://i.ytimg.com/vi_webp/4Ihh8SwPg80/maxresdefault.webp">
+          <div class="aspect-16-9">
+            <iframe itemprop="url" src="https://www.youtube.com/embed/4Ihh8SwPg80" allowfullscreen></iframe>
+          </div>
+        </div>
+
       </div>
 
     </div>
 
   </div>
 
-</div>
+</span>
 
 {% if has_future %}
 
