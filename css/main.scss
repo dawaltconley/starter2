@@ -182,7 +182,6 @@ $side: null;
         background-color: $background-color;
         color: $text-color;
         border-color: $text-color;
-        fill: $text-color;
 
         @if $light-theme {
             -webkit-font-smoothing: subpixel-antialiased;
