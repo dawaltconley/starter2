@@ -582,10 +582,11 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
     }
 }
 
-.mq-rob-2 {
-    $temper-tantrum-content: 749px;
-    @media screen and (min-height: (100vh / map-get($sizes, "person")) * ($temper-tantrum-content - map-get($paddings, "l"))) {
-        top: map-get($paddings, "l");
-        bottom: auto;
-    }
+/*
+ * Javascript
+ */
+
+.js-rob-resize {
+    top: map-get($paddings, "l");
+    bottom: auto;
 }
