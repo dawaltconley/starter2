@@ -83,14 +83,13 @@ itemtype: "http://schema.org/MusicGroup"
 
   <div class="media-wrapper padding-m flex-col flex-center">
 
-    <h2 class="hidden">Music</h2>
-
     <div class="margin-auto-v fill-flex-parent flex-col flex-space-around media-columns" itemprop="track" itemscope itemtype="http://schema.org/MusicRecording">
 
       <div>
-        <meta itemprop="name" content="I Wanna Be A Machine">
         {% capture machine_img %}
-          <img itemprop="image" src="{{ site.baseurl | append: '/assets/images/machine.png' }}" alt="I Wanna Be A Machine">
+          <h2 itemprop="name">
+            <img itemprop="image" src="{{ site.baseurl | append: '/assets/images/machine.png' }}" alt="I Wanna Be A Machine">
+          </h2>
         {% endcapture %}
         {% include responsive-picture.html img=machine_img %}
       </div>
