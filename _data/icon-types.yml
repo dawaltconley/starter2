@@ -1,60 +1,50 @@
 - type: email
   color: '#d14836'
-  fa-icon: 'envelope'
-  fa-styles:
-    - o
-    - square
+  fa-default: 'far fa-envelope'
+  fa-square: 'fas fa-envelope-square'
 - type: phone
   color: '#45a145'
-  fa-icon: 'phone'
-  fa-styles:
-    - square
+  fa-default: 'fas fa-phone'
+  fa-square: 'fas fa-phone-square'
 - type: location
   color: '#208000'
-  fa-icon: 'map-marker'
-  fa-styles:
+  fa-default: 'fas fa-map-marker-alt'
 - type: google-plus
   color: '#dd4b39'
-  fa-icon: 'google-plus'
-  fa-styles:
-    - circle
-    - official
-    - square
+  fa-default: 'fab fa-google-plus'
+  fa-square: 'fab fa-google-plus-square'
+  fa-simple: 'fab fa-google-plus-g'
 - type: facebook
   color: '#3b5998'
-  fa-icon: 'facebook'
-  fa-styles:
-    - f
-    - official
-    - square
+  fa-default: 'fab fa-facebook'
+  fa-square: 'fab fa-facebook-square'
+  fa-simple: 'fab fa-facebook-f'
 - type: twitter
   color: '#1da1f2'
-  fa-icon: 'twitter'
+  fa-default: 'fab fa-twitter'
+  fa-square: 'fab fa-twitter-square'
 - type: youtube
   color: '#cd201f'
-  fa-icon: 'youtube'
-  fa-styles:
-    - play
-    - square
+  fa-default: 'fab fa-youtube'
+  fa-square: 'fab fa-youtube-square'
 - type: linkedin
   color: '#0077b5'
-  fa-icon: 'linkedin'
-  fa-styles:
-    - square
+  fa-default: 'fab fa-linkedin'
+  fa-simple: 'fab fa-linkedin-in'
 - type: vimeo
   color: '#1ab7ea'
-  fa-icon: 'vimeo'
-  fa-styles:
-    - square
+  fa-default: 'fab fa-vimeo'
+  fa-square: 'fab fa-vimeo-square'
+  fa-simple: 'fab fa-vimeo-v'
 - type: instagram
   color: '#c13584'
-  fa-icon: 'instagram'
-  fa-styles:
+  fa-default: 'fab fa-instagram'
 - type: bandcamp
   color: '#629aa9'
-  fa-icon: 'bandcamp'
-  fa-styles:
+  fa-default: 'fab fa-bandcamp'
 - type: soundcloud
   color: '#ff8800'
-  fa-icon: 'soundcloud'
-  fa-styles:
+  fa-default: 'fab fa-soundcloud'
+- type: spotify
+  color: '#1db954'
+  fa-default: 'fab fa-spotify'
