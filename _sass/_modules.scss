@@ -408,6 +408,10 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
     transform: translateX(-10%);
 }
 
+.translate-left-65 {
+    transform: translateX(-65%);
+}
+
 .translate-right {
     -webkit-transform: translateX(100%);
     transform: translateX(100%);
@@ -575,5 +579,13 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
 
     .mq-temper-tantrum {
         margin-left: 0;
+    }
+}
+
+.mq-bucket-off {
+    $temper-tantrum-content: 749px;
+    @media screen and (min-height: (100vh / map-get($sizes, "person")) * ($temper-tantrum-content - map-get($paddings, "l"))) {
+        top: map-get($paddings, "l");
+        bottom: auto;
     }
 }

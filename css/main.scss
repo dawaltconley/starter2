@@ -52,12 +52,13 @@ $image-bp:              ({% if jekyll.environment == 'netlify' %}
 $sizes: (
     "full":             100%,
     "half":             50%,
-    "p84":              84%,
+    "container-84":     84%,
     "px373":            373px,
     "px350":            350px,
     "screen":           100vw 100vh,
     "half-screen":      50vw 50vh,
     "small-screen":     30vw 30vh,
+    "person":           84vh,
     "no":               0,
     "auto":             auto,
 );
