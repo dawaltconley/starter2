@@ -82,7 +82,7 @@ gulp.task("images", ["image-min"], function () {
                     cover: false,
                     upscale: false,
                     filter: "Catrom",
-                    interlace: true
+                    interlace: false
                 })
             )
             .pipe(rename({ suffix: "-" + bp.x + "x" + bp.y }))
