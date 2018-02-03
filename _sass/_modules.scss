@@ -572,7 +572,7 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
 }
 
 @media screen and (max-width: $bp-laptop) {
-    .mq-bucket-off {
+    .mq-rob-2 {
         left: 100%;
         transform: translateX(-65%);
     }
@@ -582,7 +582,7 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
     }
 }
 
-.mq-bucket-off {
+.mq-rob-2 {
     $temper-tantrum-content: 749px;
     @media screen and (min-height: (100vh / map-get($sizes, "person")) * ($temper-tantrum-content - map-get($paddings, "l"))) {
         top: map-get($paddings, "l");
