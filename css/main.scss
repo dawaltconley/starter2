@@ -58,7 +58,7 @@ $sizes: (
     "screen":           100vw 100vh,
     "half-screen":      50vw 50vh,
     "small-screen":     30vw 30vh,
-    "person":           84vh,
+    "person":           {{ site.person_height }}vh,
     "no":               0,
     "auto":             auto,
 );

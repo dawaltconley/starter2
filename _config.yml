@@ -25,6 +25,8 @@ contact:
 permalink: /:title/
 timezone: America/New_York
 
+person_height: 84
+
 image_bp:
   - x: 2880
     y: 1800
