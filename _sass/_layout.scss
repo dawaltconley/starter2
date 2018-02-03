@@ -253,6 +253,10 @@
     @include fixed-ratio(16, 9);
 }
 
+.aspect-logo {
+    @include fixed-ratio(1714.69, 1313.48);
+}
+
 .aspect-spaghetti {
     @include fixed-ratio(5063, 2361);
 }

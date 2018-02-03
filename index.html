@@ -30,8 +30,8 @@ itemtype: "http://schema.org/MusicGroup"
 
   <div class="relative splash-wrapper padding-m screen-height flex-col flex-center" data-force-fullscreen>
 
-    <h1 class="full-width margin-auto-t margin-m-b mq-logo" itemprop="name">
-      <img itemprop="logo" src="{{ site.logo.svg | prepend: site.baseurl }}" alt="{{ site.title }}">
+    <h1 class="full-width margin-auto-t margin-m-b aspect-logo mq-logo">
+      {% include logo.svg %}
     </h1>
 
     <ul id="social-media" class="margin-auto-b full-width flex-row flex-center media-icon-basic media-icon-list">
