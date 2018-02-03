@@ -178,7 +178,7 @@
 }
 
 .content-wrapper {
-    @include wrapper($bp-laptop $bp-mobile);
+    @include wrapper(map-values($bp));
 }
 
 .text-wrapper {
