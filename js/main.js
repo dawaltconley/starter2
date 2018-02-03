@@ -38,10 +38,6 @@
         return null;
     };
 
-    function pushState(hash) {
-        window.history.pushState({ hasFocus: hash}, hash.slice(1), hash);
-    };
-
 /*
  * Scrolling
  */
@@ -68,7 +64,6 @@
         var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
         var hash = link.hash;
         var target = document.querySelector(hash);
-        pushState(hash);
         zenscroll.to(target, dur, offset);
     };
 
@@ -147,17 +142,6 @@
                 event.preventDefault();
                 smoothScrollToHref(link);
             });
-        });
-        window.addEventListener("popstate", function (event) {
-            event.preventDefault();
-            if (event.state) {
-                var target = document.querySelector(event.state.hasFocus);
-                if (receivesSmoothScroll(target)) {
-                    zenscroll.to(target);
-                }
-            } else {
-                zenscroll.toY(0);
-            }
         });
     };
 
