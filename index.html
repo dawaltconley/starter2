@@ -30,6 +30,9 @@ itemtype: "http://schema.org/MusicGroup"
 
   <div class="relative splash-wrapper padding-m screen-height flex-col flex-center" data-force-fullscreen>
 
+    <meta itemprop="name" content="{{ site.title }}">
+    <meta itemprop="logo" content="{{ site.logo.png | prepend: site.baseurl }}">
+
     <h1 class="full-width margin-auto-t margin-m-b aspect-logo mq-logo">
       {% include logo.svg %}
     </h1>
@@ -88,16 +91,17 @@ itemtype: "http://schema.org/MusicGroup"
       <div class="margin-auto-v fill-flex-parent flex-col flex-space-around media-columns" itemprop="track" itemscope itemtype="http://schema.org/MusicRecording">
 
         <div>
-          {% capture machine_img %}
-            <h2 itemprop="name">
-              <img itemprop="image" src="{{ site.baseurl | append: '/assets/images/machine.png' }}" alt="I Wanna Be A Machine">
+            <meta itemprop="name" content="I Wanna Be A Machine">
+            <h2>
+              {% capture machine_img %}
+                  <img itemprop="image" src="{{ site.baseurl | append: '/assets/images/machine.png' }}" alt="I Wanna Be A Machine">
+              {% endcapture %}
+              {% include responsive-picture.html img=machine_img %}
             </h2>
-          {% endcapture %}
-          {% include responsive-picture.html img=machine_img %}
         </div>
 
         <div itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
-          <meta itemprop="name" content="I Wanna Be A Machine">
+          <meta itemprop="name" content="I Wanna Be A Machine Music Video">
           <meta itemprop="thumbnailUrl" content="https://i.ytimg.com/vi_webp/4Ihh8SwPg80/maxresdefault.webp">
           <div class="aspect-16-9">
             <iframe itemprop="url" src="https://www.youtube.com/embed/4Ihh8SwPg80" allowfullscreen></iframe>
