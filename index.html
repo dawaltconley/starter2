@@ -16,7 +16,7 @@ itemtype: "http://schema.org/MusicGroup"
 
 <div class="splash-background fill-window z-neg-1"></div>
 
-<div id="splash" class="relative fixed-bg">
+<div id="splash" class="relative fixed-bg overflow-h">
 
   {% capture dylan_img %}
     <img id="dylan" class="absolute person-height bottom-left translate-left-10 dylan-mq" src="{{ site.baseurl }}/assets/images/bucket-dylan.png" alt"">
@@ -32,7 +32,7 @@ itemtype: "http://schema.org/MusicGroup"
 
     <h1 class="hidden" itemprop="name">{{ site.title }}</h1>
 
-    <img class="margin-auto-t margin-m-b" itemprop="logo" src="{{ site.logo.svg | prepend: site.baseurl }}" alt="{{ site.title }}">
+    <img class="margin-auto-t margin-m-b mq-logo" itemprop="logo" src="{{ site.logo.svg | prepend: site.baseurl }}" alt="{{ site.title }}">
 
     <ul id="social-media" class="margin-auto-b full-width flex-row flex-center media-icon-basic media-icon-list">
       {% include all-media-icons.liquid icon_set=site.contact style="o play" list="true" microdata=true %}

@@ -544,10 +544,6 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
         -webkit-transform: translateX(-40%);
         transform: translateX(-40%);
     }
-
-    @media screen and (max-aspect-ratio: 756/675) {
-        display: none;
-    }
 }
 
 .rob-mq {
@@ -565,9 +561,27 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
         -webkit-transform: translateX(40%);
         transform: translateX(40%);
     }
+}
 
-    @media screen and (max-aspect-ratio: 756/675) {
-        display: none;
+@media screen and (max-aspect-ratio: 756/675) and (max-width: 550px) {
+    .mq-logo {
+        margin-top: 30px;
+        // margin-top: 9vw;
+    }
+}
+
+@media screen and (max-aspect-ratio: 756/675) {
+    .dylan-mq, .rob-mq {
+        top: 59%;
+        bottom: auto;
+    }
+
+    .dylan-mq {
+        transform: translateX(-48%);
+    }
+
+    .rob-mq {
+        transform: translateX(48%);
     }
 }
 
