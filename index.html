@@ -53,14 +53,14 @@ itemtype: "http://schema.org/MusicGroup"
 <div id="temper-tantrum" class="relative screen-height-min fixed-bg">
 
   {% capture cover_art %}
-    <img class="absolute p84-height bottom left-quarter translate-left-half" src="{{ site.baseurl }}/assets/images/bucket-off.png" alt="">
+    <img class="absolute p84-height bottom left-quarter z-neg-1 translate-left-half mq-bucket-off" src="{{ site.baseurl }}/assets/images/bucket-off.png" alt="">
   {% endcapture %}
 
   {% include responsive-picture.html img=cover_art %}
 
   <div class="content-wrapper padding-m text-center avenir-hand shadow">
 
-    <div class="margin-half-l v-rhythm">
+    <div class="margin-half-l v-rhythm mq-temper-tantrum">
       <iframe class="full-width px373-height" src="https://bandcamp.com/EmbeddedPlayer/album=2871722682/size=large/bgcol=ffffff/linkcol=0687f5/artwork=small/transparent=true/" seamless>
         <a href="http://moretongues.bandcamp.com/album/temper-tantrum">Temper Tantrum by More Tongues Than Teeth</a>
       </iframe>

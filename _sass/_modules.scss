@@ -566,3 +566,14 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
         display: none;
     }
 }
+
+@media screen and (max-width: $bp-laptop) {
+    .mq-bucket-off {
+        left: 100%;
+        transform: translateX(-65%);
+    }
+
+    .mq-temper-tantrum {
+        margin-left: 0;
+    }
+}
