@@ -171,6 +171,10 @@
  * Icons
  */
 
+.icon-size {
+    font-size: $base-icon-size;
+}
+
 .scroll-arrow {
     font-size: 36px;
     padding: 4px;
@@ -574,23 +578,21 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
 }
 
 .mq-icon-size {
-    $base-icon-size: 2.25rem;
     $bp-small: 27rem;
     $bp-large: $bp-mobile * (100% / $splash-wrapper-width) / 16px * 1rem;
-
-    font-size: $base-icon-size;
+    @extend .icon-size;
 
     @media screen and (max-height: $bp-small), screen and (max-width: $bp-small) {
         font-size: $base-icon-size / $bp-small * 100vmin;
     }
 
+    @media screen and (min-width: $bp-large) {
+        font-size: $base-icon-size / $bp-large * 100vw;
+    }
+
     @media screen and (max-width: $bp-small) {
         display: flex;
         justify-content: space-around;
-    }
-
-    @media screen and (min-width: $bp-large) {
-        font-size: $base-icon-size / $bp-large * 100vw;
     }
 }
 
