@@ -26,26 +26,12 @@
                 {% assign new_tab = false %}
             {% endunless %}
 
-            {% assign icon_class = icon.fa-icon %}
-            {% if include.style != nil %}
-                {% assign match_style = false %}
-                {% assign icon_styles = include.style | split: ', ' %}
-                {% if icon_styles.size == 1 %}
-                    {% assign icon_styles = include.style | split: ' ' %}
-                {% endif %}
-                {% if icon_styles.size == 1 %}
-                    {% assign icon_styles = include.style | split: ',' %}
-                {% endif %}
-                {% for style in icon_styles %}
-                    {% for fa_style in icon.fa-styles %}
-                        {% if fa_style == style %}
-                            {% assign match_style = style %}
-                        {% endif %}
-                    {% endfor %}
-                {% endfor %}
-                {% if match_style %}
-                    {% capture icon_class %}{{ icon_class }}-{{ match_style }}{% endcapture %}
-                {% endif %}
+            {% if include.style == 'square' and icon.fa-square != nil %}
+                {% assign icon_class = icon.fa-square %}
+            {% elsif include.style == 'simple' and icon.fa-simple != nil %}
+                {% assign icon_class = icon.fa-simple %}
+            {% else %}
+                {% assign icon_class = icon.fa-default %}
             {% endif %}
 
             {% if include.link_text %}
@@ -55,7 +41,7 @@
             {% endif %}
 
             {% capture return %}
-                <a class="media-icon {{ icon.type }}-icon fa fa-{{ icon_class }}
+                <a class="media-icon {{ icon.type }}-icon {{ icon_class }}
                   {% if include.list %}fa-li subtle-link{% else %}subtle-icon{% endif %}" 
                   {% if new_tab %}target="_blank"{% endif %}
                   {% if include.microdata and icon.type == 'email' %}itemprop="email"{% endif %}
