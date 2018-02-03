@@ -147,8 +147,12 @@
     float: right;
 }
 
-.v-rhythm > *:not(:last-child) {
+.v-rhythm > * {
     @extend %vertical-rhythm;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
 .hidden {

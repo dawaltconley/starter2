@@ -34,7 +34,7 @@ itemtype: "http://schema.org/MusicGroup"
     <meta itemprop="logo" content="{{ site.logo.png | prepend: site.baseurl }}">
     <img class="margin-auto-t margin-m-b mq-logo" itemprop="logo" src="{{ site.logo.svg | prepend: site.baseurl }}" alt="{{ site.title }}">
 
-    <ul id="social-media" class="margin-auto-b full-width flex-row flex-center media-icon-basic media-icon-list">
+    <ul class="margin-auto-b full-width flex-row flex-center media-icon-basic media-icon-list mq-icon-size">
       {% include all-media-icons.liquid icon_set=site.contact style="o play" list="true" microdata=true %}
     </ul>
 
@@ -72,7 +72,7 @@ itemtype: "http://schema.org/MusicGroup"
 
         <p>Available everywhere.</p>
 
-        <ul class="full-width flex-row flex-center media-icon-basic media-icon-list">
+        <ul class="full-width flex-row flex-center media-icon-basic media-icon-list mq-icon-size">
           {% include all-media-icons.liquid icon_set=site.temper_tantrum list=true %}
         </ul>
 
