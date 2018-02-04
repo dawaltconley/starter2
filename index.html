@@ -46,10 +46,17 @@ itemtype: "http://schema.org/MusicGroup"
 
 <div itemprop="album" itemscope itemtype="http://schema.org/MusicAlbum">
 
-  <div id="temper-tantrum" class="light small-screen-height px350-height-min flex-col title-mq">
-    <div class="content-wrapper padding-m margin-auto">
-      <h2 class="font-size-triple text-center" itemprop="name">Temper Tantrum</h2>
-    </div>
+  <div id="temper-tantrum" class="light padding-m mq-temper-tantrum">
+    <h2 itemprop="name">
+      {% capture tt_mobile %}
+        <img class="margin-auto-h mq-hidden-laptop-min" src="{{ site.baseurl }}/assets/images/temper-tantrum-mobile.jpg" alt="Temper Tantrum">
+      {% endcapture %}
+      {% capture tt_laptop %}
+        <img class="margin-auto-h mq-hidden-laptop-max" src="{{ site.baseurl }}/assets/images/temper-tantrum-laptop.jpg" alt="Temper Tantrum">
+      {% endcapture %}
+      {% include responsive-picture.html img=tt_mobile %}
+      {% include responsive-picture.html img=tt_laptop %}
+    </h2>
   </div>
 
   <div class="relative fixed-bg overflow-h" data-rob-container>
