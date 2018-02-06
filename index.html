@@ -99,7 +99,7 @@ itemtype: "http://schema.org/MusicGroup"
             <meta itemprop="name" content="I Wanna Be A Machine">
             <h2>
               {% capture machine_img %}
-                  <img itemprop="image" src="{{ site.baseurl | append: '/assets/images/machine-transparent.png' }}" alt="I Wanna Be A Machine">
+                  <img class="full-width" itemprop="image" src="{{ site.baseurl | append: '/assets/images/machine-transparent.png' }}" alt="I Wanna Be A Machine">
               {% endcapture %}
               {% include responsive-picture.html img=machine_img %}
             </h2>
