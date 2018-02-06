@@ -39,6 +39,14 @@
     font-weight: 600;
 }
 
+.fw-normal {
+    font-weight: normal;
+}
+
+.fw-bold {
+    font-weight: bold;
+}
+
 @for $i from 1 through 9 {
     $weight: $i * 100;
     .fw-#{$weight} {
@@ -235,6 +243,10 @@
     line-height: inherit;
     transition: .3s;
     z-index: 1;
+
+    &.fab {
+        @extend .fw-normal;
+    }
 
     &::before {
         @extend .no-select;
