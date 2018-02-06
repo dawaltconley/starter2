@@ -608,6 +608,14 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
     }
 }
 
+.mq-bandcamp-height {
+    height: 398px;
+
+    @media screen and (min-width: (330px + (2 * $spacing-unit))) {
+        height: 373px;
+    }
+}
+
 /*
  * Javascript
  */
