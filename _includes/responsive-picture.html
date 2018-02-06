@@ -1,7 +1,6 @@
 {% assign img = include.img %}
 {% if jekyll.environment == 'netlify' %}
-  {% assign src = img | split: 'src="' | last %}
-  {% assign src = src | split: '"' | first %}
+  {% assign src = img | split: 'src="' | last | split: '"' | first %}
   <picture>
   {% if include.bp_list %}
     {% assign bp_list = include.bp_list %}
