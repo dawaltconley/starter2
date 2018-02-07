@@ -15,6 +15,7 @@
       <source media="(max-width: {{ x }}px) and (max-height: {{ y }}px)" srcset="{% include file-suffix.liquid file_name=src suffix=suffix %}">
     {% endfor %}
     <!--[if IE 9]></video><![endif]-->
+    <source srcset="{{ src }}">
     {{ img }}
   </picture>
 {% else %}
