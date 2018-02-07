@@ -36,6 +36,8 @@
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
   <link rel="canonical" href="{{ page_url }}">
 
+  <script src="{{ site.baseurl }}/js/polyfills/picturefill.min.js" async></script>
+
   {% if site.google_analytics and jekyll.environment == 'netlify' %}
     {% include analytics.html %}
   {% endif %}
