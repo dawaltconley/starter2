@@ -14,7 +14,7 @@ itemtype: "http://schema.org/MusicGroup"
 
 <meta itemprop="url" content="{{ site.url | append: site.baseurl }}">
 
-<div class="splash-background fill-window z-neg-2"></div>
+<div class="splash-background fill-window z-neg-1"></div>
 
 <div id="splash" class="relative fixed-bg overflow-h">
 
@@ -62,14 +62,14 @@ itemtype: "http://schema.org/MusicGroup"
   <div class="relative fixed-bg overflow-h" data-rob-container>
 
     {% capture cover_art %}
-      <img id="rob-2" class="absolute person-height container-84-height-min bottom left-quarter z-neg-1 translate-left-65 mq-rob-2" src="{{ site.baseurl }}/assets/images/bucket-off.png" alt="">
+      <img id="rob-2" class="absolute person-height container-84-height-min bottom left-quarter translate-left-65 mq-rob-2" src="{{ site.baseurl }}/assets/images/bucket-off.png" alt="">
     {% endcapture %}
 
     {% include responsive-picture.html img=cover_art %}
 
     <div class="content-wrapper padding-m-h padding-l-v text-center">
 
-      <div class="margin-half-l v-rhythm font-size-large fw-600 mq-temper-tantrum">
+      <div class="relative z-1 margin-half-l v-rhythm font-size-large fw-600 mq-temper-tantrum">
 
         <p>Listen to the new <span itemprop="albumReleaseType">album</span>:</p>
 
