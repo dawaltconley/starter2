@@ -185,6 +185,10 @@
     @include wrapper(map-values($bp));
 }
 
+.shows-wrapper {
+    @include wrapper((map-get($bp, "laptop"), map-get($bp, "mobile")));
+}
+
 .text-wrapper {
     @each $length in $base-line-length {
         max-width: $length;
