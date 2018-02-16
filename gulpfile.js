@@ -70,8 +70,8 @@ gulp.task("image-min", ["build"], function (cb) {
 var imageBreakpoints = YAML.safeLoad(fs.readFileSync("_config.yml", "utf8"))["image_bp"];
 
 gulp.task("images", ["image-min"], function () {
-    var src = "./_site/assets/images/*";
-    var dest = "./_site/assets/images";
+    var src = "./_site/assets/gulp-images/*";
+    var dest = "./_site/assets/gulp-images";
     var merged = merge();
     imageBreakpoints.forEach(function (bp) {
         var stream = gulp.src(src)
@@ -79,10 +79,7 @@ gulp.task("images", ["image-min"], function () {
                 imageResize({
                     width: bp.x,
                     height: bp.y,
-                    cover: false,
-                    upscale: false,
                     filter: "Catrom",
-                    interlace: false
                 })
             )
             .pipe(rename({ suffix: "-" + bp.x + "x" + bp.y }))
@@ -92,9 +89,29 @@ gulp.task("images", ["image-min"], function () {
     return merged.isEmpty() ? null : merged;
 });
 
+gulp.task("srcset-images", ["image-min"], function () {
+    var src = "./_site/assets/gulp-srcset/*";
+    var dest = "./_site/assets/gulp-srcset";
+    var merged = merge();
+    imageBreakpoints.forEach(function (bp) {
+        var stream = gulp.src(src)
+            .pipe(
+                imageResize({
+                    width: bp.x,
+                    // upscale: true,
+                    filter: "Catrom",
+                })
+            )
+            .pipe(rename({ suffix: "-" + bp.x + "w" }))
+            .pipe(gulp.dest(dest));
+        merged.add(stream);
+    });
+    return merged.isEmpty() ? null : merged;
+});
+
 gulp.task("bg-images", ["image-min"], function () {
-    var src = "./_site/assets/backgrounds/*";
-    var dest = "./_site/assets/backgrounds";
+    var src = "./_site/assets/gulp-backgrounds/*";
+    var dest = "./_site/assets/gulp-backgrounds";
     var merged = merge();
     imageBreakpoints.forEach(function (bp) {
         var stream = gulp.src(src)
@@ -115,6 +132,6 @@ gulp.task("bg-images", ["image-min"], function () {
     return merged.isEmpty() ? null : merged;
 });
 
-gulp.task("responsive-images", ["images", "bg-images"]);
+gulp.task("responsive-images", ["images", "srcset-images", "bg-images"]);
 
 gulp.task("default", ["build", "css", "js", "clean-js", "image-min", "responsive-images"]);

@@ -39,7 +39,7 @@ $fa-icons:              ({% for icon in site.data.icon-types %}
 
 // Images
 
-$splash-image:          url({{ site.baseurl | append: '/assets/backgrounds/bucket-background.jpg' }});
+$splash-image:          url({{ site.baseurl | append: '/assets/gulp-backgrounds/bucket-background.jpg' }});
 
 $image-bp:              ({% if jekyll.environment == 'netlify' %}
                             {% for bp in site.image_bp %}
