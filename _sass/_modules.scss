@@ -522,18 +522,6 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
  * Media Queries
  */
 
-.mq-hidden-laptop-max {
-    @media screen and (max-width: 1000px) {
-        display: none;
-    }
-}
-
-.mq-hidden-laptop-min {
-    @media screen and (min-width: 999px) {
-        display: none;
-    }
-}
-
 .mq-dylan {
     @media screen and (max-aspect-ratio: 988/675) {
         -webkit-transform: translateX(-20%);
