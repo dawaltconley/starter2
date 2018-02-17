@@ -51,8 +51,8 @@ itemtype: "http://schema.org/MusicGroup"
       {% assign tt_mobile = '/assets/gulp-srcset/temper-tantrum-mobile.jpg' | prepend: site.baseurl %}
       {% assign tt_laptop = '/assets/gulp-srcset/temper-tantrum-laptop.jpg' | prepend: site.baseurl %}
       <picture>
-        <source media="(min-width: 1000px)" srcset="{% include gulp-srcset.liquid src=tt_laptop %}" sizes="100vw">
-        <img class="margin-auto-h" src="{{ tt_mobile }}" srcset="{% include gulp-srcset.liquid src=tt_mobile %}" sizes="100vw" alt="Temper Tantrum">
+        <source media="(min-width: 1000px)" srcset="{% include gulp-srcset.liquid src=tt_laptop width='5230' %}" sizes="100vw">
+        <img class="margin-auto-h" src="{{ tt_mobile }}" srcset="{% include gulp-srcset.liquid src=tt_mobile width='9807' %}" sizes="100vw" alt="Temper Tantrum">
       </picture>
     </h2>
   </div>
@@ -97,7 +97,7 @@ itemtype: "http://schema.org/MusicGroup"
             <meta itemprop="name" content="I Wanna Be A Machine">
             <h2>
               {% assign machine_img = '/assets/gulp-srcset/machine-transparent.png' | prepend: site.baseurl %}
-              <img class="full-width" itemprop="image" src="{{ machine_img }}" srcset="{% include gulp-srcset.liquid src=machine_img %}" sizes="(max-width: 800px) calc(100vw - 60px), (max-width: 1024px) 740px, calc(50vw - 90px)" alt="I Wanna Be A Machine">
+              <img class="full-width" itemprop="image" src="{{ machine_img }}" srcset="{% include gulp-srcset.liquid src=machine_img width='1331' %}" sizes="(max-width: 800px) calc(100vw - 60px), (max-width: 1024px) 740px, calc(50vw - 90px)" alt="I Wanna Be A Machine">
             </h2>
         </div>
 
@@ -159,7 +159,7 @@ itemtype: "http://schema.org/MusicGroup"
 
     <div class="half-screen-height-max overflow-h">
       {% assign spaghetti_floor = '/assets/gulp-srcset/spaghetti-floor.jpg' | prepend: site.baseurl %}
-      <img class="full-width max-width-none auto-height" src="{{ spaghetti_floor }}" srcset="{% include gulp-srcset.liquid src=spaghetti_floor %}" sizes="100vw" alt="">
+      <img class="full-width max-width-none auto-height" src="{{ spaghetti_floor }}" srcset="{% include gulp-srcset.liquid src=spaghetti_floor width='5063' %}" sizes="100vw" alt="">
     </div>
 
   </div>

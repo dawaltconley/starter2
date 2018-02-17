@@ -10,8 +10,12 @@
         {% assign x = bp | map: 'x' %}
         {% assign y = bp | map: 'y' %}
         {% capture suffix %}-{{ x }}w{% endcapture %}
-        {% capture new_src %}{% include file-suffix.liquid file_name=src suffix=suffix %} {{ x }}w{% unless forloop.last %}, {% endunless %}{% endcapture %}
+        {% capture new_src %}{% include file-suffix.liquid file_name=src suffix=suffix %} {{ x }}w, {% endcapture %}
         {% assign srcset = srcset | append: new_src %}
     {% endfor %}
+    {% assign srcset = srcset | append: src %}
+    {% if include.width %}
+        {% assign srcset = srcset | append: ' ' | append: include.width %}
+    {% endif %}
     {% assign return = srcset %}
 {% endcapture %}{% if jekyll.environment == 'netlify' %}{{ return | strip_newlines }}{% endif %}
