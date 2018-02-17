@@ -23,10 +23,12 @@ contact:
   youtube: "https://www.youtube.com/channel/UCXUKrkDX88zx1bL4Xu8qZYw"
   email: "moretonguesthanteeth@gmail.com"
 temper_tantrum:
+  bandcamp: "https://moretongues.bandcamp.com/album/temper-tantrum"
   apple_music: "https://geo.itunes.apple.com/us/album/temper-tantrum/1339448765?mt=1&app=music&itscg=30200&itsct=afftoolset_1"
   spotify: "https://open.spotify.com/album/2atIKJg8Z1BrjYpL4Wk56a"
 permalink: /:title/
 timezone: America/New_York
+emptyArray: []
 
 person_height: 84
 
