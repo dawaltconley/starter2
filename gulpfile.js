@@ -98,7 +98,6 @@ gulp.task("srcset-images", ["image-min"], function () {
             .pipe(
                 imageResize({
                     width: bp.x,
-                    // upscale: true,
                     filter: "Catrom",
                 })
             )
