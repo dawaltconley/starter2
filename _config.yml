@@ -41,8 +41,10 @@ image_bp: # breakpoints used for creating responsive images
 markdown: kramdown
 exclude:
   - "README.md"
-  - "Gemfile*"
+  - "Gemfile"
+  - "Gemfile.lock"
+  - "package.json"
+  - "package-lock.json"
   - "node_modules"
-  - "package*.json"
   - "gulpfile.js"
   - "assets/test"
