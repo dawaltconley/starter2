@@ -21,15 +21,24 @@
 
   <title>{{ title }}</title>
   <meta name="description" content="{{ description }}">
-  <meta name="keywords" content="{{ site.keywords | join: ', ' }}">
+
+  {% if site.keywords %}
+    <meta name="keywords" content="{{ site.keywords | join: ', ' }}">
+  {% endif %}
 
   <meta property="og:locale" content="en_US">
   <meta property="og:type" content="website">
   <meta property="og:url" content="{{ page_url }}">
   <meta property="og:title" content="{{ title }}">
   <meta property="og:description" content="{{ description }}">
-  <meta property="og:image" content="{{ site.og_image | prepend: site_url }}">
-  <meta property="fb:app_id" content="{{ fb_page_id }}">
+
+  {% if page.collection.og_image %}
+    <meta property="og:image" content="{{ page.og_image | prepend: site_url }}">
+  {% elsif page.og_image %}
+    <meta property="og:image" content="{{ page.collection.og_image | prepend: site_url }}">
+  {% elsif site.og_image %}
+    <meta property="og:image" content="{{ site.og_image | prepend: site_url }}">
+  {% endif %}
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:200,600,900">
