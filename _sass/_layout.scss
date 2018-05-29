@@ -162,40 +162,12 @@
  * Wrappers
  */
 
-.splash-wrapper {
-    width: $splash-wrapper-width;
-    min-width: $bp-mobile;
-    margin: 0 auto;
-
-    @media screen and (max-width: $bp-mobile) {
-        width: 100%;
-        min-width: 0;
-    }
-}
-
 .content-wrapper {
     @include wrapper(map-values($bp));
 }
 
-.shows-wrapper {
-    @include wrapper((map-get($bp, "laptop"), map-get($bp, "mobile")));
-}
-
 .text-wrapper {
     max-width: $base-line-length;
-}
-
-.media-wrapper {
-    width: 100%;
-    margin: 0 auto;
-
-    @media screen and (max-width: $bp-media-columns) {
-        width: $media-wrapper-width;
-    }
-
-    @media screen and (max-width: $media-wrapper-width) {
-        width: 100%;
-    }
 }
 
 .unwrap {
@@ -249,21 +221,6 @@
 
 .aspect-16-9 {
     @include fixed-ratio(16, 9);
-}
-
-.aspect-spaghetti {
-    @include fixed-ratio(5063, 2361);
-}
-
-.bandcamp-ratio {
-    @extend %fixed-ratio;
-    width: 100%;
-    max-width: 700px;
-    padding-top: calc(100% + 118px);
-
-    @media screen and (max-width: 300px + ($spacing-unit * 2) - 1px) {
-        padding-top: calc(100% + 143px);
-    }
 }
 
 .contains-3d {
@@ -395,85 +352,6 @@
 }
 
 /*
- * Specific
+ * Media Queries
  */
 
-.media-columns {
-    & > * {
-        margin-bottom: $spacing-unit;
-        width: 100%;
-    }
-
-    @media screen and (min-width: $bp-media-columns + 1) {
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        flex-grow: 0;
-
-        & > * {
-            flex: 1 1 0;
-            margin: $spacing-unit;
-        }
-    }
-}
-
-.show {
-    line-height: 1.2;
-}
-
-.show-time > * {
-    &:first-child {
-        width: 4.5em;
-    }
-    &:last-child {
-        width: 4em;
-    }
-}
-
-.venue, .venue-address {
-    margin-right: 1em;
-}
-
-.venue-address {
-    flex: 0 1 40%;
-}
-
-.show-links {
-    font-size: 1.35em;
-    min-width: 1.35em;
-}
-
-@media screen and (max-width: $bp-laptop) {
-    .show-time {
-        flex-direction: column;
-    }
-
-    .show-day {
-        order: -1;
-    }
-}
-
-@media screen and (max-width: $bp-mobile) {
-    .show {
-        font-size: 0.9em;
-    }
-
-    .venue-address {
-        flex: 0 1 auto;
-    }
-}
-
-@media screen and (max-width: 28em) {
-    .show-day {
-        margin-bottom: .1em;
-    }
-
-    .show-location {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .venue {
-        margin-bottom: .2em;
-    }
-}

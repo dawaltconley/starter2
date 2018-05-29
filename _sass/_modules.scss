@@ -34,9 +34,16 @@
     }
 }
 
-.sub-heading {
-    font-family: $base-font-family;
-    font-weight: 600;
+.uppercase {
+    text-transform: uppercase;
+}
+
+.lowercase {
+    text-transform: lowercase;
+}
+
+.capitalize {
+    text-transform: capitalize;
 }
 
 .fw-normal {
@@ -74,11 +81,6 @@
     text-shadow: 0 0 0.24em black;
 }
 
-.avenir-hand {
-    font-family: AvenirCondensedHand;
-    font-weight: normal;
-}
-
 .font-smoothing-normal {
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
@@ -100,12 +102,6 @@
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-}
-
-.meta {
-    font-size: smaller;
-    font-weight: 600;
-    text-transform: uppercase;
 }
 
 /*
@@ -192,10 +188,6 @@
         @extend .fill-parent;
         object-fit: cover;
     }
-}
-
-.splash-background {
-    @include background-image($splash-image, $responsive: true);
 }
 
 /*
@@ -519,6 +511,22 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
     }
 }
 
+.hover-darken {
+    @extend .relative;
+
+    &::after {
+        @extend .fill-parent, .t-inherit;
+        content: "";
+        background-color: rgba(black, 0);
+    }
+
+    @include hover {
+        &::after {
+            background-color: rgba(black, 0.1);
+        }
+    }
+}
+
 .hover-blur {
     @include blur(0);
     -webkit-transition: -webkit-filter $trans-default;
@@ -545,105 +553,3 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
  * Media Queries
  */
 
-.mq-dylan {
-    @media screen and (max-aspect-ratio: 988/675) {
-        -webkit-transform: translateX(-20%);
-        transform: translateX(-20%);
-    }
-
-    @media screen and (max-aspect-ratio: 927/675) {
-        -webkit-transform: translateX(-30%);
-        transform: translateX(-30%);
-    }
-
-    @media screen and (max-aspect-ratio: 860/675) {
-        -webkit-transform: translateX(-40%);
-        transform: translateX(-40%);
-    }
-}
-
-.mq-rob {
-    @media screen and (max-aspect-ratio: 988/675) {
-        -webkit-transform: translateX(20%);
-        transform: translateX(20%);
-    }
-
-    @media screen and (max-aspect-ratio: 927/675) {
-        -webkit-transform: translateX(30%);
-        transform: translateX(30%);
-    }
-
-    @media screen and (max-aspect-ratio: 860/675) {
-        -webkit-transform: translateX(40%);
-        transform: translateX(40%);
-    }
-}
-
-@media screen and (max-aspect-ratio: 756/675) and (max-width: 550px) {
-    .mq-logo {
-        margin-top: 30px;
-        // margin-top: 9vw;
-    }
-}
-
-@media screen and (max-aspect-ratio: 756/675) {
-    .mq-dylan, .mq-rob {
-        top: 59%;
-        bottom: auto;
-    }
-
-    .mq-dylan {
-        transform: translateX(-48%);
-    }
-
-    .mq-rob {
-        transform: translateX(48%);
-    }
-}
-
-@media screen and (max-width: $bp-laptop) {
-    .mq-rob-2 {
-        left: 100%;
-        transform: translateX(-65%);
-    }
-
-    .mq-temper-tantrum {
-        margin-left: 0;
-    }
-}
-
-.mq-icon-size {
-    $bp-small: 27rem;
-    $bp-large: $bp-mobile * (100% / $splash-wrapper-width) / 16px * 1rem;
-    @extend .icon-size;
-
-    @media screen and (max-height: $bp-small), screen and (max-width: $bp-small) {
-        font-size: $base-icon-size / $bp-small * 100vmin;
-    }
-
-    @media screen and (min-width: $bp-large) {
-        font-size: $base-icon-size / $bp-large * 100vw;
-    }
-
-    @media screen and (max-width: $bp-small) {
-        display: flex;
-        justify-content: space-around;
-    }
-}
-
-.mq-bandcamp-height {
-    height: 398px;
-
-    @media screen and (min-width: (330px + (2 * $spacing-unit))) {
-        height: 373px;
-    }
-}
-
-/*
- * Javascript
- */
-
-.js-rob-resize {
-    top: map-get($paddings, "l");
-    bottom: auto;
-}

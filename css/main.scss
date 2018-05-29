@@ -1,13 +1,6 @@
 ---
 ---
 
-// Custom Fonts
-
-@font-face {
-    font-family: Avenir-Condensed-Hand;
-    src: url({{ site.baseurl }}/assets/AvenirCondensedHand.ttf);
-}
-
 // Basic Variables
 
 $spacing-unit:          30px;
@@ -55,11 +48,8 @@ $image-bp:              ({% if jekyll.environment == 'netlify' %}
 $sizes: (
     "full":             100%,
     "half":             50%,
-    "container-84":     84%,
     "screen":           100vw 100vh,
     "half-screen":      50vw 50vh,
-    "small-screen":     30vw 30vh,
-    "person":           {{ site.person_height }}vh,
     "no":               0,
     "auto":             auto,
 );
@@ -69,7 +59,6 @@ $margins: (
     "0":        0,
     "m":        30px,
     "l":        60px,
-    "half":     50%,
 );
 
 $paddings: (
@@ -95,29 +84,19 @@ $themes: (
         background-color: #171717,
         text-color: white,
     ),
-    fixed-bg: (
-        background-color: transparent,
-        text-color: white,
-    )
 );
 
 $base-theme: light;
 
-$trans-default: .3s;
-
 // Breakpoints
 
 $bp: (
-    //"x-large":  1800px,
     "large":    1000px,
     "laptop":   800px,
     "mobile":   600px,
 );
 $bp-laptop: map-get($bp, "laptop");
 $bp-mobile: map-get($bp, "mobile");
-$splash-wrapper-width:  50%;
-$media-wrapper-width:   800px;
-$bp-media-columns:      1024px;
 
 // Mixins
 
