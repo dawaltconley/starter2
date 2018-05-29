@@ -207,7 +207,7 @@
     padding: 4px;
 }
 
-@media screen and (max-height: $bp-mobile) and (min-width: 450px) {
+@media screen and (max-height: map-get($bp, "mobile")) and (min-width: 450px) {
     [data-force-fullscreen].screen-height .scroll-arrow {
         display: none;
     }
