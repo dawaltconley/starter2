@@ -411,7 +411,7 @@ $side: null;
                 content: "";
                 position: absolute;
                 top: 0; left: 0; right: 0; bottom: 0;
-                background-color: rgba(255, 255, 255, $lighten);
+                background-color: rgba(white, $lighten);
                 z-index: 0;
             }
         } @else if $darken > 0 {
@@ -421,7 +421,7 @@ $side: null;
                 content: "";
                 position: absolute;
                 top: 0; left: 0; right: 0; bottom: 0;
-                background-color: rgba(0, 0, 0, $darken);
+                background-color: rgba(black, $darken);
                 z-index: 0;
             }
         }
