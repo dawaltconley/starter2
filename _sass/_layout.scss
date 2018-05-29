@@ -108,22 +108,6 @@
     bottom: 0;
 }
 
-.top-left {
-    @extend .absolute, .top, .left;
-}
-
-.top-right {
-    @extend .absolute, .top, .right;
-}
-
-.bottom-left {
-    @extend .absolute, .bottom, .left;
-}
-
-.bottom-right {
-    @extend .absolute, .bottom, .right;
-}
-
 .left-quarter {
     left: 25%;
 }
@@ -198,9 +182,7 @@
 }
 
 .text-wrapper {
-    @each $length in $base-line-length {
-        max-width: $length;
-    }
+    max-width: $base-line-length;
 }
 
 .media-wrapper {

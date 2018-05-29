@@ -128,6 +128,29 @@
     }
 }
 
+.radial-shadow {
+    $density: 0.3;
+    $reach: 0%;
+    $overflow: 50%;
+    @extend .relative, .overflow-v;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: -$overflow;
+        left: -$overflow;
+        right: -$overflow;
+        bottom: -$overflow;
+        background: -webkit-radial-gradient(ellipse closest-side, rgba(black, $density) $reach, transparent);
+        background: radial-gradient(ellipse closest-side, rgba(black, $density) $reach, transparent);
+        z-index: 0;
+    }
+
+    & > * {
+        @extend .z-1;
+    }
+}
+
 /*
  * Links
  */
