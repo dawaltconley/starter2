@@ -459,8 +459,8 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
  */
 
 .t-default {
-    -webkit-transition: $trans-default;
-    transition: $trans-default;
+    -webkit-transition-duration: $trans-default;
+    transition-duration: $trans-default;
 }
 
 .t-inherit {
@@ -533,8 +533,8 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
 
 .hover-blur {
     @include blur(0);
-    -webkit-transition: -webkit-filter $trans-default;
-    transition: filter $trans-default;
+    -webkit-transition-property: -webkit-filter;
+    transition-property: filter;
 
     @include hover {
         @include blur(5px);
