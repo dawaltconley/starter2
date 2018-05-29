@@ -275,8 +275,7 @@ $side: null;
     padding-top: $y/$x * $width;
 }
 
-@mixin columns-reset ($break-point) {
-    //mobile reset
+@mixin columns-reset ($break-point) { // mobile reset
     @media screen and (max-width: $break-point) {
         .cell {
             display: block;
@@ -285,6 +284,10 @@ $side: null;
                 position: static;
                 margin: 0 auto $spacing-unit;
             }
+
+            &:last-child > :last-child { // mobile only: remove bottom margin of last element in table
+                margin-bottom: 0;
+            }
         }
 
         &.button-columns .cell {
@@ -292,8 +295,7 @@ $side: null;
         }
     }
 
-    //desktop only: remove bottom margin of all last elements
-    @media screen and (min-width: $break-point + 1px) {
+    @media screen and (min-width: $break-point + 1px) { // desktop only: remove bottom margin of all last element in each cell
         .cell > :last-child {
             margin-bottom: 0;
         }
