@@ -92,8 +92,12 @@
 }
 
 .avoid-wrap {
-    //text-wrap: avoid; //css3
-    white-space: nowrap;
+    @supports(text-wrap: avoid) {
+        text-wrap: avoid;
+    }
+    @supports(not(text-wrap: avoid)) {
+        white-space: nowrap;
+    }
 }
 
 .no-select {
