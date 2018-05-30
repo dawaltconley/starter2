@@ -23,10 +23,6 @@ $brand-color:           gray;
 $text-shadow:           1px 1px 4px rgba(0, 0, 0, 0.2);
 $full-shadow:           0 0 0.24em black;
 
-$gray-color:            #828282;
-$gray-color-light:      lighten($gray-color, 40%);
-$gray-color-dark:       darken($gray-color, 25%);
-
 $fa-icons:              ({% for icon in site.data.icon-types %}
                             {{ icon.type }}: {{ icon.color }},{% endfor %}
                         );
