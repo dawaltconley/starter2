@@ -1,8 +1,4 @@
 {
-  "name": "mt3",
-  "version": "1.0.0",
-  "description": "A website for my band, More Tongues Than Teeth.",
-  "main": "index.js",
   "dependencies": {
     "autoprefixer": "^7.2.5",
     "babel-core": "^6.26.0",
@@ -25,15 +21,5 @@
   "devDependencies": {},
   "scripts": {
     "build": "gulp"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dawaltconley/mt3.git"
-  },
-  "author": "Dylan Awalt-Conley",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/dawaltconley/mt3/issues"
-  },
-  "homepage": "https://github.com/dawaltconley/mt3#readme"
+  }
 }
