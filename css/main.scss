@@ -149,13 +149,22 @@ $side: null;
         @if map-has-key($styles, "text-color") {
             $text-color: map-get($styles, "text-color");
         }
-        $light-theme: lightness($text-color) < lightness($background-color);
+
         $styles: map-remove($styles, "background-color", "text-color");
+        $light-theme: lightness($text-color) < lightness($background-color);
         $lightness-diff: abs(lightness($text-color) - lightness($background-color)) / 100%;
+        $light-text: null;
+
+        @if $light-theme {
+            $light-text: mix($text-color, $background-color, 58%);
+        } @else {
+            $light-text: mix($text-color, $background-color, 72%);
+        }
 
         background-color: $background-color;
         color: $text-color;
         border-color: $text-color;
+        light: $light-theme;
 
         @if $light-theme {
             -webkit-font-smoothing: subpixel-antialiased;
@@ -166,7 +175,7 @@ $side: null;
         }
 
         blockquote {
-            color: mix($text-color, $background-color, 58%);
+            color: $light-text;
             border-left-color: mix($text-color, $background-color, 10%);
         }
 
@@ -205,7 +214,7 @@ $side: null;
         }
 
         .text-light, &.text-light {
-            color: mix($text-color, $background-color, 58%);
+            color: $light-text;
         }
 
         .border-light, &.border-light {
