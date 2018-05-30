@@ -163,10 +163,10 @@ a {
  */
 
 blockquote {
-    color: $gray-color;
-    border-left: 4px solid $gray-color-light;
+    border-left-width: 4px;
+    border-left-style: solid;
     padding-left: $spacing-unit;
-    font-size: 18px;
+    font-size: smaller;
     letter-spacing: -1px;
     font-style: italic;
 

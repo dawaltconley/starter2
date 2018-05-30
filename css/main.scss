@@ -168,6 +168,10 @@ $side: null;
             -moz-osx-font-smoothing: grayscale;
         }
 
+        blockquote {
+            color: mix($text-color, $background-color, 58%);
+            border-left-color: mix($text-color, $background-color, 10%);
+        }
 
         .theme-link {
             @if $light-theme {
