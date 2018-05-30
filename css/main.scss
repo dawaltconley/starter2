@@ -194,27 +194,15 @@ $side: null;
         }
 
         .text-light, &.text-light {
-            @if $light-theme {
-                color: lighten($text-color, 40%);
-            } @else {
-                color: darken($text-color, 40%);
-            }
+            color: mix($text-color, $background-color, 58%);
         }
 
         .border-light, &.border-light {
-            @if $light-theme {
-                border-color: darken($background-color, 10%);
-            } @else {
-                border-color: lighten($background-color, 10%);
-            }
+            border-color: mix($text-color, $background-color, 10%);
         }
 
         .border-x-light, &.border-x-light {
-            @if $light-theme {
-                border-color: darken($background-color, 5%);
-            } @else {
-                border-color: lighten($background-color, 5%);
-            }
+            border-color: mix($text-color, $background-color, 5%);
         }
     }
 
