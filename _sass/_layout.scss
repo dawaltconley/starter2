@@ -108,8 +108,24 @@
     bottom: 0;
 }
 
-.left-quarter {
-    left: 25%;
+.top-left {
+    @extend .absolute;
+    top: 0; left: 0;
+}
+
+.top-right {
+    @extend .absolute;
+    top: 0; right: 0;
+}
+
+.bottom-left {
+    @extend .absolute;
+    bottom: 0; left: 0;
+}
+
+.bottom-right {
+    @extend .absolute;
+    bottom: 0; right: 0;
 }
 
 @for $i from -9 through 9 {
