@@ -155,6 +155,7 @@ $side: null;
         }
         $light-theme: lightness($text-color) < lightness($background-color);
         $styles: map-remove($styles, "background-color", "text-color");
+        $lightness-diff: abs(lightness($text-color) - lightness($background-color)) / 100%;
 
         background-color: $background-color;
         color: $text-color;
@@ -171,6 +172,20 @@ $side: null;
         blockquote {
             color: mix($text-color, $background-color, 58%);
             border-left-color: mix($text-color, $background-color, 10%);
+        }
+
+        pre, code {
+            @if $light-theme {
+                $box-color: darken($background-color, $lightness-diff * 25%);
+                color: mix($text-color, $box-color, 65%);
+                border-color: darken($background-color, $lightness-diff * 40%);
+                background-color: $box-color;
+            } @else {
+                $box-color: lighten($background-color, $lightness-diff * 15%);
+                color: mix($text-color, $box-color, 80%);
+                border-color: lighten($background-color, $lightness-diff * 10%);
+                background-color: $box-color;
+            }
         }
 
         .theme-link {

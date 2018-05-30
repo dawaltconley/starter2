@@ -179,12 +179,11 @@ blockquote {
  * Code formatting
  */
 
-pre,
-code {
+pre, code {
     font-size: 15px;
-    border: 1px solid $gray-color-light;
+    border-width: 1px;
+    border-style: solid;
     border-radius: 3px;
-    background-color: #eef;
 }
 
 code {
