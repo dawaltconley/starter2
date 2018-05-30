@@ -16,7 +16,12 @@
         {% endfor %}
         {% assign srcset = srcset | append: src %}
         {% if include.width %}
-            {% assign srcset = srcset | append: ' ' | append: include.width %}
+            {% assign width = include.width | replace: 'px', 'w' %}
+            {% assign width_unit = width | slice: -1 %}
+            {% unless width_unit == 'w' %}
+                {% assign width = width | append: 'w' %}
+            {% endunless %}
+            {% assign srcset = srcset | append: ' ' | append: width %}
         {% endif %}
         {% assign return = srcset %}
     {% else %}

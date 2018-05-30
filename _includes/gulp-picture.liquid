@@ -16,7 +16,7 @@
         {% endfor %}
         <source srcset="{{ src }}">
         <!--[if IE 9]></video><![endif]-->
-        {{ img }}
+        {{ img | replace_first: 'src=', 'srcset=' }}
     </picture>
 {% else %}
     {{ img }}
