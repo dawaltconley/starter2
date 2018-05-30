@@ -193,7 +193,7 @@ $side: null;
             }
         }
 
-        .text-light  &.text-light {
+        .text-light, &.text-light {
             @if $light-theme {
                 color: lighten($text-color, 40%);
             } @else {
