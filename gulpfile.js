@@ -49,7 +49,8 @@ gulp.task("clean-js", ["js"], function (cb) {
     pump([
         gulp.src([
             "./_site/js/*",
-            "!./_site/js/all.js"
+            "!./_site/js/all.js",
+            "!./_site/js/polyfills/picturefill.min.js"
         ], { read: false }),
         clean()
     ], cb);
