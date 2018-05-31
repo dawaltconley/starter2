@@ -128,7 +128,7 @@ $side: null;
     @return $return;
 }
 
-@mixin theme-styles($background-color: null, $text-color: null) {
+@mixin theme-styles($background-color: white, $text-color: black) {
     $light-theme: lightness($text-color) < lightness($background-color);
     $lightness-diff: abs(lightness($text-color) - lightness($background-color)) / 100%;
     $light-text: null;
