@@ -72,19 +72,6 @@ $borders: (
     ),
 );
 
-$themes: (
-    light: (
-        background-color: white,
-        text-color: #171717,
-    ),
-    dark: (
-        background-color: #171717,
-        text-color: white,
-    ),
-);
-
-$base-theme: light;
-
 // Breakpoints
 
 $bp: (
@@ -141,111 +128,79 @@ $side: null;
     @return $return;
 }
 
-@mixin theme-styles($styles, $background-color: null, $text-color: null) {
-    @if map-has-key($styles, "background-color") or map-has-key($styles, "text-color") {
-        @if map-has-key($styles, "background-color") {
-            $background-color: map-get($styles, "background-color");
-        }
-        @if map-has-key($styles, "text-color") {
-            $text-color: map-get($styles, "text-color");
-        }
+@mixin theme-styles($background-color: null, $text-color: null) {
+    $light-theme: lightness($text-color) < lightness($background-color);
+    $lightness-diff: abs(lightness($text-color) - lightness($background-color)) / 100%;
+    $light-text: null;
 
-        $styles: map-remove($styles, "background-color", "text-color");
-        $light-theme: lightness($text-color) < lightness($background-color);
-        $lightness-diff: abs(lightness($text-color) - lightness($background-color)) / 100%;
-        $light-text: null;
+    @if $light-theme {
+        $light-text: mix($text-color, $background-color, 58%);
+    } @else {
+        $light-text: mix($text-color, $background-color, 72%);
+    }
 
+    background-color: $background-color;
+    color: $text-color;
+    border-color: $text-color;
+
+    @if $light-theme {
+        -webkit-font-smoothing: subpixel-antialiased;
+        -moz-osx-font-smoothing: auto;
+    } @else {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    blockquote {
+        color: $light-text;
+        border-left-color: mix($text-color, $background-color, 10%);
+    }
+
+    pre, code {
         @if $light-theme {
-            $light-text: mix($text-color, $background-color, 58%);
+            $box-color: darken($background-color, $lightness-diff * 25%);
+            color: mix($text-color, $box-color, 65%);
+            border-color: darken($background-color, $lightness-diff * 40%);
+            background-color: $box-color;
         } @else {
-            $light-text: mix($text-color, $background-color, 72%);
-        }
-
-        background-color: $background-color;
-        color: $text-color;
-        border-color: $text-color;
-        light: $light-theme;
-
-        @if $light-theme {
-            -webkit-font-smoothing: subpixel-antialiased;
-            -moz-osx-font-smoothing: auto;
-        } @else {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        blockquote {
-            color: $light-text;
-            border-left-color: mix($text-color, $background-color, 10%);
-        }
-
-        pre, code {
-            @if $light-theme {
-                $box-color: darken($background-color, $lightness-diff * 25%);
-                color: mix($text-color, $box-color, 65%);
-                border-color: darken($background-color, $lightness-diff * 40%);
-                background-color: $box-color;
-            } @else {
-                $box-color: lighten($background-color, $lightness-diff * 15%);
-                color: mix($text-color, $box-color, 80%);
-                border-color: lighten($background-color, $lightness-diff * 10%);
-                background-color: $box-color;
-            }
-        }
-
-        .theme-link {
-            @if $light-theme {
-                &:visited {
-                    color: lighten($text-color, 25%);
-                }
-
-                &:hover {
-                    color: lighten($text-color, 15%);
-                }
-            } @else {
-                &:visited {
-                    color: darken($text-color, 25%);
-                }
-
-                &:hover {
-                    color: darken($text-color, 15%);
-                }
-            }
-        }
-
-        .text-light, &.text-light {
-            color: $light-text;
-        }
-
-        .border-light, &.border-light {
-            border-color: mix($text-color, $background-color, 10%);
-        }
-
-        .border-x-light, &.border-x-light {
-            border-color: mix($text-color, $background-color, 5%);
+            $box-color: lighten($background-color, $lightness-diff * 15%);
+            color: mix($text-color, $box-color, 80%);
+            border-color: lighten($background-color, $lightness-diff * 10%);
+            background-color: $box-color;
         }
     }
 
-    @each $property, $value in $styles {
-        @if type-of($value) == "map" {
-            @if $property == "headings" or $property == "h" {
-                & h1, h2, h3, h4, h5, h6 {
-                    @include theme-styles($value, $background-color, $text-color);
-                }
-            } @else {
-                @each $bp-name, $bp-value in $bp {
-                    @if $property == $bp-name {
-                        @media screen and (max-width: $bp-value) {
-                            @include theme-styles($value, $background-color, $text-color);
-                        }
-                    }
-                }
+    .theme-link {
+        @if $light-theme {
+            &:visited {
+                color: lighten($text-color, 25%);
+            }
+
+            &:hover {
+                color: lighten($text-color, 15%);
             }
         } @else {
-            #{$property}: $value;
+            &:visited {
+                color: darken($text-color, 25%);
+            }
+
+            &:hover {
+                color: darken($text-color, 15%);
+            }
         }
     }
 
+    .text-light, &.text-light {
+        color: $light-text;
+    }
+
+    .border-light, &.border-light {
+        border-color: mix($text-color, $background-color, 10%);
+    }
+
+    .border-x-light, &.border-x-light {
+        border-color: mix($text-color, $background-color, 5%);
+    }
 }
 
 @mixin wrapper ($breakpoints, $min-margins: $spacing-unit) {

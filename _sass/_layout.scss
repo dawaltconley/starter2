@@ -58,10 +58,22 @@
     }
 }
 
-@each $name, $styles in $themes {
-    .#{$name} {
-        @include theme-styles($styles);
-    }
+/*
+ * Themes
+ */
+
+body, .light {
+    @include theme-styles(
+        $text-color: #171717,
+        $background-color: white
+    );
+}
+
+.dark {
+    @include theme-styles(
+        $text-color: white,
+        $background-color: #171717
+    );
 }
 
 /*

@@ -31,7 +31,6 @@ html, body {
  */
 
 body {
-    @extend .#{$base-theme} !optional;
     font: $base-font-weight #{$base-font-size}/#{$base-line-height} $base-font-family;
     -webkit-text-size-adjust: 100%;
     -webkit-font-feature-settings: "kern" 1;
