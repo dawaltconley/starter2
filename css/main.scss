@@ -135,20 +135,16 @@ $side: null;
     $br-bg: abs(lightness($brand-color) - lightness($background-color)) / 100%;
     $light-text: null;
 
-    @if $light-theme {
-        $light-text: mix($text-color, $background-color, 58%);
-    } @else {
-        $light-text: mix($text-color, $background-color, 72%);
-    }
-
     background-color: $background-color;
     color: $text-color;
     border-color: $text-color;
 
     @if $light-theme {
+        $light-text: mix($text-color, $background-color, 58%);
         -webkit-font-smoothing: subpixel-antialiased;
         -moz-osx-font-smoothing: auto;
     } @else {
+        $light-text: mix($text-color, $background-color, 72%);
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
