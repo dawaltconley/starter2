@@ -167,11 +167,13 @@ $side: null;
         pre, code {
             @if $light-theme {
                 $box-color: darken($background-color, $tx-bg * 25%);
+                $box-color: desaturate($box-color, saturation($box-color) / 2 );
                 color: mix($text-color, $box-color, 65%);
                 border-color: darken($background-color, $tx-bg * 40%);
                 background-color: $box-color;
             } @else {
                 $box-color: lighten($background-color, $tx-bg * 15%);
+                $box-color: desaturate($box-color, saturation($box-color) / 2 );
                 color: mix($text-color, $box-color, 80%);
                 border-color: lighten($background-color, $tx-bg * 10%);
                 background-color: $box-color;
