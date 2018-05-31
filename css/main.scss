@@ -129,10 +129,10 @@ $side: null;
 }
 
 @mixin theme-styles($background-color: null, $text-color: null, $brand-color: null, $light-text: null) {
-    $light-theme: null; $tx-bg: null; $br-tx: null; $br-bg: null;
+    $light-theme: null; $ld-tx-bg: null; $ld-br-tx: null; $ld-br-bg: null;
     @if $background-color and $text-color {
         $light-theme: lightness($text-color) < lightness($background-color);
-        $tx-bg: abs(lightness($text-color) - lightness($background-color)) / 100%;
+        $ld-tx-bg: abs(lightness($text-color) - lightness($background-color)) / 100%;
 
         @if $light-theme and not($light-text) {
             $light-text: mix($text-color, $background-color, 58%);
@@ -150,8 +150,8 @@ $side: null;
     }
 
     @if $brand-color and $text-color and $background-color {
-        $br-tx: abs(lightness($brand-color) - lightness($text-color)) / 100%;
-        $br-bg: abs(lightness($brand-color) - lightness($background-color)) / 100%;
+        $ld-br-tx: abs(lightness($brand-color) - lightness($text-color)) / 100%;
+        $ld-br-bg: abs(lightness($brand-color) - lightness($background-color)) / 100%;
     }
 
     background-color: $background-color;
@@ -166,16 +166,16 @@ $side: null;
 
         pre, code {
             @if $light-theme {
-                $box-color: darken($background-color, $tx-bg * 15%);
+                $box-color: darken($background-color, $ld-tx-bg * 15%);
                 $box-color: desaturate($box-color, saturation($box-color) / 2 );
                 color: mix($text-color, $box-color, 80%);
-                border-color: darken($box-color, $tx-bg * 25%);
+                border-color: darken($box-color, $ld-tx-bg * 25%);
                 background-color: $box-color;
             } @else {
-                $box-color: lighten($background-color, $tx-bg * 15%);
+                $box-color: lighten($background-color, $ld-tx-bg * 15%);
                 $box-color: desaturate($box-color, saturation($box-color) / 2 );
                 color: mix($text-color, $box-color, 80%);
-                border-color: darken($box-color, $tx-bg * 10%);
+                border-color: darken($box-color, $ld-tx-bg * 10%);
                 background-color: $box-color;
             }
         }
@@ -207,8 +207,8 @@ $side: null;
             color: $brand-color;
 
             @if $text-color and $background-color {
-                &:hover { color: darken($brand-color, $br-tx * 45%); }
-                &:visited { color: lighten($brand-color, $br-bg * 35%); }
+                &:hover { color: darken($brand-color, $ld-br-tx * 45%); }
+                &:visited { color: lighten($brand-color, $ld-br-bg * 35%); }
             } @else {
                 &:hover { color: darken($brand-color, 15%); }
                 &:visited { color: darken($brand-color, 25%); }
