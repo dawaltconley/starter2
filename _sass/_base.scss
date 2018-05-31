@@ -144,15 +144,9 @@ hr {
  */
 
 a {
-    color: $brand-color;
     text-decoration: none;
 
-    &:visited {
-        color: darken($brand-color, 25%);
-    }
-
     &:hover {
-        color: darken($brand-color, 15%);
         text-decoration: underline;
     }
 }

@@ -128,9 +128,11 @@ $side: null;
     @return $return;
 }
 
-@mixin theme-styles($background-color: white, $text-color: black) {
+@mixin theme-styles($background-color: white, $text-color: black, $brand-color: royalblue) {
     $light-theme: lightness($text-color) < lightness($background-color);
-    $lightness-diff: abs(lightness($text-color) - lightness($background-color)) / 100%;
+    $tx-bg: abs(lightness($text-color) - lightness($background-color)) / 100%;
+    $br-tx: abs(lightness($brand-color) - lightness($text-color)) / 100%;
+    $br-bg: abs(lightness($brand-color) - lightness($background-color)) / 100%;
     $light-text: null;
 
     @if $light-theme {
@@ -158,35 +160,27 @@ $side: null;
 
     pre, code {
         @if $light-theme {
-            $box-color: darken($background-color, $lightness-diff * 25%);
+            $box-color: darken($background-color, $tx-bg * 25%);
             color: mix($text-color, $box-color, 65%);
-            border-color: darken($background-color, $lightness-diff * 40%);
+            border-color: darken($background-color, $tx-bg * 40%);
             background-color: $box-color;
         } @else {
-            $box-color: lighten($background-color, $lightness-diff * 15%);
+            $box-color: lighten($background-color, $tx-bg * 15%);
             color: mix($text-color, $box-color, 80%);
-            border-color: lighten($background-color, $lightness-diff * 10%);
+            border-color: lighten($background-color, $tx-bg * 10%);
             background-color: $box-color;
         }
     }
 
-    .theme-link {
-        @if $light-theme {
-            &:visited {
-                color: lighten($text-color, 25%);
-            }
+    a {
+        color: $brand-color;
 
-            &:hover {
-                color: lighten($text-color, 15%);
-            }
-        } @else {
-            &:visited {
-                color: darken($text-color, 25%);
-            }
+        &:hover {
+            color: darken($brand-color, $br-tx * 45%);
+        }
 
-            &:hover {
-                color: darken($text-color, 15%);
-            }
+        &:visited {
+            color: lighten($brand-color, $br-bg * 35%);
         }
     }
 

@@ -65,7 +65,8 @@
 body, .light {
     @include theme-styles(
         $text-color: #171717,
-        $background-color: white
+        $background-color: white,
+        $brand-color: royalblue
     );
 }
 
