@@ -80,6 +80,14 @@ $bp: (
     "mobile":   600px,
 );
 
+// Modules
+
+{% if jekyll.environment == 'accessibility' %}
+    @import "../node_modules/sass-color-helpers/stylesheets/_color-helpers.scss";
+{% else %}
+    @function ch-color-contrast($args...) { @return 21 };
+{% endif %}
+
 // Mixins
 
 $sides: "top", "bottom", "left", "right";
@@ -128,11 +136,15 @@ $side: null;
     @return $return;
 }
 
-@mixin theme-styles($background-color: null, $text-color: null, $brand-color: null, $light-text: null) {
-    $light-theme: null; $ld-tx-bg: null; $ld-br-tx: null; $ld-br-bg: null;
+@mixin theme-styles($background-color: null, $text-color: null, $brand-color: null, $light-text: null, $accessibility: "AA") {
+    $light-theme: null; $ld-tx-bg: null; $ld-br-tx: null; $ld-br-bg: null; $ct-tx-bg: null; $ct-br-tx: null; $ct-br-bg: null;
+    $aa: to-upper-case($accessibility) == "AA";
+    $aaa: to-upper-case($accessibility) == "AAA";
+
     @if $background-color and $text-color {
         $light-theme: lightness($text-color) < lightness($background-color);
         $ld-tx-bg: abs(lightness($text-color) - lightness($background-color)) / 100%;
+        $ct-tx-bg: ch-color-contrast($background-color, $text-color);
 
         @if $light-theme and not($light-text) {
             $light-text: mix($text-color, $background-color, 58%);
@@ -143,6 +155,12 @@ $side: null;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
+
+        @if $ct-tx-bg < 4.5 and $aa {
+            @warn "The contrast ratio of a theme's text (#{$text-color}) and background (#{$background-color}) colors is #{$ct-tx-bg}, which does not meet WCAG 2.0 AA standards.";
+        } @else if $ct-tx-bg < 7 and $aaa {
+            @warn "The contrast ratio of a theme's text (#{$text-color}) and background (#{$background-color}) colors is #{$ct-tx-bg}, which does not meet WCAG 2.0 AAA standards.";
+        }
     } @else if not($brand-color or $light-text) {
         @if $background-color { @warn "Insufficient arguments passed to theme include: $background-color needs to be accompanied by a $text-color."; }
         @else if $text-color { @warn "Insufficient arguments passed to theme include: $text-color needs to be accompanied by a $background-color."; }
@@ -152,6 +170,17 @@ $side: null;
     @if $brand-color and $text-color and $background-color {
         $ld-br-tx: abs(lightness($brand-color) - lightness($text-color)) / 100%;
         $ld-br-bg: abs(lightness($brand-color) - lightness($background-color)) / 100%;
+        $ct-br-tx: ch-color-contrast($brand-color, $text-color);
+        $ct-br-bg: ch-color-contrast($brand-color, $background-color);
+
+        @if $ct-br-tx < 3 and $aa {
+            @warn "The contrast ratio of a theme's link (#{$brand-color}) and text (#{$text-color}) colors is #{$ct-br-tx}, which does not meet WCAG 2.0 AA standards.";
+        }
+        @if $ct-br-bg < 4.5 and $aa {
+            @warn "The contrast ratio of a theme's link (#{$brand-color}) and background (#{$background-color}) colors is #{$ct-br-bg}, which does not meet WCAG 2.0 AA standards.";
+        } @else if $ct-br-bg < 7 and $aaa {
+            @warn "The contrast ratio of a theme's link (#{$brand-color}) and background (#{$background-color}) colors is #{$ct-br-bg}, which does not meet WCAG 2.0 AAA standards.";
+        }
     }
 
     background-color: $background-color;

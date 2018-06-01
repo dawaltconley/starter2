@@ -18,7 +18,9 @@
     "npm": "^5.5.1",
     "pump": "^2.0.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "sass-color-helpers": "^2.1.1"
+  },
   "scripts": {
     "build": "gulp"
   }

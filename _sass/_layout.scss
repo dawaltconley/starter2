@@ -66,14 +66,16 @@ body, .light {
     @include theme-styles(
         $text-color: #171717,
         $background-color: white,
-        $brand-color: royalblue
+        $brand-color: royalblue,
+        $accessibility: AA
     );
 }
 
 .dark {
     @include theme-styles(
         $text-color: white,
-        $background-color: #171717
+        $background-color: #171717,
+        $accessibility: AA
     );
 }
 
