@@ -121,23 +121,6 @@
     }
 
 /*
- * Rob Resize
- */
-
-    var rob = document.getElementById("rob-2");
-    var robContainer = document.querySelector("[data-rob-container]");
-    var personHeight = {{ site.person_height }};
-
-    function robResize() {
-        var containerHeight = robContainer.clientHeight - 60;
-        if (!rob.classList.contains("js-rob-resize") && (containerHeight / window.innerHeight) < (personHeight / 100)) {
-            rob.classList.add("js-rob-resize");
-        } else if (rob.classList.contains("js-rob-resize") && (containerHeight / window.innerHeight) > (personHeight / 100)) {
-            rob.classList.remove("js-rob-resize");
-        }
-    }
-
-/*
  * Event Listeners
  */
 
@@ -193,12 +176,6 @@
         }, passive);
     }
 
-    function addRobResizeListener() {
-        window.addEventListener("resize", function () {
-            robResize();
-        }, passive);
-    }
-
     if (smoothLinks.length > 0 && pageScrollBehavior != "smooth") {
         addSmoothScrollListeners();
     }
@@ -214,11 +191,6 @@
 
     if (elementsToHideOnScroll.length > 0) {
         addHideOnScrollListener();
-    }
-
-    if (rob && robContainer) {
-        addRobResizeListener();
-        robResize();
     }
 
 {% unless jekyll.environment == "development" %}
