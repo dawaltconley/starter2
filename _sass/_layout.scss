@@ -67,7 +67,6 @@ body, .light {
         $text-color: #171717,
         $background-color: white,
         $brand-color: royalblue,
-        $accessibility: AA
     );
 }
 
@@ -75,7 +74,6 @@ body, .light {
     @include theme-styles(
         $text-color: white,
         $background-color: #171717,
-        $accessibility: AA
     );
 }
 
