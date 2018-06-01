@@ -21,15 +21,17 @@
 .text-justify-full {
     @extend .text-justify;
 
-    @supports (text-align-last: justify) {
-        text-align-last: justify;
+    &::after {
+        content: "";
+        display: inline-block;
+        width: 100%;
     }
 
-    @supports (not (text-align-last: justify)) {
+    @supports (text-align-last: justify) {
+        text-align-last: justify;
+
         &::after {
-            content: "";
-            display: inline-block;
-            width: 100%;
+            display: none;
         }
     }
 }
@@ -92,11 +94,12 @@
 }
 
 .avoid-wrap {
+    white-space: nowrap;
+
     @supports(text-wrap: avoid) {
+        white-space: initial;
+        white-space: unset;
         text-wrap: avoid;
-    }
-    @supports(not(text-wrap: avoid)) {
-        white-space: nowrap;
     }
 }
 
