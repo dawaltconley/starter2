@@ -243,14 +243,12 @@
     function forceFullscreen(element) {
         var viewHeight = window.innerHeight;
         if (element.clientHeight != viewHeight) {
-            if (element.classList.contains("screen-height") || element.classList.contains("screen-size")) {
-                element.style.height = viewHeight.toString() + "px";
-            } else if (element.classList.contains("screen-height-min") || element.classList.contains("screen-size-min")) {
+            if (element.getAttribute("data-force-fullscreen") === "min") {
                 element.style.minHeight = viewHeight.toString() + "px";
-            } else if (element.classList.contains("screen-height-max") || element.classList.contains("screen-size-max")) {
+            } else if (element.getAttribute("data-force-fullscreen") === "max") {
                 element.style.maxHeight = viewHeight.toString() + "px";
             } else {
-                console.log("Found element with attribute [data-force-fullscreen], but no corresponding class. Expected screen-height or screen-size. Found on " + element);
+                element.style.height = viewHeight.toString() + "px";
             }
         }
     };
