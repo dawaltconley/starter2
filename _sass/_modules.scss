@@ -210,7 +210,7 @@
     padding: 4px;
 }
 
-@media screen and (max-width: map-get($bp, "mobile")) and (orientation: landscape) {
+@media screen and (max-height: map-get($bp, "mobile")) and (orientation: landscape) {
     [data-force-fullscreen].screen-height .scroll-arrow {
         display: none;
     }
