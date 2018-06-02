@@ -136,7 +136,7 @@ $side: null;
     @return $return;
 }
 
-@mixin theme-styles($background-color: null, $text-color: null, $brand-color: null, $light-text: null, $accessibility: "AA") {
+@mixin theme($background-color: null, $text-color: null, $brand-color: null, $light-text: null, $accessibility: "AA") {
     $light-theme: null; $ld-tx-bg: null; $ld-br-tx: null; $ld-br-bg: null; $ct-tx-bg: null; $ct-br-tx: null; $ct-br-bg: null;
     $aa: to-upper-case($accessibility) == "AA";
     $aaa: to-upper-case($accessibility) == "AAA";
