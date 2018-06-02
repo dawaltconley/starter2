@@ -247,6 +247,10 @@
                 element.style.height = viewHeight.toString() + "px";
             } else if (element.classList.contains("screen-height-min") || element.classList.contains("screen-size-min")) {
                 element.style.minHeight = viewHeight.toString() + "px";
+            } else if (element.classList.contains("screen-height-max") || element.classList.contains("screen-size-max")) {
+                element.style.maxHeight = viewHeight.toString() + "px";
+            } else {
+                console.log("Found element with attribute [data-force-fullscreen], but no corresponding class. Expected screen-height or screen-size. Found on " + element);
             }
         }
     };
