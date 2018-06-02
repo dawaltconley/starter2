@@ -352,7 +352,7 @@
         forceFullscreenAll();
     }
 
-    if (objectFitObjects.length > 0 && window.getComputedStyle(objectFitObjects[0].img).getPropertyValue("object-fit") == "") {
+    if (objectFitObjects.length > 0 && !CSS.supports("object-fit", "cover")) {
         objectFitFallback();
     }
 
