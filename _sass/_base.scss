@@ -50,8 +50,10 @@ h1, h2, h3, h4, h5, h6,
 p, blockquote, pre,
 ul, ol, dl, figure,
 %vertical-rhythm {
-    &:not(:last-child) {
-        margin-bottom: $spacing-unit;
+    margin-bottom: $spacing-unit;
+
+    &:last-child {
+        margin-bottom: 0;
     }
 }
 
