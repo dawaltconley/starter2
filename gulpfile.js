@@ -18,7 +18,7 @@ function jekyllBuild(env = "development") {
     child.execSync(cmd, { stdio: "inherit" });
 }
 
-gulp.task("build", jekyllBuild.bind(null, "netlify"));
+gulp.task("build", jekyllBuild.bind(null, "gulp"));
 
 gulp.task("css", ["build"], function (cb) {
     pump([
