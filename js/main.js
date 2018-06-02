@@ -210,28 +210,33 @@
  */
 
     var pageScrollBehavior = window.getComputedStyle(page).getPropertyValue("scroll-behavior");
-    var smoothLinks = toArray(document.querySelectorAll("[data-smooth-scroll]"));
-    // make objects
+    var smoothLinks = [];
+
+    toArray(document.querySelectorAll("[data-smooth-scroll]")).forEach(function (element) {
+        smoothLinks.push(new SmoothLink(element));
+    });
 
     zenscroll.setup(500, 0);
+
+    function SmoothLink(link) {
+        this.element = link;
+        this.target = document.querySelector(link.hash);
+    };
+
+    SmoothLink.prototype.scroll = function () {
+        var dur = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+        var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+        zenscroll.to(this.target, dur, offset);
+    };
 
     function receivesSmoothScroll(element) {
         for (var i=0; i < smoothLinks.length; i++) {
             var link = smoothLinks[i];
-            var linkTarget = document.querySelector(link.hash);
-            if (element === linkTarget) {
+            if (element === link.target) {
                 return true;
             }
         }
         return false;
-    };
-
-    function smoothScrollToHref(link) {
-        var dur = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-        var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-        var hash = link.hash;
-        var target = document.querySelector(hash);
-        zenscroll.to(target, dur, offset);
     };
 
 /*
@@ -307,9 +312,9 @@
 
     function addSmoothScrollListeners() {
         smoothLinks.forEach(function (link) {
-            link.addEventListener("click", function (event) {
+            link.element.addEventListener("click", function (event) {
                 event.preventDefault();
-                smoothScrollToHref(link);
+                link.scroll();
             });
         });
     };
