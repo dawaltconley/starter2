@@ -9,7 +9,7 @@
     var win = page;
 
     if (!page || window.getComputedStyle(page).getPropertyValue("perspective") == "none") {
-        page = getScrollableChild(document.documentElement);
+        page = document.scrollingElement ? document.scrollingElement : getScrollableChild(document.documentElement);
         win = window;
     }
 
