@@ -205,36 +205,6 @@
         }
     };
 
-    /*
-     * Object Fit Fallback
-     */
-
-    var objectFitElements = toArray(document.querySelectorAll('[class*="object-fit"]'));
-    var objectFitObjects = [];
-
-    objectFitElements.forEach(function (element) {
-        var newObjectFit = new ObjectFit(element);
-        objectFitObjects.push(newObjectFit);
-    });
-
-    function ObjectFit(element) {
-        this.container = element;
-        this.img = getChildBySelector(element, "img", 1);
-    }
-
-    ObjectFit.prototype.fallback = function () {
-        if (this.img) {
-            this.container.style.backgroundImage = "url(" + this.img.src + ")";
-            this.img.parentNode.removeChild(this.img);
-        }
-    };
-
-    if (objectFitObjects.length > 0 && window.getComputedStyle(objectFitObjects[0].img).getPropertyValue("object-fit") == "") {
-        objectFitObjects.forEach(function (object) {
-            object.fallback();
-        });
-    }
-
 /*
  * Scrolling
  */
