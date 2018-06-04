@@ -13,6 +13,7 @@
         win = window;
     }
 
+    jekyllEnv = "{{ jekyll.environment }}";
 /*
  * General-purpose functions
  */
@@ -419,7 +420,7 @@
         addHideOnScrollListener();
     }
 
-    if (iFrameAnalyticsObjects.length > 0) {
+    if (iFrameAnalyticsObjects.length > 0 && jekyllEnv == "gulp") {
         addIFrameListers();
     }
 
