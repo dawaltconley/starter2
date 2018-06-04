@@ -14,6 +14,7 @@
     }
 
     jekyllEnv = "{{ jekyll.environment }}";
+    hasGoogleAnalytics = "{{ site.google_analytics }}";
 /*
  * General-purpose functions
  */
@@ -429,7 +430,7 @@
         addHideOnScrollListener();
     }
 
-    if (analyticsObjects.length > 0 && jekyllEnv == "gulp") {
+    if (analyticsObjects.length > 0 && hasGoogleAnalytics && jekyllEnv == "gulp") {
         analyticsObjects.forEach(function (object) {
             object.addListener()
         });
