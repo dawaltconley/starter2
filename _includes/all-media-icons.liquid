@@ -13,7 +13,7 @@
             {% capture return %}<!--
                 -->{{ return }}<!--
                 {% if include.list %}--><li><!--{% endif %}
-                    -->{% include media-icon.liquid type=icon_type link=icon_link style=icon_style microdata=include.microdata %}<!--
+                    -->{% include media-icon.liquid type=icon_type link=icon_link style=icon_style microdata=include.microdata analytics=include.analytics %}<!--
                 {% if include.list %}--></li><!--{% endif %}
          -->{% endcapture %}
         {% endif %}

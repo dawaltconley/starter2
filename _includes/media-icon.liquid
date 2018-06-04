@@ -40,6 +40,18 @@
                 {% assign link_text = include.link %}
             {% endif %}
 
+            {% if icon.type == 'email' or icon.type == 'phone' %}
+                {% assign analytics_category = 'Contact Link' %}
+            {% else %}
+                {% assign analytics_category = 'Social Link' %}
+            {% endif %}
+
+            {% if include.analytics %}
+                {% assign analytics_label = include.analytics %}
+            {% else %}
+                {% capture analytics_label %}Clicked on {{ icon.type }} link{% endcapture %}
+            {% endif %}
+
             {% capture return %}
                 <a class="media-icon {{ icon.type }}-icon {{ icon_class }}
                   {% if icon.color == nil or icon.color == 'inherit' %}theme-link{% endif %}
@@ -47,6 +59,7 @@
                   {% if new_tab %}target="_blank"{% endif %}
                   {% if include.microdata and icon.type == 'email' %}itemprop="email"{% endif %}
                   {% if include.microdata and icon.type == 'phone' %}itemprop="telephone"{% endif %}
+                  {% if site.google_analytics %}data-analytics-category="{{ analytics_category }}" data-analytics-action="click" data-analytics-label="{{ analytics_label }}"{% endif %}
                   href="{{ icon_link }}" aria-label="{{ alt_text }}"><!--
                     {% if include.show_link %}--><span class="media-icon-text">{{ link_text }}</span><!--{% endif %}
              --></a>
