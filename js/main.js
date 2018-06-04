@@ -312,7 +312,7 @@
 
     iFrameAnalyticsObjects = [];
 
-    toArray(document.querySelectorAll('iframe[data-analytics-action="click"]')).forEach(function (element) {
+    toArray(document.querySelectorAll('iframe[data-analytics-category][data-analytics-action="click"][data-analytics-label]')).forEach(function (element) {
         iFrameAnalyticsObjects.push(new AnalyticsEventObj(element));
     });
 
