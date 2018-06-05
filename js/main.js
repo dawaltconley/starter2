@@ -326,19 +326,16 @@
         this.category = element.getAttribute("data-analytics-category");
         this.action = element.getAttribute("data-analytics-action");
         this.label = element.getAttribute("data-analytics-label");
-        this.firstInteraction = true;
-        this.isIFrame = false;
     };
 
     AnalyticsEventObj.prototype.send = function () {
         ga("send", "event", this.category, this.action, this.label);
-        this.firstInteraction = false;
     };
 
     AnalyticsEventObj.prototype.addListener = function () {
         if (this.element instanceof HTMLIFrameElement && this.action == "click") {
-            window.addEventListener("blur", iFrameClickEventListener, passive);
-            this.isIFrame = true;
+            this.listener = iFrameClickEventListener.bind(null, this);
+            window.addEventListener("blur", this.listener, passive);
         } else if (this.action == "click") {
             this.element.addEventListener("click", this.send.bind(this), passive);
         } else if (this.action == "view") {
@@ -354,20 +351,16 @@
         }
     };
 
-    function iFrameClickEventListener() {
+    function iFrameClickEventListener(eventObj) {
         window.setTimeout(function () {
-            element = document.activeElement;
-            for (var i=0; i < analyticsObjects.length; i++) {
-                obj = analyticsObjects[i];
-                if (element === obj.element && obj.isIFrame && obj.firstInteraction) {
-                    obj.send();
-                    break;
-                }
+            if (document.activeElement === eventObj.element) {
+                eventObj.send();
+                eventObj.element.addEventListener("mouseout", function refocus() {
+                    window.focus();
+                    this.removeEventListener("mouseout", refocus, passive);
+                }, passive);
+                window.removeEventListener("blur", eventObj.listener, passive);
             }
-            element.addEventListener("mouseout", function refocus() {
-                window.focus();
-                this.removeEventListener("mouseout", refocus, passive);
-            }, passive);
         }, 0);
     };
 
