@@ -341,6 +341,16 @@
             this.isIFrame = true;
         } else if (this.action == "click") {
             this.element.addEventListener("click", this.send.bind(this), passive);
+        } else if (this.action == "view") {
+            this.listener = scrollToViewEventListener.bind(null, this);
+            window.addEventListener("scroll", this.listener, passive);
+        }
+    };
+
+    function scrollToViewEventListener(eventObj) {
+        if (distToBottom(eventObj.element) <= 0) {
+            eventObj.send();
+            window.removeEventListener("scroll", eventObj.listener, passive);
         }
     };
 
