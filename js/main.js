@@ -220,6 +220,10 @@
         }
     };
 
+    function distToBottom(element) {
+        return Math.floor(element.getBoundingClientRect().bottom - page.clientHeight);
+    };
+
 /*
  * Scrolling
  */
