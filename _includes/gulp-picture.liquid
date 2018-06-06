@@ -1,5 +1,5 @@
 {% assign img = include.img %}
-{% if jekyll.environment == 'gulp' %}
+{% if jekyll.environment == 'production' or jekyll.environment == 'gulp' %}
     {% assign src = img | split: 'src="' | last | split: '"' | first %}
     <picture>
         {% if include.bp_list %}

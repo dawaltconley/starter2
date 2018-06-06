@@ -1,5 +1,5 @@
 <script>window.noZensmooth = true</script>
-{% if jekyll.environment == 'gulp' %}
+{% if jekyll.environment == 'production' or jekyll.environment == 'gulp' %}
   <script src="{{ site.baseurl }}/js/all.js"></script>
 {% else %}
   <script src="{{ site.baseurl }}/js/polyfills/scroll-restoration-polyfill.browser.js"></script>

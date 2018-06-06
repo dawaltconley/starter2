@@ -438,7 +438,7 @@
         addHideOnScrollListener();
     }
 
-    if (analyticsObjects.length > 0 && hasGoogleAnalytics && jekyllEnv == "gulp") {
+    if (analyticsObjects.length > 0 && hasGoogleAnalytics && jekyllEnv == "production") {
         analyticsObjects.forEach(function (object) {
             object.addListener();
         });

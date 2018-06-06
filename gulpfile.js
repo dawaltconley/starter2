@@ -13,12 +13,18 @@ var child = require("child_process");
 var YAML = require("js-yaml");
 var fs = require("fs");
 
+let jekyllEnv = "gulp";
+
+if (process.env.CONTEXT == "production") {
+    jekyllEnv = "production";
+}
+
 function jekyllBuild(env = "development") {
     var cmd = "JEKYLL_ENV=" + env + " jekyll build";
     child.execSync(cmd, { stdio: "inherit" });
 }
 
-gulp.task("build", jekyllBuild.bind(null, "gulp"));
+gulp.task("build", jekyllBuild.bind(null, jekyllEnv));
 
 gulp.task("css", ["build"], function (cb) {
     pump([

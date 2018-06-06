@@ -1,6 +1,6 @@
 {% capture blank %}
     {% assign src = include.src %}
-    {% if jekyll.environment == 'gulp' %}
+    {% if jekyll.environment == 'production' or jekyll.environment == 'gulp' %}
         {% if include.bp_list %}
             {% assign bp_list = include.bp_list %}
         {% else %}
