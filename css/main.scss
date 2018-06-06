@@ -1,6 +1,10 @@
 ---
 ---
 
+// Modules
+
+@import "../node_modules/sass-color-helpers/stylesheets/_color-helpers.scss"; // npm install --only dev
+
 // Basic Variables
 
 $spacing-unit:          30px;
@@ -80,14 +84,6 @@ $bp: (
     "mobile":   600px,
 );
 
-// Modules
-
-{% if jekyll.environment == 'accessibility' %}
-    @import "../node_modules/sass-color-helpers/stylesheets/_color-helpers.scss";
-{% else %}
-    @function ch-color-contrast($args...) { @return 21 };
-{% endif %}
-
 // Mixins
 
 $sides: "top", "bottom", "left", "right";
@@ -138,8 +134,8 @@ $side: null;
 
 @mixin theme($background-color: null, $text-color: null, $brand-color: null, $light-text: null, $accessibility: "AA") {
     $light-theme: null; $ld-tx-bg: null; $ld-br-tx: null; $ld-br-bg: null; $ct-tx-bg: null; $ct-br-tx: null; $ct-br-bg: null;
-    $aa: to-upper-case($accessibility) == "AA";
-    $aaa: to-upper-case($accessibility) == "AAA";
+    $aa: to-upper-case(inspect($accessibility)) == "AA";
+    $aaa: to-upper-case(inspect($accessibility)) == "AAA";
 
     @if $background-color and $text-color {
         $light-theme: lightness($text-color) < lightness($background-color);
