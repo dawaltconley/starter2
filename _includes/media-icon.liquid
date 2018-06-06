@@ -52,9 +52,8 @@
                 {% capture analytics_label %}Clicked on {{ icon.type }} link{% endcapture %}
             {% endif %}
 
-            {% capture return %}
-                <a class="media-icon {{ icon.type }}-icon {{ icon_class }}
-                  {% if icon.color == nil or icon.color == 'inherit' %}theme-link{% endif %}
+            {% capture return %}<!--
+             --><a class="media-icon {{ icon.type }}-icon {{ icon_class }}
                   {% if include.list %}fa-li subtle-link{% else %}subtle-icon{% endif %}" 
                   {% if new_tab %}target="_blank"{% endif %}
                   {% if include.microdata and icon.type == 'email' %}itemprop="email"{% endif %}
