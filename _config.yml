@@ -11,6 +11,7 @@ google_analytics: # tracking number
 permalink: /:title/ # default permalink structure for pages
 timezone: America/New_York # used for liquid-generated datetimes
 emptyArray: [] # variable for easy array creation
+auto_scroll: false # enables smooth scrolling for all same-page links using zenscroll
 bg_testing: false # turn on to enable the bg-testing.html include
 
 image_bp: # breakpoints used for creating responsive images

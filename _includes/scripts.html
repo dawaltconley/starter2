@@ -1,4 +1,6 @@
-<script>window.noZensmooth = true</script>
+{% unless site.auto_scroll %}
+  <script>window.noZensmooth = true</script>
+{% endunless %}
 {% if jekyll.environment == 'production' or jekyll.environment == 'gulp' %}
   <script src="{{ site.baseurl }}/js/all.js"></script>
 {% else %}
