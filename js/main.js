@@ -160,6 +160,18 @@
         }
     };
 
+    function getHash(element) { // for getting hash of an anchor, regardless of whether it is an HTML or SVG anchor
+        var elementClass = Object.prototype.toString.call(element);
+        if (elementClass == "[object SVGAElement]") {
+            var link = element.href.baseVal;
+            return link.slice(link.search("#"));
+        } else if (elementClass == "[object HTMLAnchorElement]") {
+            return element.hash;
+        } else {
+            return null;
+        }
+    };
+
     function clearClass(string, elements) {
         var className, allOfClass;
         if (string.charAt(0) === ".") {
