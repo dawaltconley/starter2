@@ -329,9 +329,11 @@
         this.label = element.getAttribute("data-analytics-label");
     };
 
-    AnalyticsEventObj.prototype.send = function () {
-        ga("send", "event", this.category, this.action, this.label);
-    };
+    if (jekyllEnv == 'production') {
+        AnalyticsEventObj.prototype.send = function () { ga("send", "event", this.category, this.action, this.label); }
+    } else {
+        AnalyticsEventObj.prototype.send = function () { console.log('Google Analytics Event: ga("send", "event", "%s", "%s", "%s")', this.category, this.action, this.label); }
+    }
 
     AnalyticsEventObj.prototype.addListener = function () {
         if (this.element instanceof HTMLIFrameElement && this.action == "click") {
@@ -438,7 +440,7 @@
         addHideOnScrollListener();
     }
 
-    if (analyticsObjects.length > 0 && hasGoogleAnalytics && jekyllEnv == "production") {
+    if (analyticsObjects.length > 0 && hasGoogleAnalytics) {
         analyticsObjects.forEach(function (object) {
             object.addListener();
         });
