@@ -224,19 +224,17 @@ body, .light {
 }
 
 .fill-window {
+    @extend .fixed, .top-left;
     @extend .full-size !optional;
-    position: fixed;
-    top: 0; left: 0;
 }
 
 .fill-parent {
+    @extend .absolute, .top-left;
     @extend .full-size !optional;
-    position: absolute;
-    top: 0; left: 0;
 }
 
 .expand-children {
-    position: relative;
+    @extend .relative;
 
     & > * {
         @extend .fill-parent;
