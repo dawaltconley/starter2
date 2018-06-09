@@ -297,34 +297,6 @@
     };
 
 /*
- * Object Fit Fallback
- */
-
-    var objectFitElements = [];
-
-    toArray(document.querySelectorAll('[class*="object-fit"]')).forEach(function (element) {
-        objectFitElements.push(new ObjectFit(element));
-    });
-
-    function ObjectFit(element) {
-        this.container = element;
-        this.img = getChildBySelector(element, "img", 1);
-    };
-
-    ObjectFit.prototype.fallback = function () {
-        if (this.img) {
-            this.container.style.backgroundImage = "url(" + this.img.src + ")";
-            this.img.parentNode.removeChild(this.img);
-        }
-    };
-
-    function objectFitFallback() {
-        objectFitElements.forEach(function (object) {
-            object.fallback();
-        });
-    };
-
-/*
  * Analytics
  */
 
@@ -435,6 +407,8 @@
         }, passive);
     };
 
+    objectFitImages();
+
     if (smoothLinks.length > 0 && pageScrollBehavior != "smooth") {
         addSmoothScrollListeners();
     }
@@ -442,10 +416,6 @@
     if (fullscreenElements.length > 0) {
         addOrientationChangeListener();
         forceFullscreenAll();
-    }
-
-    if (objectFitElements.length > 0 && !CSS.supports("object-fit", "cover")) {
-        objectFitFallback();
     }
 
     if (elementsToHideOnScroll.length > 0) {
