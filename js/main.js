@@ -314,9 +314,18 @@
     };
 
     if (jekyllEnv == 'production') {
-        AnalyticsEventObj.prototype.send = function () { ga("send", "event", this.category, this.action, this.label); }
+        AnalyticsEventObj.prototype.send = function (callback) {
+            ga("send", "event", this.category, this.action, this.label, {
+                "hitCallback": callback
+            });
+        }
     } else {
-        AnalyticsEventObj.prototype.send = function () { console.log('Google Analytics Event: ga("send", "event", "%s", "%s", "%s")', this.category, this.action, this.label); }
+        AnalyticsEventObj.prototype.send = function (callback) {
+            var cbString = "";
+            if (callback) { cbString = ', {\n    "hitCallback": ' + callback + '\n}'; }
+            console.log('Google Analytics Event: ga("send", "event", "%s", "%s", "%s"%s)', this.category, this.action, this.label, cbString);
+            callback();
+        }
     }
 
     AnalyticsEventObj.prototype.addListener = function () {
@@ -324,10 +333,28 @@
             this.listener = iFrameClickEventListener.bind(null, this);
             window.addEventListener("blur", this.listener, passive);
         } else if (this.action == "click") {
-            this.element.addEventListener("click", this.send.bind(this), passive);
+            this.listener = linkClickEventListener.bind(null, this)
+            this.element.addEventListener("click", this.listener);
         } else if (this.action == "view") {
             this.listener = scrollToViewEventListener.bind(null, this);
             window.addEventListener("scroll", this.listener, passive);
+        }
+    };
+
+    function linkClickEventListener(eventObj, event) {
+        if (document.origin == eventObj.element.origin) {
+            eventObj.send();
+        } else {
+            event.preventDefault();
+            function followLink() {
+                if (eventObj.element.target) {
+                    window.open(eventObj.element.href, eventObj.element.target);
+                } else {
+                    window.open(eventObj.element.href);
+                }
+            }
+            window.setTimeout(followLink, 1000);
+            eventObj.send(followLink);
         }
     };
 
