@@ -394,7 +394,7 @@ $side: null;
             position: absolute;
             top: $blur-offset; left: $blur-offset; right: $blur-offset; bottom: $blur-offset;
             @include blur($blur);
-            @include background-image($image, $x, $y, $lighten, $darken, $responsive: $responsive);
+            @include background-image($image:$image, $x:$x, $y:$y, $lighten:$lighten, $darken:$darken, $responsive:$responsive);
             z-index: -1;
         }
     } @else if $image != none {
