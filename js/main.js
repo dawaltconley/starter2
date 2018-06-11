@@ -346,11 +346,11 @@
             eventObj.send();
         } else {
             event.preventDefault();
+            var linkFollowed = false;
             function followLink() {
-                if (eventObj.element.target) {
+                if (!linkFollowed) {
+                    linkFollowed = true;
                     window.open(eventObj.element.href, eventObj.element.target);
-                } else {
-                    window.open(eventObj.element.href);
                 }
             }
             window.setTimeout(followLink, 1000);
