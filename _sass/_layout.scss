@@ -249,8 +249,6 @@ body, .light {
 .contains-3d {
     -webkit-perspective: $perspective;
     perspective: $perspective;
-    -webkit-transform-style: preserve-3d;
-    transform-style: preserve-3d;
 
     &-deep * {
         @extend .contains-3d;
