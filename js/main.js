@@ -314,17 +314,17 @@
     };
 
     if (jekyllEnv == 'production') {
-        AnalyticsEventObj.prototype.send = function (callback) {
+        AnalyticsEventObj.prototype.send = function () {
+            var callback = arguments.length > 0 && arguments[0] != undefined ? arguments[0] : function(){};
             ga("send", "event", this.category, this.action, this.label, {
                 "hitCallback": callback
             });
         }
     } else {
         AnalyticsEventObj.prototype.send = function (callback) {
-            var cbString = "";
-            if (callback) { cbString = ', {\n    "hitCallback": ' + callback + '\n}'; }
+            var cbString = callback ? ', {\n    "hitCallback": ' + callback + '\n}' : '';
             console.log('Google Analytics Event: ga("send", "event", "%s", "%s", "%s"%s)', this.category, this.action, this.label, cbString);
-            callback();
+            callback ? callback() : undefined;
         }
     }
 
