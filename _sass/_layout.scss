@@ -50,6 +50,12 @@
     }
 }
 
+@each $name, $value in $positions {
+    @include all-sides("pos-" + $name) {
+        #{$side}: $value;
+    }
+}
+
 @each $name, $styles in $borders {
     @include all-sides("border-" + $name) {
         border-#{$side}-width: map-get($styles, width);
