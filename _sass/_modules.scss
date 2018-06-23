@@ -193,10 +193,6 @@ img.object-fit-cover {
     font-family: 'object-fit: cover;'
 }
 
-.splash-img {
-    @include background-image($splash-image, $darken: .4, $responsive: true);
-}
-
 /*
  * Icons
  */
