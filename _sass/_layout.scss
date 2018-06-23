@@ -143,6 +143,27 @@ body, .light {
     @extend .absolute, .bottom, .right;
 }
 
+.abs-center {
+    @extend .absolute;
+    top: 50%; left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.abs-center-h {
+    @extend .absolute;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+.abs-center-v {
+    @extend .absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
 @for $i from -9 through 9 {
     $class-name: z-#{$i};
     @if ($i < 0) {
