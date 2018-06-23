@@ -450,6 +450,16 @@ $side: null;
     }
 }
 
+@mixin transform($transform) {
+    -webkit-transform: $transform;
+    transform: $transform;
+
+    &.hw-accel {
+        -webkit-transform: $transform translateZ(0);
+        transform: $transform translateZ(0);
+    }
+}
+
 // Partials
 
 @import

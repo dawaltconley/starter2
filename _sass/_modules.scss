@@ -399,53 +399,33 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
  * Transforms
  */
 
-.hw-accel {
+.hw-accel { // use the transform include to ensure that hw-accel is not overwritten by other transform classes
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
 }
 
 .translate-left {
-    -webkit-transform: translateX(-100%);
-    transform: translateX(-100%);
+    @include transform(translateX(-100%));
 }
 
 .translate-left-half {
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-}
-
-.translate-left-10 {
-    -webkit-transform: translateX(-10%);
-    transform: translateX(-10%);
-}
-
-.translate-left-65 {
-    transform: translateX(-65%);
+    @include transform(translateX(-50%));
 }
 
 .translate-right {
-    -webkit-transform: translateX(100%);
-    transform: translateX(100%);
+    @include transform(translateX(100%));
 }
 
 .translate-right-half {
-    -webkit-transform: translateX(50%);
-    transform: translateX(50%);
-}
-
-.translate-right-10 {
-    -webkit-transform: translateX(10%);
-    transform: translateX(10%);
+    @include transform(translateX(50%));
 }
 
 .translate-x-none {
-    -webkit-transform: translateX(0%);
-    transform: translateX(0%);
+    @include transform(translateX(0%));
 }
 
 .flip-x {
-    -webkit-transform: rotate3d(1, 0, 0, 180deg);
-    transform: rotate3d(1, 0, 0, 180deg);
+    @include transform(rotate3d(1, 0, 0, 180deg));
 }
 
 .no-backface {
