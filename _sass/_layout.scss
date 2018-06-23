@@ -226,13 +226,11 @@ body, .light {
 }
 
 .fill-window {
-    @extend .fixed, .top-left;
-    @extend .full-size !optional;
+    @extend .fixed, .pos-0;
 }
 
 .fill-parent {
-    @extend .absolute, .top-left;
-    @extend .full-size !optional;
+    @extend .absolute, .pos-0;
 }
 
 .expand-children {
