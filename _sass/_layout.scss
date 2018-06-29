@@ -1,68 +1,4 @@
 /*
- * Generated
- */
-
-@each $name, $size in $sizes {
-    $width: null;
-    $height: null;
-
-    @if length($size) == 1 {
-        $width: $size;
-        $height: $size;
-    } @else if length($size) == 2 {
-        $width: nth($size, 1);
-        $height: nth($size, 2);
-    } @else {
-        @error "Wrong number of values in #{$name} size.";
-    }
-
-    .#{$name} {
-        &-size, &-width {
-            width: $width;
-        }
-        &-size, &-height {
-            height: $height;
-        }
-        &-size-min, &-width-min {
-            min-width: $width;
-        }
-        &-size-min, &-height-min {
-            min-height: $height;
-        }
-        &-size-max, &-width-max {
-            max-width: $width;
-        }
-        &-size-max, &-height-max {
-            max-height: $height;
-        }
-    }
-}
-
-@each $name, $size in $margins {
-    .margin-#{$name} {
-        @include all-sides {
-            margin-#{$side}: $size;
-        }
-    }
-}
-
-@each $name, $size in $paddings {
-    .padding-#{$name} {
-        @include all-sides {
-            padding-#{$side}: $size;
-        }
-    }
-}
-
-@each $name, $value in $positions {
-    .pos-#{$name} {
-        @include all-sides {
-            #{$side}: $value;
-        }
-    }
-}
-
-/*
  * Themes
  */
 
@@ -107,6 +43,117 @@ body, .light {
 
 .fixed {
     position: fixed;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.v-rhythm > * {
+    @extend %vertical-rhythm;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+    border-spacing: 0;
+}
+
+/*
+ * Sizes
+ */
+
+@each $name, $size in $sizes {
+    $width: null;
+    $height: null;
+
+    @if length($size) == 1 {
+        $width: $size;
+        $height: $size;
+    } @else if length($size) == 2 {
+        $width: nth($size, 1);
+        $height: nth($size, 2);
+    } @else {
+        @error "Wrong number of values in #{$name} size.";
+    }
+
+    .#{$name} {
+        &-size, &-width {
+            width: $width;
+        }
+        &-size, &-height {
+            height: $height;
+        }
+        &-size-min, &-width-min {
+            min-width: $width;
+        }
+        &-size-min, &-height-min {
+            min-height: $height;
+        }
+        &-size-max, &-width-max {
+            max-width: $width;
+        }
+        &-size-max, &-height-max {
+            max-height: $height;
+        }
+    }
+}
+
+.max-width-none {
+    max-width: none;
+}
+
+.max-height-none {
+    max-height: none;
+}
+
+/*
+ * Margins
+ */
+
+@each $name, $size in $margins {
+    .margin-#{$name} {
+        @include all-sides {
+            margin-#{$side}: $size;
+        }
+    }
+}
+
+/*
+ * Paddings
+ */
+
+@each $name, $size in $paddings {
+    .padding-#{$name} {
+        @include all-sides {
+            padding-#{$side}: $size;
+        }
+    }
+}
+
+/*
+ * Positioning
+ */
+
+@each $name, $value in $positions {
+    .pos-#{$name} {
+        @include all-sides {
+            #{$side}: $value;
+        }
+    }
 }
 
 .top {
@@ -168,41 +215,6 @@ body, .light {
         @extend .relative;
         z-index: $i;
     }
-}
-
-.max-width-none {
-    max-width: none;
-}
-
-.max-height-none {
-    max-height: none;
-}
-
-.float-left {
-    float: left;
-}
-
-.float-right {
-    float: right;
-}
-
-.v-rhythm > * {
-    @extend %vertical-rhythm;
-
-    &:last-child {
-        margin-bottom: 0;
-    }
-}
-
-.hidden {
-    display: none;
-}
-
-.clearfix:after {
-    content: "";
-    display: table;
-    clear: both;
-    border-spacing: 0;
 }
 
 /*
