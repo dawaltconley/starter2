@@ -243,6 +243,14 @@ body, .light {
     }
 }
 
+.center-child {
+    @extend .relative;
+
+    & > *:only-child {
+        @extend .abs-center;
+    }
+}
+
 .aspect-16-9 {
     @include fixed-ratio(16, 9);
 }
