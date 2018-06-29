@@ -75,7 +75,7 @@ iframe {
  */
 
 figure > img {
-    display: block;
+    @extend .block;
 }
 
 figcaption {
@@ -201,6 +201,6 @@ pre {
  */
 
 svg {
-    display: inline; // for ie and others
-    display: initial;
+    @include display(inline); // for ie and others
+    @include display(initial);
 }

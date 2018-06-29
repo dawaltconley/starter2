@@ -22,15 +22,19 @@ body, .light {
  */
 
 .block {
-    display: block;
+    @include display(block);
 }
 
 .inline {
-    display: inline;
+    @include display(inline);
 }
 
 .inline-block {
-    display: inline-block;
+    @include display(inline-block);
+}
+
+.hidden {
+    display: none;
 }
 
 .relative {
@@ -59,10 +63,6 @@ body, .light {
     &:last-child {
         margin-bottom: 0;
     }
-}
-
-.hidden {
-    display: none;
 }
 
 .transparent {
@@ -340,7 +340,7 @@ body, .light {
  */
 
 .table {
-    display: table;
+    @include display(table);
 }
 
 .table-fixed {
@@ -349,15 +349,15 @@ body, .light {
 }
 
 .column {
-    display: column;
+    @include display(column);
 }
 
 .row {
-    display: table-row;
+    @include display(table-row);
 }
 
 .cell {
-    display: table-cell;
+    @include display(table-cell);
 }
 
 .v-middle {
@@ -365,7 +365,7 @@ body, .light {
 }
 
 %columns {
-    display: table;
+    @extend .table;
     width: calc(100% + (#{$spacing-unit} * 2));
     margin: -$spacing-unit;
     border-spacing: $spacing-unit;
@@ -399,7 +399,7 @@ body, .light {
     white-space: nowrap;
 
     > * {
-        display: inline-block;
+        @extend .inline-block;
         white-space: normal;
     }
 }
@@ -408,13 +408,21 @@ body, .light {
  * Flexbox
  */
 
+%flex {
+    @include display(flex);
+}
+
+.inline-flex {
+    @include display(inline-flex);
+}
+
 .flex-row {
-    display: flex;
+    @extend %flex;
     flex-direction: row;
 }
 
 .flex-col {
-    display: flex;
+    @extend %flex;
     flex-direction: column;
 }
 

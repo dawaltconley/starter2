@@ -240,7 +240,7 @@ img.object-fit-cover {
 
 // universal styling for the anchor tags that contain social-media fa-icons.
 .media-icon {
-    display: inline-block;
+    @extend .inline-block;
     position: relative;
     line-height: inherit;
     transition: .3s;
@@ -310,8 +310,7 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
 
 // forces icon links to fill a certain size, with icon hovering in the middle
 .media-icon-bloat .media-icon {
-    @extend .flex-center;
-    display: inline-flex;
+    @extend .flex-center, .inline-flex;
     min-width: 1.2em;
     min-height: 1.2em;
 }
@@ -340,11 +339,10 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
     }
 
     &:not(.media-icon-circle) > li {
-        display: inline-flex;
+        @extend .inline-flex;
 
         > .media-icon:only-child {
-            display: flex;
-            @extend .flex-center, .fill-flex-parent;
+            @extend %flex, .flex-center, .fill-flex-parent;
         }
     }
 }
@@ -464,6 +462,14 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
  * Hover
  */
 
+.hover-display {
+    display: none;
+
+    @include hover {
+        display: initial;
+    }
+}
+
 .hover-fade-in {
     opacity: 0;
     -webkit-transition-property: opacity;
@@ -532,7 +538,7 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
     display: none;
 
     &:target {
-        display: inherit;
+        display: initial;
     }
 }
 

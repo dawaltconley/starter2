@@ -252,6 +252,26 @@ $side: null;
 
 }
 
+@mixin display($display) {
+    display: $display;
+
+    &.hover-display {
+        display: none;
+
+        @include hover {
+            display: $display;
+        }
+    }
+
+    &.target-display {
+        display: none;
+
+        &:target {
+            display: $display;
+        }
+    }
+}
+
 @mixin wrapper ($breakpoints, $min-margins: $spacing-unit) {
     $bp-first: nth($breakpoints, 1);
     $bp-last: nth($breakpoints, length($breakpoints));
