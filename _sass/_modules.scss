@@ -556,3 +556,16 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
  * Media Queries
  */
 
+@each $name, $breakpoint in $bp {
+    .hide-on-#{$name} {
+        @media screen and (max-width: $breakpoint) {
+            display: none;
+        }
+    }
+
+    .show-on-#{$name} {
+        @media screen and (min-width: $breakpoint + 1) {
+            display: none;
+        }
+    }
+}
