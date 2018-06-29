@@ -420,8 +420,28 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
     @include transform(translateX(50%));
 }
 
+.translate-up {
+    @include transform(translateY(-100%));
+}
+
+.translate-up-half {
+    @include transform(translateY(-50%));
+}
+
+.translate-down {
+    @include transform(translateY(100%));
+}
+
+.translate-down-half {
+    @include transform(translateY(50%));
+}
+
 .translate-x-none {
     @include transform(translateX(0%));
+}
+
+.translate-y-none {
+    @include transform(translateY(0%));
 }
 
 .flip-x {
