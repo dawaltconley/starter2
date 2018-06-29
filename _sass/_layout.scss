@@ -211,30 +211,6 @@ body, .light {
 }
 
 /*
- * Wrappers
- */
-
-.content-wrapper {
-    @include wrapper(map-values($bp));
-}
-
-.text-wrapper {
-    max-width: $base-line-length;
-}
-
-.unwrap {
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-}
-
-.stretch {
-    @extend .unwrap;
-    padding-left: calc(50vw - 50%);
-    padding-right: calc(50vw - 50%);
-}
-
-/*
  * Containers
  */
 
@@ -285,6 +261,30 @@ body, .light {
 .render-3d {
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
+}
+
+/*
+ * Wrappers
+ */
+
+.content-wrapper {
+    @include wrapper(map-values($bp));
+}
+
+.text-wrapper {
+    max-width: $base-line-length;
+}
+
+.unwrap {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+}
+
+.stretch {
+    @extend .unwrap;
+    padding-left: calc(50vw - 50%);
+    padding-right: calc(50vw - 50%);
 }
 
 /*
