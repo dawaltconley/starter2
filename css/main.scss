@@ -3,7 +3,11 @@
 
 // Modules
 
-@import "../node_modules/sass-color-helpers/stylesheets/_color-helpers.scss"; // npm install --only dev
+{% unless jekyll.environment == 'production' %}
+    @import "../node_modules/sass-color-helpers/stylesheets/_color-helpers.scss"; // npm install --only dev
+{% else %}
+    @function ch-color-contrast($args...) { @return 21 };
+{% endunless %}
 
 // Basic Variables
 
@@ -102,14 +106,12 @@ $side: null;
     }
 }
 
-@mixin all-sides($class-name) {
-    .#{$class-name} {
-        @each $name in $sides {
-            $side: $name !global;
-            $o: str-slice(get-orientation($side), 1, 1);
-            &, &-#{$o}, &-#{str-slice($side, 1, 1)} {
-                @content;
-            }
+@mixin all-sides {
+    @each $name in $sides {
+        $side: $name !global;
+        $o: str-slice(get-orientation($side), 1, 1);
+        &, &-#{$o}, &-#{str-slice($side, 1, 1)} {
+            @content;
         }
     }
 }

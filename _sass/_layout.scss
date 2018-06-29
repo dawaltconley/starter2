@@ -39,28 +39,36 @@
 }
 
 @each $name, $size in $margins {
-    @include all-sides("margin-" + $name) {
-        margin-#{$side}: $size;
+    .margin-#{$name} {
+        @include all-sides {
+            margin-#{$side}: $size;
+        }
     }
 }
 
 @each $name, $size in $paddings {
-    @include all-sides("padding-" + $name) {
-        padding-#{$side}: $size;
+    .padding-#{$name} {
+        @include all-sides {
+            padding-#{$side}: $size;
+        }
     }
 }
 
 @each $name, $value in $positions {
-    @include all-sides("pos-" + $name) {
-        #{$side}: $value;
+    .pos-#{$name} {
+        @include all-sides {
+            #{$side}: $value;
+        }
     }
 }
 
 @each $name, $styles in $borders {
-    @include all-sides("border-" + $name) {
-        border-#{$side}-width: map-get($styles, width);
-        border-#{$side}-style: map-get($styles, style);
-        border-#{$side}-color: map-get($styles, color);
+    .border-#{$name} {
+        @include all-sides {
+            border-#{$side}-width: map-get($styles, width);
+            border-#{$side}-style: map-get($styles, style);
+            border-#{$side}-color: map-get($styles, color);
+        }
     }
 }
 
