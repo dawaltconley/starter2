@@ -235,11 +235,6 @@ body, .light {
     }
 }
 
-%fixed-ratio { // extended by the fixed-ratio mixin
-    @extend .expand-children;
-    height: 0;
-}
-
 .aspect-16-9 {
     @include fixed-ratio(16, 9);
 }

@@ -278,8 +278,8 @@ $side: null;
 }
 
 @mixin fixed-ratio ($x, $y, $width: 100%) {
-    @extend %fixed-ratio; // found in _layout partial
     width: $width;
+    height: 0;
     padding-top: $y/$x * $width;
 }
 
