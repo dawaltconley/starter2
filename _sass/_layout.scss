@@ -21,6 +21,10 @@ body, .light {
  * Basic
  */
 
+%hidden { // used when you want display classes to override
+    display: none;
+}
+
 .block {
     @include display(block);
 }

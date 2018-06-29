@@ -547,15 +547,27 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
  */
 
 @each $name, $breakpoint in $bp {
-    .hide-on-#{$name} {
+    .hide-max-#{$name} {
         @media screen and (max-width: $breakpoint) {
             display: none;
         }
     }
 
-    .show-on-#{$name} {
+    .hide-min-#{$name} {
         @media screen and (min-width: $breakpoint + 1) {
             display: none;
+        }
+    }
+
+    .show-max-#{$name} {
+        @media screen and (max-width: $breakpoint) {
+            display: initial;
+        }
+    }
+
+    .show-min-#{$name} {
+        @media screen and (min-width: $breakpoint + 1) {
+            display: initial;
         }
     }
 }
