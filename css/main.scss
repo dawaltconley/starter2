@@ -215,11 +215,15 @@ $side: null;
         }
 
         .border-light, &.border-light {
-            border-color: mix($text-color, $background-color, 10%);
+            @include all-sides {
+                border-color: mix($text-color, $background-color, 10%);
+            }
         }
 
         .border-x-light, &.border-x-light {
-            border-color: mix($text-color, $background-color, 5%);
+            @include all-sides {
+                border-color: mix($text-color, $background-color, 5%);
+            }
         }
     } @else if $light-text {
         blockquote {

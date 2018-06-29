@@ -115,22 +115,6 @@
  * Block Styles
  */
 
-.border-between {
-    @extend .border-basic-b;
-
-    &:last-of-type {
-        border-bottom: 0;
-    }
-}
-
-.border-around {
-    @extend .border-basic-b;
-
-    &:first-of-type {
-        @extend .border-basic-t;
-    }
-}
-
 .radial-shadow {
     $density: 0.3;
     $reach: 0%;
