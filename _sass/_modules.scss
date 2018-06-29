@@ -482,8 +482,8 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
 
 .hover-fade-in {
     opacity: 0;
-    -webkit-transition: opacity $trans-default;
-    transition: opacity $trans-default;
+    -webkit-transition-property: opacity;
+    transition-property: opacity;
 
     @include hover {
         opacity: 1;
