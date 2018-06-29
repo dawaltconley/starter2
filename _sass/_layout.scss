@@ -65,6 +65,14 @@ body, .light {
     display: none;
 }
 
+.transparent {
+    opacity: 0;
+}
+
+.content-box {
+    box-sizing: content-box;
+}
+
 .clearfix:after {
     content: "";
     display: table;
