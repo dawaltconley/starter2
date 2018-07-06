@@ -218,7 +218,7 @@ body, .light {
     @include transform(translateY(-50%));
 }
 
-@for $i from -9 through 9 {
+@for $i from nth($z-range, 1) through nth($z-range, 2) {
     $class-name: z-#{$i};
     @if ($i < 0) {
         $class-name: z-neg-#{($i * -1)};
