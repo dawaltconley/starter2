@@ -193,6 +193,30 @@ $side: null;
     color: $text-color;
     border-color: $text-color;
 
+    .fill-color-theme, &.fill-color-theme {
+        &-text {
+            fill: $text-color;
+        }
+        &-bg {
+            fill: $background-color;
+        }
+        &-brand {
+            fill: $brand-color;
+        }
+    }
+
+    .stroke-color-theme, &.stroke-color-theme {
+        &-text {
+            stroke: $text-color;
+        }
+        &-bg {
+            stroke: $background-color;
+        }
+        &-brand {
+            stroke: $brand-color;
+        }
+    }
+
     @if $background-color and $text-color {
         @at-root & blockquote, blockquote#{nth(&, length(&))} {
             color: $light-text;
