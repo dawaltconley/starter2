@@ -55,43 +55,25 @@
     };
 
     function getTransitionTime(element) {
-        var dur = 0;
-        var transition = window.getComputedStyle(element).getPropertyValue("transition").split(", ");
-
-        for (var _len = arguments.length, properties = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        var properties, durSet = [ 0 ];
+        for (var _len = arguments.length, properties = Array(_len > 1 ? _len - 1 : "all"), _key = 1; _key < _len; _key++) {
             properties[_key - 1] = arguments[_key];
         }
-
-        if (properties.length > 0) {
-            properties.forEach(function (property) {
-                transition.forEach(function (transitionSet) {
-                    var propertyMatch = new RegExp("(\\s|^)" + property + "(\\s|$)");
-                    if (transitionSet.search(propertyMatch) >= 0) {
-                        transitionSet.split(" ").forEach(function (value) {
-                            if (value.search(/\ds$/) >= 0) {
-                                var seconds = Number(value.replace("s", ""));
-                                dur += seconds;
-                            }
-                        });
-                    }
-                });
-            });
-        } else {
-            var durElement = void 0,
-                durSet = [];
-            transition.forEach(function (transitionSet) {
-                durElement = 0;
-                transitionSet.split(" ").forEach(function (value) {
-                    if (value.search(/\ds$/) >= 0) {
-                        var seconds = Number(value.replace("s", ""));
-                        durElement += seconds;
-                    }
-                });
-                durSet.push(durElement);
-            });
-            dur = Math.max.apply(null, durSet);
-        }
-        return dur * 1000;
+        var computedStyle = window.getComputedStyle(element);
+        var prefix = computedStyle.getPropertyValue("transition-duration") ? "" : "-webkit-";
+        var tProperty = computedStyle.getPropertyValue(prefix + "transition-property").split(", ");
+        var tDur = computedStyle.getPropertyValue(prefix + "transition-duration").split(", ");
+        var tDelay = computedStyle.getPropertyValue(prefix + "transition-delay").split(", ");
+        properties.forEach(function (property) {
+            for (var i=0; i < tProperty.length; i++) {
+                if (property == tProperty[i] || tProperty[i] == "all" || property == "all") {
+                    var dur = Number(tDur[i].replace("s", ""));
+                    var delay = Number(tDelay[i].replace("s", ""));
+                    durSet.push((dur + delay) * 1000);
+                }
+            }
+        });
+        return Math.max.apply(null, durSet);
     };
 
     function scrollBottom(element) {
