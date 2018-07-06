@@ -494,6 +494,8 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
 
 .hover-scale {
     transform: scale(1) translateZ(0);
+    -webkit-transition-property: transform;
+    transition-property: transform;
 
     @include hover {
         transform: scale(1.05) translateZ(0);
@@ -507,6 +509,8 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
         @extend .fill-parent, .t-inherit;
         content: "";
         background-color: rgba(white, 0);
+        -webkit-transition-property: background-color;
+        transition-property: background-color;
     }
 
     @include hover {
@@ -523,6 +527,8 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
         @extend .fill-parent, .t-inherit;
         content: "";
         background-color: rgba(black, 0);
+        -webkit-transition-property: background-color;
+        transition-property: background-color;
     }
 
     @include hover {
