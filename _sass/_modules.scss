@@ -565,26 +565,24 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
  */
 
 @each $name, $breakpoint in $bp {
-    .hide-max-#{$name} {
-        @media screen and (max-width: $breakpoint) {
+    @media screen and (max-width: $breakpoint) {
+        .hide-lt-#{$name} {
             display: none;
         }
-    }
 
-    .hide-min-#{$name} {
-        @media screen and (min-width: $breakpoint + 1) {
-            display: none;
-        }
-    }
-
-    .show-max-#{$name} {
-        @media screen and (max-width: $breakpoint) {
+        .show-lt-#{$name} {
+            display: block; // ie fallback
             display: initial;
         }
     }
 
-    .show-min-#{$name} {
-        @media screen and (min-width: $breakpoint + 1) {
+    @media screen and (min-width: $breakpoint + 1) {
+        .hide-gt-#{$name} {
+            display: none;
+        }
+
+        .show-gt-#{$name} {
+            display: block; // ie fallback
             display: initial;
         }
     }
