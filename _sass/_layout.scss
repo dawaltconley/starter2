@@ -380,10 +380,11 @@ body, .light {
 }
 
 %columns {
+    $spacing: map-get($paddings, m);
     @extend .table;
-    width: calc(100% + (#{$spacing-unit} * 2));
-    margin: -$spacing-unit;
-    border-spacing: $spacing-unit;
+    width: calc(100% + (#{$spacing} * 2));
+    margin: -$spacing;
+    border-spacing: $spacing;
     table-layout: fixed;
 
     &:last-child > :last-child {
