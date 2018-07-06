@@ -331,19 +331,22 @@ body, .light {
     }
 }
 
-.border-between {
-    @extend .border-basic-b;
+.border-between > * {
+    border-top-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
 
-    &:last-of-type {
-        border-bottom: 0;
+    &:last-child {
+        border-bottom-width: 0;
     }
 }
 
-.border-around {
-    @extend .border-basic-b;
+.border-around > * {
+    border-left-width: 0;
+    border-right-width: 0;
 
-    &:first-of-type {
-        @extend .border-basic-t;
+    &:nth-child(n + 1) {
+        border-top-width: 0;
     }
 }
 
