@@ -268,29 +268,25 @@ $side: null;
     display: $display;
 
     &.hover-display {
-        @extend %hidden;
-
         @include hover {
             display: $display;
         }
     }
 
     &.target-display {
-        @extend %hidden;
-
         &:target {
             display: $display;
         }
     }
 
     @each $name, $breakpoint in $bp {
-        &.show-max-#{$name} {
+        &.show-lt-#{$name} {
             @media screen and (max-width: $breakpoint) {
                 display: $display;
             }
         }
 
-        &.show-min-#{$name} {
+        &.show-gt-#{$name} {
             @media screen and (min-width: $breakpoint + 1) {
                 display: $display;
             }
