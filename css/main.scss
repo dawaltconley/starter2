@@ -194,12 +194,12 @@ $side: null;
     border-color: $text-color;
 
     @if $background-color and $text-color {
-        blockquote {
+        @at-root & blockquote, blockquote#{nth(&, length(&))} {
             color: $light-text;
             border-left-color: mix($light-text, $background-color, 25%);
         }
 
-        pre, code {
+        @at-root & pre, pre#{nth(&, length(&))}, & code, code#{nth(&, length(&))} {
             @if $light-theme {
                 $box-color: darken($background-color, $ld-tx-bg * 15%);
                 $box-color: desaturate($box-color, saturation($box-color) / 2 );
@@ -231,7 +231,7 @@ $side: null;
             }
         }
     } @else if $light-text {
-        blockquote {
+        @at-root & blockquote, blockquote#{nth(&, length(&))} {
             color: $light-text;
             border-left-color: lighten($light-text, 25%);
         }
@@ -242,7 +242,7 @@ $side: null;
     }
 
     @if $brand-color {
-        a {
+        @at-root & a, a#{nth(&, length(&))} {
             color: $brand-color;
 
             @if $text-color and $background-color {
