@@ -252,6 +252,13 @@ $side: null;
         }
     }
 
+    .subtle-link, &.subtle-link {
+        text-decoration: none;
+
+        &, &:hover, &:visited {
+            color: $text-color;
+        }
+    }
 }
 
 @mixin display($display) {
