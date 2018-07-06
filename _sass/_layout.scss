@@ -229,6 +229,14 @@ body, .light {
     }
 }
 
+.front {
+    z-index: nth($z-range, 2) + 1;
+}
+
+.back {
+    z-index: nth($z-range, 1) -1;
+}
+
 /*
  * Containers
  */
