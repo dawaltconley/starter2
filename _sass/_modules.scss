@@ -433,9 +433,11 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
  * Transitions
  */
 
-.t-default {
-    -webkit-transition-duration: $trans-default;
-    transition-duration: $trans-default;
+@each $name, $transition in $transitions {
+    .t-#{$name} {
+        -webkit-transition-duration: $transition;
+        transition-duration: $transition;
+    }
 }
 
 .t-inherit {
@@ -450,6 +452,22 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
 .t-none {
     -webkit-transition: 0s;
     transition: 0s;
+}
+
+.t-ease-in {
+    transition-timing-function: ease-in;
+}
+
+.t-ease-out {
+    transition-timing-function: ease-out;
+}
+
+.t-ease-in-out {
+    transition-timing-function: ease-in-out;
+}
+
+.t-linear {
+    transition-timing-function: linear;
 }
 
 /*

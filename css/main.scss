@@ -23,7 +23,6 @@ $base-icon-size:        1.5rem;
 $header-font-weight:    600;
 
 $perspective:           2000px;
-$trans-default:         .3s;
 
 // Colors
 
@@ -84,6 +83,10 @@ $borders: (
 );
 
 $z-range: -9, 9;
+
+$transitions: (
+    "default": .3s,
+);
 
 // Breakpoints
 
