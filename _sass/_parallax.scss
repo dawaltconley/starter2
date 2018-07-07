@@ -11,6 +11,7 @@ body {
     position: relative;
     overflow-y: auto;
     overflow-x: hidden;
+    @if $native-scroll { scroll-behavior: smooth; }
 
     > * {
         @extend .hw-accel;

@@ -24,7 +24,7 @@ dl, dd, ol, ul, figure {
 html, body {
     max-width: 100%;
     overflow-x: hidden;
-    scroll-behavior: smooth;
+    @if $native-scroll { scroll-behavior: smooth; }
 }
 
 /*
