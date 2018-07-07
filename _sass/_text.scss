@@ -1,4 +1,31 @@
 /*
+ * Typography
+ */
+
+@for $i from 1 through 9 {
+    $weight: $i * 100;
+    .fw-#{$weight} {
+        font-weight: $weight;
+    }
+}
+
+.fw-normal {
+    font-weight: normal;
+}
+
+.fw-bold {
+    font-weight: bold;
+}
+
+.shadow {
+    text-shadow: $text-shadow;
+}
+
+.full-shadow {
+    text-shadow: $full-shadow;
+}
+
+/*
  * Text
  */
 
@@ -48,41 +75,6 @@
     text-transform: capitalize;
 }
 
-.fw-normal {
-    font-weight: normal;
-}
-
-.fw-bold {
-    font-weight: bold;
-}
-
-@for $i from 1 through 9 {
-    $weight: $i * 100;
-    .fw-#{$weight} {
-        font-weight: $weight;
-    }
-}
-
-.font-size-large {
-    font-size: 1.5em;
-}
-
-.font-size-double {
-    font-size: 2em;
-}
-
-.font-size-triple {
-    font-size: 3em;
-}
-
-.shadow {
-    text-shadow: $text-shadow;
-}
-
-.full-shadow {
-    text-shadow: $full-shadow;
-}
-
 .font-smoothing-normal {
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
@@ -130,4 +122,3 @@
         text-decoration: none;
     }
 }
-
