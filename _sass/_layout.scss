@@ -145,38 +145,6 @@
     }
 }
 
-.top {
-    top: 0;
-}
-
-.left {
-    left: 0;
-}
-
-.right {
-    right: 0;
-}
-
-.bottom {
-    bottom: 0;
-}
-
-.top-left {
-    @extend .absolute, .top, .left;
-}
-
-.top-right {
-    @extend .absolute, .top, .right;
-}
-
-.bottom-left {
-    @extend .absolute, .bottom, .left;
-}
-
-.bottom-right {
-    @extend .absolute, .bottom, .right;
-}
-
 .abs-center {
     @extend .absolute;
     top: 50%; left: 50%;
@@ -194,6 +162,10 @@
     top: 50%;
     @include transform(translateY(-50%));
 }
+
+/*
+ * Z-Axis
+ */
 
 @for $i from nth($z-range, 1) through nth($z-range, 2) {
     $class-name: z-#{$i};
