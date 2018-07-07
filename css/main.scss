@@ -1,34 +1,13 @@
 ---
 ---
 
-// Basic Variables
-
-$spacing-unit:          30px;
-
-$base-font-family:      "Raleway", sans-serif;
-$base-font-size:        1.25em;
-$base-font-weight:      200;
-$base-line-height:      1.4;
-$base-line-length:      36em;
-$base-icon-size:        1.5rem;
-
-$header-font-weight:    600;
-
-$perspective:           2000px;
+// Liquid
 
 $native-scroll:         {{ site.native_scroll }};
-
-// Colors
-
-$brand-color:           gray;
-$text-shadow:           1px 1px 4px rgba(0, 0, 0, 0.2);
-$full-shadow:           0 0 0.24em black;
 
 $fa-icons:              ({% for icon in site.data.icon-types %}
                             {{ icon.type }}: {{ icon.color }},{% endfor %}
                         );
-
-// Images
 
 $image-bp:              ({% if jekyll.environment == 'production' or jekyll.environment == 'gulp' %}
                             {% for bp in site.image_bp %}
@@ -39,57 +18,6 @@ $image-bp:              ({% if jekyll.environment == 'production' or jekyll.envi
                             {% endfor %}
                         {% endif %});
 
-// Layouts
-
-$sizes: (
-    "full":             100%,
-    "half":             50%,
-    "screen":           100vw 100vh,
-    "half-screen":      50vw 50vh,
-    "no":               0,
-    "auto":             auto,
-);
-
-$margins: (
-    "auto":     auto,
-    "0":        0,
-    "m":        30px,
-    "l":        60px,
-);
-
-$paddings: (
-    "xs":       10px,
-    "m":        30px,
-    "l":        60px,
-);
-
-$positions: (
-    "0":        0,
-    "m":        30px,
-);
-
-$borders: (
-    "basic": (
-        width: 1px,
-        style: solid,
-        color: inherit
-    ),
-);
-
-$z-range: -9, 9;
-
-$transitions: (
-    "default": .3s,
-);
-
-// Breakpoints
-
-$bp: (
-    "large":    1000px,
-    "laptop":   800px,
-    "mobile":   600px,
-);
-
 // Imports
 
 {% unless jekyll.environment == 'production' %}
@@ -99,6 +27,7 @@ $bp: (
 {% endunless %}
 
 @import
+    "variables",
     "functions",
     "mixins/manifest";
 
