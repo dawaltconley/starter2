@@ -27,22 +27,13 @@ $sizes: (
     "auto":             auto,
 );
 
-$margins: (
+$spacings: (
     "auto":     auto,
     "0":        0,
-    "m":        30px,
-    "l":        60px,
-);
-
-$paddings: (
     "xs":       10px,
+    "s":        15px,
     "m":        30px,
     "l":        60px,
-);
-
-$positions: (
-    "0":        0,
-    "m":        30px,
 );
 
 $borders: (

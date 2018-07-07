@@ -113,10 +113,10 @@
  * Margins
  */
 
-@each $name, $size in $margins {
+@each $name, $value in $spacings {
     .margin-#{$name} {
         @include all-sides {
-            margin-#{$side}: $size;
+            margin-#{$side}: $value;
         }
     }
 }
@@ -125,10 +125,12 @@
  * Paddings
  */
 
-@each $name, $size in $paddings {
-    .padding-#{$name} {
-        @include all-sides {
-            padding-#{$side}: $size;
+@each $name, $value in $spacings {
+    @if $value != "auto" {
+        .padding-#{$name} {
+            @include all-sides {
+                padding-#{$side}: $value;
+            }
         }
     }
 }
@@ -137,7 +139,7 @@
  * Positioning
  */
 
-@each $name, $value in $positions {
+@each $name, $value in $spacings {
     .pos-#{$name} {
         @include all-sides {
             #{$side}: $value;
