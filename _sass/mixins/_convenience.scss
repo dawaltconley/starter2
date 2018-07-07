@@ -1,0 +1,99 @@
+@mixin display($display) {
+    display: $display;
+
+    &.hover-display {
+        @include hover {
+            display: $display;
+        }
+    }
+
+    &.target-display {
+        &:target {
+            display: $display;
+        }
+    }
+
+    @each $name, $breakpoint in $bp {
+        &.show-lt-#{$name} {
+            @media screen and (max-width: $breakpoint) {
+                display: $display;
+            }
+        }
+
+        &.show-gt-#{$name} {
+            @media screen and (min-width: $breakpoint + 1) {
+                display: $display;
+            }
+        }
+    }
+}
+
+@mixin fixed-ratio($x, $y, $width: 100%) {
+    width: $width;
+    height: 0;
+    padding-top: $y/$x * $width;
+}
+
+@mixin columns-reset($break-point) { // mobile reset
+    @media screen and (max-width: $break-point) {
+        .cell {
+            display: block;
+
+            .button {
+                position: static;
+                margin: 0 auto $spacing-unit;
+            }
+
+            &:last-child > :last-child { // mobile only: remove bottom margin of last element in table
+                margin-bottom: 0;
+            }
+        }
+
+        &.button-columns .cell {
+            padding-bottom: 0;
+        }
+    }
+
+    @media screen and (min-width: $break-point + 1px) { // desktop only: remove bottom margin of all last element in each cell
+        .cell > :last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+@mixin inline-columns($columns, $spacing: 0) {
+    @if not($columns > 1) { @error "inline-columns mixin must have more than one column." }
+    $width: 100% / $columns;
+    $row-end: $columns + "n";
+    display: inline-block;
+    width: calc(#{$width} - (#{$spacing} * (#{$columns} - 1) / #{$columns}));
+    margin-right: $spacing;
+    margin-bottom: $spacing;
+
+    &:nth-child(#{$row-end}), &:last-child {
+        margin-right: 0;
+    }
+}
+
+@mixin blur($blur) {
+    -webkit-filter: blur($blur);
+    filter: blur($blur);
+}
+
+// This mixin applies the effects its contents when a element
+// with class "hover" (either same element or a parent) is hovered
+@mixin hover($hover-class: "hover") {
+    &.#{$hover-class}:hover, .#{$hover-class}:hover & {
+        @content
+    }
+}
+
+@mixin transform($transform) {
+    -webkit-transform: $transform;
+    transform: $transform;
+
+    &.hw-accel {
+        -webkit-transform: $transform translateZ(0);
+        transform: $transform translateZ(0);
+    }
+}

@@ -1,0 +1,113 @@
+@mixin responsive-image($image, $breakpoints: $image-bp) {
+    @if $breakpoints and length($breakpoints) > 0 {
+        $file-types: jpg, jpeg, png, gif, svg, webp;
+
+        // wrap image files in url if they are not yet
+        @each $bg in $image {
+            $i: index($image, $bg);
+            $is-img: null;
+            $n: 1;
+            @while ($n <= length($file-types)) and not($is-img) {
+                $ext: nth($file-types, $n);
+                @if str-slice($ext, 1, 1) != "." { $ext: ".#{$ext}"; }
+                $is-img: str-index(to-lower-case($bg), to-lower-case($ext));
+                $n: $n + 1;
+            }
+            @if $is-img and (str-slice($bg, 1, 4) != "url(") {
+                $bg: url(#{unquote($bg)});
+                $image: set-nth($image, $i, $bg);
+            }
+        }
+
+        // first
+        $first: nth($breakpoints, 1);
+        $x: map-get($first, x) + 1;
+        $y: map-get($first, y) + 1;
+        @media screen and (min-width: #{$x}px), screen and (min-height: #{$y}px) {
+            background-image: $image;
+        }
+
+        // array values
+        @for $i from 1 to length($breakpoints) {
+            $current: nth($breakpoints, $i);
+            $x: map-get($current, x);
+            $y: map-get($current, y);
+            $next: nth($breakpoints, $i + 1);
+            $nx: map-get($next, x) + 1;
+            $ny: map-get($next, y) + 1;
+            @media screen and (max-width: #{$x}px) and (max-height: #{$y}px) and (min-width: #{$nx}px),
+              screen and (max-width: #{$x}px) and (max-height: #{$y}px) and (min-height: #{$ny}px) {
+                $suffix: "-#{$x}x#{$y}";
+                background-image: file-suffix($image, $suffix, $file-types);
+            }
+        }
+
+        //last
+        $last: nth($breakpoints, -1);
+        $x: map-get($last, x);
+        $y: map-get($last, y);
+        @media screen and (max-width: #{$x}px) and (max-height: #{$y}px) {
+            $suffix: "-#{$x}x#{$y}";
+            background-image: file-suffix($image, $suffix, $file-types);
+        }
+    } @else {
+        background-image: $image;
+    }
+}
+
+@mixin background-image($image: none, $x: center, $y: center, $size: cover, $repeat: no-repeat, $lighten: 0, $darken: 0, $blur: null, $responsive: false) {
+
+    @if $blur {
+        @extend .relative, .overflow-h;
+
+        &::after {
+            $blur-offset: -$blur * 2;
+            content: "";
+            position: absolute;
+            top: $blur-offset; left: $blur-offset; right: $blur-offset; bottom: $blur-offset;
+            @include blur($blur);
+            @include background-image($image:$image, $x:$x, $y:$y, $lighten:$lighten, $darken:$darken, $responsive:$responsive);
+            z-index: -1;
+        }
+    } @else if $image != none {
+        @if $lighten > 0 {
+            $image: (linear-gradient(rgba(white, $lighten), rgba(white, $lighten)), $image);
+        } @else if $darken > 0 {
+            $image: (linear-gradient(rgba(black, $darken), rgba(black, $darken)), $image);
+        }
+        @if $responsive {
+            @include responsive-image($image);
+        } @else {
+            background-image: $image;
+        }
+    } @else {
+        @if $lighten > 0 {
+            @extend .relative;
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background-color: rgba(white, $lighten);
+                z-index: 0;
+            }
+        } @else if $darken > 0 {
+            @extend .relative;
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background-color: rgba(black, $darken);
+                z-index: 0;
+            }
+        }
+    }
+
+    @if not($blur) {
+        background-position: $x $y;
+        background-size: $size;
+        background-repeat: $repeat;
+    }
+}
+

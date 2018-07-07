@@ -1,0 +1,30 @@
+// checks to rule out browsers that won't support css parallax effect
+// last value is a hack to rule out edge, which currently works but renders badly (bug)
+// https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/5084491/
+
+@mixin parallax-support {
+    @supports (((-webkit-perspective: 1px) or (perspective: 1px)) and (not (-webkit-overflow-scrolling: touch))) {
+        @content;
+    }
+}
+
+// settings for a layer of a parallax-group div
+// first line calculates scale to preserve original size
+// when translated backwards
+// second line calculates minimum height adjusment necessary
+// for the layer to always fill the width of its parent parallax-group
+
+@mixin parallax($depth: 0px) {
+    position: absolute !important;
+    top: 0; bottom: 0; left: 0; right: 0;
+
+    @include parallax-support {
+        $scale: 1 - ($depth / $perspective);
+        $height-adjust: calc((1 - (1 / #{$scale})) * (100vh - 100%) / -2);
+        top: $height-adjust; bottom: $height-adjust;
+        -webkit-transform-origin: right;
+        transform-origin: right;
+        -webkit-transform: translateZ($depth) scale($scale);
+        transform: translateZ($depth) scale($scale);
+    }
+}

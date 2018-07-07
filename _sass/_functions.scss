@@ -31,3 +31,13 @@ $side: null;
         @error "Not a valid side."
     }
 }
+
+@mixin all-sides {
+    @each $name in $sides {
+        $side: $name !global;
+        $o: str-slice(get-orientation($side), 1, 1);
+        &, &-#{$o}, &-#{str-slice($side, 1, 1)} {
+            @content;
+        }
+    }
+}
