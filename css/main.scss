@@ -558,8 +558,8 @@ $side: null;
         top: $height-adjust; bottom: $height-adjust;
         -webkit-transform-origin: right;
         transform-origin: right;
-        -webkit-transform: translateZ($depth * 1px) scale($scale);
-        transform: translateZ($depth * 1px) scale($scale);
+        -webkit-transform: translateZ($depth) scale($scale);
+        transform: translateZ($depth) scale($scale);
     }
 }
 

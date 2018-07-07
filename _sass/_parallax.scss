@@ -18,8 +18,8 @@ body {
 
     @include parallax-support {
         height: 100vh;
-        -webkit-perspective: $perspective * 1px;
-        perspective: $perspective * 1px;
+        -webkit-perspective: $perspective;
+        perspective: $perspective;
         -webkit-perspective-origin: right;
         perspective-origin: right;
     }
