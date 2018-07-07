@@ -1,0 +1,18 @@
+/*
+ * Themes
+ */
+
+body, .light {
+    @include theme(
+        $text-color: #171717,
+        $background-color: white,
+        $brand-color: royalblue,
+    );
+}
+
+.dark {
+    @include theme(
+        $text-color: white,
+        $background-color: #171717,
+    );
+}

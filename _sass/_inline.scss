@@ -1,0 +1,20 @@
+/*
+ * Inline Layouts
+ */
+
+.font-0 {
+    font-size: 0;
+
+    > * {
+        font-size: $base-font-size;
+    }
+}
+
+.inline-row {
+    white-space: nowrap;
+
+    > * {
+        @extend .inline-block;
+        white-space: normal;
+    }
+}

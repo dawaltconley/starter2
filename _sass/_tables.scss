@@ -1,0 +1,48 @@
+/*
+ * Tables
+ */
+
+.table {
+    @include display(table);
+}
+
+.table-fixed {
+    @extend .table;
+    table-layout: fixed;
+}
+
+.column {
+    @include display(column);
+}
+
+.row {
+    @include display(table-row);
+}
+
+.cell {
+    @include display(table-cell);
+}
+
+.v-middle {
+    vertical-align: middle;
+}
+
+%columns {
+    $spacing: map-get($paddings, m);
+    @extend .table;
+    width: calc(100% + (#{$spacing} * 2));
+    margin: -$spacing;
+    border-spacing: $spacing;
+    table-layout: fixed;
+
+    &:last-child > :last-child {
+        margin-bottom: 0;
+    }
+}
+
+@each $name, $breakpoint in $bp {
+    .#{$name}-columns {
+        @extend %columns;
+        @include columns-reset($breakpoint);
+    }
+}

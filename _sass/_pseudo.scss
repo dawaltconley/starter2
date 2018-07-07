@@ -1,0 +1,89 @@
+/*
+ * Hover
+ */
+
+.hover-display {
+    display: none;
+
+    @include hover {
+        display: initial;
+    }
+}
+
+.hover-fade-in {
+    opacity: 0;
+    -webkit-transition-property: opacity;
+    transition-property: opacity;
+
+    @include hover {
+        opacity: 1;
+    }
+}
+
+.hover-scale {
+    transform: scale(1) translateZ(0);
+    -webkit-transition-property: transform;
+    transition-property: transform;
+
+    @include hover {
+        transform: scale(1.05) translateZ(0);
+    }
+}
+
+.hover-lighten {
+    @extend .relative;
+
+    &::after {
+        @extend .fill-parent, .t-inherit;
+        content: "";
+        background-color: rgba(white, 0);
+        -webkit-transition-property: background-color;
+        transition-property: background-color;
+    }
+
+    @include hover {
+        &::after {
+            background-color: rgba(white, 0.1);
+        }
+    }
+}
+
+.hover-darken {
+    @extend .relative;
+
+    &::after {
+        @extend .fill-parent, .t-inherit;
+        content: "";
+        background-color: rgba(black, 0);
+        -webkit-transition-property: background-color;
+        transition-property: background-color;
+    }
+
+    @include hover {
+        &::after {
+            background-color: rgba(black, 0.1);
+        }
+    }
+}
+
+.hover-blur {
+    @include blur(0);
+    -webkit-transition-property: -webkit-filter;
+    transition-property: filter;
+
+    @include hover {
+        @include blur(5px);
+    }
+}
+
+/*
+ * Target
+ */
+
+.target-display {
+    display: none;
+
+    &:target {
+        display: initial;
+    }
+}

@@ -1,0 +1,133 @@
+/*
+ * Text
+ */
+
+.text-left {
+    text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+.text-justify-full {
+    @extend .text-justify;
+
+    &::after {
+        content: "";
+        display: inline-block;
+        width: 100%;
+    }
+
+    @supports (text-align-last: justify) {
+        text-align-last: justify;
+
+        &::after {
+            display: none;
+        }
+    }
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.lowercase {
+    text-transform: lowercase;
+}
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+.fw-normal {
+    font-weight: normal;
+}
+
+.fw-bold {
+    font-weight: bold;
+}
+
+@for $i from 1 through 9 {
+    $weight: $i * 100;
+    .fw-#{$weight} {
+        font-weight: $weight;
+    }
+}
+
+.font-size-large {
+    font-size: 1.5em;
+}
+
+.font-size-double {
+    font-size: 2em;
+}
+
+.font-size-triple {
+    font-size: 3em;
+}
+
+.shadow {
+    text-shadow: $text-shadow;
+}
+
+.full-shadow {
+    text-shadow: $full-shadow;
+}
+
+.font-smoothing-normal {
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+}
+
+.font-smoothing-dark {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.avoid-wrap {
+    white-space: nowrap;
+
+    @supports(text-wrap: avoid) {
+        white-space: initial;
+        white-space: unset;
+        text-wrap: avoid;
+    }
+}
+
+.no-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/*
+ * Links
+ */
+
+.subtle-link {
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.subtle-icon {
+    @extend .subtle-link;
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+

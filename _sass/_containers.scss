@@ -1,0 +1,55 @@
+/*
+ * Containers
+ */
+
+.overflow-v {
+    overflow: visible;
+}
+
+.overflow-h {
+    overflow: hidden;
+}
+
+.fill-window {
+    @extend .fixed, .pos-0;
+}
+
+.fill-parent {
+    @extend .absolute, .pos-0;
+}
+
+.expand-children {
+    @extend .relative;
+
+    & > * {
+        @extend .fill-parent;
+    }
+}
+
+.center-child {
+    @extend .relative;
+
+    & > *:only-child {
+        @extend .abs-center;
+    }
+}
+
+.aspect-16-9 {
+    @include fixed-ratio(16, 9);
+}
+
+.contains-3d {
+    -webkit-perspective: $perspective;
+    perspective: $perspective;
+
+    &-deep * {
+        @extend .contains-3d;
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+    }
+}
+
+.render-3d {
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}

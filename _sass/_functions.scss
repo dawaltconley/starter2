@@ -1,0 +1,33 @@
+@function file-suffix($file-name, $suffix, $extension: ".") {
+    $return: ();
+    $separator: list-separator($file-name);
+    @each $name in $file-name {
+        $ext-index: null;
+        $i: 1;
+        @while ($i <= length($extension)) and not($ext-index) {
+            $ext: nth($extension, $i);
+            @if str-slice($ext, 1, 1) != "." { $ext: ".#{$ext}"; }
+            $ext-index: str-index(to-lower-case($name), to-lower-case($ext));
+            $i: $i + 1;
+        }
+        @if $ext-index {
+            $return: append($return, str-insert($name, $suffix, $ext-index), $separator);
+        } @else {
+            $return: append($return, $name, $separator);
+        }
+    }
+    @return $return;
+}
+
+$sides: "top", "bottom", "left", "right";
+$side: null;
+
+@function get-orientation($side) {
+    @if $side == "top" or $side == "bottom" {
+        @return "vertical";
+    } @else if $side == "left" or $side == "right" {
+        @return "horizontal";
+    } @else {
+        @error "Not a valid side."
+    }
+}

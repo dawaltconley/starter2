@@ -1,0 +1,57 @@
+/*
+ * Transforms
+ */
+
+.hw-accel { // use the transform include to ensure that hw-accel is not overwritten by other transform classes
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+.translate-left {
+    @include transform(translateX(-100%));
+}
+
+.translate-left-half {
+    @include transform(translateX(-50%));
+}
+
+.translate-right {
+    @include transform(translateX(100%));
+}
+
+.translate-right-half {
+    @include transform(translateX(50%));
+}
+
+.translate-up {
+    @include transform(translateY(-100%));
+}
+
+.translate-up-half {
+    @include transform(translateY(-50%));
+}
+
+.translate-down {
+    @include transform(translateY(100%));
+}
+
+.translate-down-half {
+    @include transform(translateY(50%));
+}
+
+.translate-x-none {
+    @include transform(translateX(0%));
+}
+
+.translate-y-none {
+    @include transform(translateY(0%));
+}
+
+.flip-x {
+    @include transform(rotate3d(1, 0, 0, 180deg));
+}
+
+.no-backface {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}

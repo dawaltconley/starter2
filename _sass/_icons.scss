@@ -1,0 +1,199 @@
+/*
+ * Icons
+ */
+
+.icon-size {
+    font-size: $base-icon-size;
+}
+
+.scroll-arrow {
+    font-size: 36px;
+    padding: 4px;
+}
+
+@media screen and (max-height: map-get($bp, "mobile")) and (orientation: landscape) {
+    [data-force-fullscreen].screen-height .scroll-arrow {
+        display: none;
+    }
+}
+
+.fa-icon-circle {
+    $circle-size: 1.5;
+    line-height: $circle-size;
+    text-align: center;
+    border-radius: 50%;
+    // border-width: 2px;
+    border-width: .07em;
+    border-style: solid;
+    border-color: inherit;
+
+    &::before {
+        display: block;
+        width: $circle-size * 1em;
+        height: $circle-size * 1em;
+        margin: 0;
+    }
+}
+
+// loops through all icon classes, passes their brand color to all relevant styles. this can be unset later.
+@each $icon-name, $color in $fa-icons {
+    .#{$icon-name}-icon {
+        &, &:hover {
+            color: $color;
+            background-color: $color !important;
+            border-color: $color !important;
+        }
+    }
+}
+
+// styling resets, including inherit fallback for older browsers
+%reset-color {
+    color: inherit;
+}
+
+%reset-background-color {
+    background-color: inherit !important;
+}
+
+%reset-border-color {
+    border-color: inherit !important;
+}
+
+// universal styling for the anchor tags that contain social-media fa-icons.
+.media-icon {
+    @extend .inline-block;
+    position: relative;
+    line-height: inherit;
+    transition: .3s;
+    z-index: 1;
+
+    &.fab {
+        @extend .fw-normal;
+    }
+
+    &::before {
+        @extend .no-select;
+        position: relative;
+        user-select: none;
+        z-index: 3;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        transition: inherit;
+        z-index: 2;
+    }
+}
+
+// basic icons inherit their text color. hovering reveals their brand color.
+.media-icon-basic .media-icon {
+    &:not(:hover) {
+        @extend %reset-color;
+    }
+
+    &, &:hover {
+        @extend %reset-background-color, %reset-border-color;
+    }
+}
+
+// square buttons. white icons with brand-color background. hovering animates to white background with icons in their brand color.
+.media-icon-button .media-icon {
+    @extend .media-icon-bloat;
+    color: white;
+
+    &:hover::after {
+        background-color: rgba(white, 0.2);
+    }
+}
+
+.media-icon-shutter .media-icon {
+    @extend .media-icon-bloat;
+
+    &:not(:hover) {
+        color: white;
+    }
+
+    &::after {
+        left: 50%; right: 50%;
+    }
+
+    &:hover::after {
+        left: 0; right: 0;
+        background-color: white;
+    }
+}
+
+ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
+    @extend .unlist;
+}
+
+// forces icon links to fill a certain size, with icon hovering in the middle
+.media-icon-bloat .media-icon {
+    @extend .flex-center, .inline-flex;
+    min-width: 1.2em;
+    min-height: 1.2em;
+}
+
+// expands a list of icons; icons get 2em of space, and links expand to maintain contact.
+.media-icon-list {
+    @extend .media-icon-bloat;
+
+    > * {
+        margin: 0;
+    }
+
+    &.flex-row, &.flex-col {
+        > * {
+            flex: 0 1 2em;
+        }
+    }
+
+    &.media-icon-circle .media-icon {
+        flex: 0 1 auto;
+        margin: 0 .25em;
+    }
+
+    &:not(.flex-row):not(.flex-col):not(.media-icon-circle) .media-icon {
+        min-width: 2em;
+    }
+
+    &:not(.media-icon-circle) > li {
+        @extend .inline-flex;
+
+        > .media-icon:only-child {
+            @extend %flex, .flex-center, .fill-flex-parent;
+        }
+    }
+}
+
+// stretches icons to evenly fill space of container
+.media-icon-stretch {
+    &.flex-row, &.flex-col {
+        > * {
+            flex: 1 1 0;
+        }
+    }
+}
+
+.media-icon-circle .media-icon {
+    @extend .fa-icon-circle;
+
+    &:not(:hover) {
+        @extend %reset-color, %reset-background-color, %reset-border-color;
+    }
+
+    &:hover {
+        color: white;
+        text-shadow: none;
+
+        &::before {
+            box-shadow: none;
+        }
+    }
+}
+
+.media-icon-shadow .media-icon::before {
+    box-shadow: 2px 1px 6px rgba(0, 0, 0, 0.4), 2px 1px 6px rgba(0, 0, 0, 0.4) inset;
+}

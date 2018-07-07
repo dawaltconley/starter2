@@ -1,0 +1,26 @@
+/*
+ * Shadows
+ */
+
+.radial-shadow {
+    $density: 0.3; // opacity of shadow at center
+    $reach: 0%; // relative radius of the center opacity, before it begins fading
+    $overflow: 50%; // how far the shadow extends beyond the element, relative to the size of the element
+    @extend .relative, .overflow-v;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: -$overflow;
+        left: -$overflow;
+        right: -$overflow;
+        bottom: -$overflow;
+        background: -webkit-radial-gradient(ellipse closest-side, rgba(black, $density) $reach, transparent);
+        background: radial-gradient(ellipse closest-side, rgba(black, $density) $reach, transparent);
+        z-index: 0;
+    }
+
+    & > * {
+        @extend .z-1;
+    }
+}
