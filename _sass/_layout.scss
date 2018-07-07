@@ -195,9 +195,9 @@
 @each $name, $styles in $borders {
     .border-#{$name} {
         @include all-sides {
-            border-#{$side}-width: map-get($styles, width);
-            border-#{$side}-style: map-get($styles, style);
-            border-#{$side}-color: map-get($styles, color);
+            @each $rule, $value in $styles {
+                border-#{$side}-#{$rule}: $value;
+            }
         }
     }
 }
