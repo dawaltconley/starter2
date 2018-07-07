@@ -67,6 +67,10 @@
     transition: .3s;
     z-index: 1;
 
+    &, &:hover {
+        text-decoration: none;
+    }
+
     &.fab {
         @extend .fw-normal;
     }

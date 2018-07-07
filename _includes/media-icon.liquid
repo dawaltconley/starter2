@@ -54,7 +54,7 @@
 
             {% capture return %}<!--
              --><a class="media-icon {{ icon.type }}-icon {{ icon_class }}
-                  {% if include.list %}fa-li subtle-link{% else %}subtle-icon{% endif %}" 
+                  {% if include.list %}fa-li{% endif %}" 
                   {% if new_tab %}target="_blank"{% endif %}
                   {% if include.microdata and icon.type == 'email' %}itemprop="email"{% endif %}
                   {% if include.microdata and icon.type == 'phone' %}itemprop="telephone"{% endif %}
