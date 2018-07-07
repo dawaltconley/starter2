@@ -1,0 +1,47 @@
+// styling for container elements of parallax pages
+
+body {
+    @include parallax-support {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+}
+
+.parallax-page {
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    > * {
+        @extend .hw-accel;
+    }
+
+    @include parallax-support {
+        height: 100vh;
+        -webkit-perspective: $perspective * 1px;
+        perspective: $perspective * 1px;
+        -webkit-perspective-origin: right;
+        perspective-origin: right;
+    }
+}
+
+.parallax-group {
+    @extend .relative;
+    background-color: transparent !important;
+    pointer-events: none;
+
+    > * {
+        pointer-events: auto;
+    }
+
+    @include parallax-support {
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+
+        $offset: 100; // fix for scrollbar bug; works on all modern browsers except Safari, which wants an offset of 50 instead
+        margin-left: calc(#{$offset}% - #{$offset}vw);
+        margin-right: calc(#{$offset}% - #{$offset}vw);
+        padding-left: calc(#{$offset}vw - #{$offset}%);
+        padding-right: calc(#{$offset}vw - #{$offset}%);
+    }
+}
