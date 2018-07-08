@@ -10,10 +10,14 @@
 
         @if $light-theme and not($light-text) {
             $light-text: mix($text-color, $background-color, 58%);
+        } @else {
+            $light-text: mix($text-color, $background-color, 72%);
+        }
+
+        @if $light-theme {
             -webkit-font-smoothing: subpixel-antialiased;
             -moz-osx-font-smoothing: auto;
         } @else {
-            $light-text: mix($text-color, $background-color, 72%);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
