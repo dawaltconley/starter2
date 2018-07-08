@@ -15,7 +15,7 @@
   {% else %}
     {% assign description = site.description %}
   {% endif %}
-  {% assign description = description | strip_html | strip_newlines | truncate: 160 %}
+  {% assign description = description | markdownify | strip_html | strip_newlines | truncate: 160 %}
 
   {% assign page_url = page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url %}
   {% assign site_url = site.url | append: site.baseurl %}
