@@ -116,24 +116,16 @@ h1, h2, h3, h4, h5, h6 {
     text-decoration: none;
 }
 
-h2 {
-    font-size: 1.2em;
-
-    @media screen and (max-width: map-get($bp, "laptop")) {
-        font-size: 1.1em;
+@for $i from 1 through 6 { // generate header styles
+    $font-size: 1em;
+    @if $i <= length($header-sizes) {
+        $font-size: nth($header-sizes, $i);
     }
-}
 
-h3 {
-    font-size: 1.1em;
-
-    @media screen and (max-width: map-get($bp, "laptop")) {
-        font-size: 1.05em;
+    h#{$i} {
+        font-size: $font-size;
+        letter-spacing: $font-size / -100;
     }
-}
-
-h4 {
-    font-size: 1em;
 }
 
 hr {
