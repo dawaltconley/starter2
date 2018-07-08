@@ -1,4 +1,4 @@
-@mixin wrapper($breakpoints, $min-margins: $spacing-unit) {
+@mixin wrapper($breakpoints, $min-margins: 0) {
     $bp-first: nth($breakpoints, 1);
     $bp-last: nth($breakpoints, length($breakpoints));
 

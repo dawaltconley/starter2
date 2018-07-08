@@ -1,7 +1,5 @@
 // Basic Variables
 
-$spacing-unit:          30px;
-
 $base-font-family:      "Raleway", sans-serif;
 $base-font-size:        1.25rem;
 $base-font-weight:      400;
@@ -36,6 +34,8 @@ $spacings: (
     "m":        30px,
     "l":        60px,
 );
+
+$default-spacing: map-get($spacings, m);
 
 $borders: (
     "basic": (

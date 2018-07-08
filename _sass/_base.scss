@@ -49,7 +49,7 @@ h1, h2, h3, h4, h5, h6,
 p, blockquote, pre,
 ul, ol, dl, figure,
 %vertical-rhythm {
-    margin-bottom: $spacing-unit;
+    margin-bottom: $default-spacing;
 
     &:last-child {
         margin-bottom: 0;
@@ -86,10 +86,10 @@ figcaption {
  */
 
 ul, ol {
-    margin-left: ($spacing-unit * 2);
+    margin-left: $default-spacing * 2;
 
     @media screen and (max-width: map-get($bp, "mobile")) {
-        margin-left: $spacing-unit;
+        margin-left: $default-spacing;
     }
 }
 
@@ -129,7 +129,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 hr {
-    margin: $spacing-unit 0;
+    margin: $default-spacing 0;
 }
 
 /**
@@ -151,7 +151,7 @@ a {
 blockquote {
     border-left-width: 4px;
     border-left-style: solid;
-    padding-left: $spacing-unit;
+    padding-left: $default-spacing;
     font-size: smaller;
     letter-spacing: -1px;
     font-style: italic;

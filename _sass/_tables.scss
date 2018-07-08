@@ -28,8 +28,7 @@
 }
 
 %columns {
-    $spacing: $spacing-unit;
-    @if map-has-key($spacings, m) { $spacing: map-get($spacings, m); }
+    $spacing: $default-spacing;
     @extend .table;
     width: calc(100% + (#{$spacing} * 2));
     margin: -$spacing;

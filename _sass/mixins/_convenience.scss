@@ -41,7 +41,7 @@
 
             .button {
                 position: static;
-                margin: 0 auto $spacing-unit;
+                margin: 0 auto $default-spacing;
             }
 
             &:last-child > :last-child { // mobile only: remove bottom margin of last element in table
