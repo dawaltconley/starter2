@@ -3,6 +3,8 @@
 
 // Liquid
 
+$baseurl:               "{{ site.baseurl }}";
+
 $native-scroll:         {{ site.native_scroll }};
 
 $fa-icons:              ({% for icon in site.data.icon-types %}
