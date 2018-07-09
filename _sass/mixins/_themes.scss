@@ -105,13 +105,13 @@
 
         .border-light, &.border-light {
             @include all-sides {
-                border-color: mix($text-color, $background-color, 10%);
+                border-#{$side}-color: mix($text-color, $background-color, 10%);
             }
         }
 
         .border-x-light, &.border-x-light {
             @include all-sides {
-                border-color: mix($text-color, $background-color, 5%);
+                border-#{$side}-color: mix($text-color, $background-color, 5%);
             }
         }
     } @else if $light-text {
