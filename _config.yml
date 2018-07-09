@@ -10,10 +10,10 @@ og_image: # default og image used for entire site; can be overridden if specifie
 google_analytics: # tracking number
 permalink: /:title/ # default permalink structure for pages
 timezone: America/New_York # used for liquid-generated datetimes
-emptyArray: [] # variable for easy array creation
 auto_scroll: false # enables smooth scrolling for all same-page links using zenscroll
 native_scroll: false # enables smooth scrolling by the scroll-behavior property, for all browsers that support it
 bg_testing: false # turn on to enable the bg-testing.html include
+emptyArray: [] # variable for easy array creation
 
 image_bp: # breakpoints used for creating responsive images
   - x: 2880
