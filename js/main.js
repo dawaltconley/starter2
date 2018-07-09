@@ -254,6 +254,64 @@
     };
 
 /*
+ * Background Image Testing
+ */
+
+    bgTestingObjects = [];
+
+    toArray(document.querySelectorAll("[data-background-images]")).forEach(function (element) {
+        bgTestingObjects.push(new bgSelect(element));
+    });
+
+    function bgSelect(element) {
+        var menuContainer = element;
+        var position = window.getComputedStyle(element).getPropertyValue("position");
+        if (position == "static") {
+            element.style.position = "relative";
+        } else if (position == "absolute") {
+            menuContainer = element.parentElement;
+        }
+
+        this.element = element;
+        this.controls = document.createElement("div");
+        this.controls.style.cssText = "position: absolute; top: 0; left: 0;";
+        this.menu = document.createElement("select");
+        this.slider = document.createElement("input");
+        this.slider.type = "range";
+        this.slider.value = "0";
+
+        this.images = JSON.parse(element.getAttribute("data-background-images"));
+
+        for (var i=0; i < this.images.length; i++) {
+            var image = this.images[i];
+            var imageName = image["name"] ? image["name"] : "image " + i;
+            var opt = document.createElement("option");
+            opt.textContent = imageName;
+            this.menu.appendChild(opt);
+        }
+
+        this.controls.appendChild(this.menu);
+        this.controls.appendChild(this.slider);
+        menuContainer.appendChild(this.controls);
+    }
+
+    bgSelect.prototype.setBg = function () {
+        var image = this.images[this.menu.selectedIndex];
+        var imagePath = image["path"] ? image["path"] : image;
+        var darkness = (Number(this.slider.value) / 100).toString();
+        if (image["size"]) { this.element.style.backgroundSize = image["size"]; }
+        if (image["position"]) { this.element.style.backgroundPosition = image["position"] }
+        this.element.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, " + darkness + "), rgba(0, 0, 0, " + darkness + ")), url('" + imagePath + "')";
+        console.log("image: %s\ndarkness: %s", imagePath, darkness);
+    }
+
+    bgTestingObjects.forEach(function (obj) {
+        obj.element.removeAttribute("data-background-images");
+        obj.menu.onchange = obj.setBg.bind(obj);
+        obj.slider.onchange = obj.setBg.bind(obj);
+    });
+
+/*
  * Fullscreen
  */
 
