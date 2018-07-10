@@ -265,12 +265,17 @@
 
     function bgSelect(element) {
         var menuContainer = element;
-        var position = window.getComputedStyle(element).getPropertyValue("position");
+        var computedStyle = window.getComputedStyle(element);
+        var position = computedStyle.getPropertyValue("position");
+
         if (position == "static") {
             element.style.position = "relative";
         } else if (position == "absolute") {
             menuContainer = element.parentElement;
         }
+
+        var initialImage = computedStyle.getPropertyValue("background-image");
+        initialImage = initialImage.replace(/.*\s?url\([\'\"]?/, '').replace(/[\'\"]?\).*/, '');
 
         this.element = element;
         this.controls = document.createElement("div");
@@ -281,6 +286,7 @@
         this.slider.value = "50";
 
         this.images = JSON.parse(element.getAttribute("data-background-images"));
+        this.images.unshift(initialImage);
 
         for (var i=0; i < this.images.length; i++) {
             var image = this.images[i];
