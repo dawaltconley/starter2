@@ -299,8 +299,8 @@
         var image = this.images[this.menu.selectedIndex];
         var imagePath = image["path"] ? image["path"] : image;
         var darkness = (Number(this.slider.value) / 100).toString();
-        if (image["size"]) { this.element.style.backgroundSize = image["size"]; }
-        if (image["position"]) { this.element.style.backgroundPosition = image["position"] }
+        image["size"] ? this.element.style.backgroundSize = image["size"] : this.element.style.backgroundSize = null;
+        image["position"] ? this.element.style.backgroundPosition = image["position"] : this.element.style.backgroundPosition = null;
         this.element.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, " + darkness + "), rgba(0, 0, 0, " + darkness + ")), url('" + imagePath + "')";
         console.log("image: %s\ndarkness: %s", imagePath, darkness);
     }
