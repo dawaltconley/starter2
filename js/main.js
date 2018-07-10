@@ -278,7 +278,7 @@
         this.menu = document.createElement("select");
         this.slider = document.createElement("input");
         this.slider.type = "range";
-        this.slider.value = "0";
+        this.slider.value = "50";
 
         this.images = JSON.parse(element.getAttribute("data-background-images"));
 
@@ -298,17 +298,27 @@
     bgSelect.prototype.setBg = function () {
         var image = this.images[this.menu.selectedIndex];
         var imagePath = image["path"] ? image["path"] : image;
-        var darkness = (Number(this.slider.value) / 100).toString();
+        var lightness = ((Number(this.slider.value) - 50) / 50).toString();
         image["size"] ? this.element.style.backgroundSize = image["size"] : this.element.style.backgroundSize = null;
         image["position"] ? this.element.style.backgroundPosition = image["position"] : this.element.style.backgroundPosition = null;
-        this.element.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, " + darkness + "), rgba(0, 0, 0, " + darkness + ")), url('" + imagePath + "')";
-        console.log("image: %s\ndarkness: %s", imagePath, darkness);
+        if (lightness >= 0) {
+            this.element.style.backgroundImage = "linear-gradient(rgba(255, 255, 255, " + lightness + "), rgba(255, 255, 255, " + lightness + ")), url('" + imagePath + "')";
+            console.log("image: %s\nlightness: %s", imagePath, lightness);
+        } else {
+            var darkness = Math.abs(lightness);
+            this.element.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, " + darkness + "), rgba(0, 0, 0, " + darkness + ")), url('" + imagePath + "')";
+            console.log("image: %s\ndarkness: %s", imagePath, darkness);
+        }
     }
 
     bgTestingObjects.forEach(function (obj) {
         obj.element.removeAttribute("data-background-images");
         obj.menu.onchange = obj.setBg.bind(obj);
         obj.slider.onchange = obj.setBg.bind(obj);
+        obj.slider.ondblclick = function () {
+            obj.slider.value = 50;
+            obj.setBg();
+        }
     });
 
 /*
