@@ -286,7 +286,7 @@
         this.slider.value = "50";
 
         this.images = JSON.parse(element.getAttribute("data-background-images"));
-        this.images.unshift(initialImage);
+        this.images.unshift({ "name": "initial", "path": initialImage});
 
         for (var i=0; i < this.images.length; i++) {
             var image = this.images[i];
@@ -301,25 +301,28 @@
         menuContainer.appendChild(this.controls);
     }
 
-    bgSelect.prototype.setBg = function () {
+    bgSelect.prototype.setBg = function (trigger) {
         var image = this.images[this.menu.selectedIndex];
         var imagePath = image["path"] ? image["path"] : image;
+        if (trigger == "menu" && image["slider"]) { this.slider.value = image["slider"]; }
         var lightness = ((Number(this.slider.value) - 50) / 50).toString();
-        image["size"] ? this.element.style.backgroundSize = image["size"] : this.element.style.backgroundSize = null;
-        image["position"] ? this.element.style.backgroundPosition = image["position"] : this.element.style.backgroundPosition = null;
+
         if (lightness >= 0) {
             this.element.style.backgroundImage = "linear-gradient(rgba(255, 255, 255, " + lightness + "), rgba(255, 255, 255, " + lightness + ")), url('" + imagePath + "')";
-            console.log("image: %s\nlightness: %s", imagePath, lightness);
+            console.log("image: %s\nlightness: %s\nslider: %s", imagePath, lightness, Number(this.slider.value));
         } else {
             var darkness = Math.abs(lightness);
             this.element.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, " + darkness + "), rgba(0, 0, 0, " + darkness + ")), url('" + imagePath + "')";
-            console.log("image: %s\ndarkness: %s", imagePath, darkness);
+            console.log("image: %s\ndarkness: %s\nslider: %s", imagePath, darkness, Number(this.slider.value));
         }
+
+        image["size"] ? this.element.style.backgroundSize = image["size"] : this.element.style.backgroundSize = null;
+        image["position"] ? this.element.style.backgroundPosition = image["position"] : this.element.style.backgroundPosition = null;
     }
 
     bgTestingObjects.forEach(function (obj) {
         obj.element.removeAttribute("data-background-images");
-        obj.menu.onchange = obj.setBg.bind(obj);
+        obj.menu.onchange = obj.setBg.bind(obj, "menu");
         obj.slider.onchange = obj.setBg.bind(obj);
         obj.slider.ondblclick = function () {
             obj.slider.value = 50;
