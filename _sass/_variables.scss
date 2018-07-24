@@ -29,7 +29,7 @@ $themes: (
     ),
 );
 
-$theme-depth: 1; // controls the depth (in a series nested themes) at which an element still inherits the styles of its immediate ancestor theme. stylesheets get much larger and more complex as this number increases, so it should be set as low as possible.
+$theme-depth: 0; // controls the depth (in a series nested themes) at which an element still inherits the styles of its immediate ancestor theme. stylesheets get much larger and more complex as this number increases, so it should be set as low as possible.
 
 $sizes: (
     "full":             100%,
