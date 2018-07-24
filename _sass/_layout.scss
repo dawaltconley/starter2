@@ -197,7 +197,7 @@
         @include all-sides {
             border-#{$side}-width: map-get($styles, width);
             border-#{$side}-style: map-get($styles, style);
-            border-#{$side}-color: map-get($styles, color);
+            border-#{$side}-color: map-get($styles, color) !important;
         }
     }
 }
