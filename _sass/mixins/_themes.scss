@@ -1,3 +1,15 @@
+@mixin themeify($selectors...) {
+    $group: ();
+    @each $selector in $selectors {
+        $group: append($group, "& #{$selector}, #{selector-unify(&, $selector)}", "comma");
+    }
+
+    @at-root #{$group} {
+        @content;
+    }
+}
+
+
 @mixin theme($background-color: null, $text-color: null, $brand-color: null, $light-text: null, $accessibility: "AA") {
     $light-theme: null; $ld-tx-bg: null; $ld-br-tx: null; $ld-br-bg: null; $ct-tx-bg: null; $ct-br-tx: null; $ct-br-bg: null;
     $aa: to-upper-case(inspect($accessibility)) == "AA";
@@ -53,7 +65,7 @@
     color: $text-color;
     border-color: $text-color;
 
-    .fill-color-theme, &.fill-color-theme {
+    @include themeify(".fill-color-theme") {
         &-text {
             fill: $text-color;
         }
@@ -65,7 +77,7 @@
         }
     }
 
-    .stroke-color-theme, &.stroke-color-theme {
+    @include themeify(".stroke-color-theme") {
         &-text {
             stroke: $text-color;
         }
@@ -78,12 +90,12 @@
     }
 
     @if $background-color and $text-color {
-        @at-root & blockquote, #{selector-unify(&, blockquote)} {
+        @include themeify("blockquote") {
             color: $light-text;
             border-left-color: mix($light-text, $background-color, 25%);
         }
 
-        @at-root & pre, #{selector-unify(&, pre)}, & code, #{selector-unify(&, code)} {
+        @include themeify("pre", "code") {
             @if $light-theme {
                 $box-color: darken($background-color, $ld-tx-bg * 15%);
                 $box-color: desaturate($box-color, saturation($box-color) / 2 );
@@ -99,34 +111,34 @@
             }
         }
 
-        .text-light, &.text-light {
+        @include themeify(".text-light") {
             color: $light-text;
         }
 
-        .border-light, &.border-light {
+        @include themeify(".border-light") {
             @include all-sides {
                 border-#{$side}-color: mix($text-color, $background-color, 10%);
             }
         }
 
-        .border-x-light, &.border-x-light {
+        @include themeify(".border-x-light") {
             @include all-sides {
                 border-#{$side}-color: mix($text-color, $background-color, 5%);
             }
         }
     } @else if $light-text {
-        @at-root & blockquote, #{selector-unify(&, blockquote)} {
+        @include themeify("blockquote") {
             color: $light-text;
             border-left-color: lighten($light-text, 25%);
         }
 
-        .text-light, &.text-light {
+        @include themeify(".text-light") {
             color: $light-text;
         }
     }
 
     @if $brand-color {
-        @at-root & a, #{selector-unify(&, a)} {
+        @include themeify("a") {
             color: $brand-color;
 
             @if $text-color and $background-color {
@@ -136,6 +148,12 @@
                 &:hover { color: darken($brand-color, 15%); }
                 &:visited { color: darken($brand-color, 25%); }
             }
+        }
+    }
+
+    @include themeify(".subtle-link") {
+        &, &:hover, &:visited {
+            color: $text-color;
         }
     }
 }
