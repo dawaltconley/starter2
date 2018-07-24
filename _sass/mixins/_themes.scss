@@ -126,7 +126,7 @@
     }
 
     @if $brand-color {
-        @at-root & a, a#{nth(&, length(&))} {
+        @at-root & a:not(.subtle-link), a#{nth(&, length(&))}:not(.subtle-link) {
             color: $brand-color;
 
             @if $text-color and $background-color {
@@ -136,14 +136,6 @@
                 &:hover { color: darken($brand-color, 15%); }
                 &:visited { color: darken($brand-color, 25%); }
             }
-        }
-    }
-
-    .subtle-link, &.subtle-link {
-        text-decoration: none;
-
-        &, &:hover, &:visited {
-            color: $text-color;
         }
     }
 }
