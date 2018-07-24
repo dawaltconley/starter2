@@ -17,6 +17,18 @@ $perspective:           2000px;
 
 // Generated Classes
 
+$themes: (
+    "light": (
+        text-color: #171717,
+        background-color: white,
+        brand-color: royalblue,
+    ),
+    "dark": (
+        text-color: white,
+        background-color: #171717,
+    ),
+);
+
 $sizes: (
     "full":             100%,
     "half":             50%,

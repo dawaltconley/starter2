@@ -78,12 +78,12 @@
     }
 
     @if $background-color and $text-color {
-        @at-root & blockquote, blockquote#{nth(&, length(&))} {
+        @at-root & blockquote, #{selector-unify(&, blockquote)} {
             color: $light-text;
             border-left-color: mix($light-text, $background-color, 25%);
         }
 
-        @at-root & pre, pre#{nth(&, length(&))}, & code, code#{nth(&, length(&))} {
+        @at-root & pre, #{selector-unify(&, pre)}, & code, #{selector-unify(&, code)} {
             @if $light-theme {
                 $box-color: darken($background-color, $ld-tx-bg * 15%);
                 $box-color: desaturate($box-color, saturation($box-color) / 2 );
@@ -115,7 +115,7 @@
             }
         }
     } @else if $light-text {
-        @at-root & blockquote, blockquote#{nth(&, length(&))} {
+        @at-root & blockquote, #{selector-unify(&, blockquote)} {
             color: $light-text;
             border-left-color: lighten($light-text, 25%);
         }
@@ -126,7 +126,7 @@
     }
 
     @if $brand-color {
-        @at-root & a:not(.subtle-link), a#{nth(&, length(&))}:not(.subtle-link) {
+        @at-root & a, #{selector-unify(&, a)} {
             color: $brand-color;
 
             @if $text-color and $background-color {
