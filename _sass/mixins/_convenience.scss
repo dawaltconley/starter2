@@ -1,3 +1,19 @@
+@mixin mq($breakpoints: $bp, $queries: (lt: max, gt: min)) {
+    @each $name, $breakpoint in $breakpoints {
+        @each $prefix, $query in $queries {
+            @if $query == "min" {
+                $breakpoint: $breakpoint + 1;
+            }
+
+            &-#{$prefix}-#{$name} {
+                @media screen and (#{$query}-width: $breakpoint) {
+                    @content;
+                }
+            }
+        }
+    }
+}
+
 @mixin display($display) {
     display: $display;
 
@@ -13,17 +29,9 @@
         }
     }
 
-    @each $name, $breakpoint in $bp {
-        &.show-lt-#{$name} {
-            @media screen and (max-width: $breakpoint) {
-                display: $display;
-            }
-        }
-
-        &.show-gt-#{$name} {
-            @media screen and (min-width: $breakpoint + 1) {
-                display: $display;
-            }
+    &.show {
+        @include mq {
+            display: $display;
         }
     }
 }
@@ -84,7 +92,7 @@
 // with class "hover" (either same element or a parent) is hovered
 @mixin hover($hover-class: "hover") {
     &.#{$hover-class}:hover, .#{$hover-class}:hover & {
-        @content
+        @content;
     }
 }
 
