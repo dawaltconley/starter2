@@ -2,26 +2,15 @@
  * Media Queries
  */
 
-@each $name, $breakpoint in $bp {
-    @media screen and (max-width: $breakpoint) {
-        .hide-lt-#{$name} {
-            display: none;
-        }
-
-        .show-lt-#{$name} {
-            display: block; // ie fallback
-            display: initial;
-        }
+.hide {
+    @include mq {
+        display: none;
     }
+}
 
-    @media screen and (min-width: $breakpoint + 1) {
-        .hide-gt-#{$name} {
-            display: none;
-        }
-
-        .show-gt-#{$name} {
-            display: block; // ie fallback
-            display: initial;
-        }
+.show {
+    @include mq {
+        display: block;
+        display: initial;
     }
 }
