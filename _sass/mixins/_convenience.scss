@@ -1,7 +1,7 @@
 @mixin mq($breakpoints: $bp, $queries: (lt: max, gt: min)) {
     @each $name, $breakpoint in $breakpoints {
         @each $prefix, $query in $queries {
-            @if $query == "min" {
+            @if ($query == "min") and (index('px', unit($breakpoint))) {
                 $breakpoint: $breakpoint + 1;
             }
 
