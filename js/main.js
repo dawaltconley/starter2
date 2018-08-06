@@ -260,10 +260,10 @@
     bgTestingObjects = [];
 
     toArray(document.querySelectorAll("[data-background-images]")).forEach(function (element) {
-        bgTestingObjects.push(new bgSelect(element));
+        bgTestingObjects.push(new BgSelect(element));
     });
 
-    function bgSelect(element) {
+    function BgSelect(element) {
         var menuContainer = element;
         var computedStyle = window.getComputedStyle(element);
         var position = computedStyle.getPropertyValue("position");
@@ -301,7 +301,7 @@
         menuContainer.appendChild(this.controls);
     }
 
-    bgSelect.prototype.setBg = function (trigger) {
+    BgSelect.prototype.setBg = function (trigger) {
         var image = this.images[this.menu.selectedIndex];
         var imagePath = image["path"] ? image["path"] : image;
         if (trigger == "menu" && image["slider"]) { this.slider.value = image["slider"]; }
