@@ -34,6 +34,7 @@ $image-bp:              ({% if jekyll.environment == 'production' or jekyll.envi
     "mixins/manifest";
 
 @import
+    "mq-sort-order",
     "base",
     "themes",
     "layout",
