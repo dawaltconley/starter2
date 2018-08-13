@@ -1,6 +1,16 @@
 @mixin mq($breakpoints: $bp, $queries: (lt: max, gt: min)) {
-    @each $name, $breakpoint in $breakpoints {
-        @each $prefix, $query in $queries {
+    @each $prefix, $query in $queries {
+        $sorted-bp: map-sort-units($breakpoints, $order: px em);
+        @for $i from 1 through length($sorted-bp) {
+            $unit-set: map-sort(nth($sorted-bp, $i));
+            @if $query == "max" {
+                $unit-set: map-reverse($unit-set);
+            }
+            $sorted-bp: set-nth($sorted-bp, $i, $unit-set);
+        }
+        $sorted-bp: merge-all($sorted-bp);
+
+        @each $name, $breakpoint in $sorted-bp {
             @if ($query == "min") and (index('px', unit($breakpoint))) {
                 $breakpoint: $breakpoint + 1;
             }
