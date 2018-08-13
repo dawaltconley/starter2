@@ -105,6 +105,32 @@ $default-unit-order: "px" "em" "rem" "%" !default;
     @return $sorted;
 }
 
+@function map-sort-units($map, $sort-by: "values", $order: $default-unit-order) {
+    $sorted: ();
+
+    $values: index("values" "value" "val" "v", $sort-by);
+    $keys: index("keys" "key" "k", $sort-by);
+    @if not ($values or $keys) {
+        @error "Wrong value for $sort-by argument: was #{$sort-by}, should be 'keys' or 'values'.";
+    }
+
+    @each $unit in $order {
+        $matches: ();
+        @each $k, $v in $map {
+            $item: null;
+            @if $values { $item: $v; } @else { $item: $k; }
+            @if unit($item) == $unit {
+                $matches: map-merge($matches, ($k:$v));
+            }
+        }
+        @if length($matches) > 0 {
+            $sorted: append($sorted, $matches);
+        }
+    }
+
+    @return $sorted;
+}
+
 @function reverse($list, $recursive: false) {
     $sep: list-separator($list);
     $reversedList: ();
