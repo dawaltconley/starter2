@@ -160,6 +160,14 @@ $default-unit-order: "px" "em" "rem" "%" !default;
     }
 }
 
+@function merge-all($list) {
+    $return: ();
+    @each $map in $list {
+        $return: map-merge($return, $map);
+    }
+    @return $return;
+}
+
 @function unique($list) {
     $sep: list-separator($list);
     $return: ();
@@ -167,6 +175,16 @@ $default-unit-order: "px" "em" "rem" "%" !default;
         @if not(index($return, $item)) {
             $return: append($return, $item, $sep);
         }
+    }
+    @return $return;
+}
+
+@function map-reverse($map) {
+    $return: ();
+    @for $i from length($map) through 1 {
+        $pair: nth($map, $i);
+        $pair: (nth($pair, 1): nth($pair, 2));
+        $return: map-merge($return, $pair);
     }
     @return $return;
 }
