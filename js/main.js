@@ -25,7 +25,7 @@
     };
 
     function getScrollableParent(element) {
-        var maxDepth = arguments.length > 2 && arguments[1] !== undefined ? arguments[1] : undefined;
+        var maxDepth = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
         var ancestor = element;
         while (ancestor != document.documentElement && maxDepth !== 0) {
             ancestor = ancestor.parentElement;
