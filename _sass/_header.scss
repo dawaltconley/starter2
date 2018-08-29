@@ -17,8 +17,10 @@
             padding-right: map-get($spacings, m);
             line-height: $header-height * 0.75;
 
+            $parent-bg: map-get(map-get($themes, "black"), "background-color");
+            $parent-text: map-get(map-get($themes, "black"), "text-color");
             @include theme (
-                $background-color: mix($panel-blue, #2a2a2a, 16%),
+                $background-color: mix(mix($parent-text, $panel-blue, 85%), $parent-bg, 16%),
                 $text-color: white,
                 $brand-color: $panel-blue,
                 $accessibility: none,
