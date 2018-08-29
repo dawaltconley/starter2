@@ -285,48 +285,59 @@
  */
 
     var header = document.querySelector("[data-fixed-header]");
-    var headerAffix = document.querySelector("[data-affix-header-on-scroll]");
-    var headerAffixScrollPoint = headerAffix.getAttribute("data-affix-header-on-scroll");
+    var scrollRef = document.querySelector("[data-affix-header-on-scroll]");
+    var fixedHeader = new FixedHeader(header, scrollRef, scrollRef.getAttribute("data-affix-header-on-scroll"));
 
-    if (header) {
-        var fixedHeader = header.cloneNode(true);
-        fixedHeader.style.position = "absolute";
-        fixedHeader.style.width = header.clientWidth.toString() + "px";
-        fixedHeader.classList.add("translate-up", "t-short", "t-ease-out", "t-transform");
-        updateDescendentIds(fixedHeader, "-fixed");
-        if (page.parentElement) {
-            page.parentElement.insertBefore(fixedHeader, page.parentElement.firstChild);
+    function FixedHeader(header, scrollRef) {
+        var e = header.cloneNode(true);
+        var loc = page.parentElement;
+        e.style.width = header.clientWidth.toString() + "px";
+        e.classList.add("translate-up", "t-short", "t-ease-out", "t-transform");
+        updateDescendentIds(e, "-fixed");
+        if (loc) {
+            e.style.position = "absolute";
+            loc.insertBefore(e, loc.firstChild);
         } else {
-            page.insertBefore(fixedHeader, page.firstChild);
+            document.body.insertBefore(e, document.body.firstChild);
+            e.position = "fixed";
+        }
+        this.element = e;
+        this.headerRef = header;
+        this.scrollRef = scrollRef;
+        this.scrollRefSide = arguments.length > 2 && arguments[2] ? arguments[2] : "top";
+        this.isOpen = false;
+    }
+
+    FixedHeader.prototype.scrollDist = function () {
+        return this.scrollRef.getBoundingClientRect()[this.scrollRefSide];
+    }
+
+    FixedHeader.prototype.toggle = function () {
+        this.element.classList.toggle("translate-up");
+        this.isOpen = this.element.classList.contains("translate-up");
+    }
+
+    FixedHeader.prototype.toggleOnScroll = function () {
+        var scrollDist = this.scrollDist();
+        var menu = this.menu;
+        if ((this.isOpen && scrollDist <= 0) || (!this.isOpen && scrollDist >= 0)) {
+            this.toggle();
+            if (menu && menu.state == "open") {
+                menu.close();
+            }
         }
     }
 
-    function affixHeaderOnScroll() {
-        var scrollDist;
-        if (headerAffixScrollPoint) {
-            scrollDist = headerAffix.getBoundingClientRect()[headerAffixScrollPoint];
-        } else {
-            scrollDist = headerAffix.getBoundingClientRect().top;
-        }
-        if (scrollDist <= 0) {
-            fixedHeader.classList.remove("translate-up");
-            win.addEventListener("scroll", unfixHeaderOnScroll, passive);
-            win.removeEventListener("scroll", affixHeaderOnScroll, passive);
+    FixedHeader.prototype.resize = function () {
+        var refWidth = this.headerRef.clientWidth;
+        if (this.element.clientWidth != refWidth) {
+            this.element.style.width = refWidth.toString() + "px";
         }
     }
 
-    function unfixHeaderOnScroll() {
-        var scrollDist;
-        if (headerAffixScrollPoint) {
-            scrollDist = headerAffix.getBoundingClientRect()[headerAffixScrollPoint];
-        } else {
-            scrollDist = headerAffix.getBoundingClientRect().top;
-        }
-        if (scrollDist >= 0) {
-            fixedHeader.classList.add("translate-up");
-            win.addEventListener("scroll", affixHeaderOnScroll, passive);
-            win.removeEventListener("scroll", unfixHeaderOnScroll, passive);
-        }
+    FixedHeader.prototype.addListeners = function () {
+        page.addEventListener("scroll", this.toggleOnScroll.bind(this), passive);
+        window.addEventListener("resize", this.resize.bind(this), passive);
     }
 
 /*
@@ -336,6 +347,9 @@
     var collapsibleMenus = toArray(document.querySelectorAll("[data-menu]"));
     for (var i = 0; i < collapsibleMenus.length; i++) {
         collapsibleMenus[i] = new CollapsibleMenu(collapsibleMenus[i]);
+        if (collapsibleMenus[i].element === fixedHeader.element) {
+            fixedHeader.menu = collapsibleMenus[i];
+        }
     }
 
     function CollapsibleMenu(element) {
@@ -592,18 +606,6 @@
         window.addEventListener("test", null, options);
     } catch (err) {}
 
-    function addHeaderListeners() {
-        var initWidth = document.documentElement.clientWidth;
-        win.addEventListener("scroll", affixHeaderOnScroll, passive);
-        window.addEventListener("resize", function () {
-            var currentWidth = document.documentElement.clientWidth;
-            if (initWidth != currentWidth) {
-                fixedHeader.style.width = header.clientWidth.toString() + "px";
-                initWidth = currentWidth;
-            }
-        }, passive);
-    }
-
     function addCollapsibleMenuListeners() {
         collapsibleMenus.forEach(function (menu) {
             menu.addListeners();
@@ -651,7 +653,7 @@
     };
 
     objectFitImages();
-    addHeaderListeners();
+    if (fixedHeader) { fixedHeader.addListeners(); }
     addCollapsibleMenuListeners();
 
     if (smoothLinks.length > 0 && pageScrollBehavior != "smooth") {
