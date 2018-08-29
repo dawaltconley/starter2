@@ -289,9 +289,8 @@
 
     function FixedHeader(header, scrollRef) {
         var e = header.cloneNode(true);
-        e.style.position = "fixed";
         e.style.width = header.clientWidth.toString() + "px";
-        e.classList.add("translate-up", "t-short", "t-ease-out", "t-transform");
+        e.classList.add("fixed-header");
         updateDescendentIds(e, "-fixed");
         document.body.insertBefore(e, document.body.firstChild);
         this.element = e;
@@ -306,8 +305,7 @@
     }
 
     FixedHeader.prototype.toggle = function () {
-        this.element.classList.toggle("translate-up");
-        this.isOpen = !this.element.classList.contains("translate-up");
+        this.isOpen = this.element.classList.toggle("fixed-header-open");
     }
 
     FixedHeader.prototype.toggleOnScroll = function () {
