@@ -34,7 +34,7 @@
     }
 
     &.target-display {
-        &:target {
+        @include target {
             display: $display;
         }
     }
@@ -103,6 +103,12 @@
 @mixin hover($hover-class: "hover") {
     &.#{$hover-class}:hover, .#{$hover-class}:hover & {
         @content;
+    }
+}
+
+@mixin target($target-class: "target") {
+    &.#{$target-class}:target, .#{$target-class}:target & {
+        @content
     }
 }
 

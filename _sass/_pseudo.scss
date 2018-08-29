@@ -83,7 +83,13 @@
 .target-display {
     display: none;
 
-    &:target {
+    @include target {
         display: initial;
+    }
+}
+
+.target-hide {
+    @include target {
+        display: none;
     }
 }
