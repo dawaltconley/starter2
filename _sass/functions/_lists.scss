@@ -1,0 +1,90 @@
+@function sort($list, $order: $default-order) {
+    $sep: list-separator($list);
+    $less:  ();
+    $equal: ();
+    $large: ();
+
+    @if length($list) > 1 {
+        $seed: nth($list, ceil(length($list) / 2));
+
+        @each $item in $list {
+            @if $item == $seed {
+                $equal: append($equal, $item, $sep);
+            } @else if _lt($item, $seed, $order) {
+                $less: append($less, $item, $sep);
+            } @else if not _lt($item, $seed, $order) {
+                $large: append($large, $item, $sep);
+            }
+        }
+
+        @return join(join(sort($less, $order), $equal, $sep), sort($large, $order), $sep);
+    }
+
+    @return $list;
+}
+
+@function sort-units($list, $order: $default-unit-order) {
+    $sep: list-separator($list);
+    $sorted: ();
+    @each $unit in $order {
+        $matches: ();
+        @each $item in $list {
+            @if unit($item) == $unit {
+                $matches: append($matches, $item, $sep);
+            }
+        }
+        @if length($matches) > 0 {
+            $sorted: append($sorted, $matches, $sep);
+        }
+    }
+    @return $sorted;
+}
+
+@function reverse($list, $recursive: false) {
+    $sep: list-separator($list);
+    $reversedList: ();
+    @for $i from length($list) through 1 {
+        $item: nth($list, $i);
+        @if type-of($item) == list and $recursive {
+            $reversedList: append($reversedList, reverse($item, $recursive), $sep);
+        } @else {
+            $reversedList: append($reversedList, $item, $sep);
+        }
+    }
+    @return $reversedList;
+}
+
+@function flatten($list, $recursive: false) {
+    $sep: list-separator($list);
+    $return: ();
+    $max-l: 1;
+    @each $sub-list in $list {
+        $return: join($return, $sub-list, $sep);
+        $max-l: max($max-l, length($sub-list));
+    }
+    @if $recursive and $max-l > 1 {
+        @return flatten($return);
+    } @else {
+        @return $return;
+    }
+}
+
+@function unique($list) {
+    $sep: list-separator($list);
+    $return: ();
+    @each $item in $list {
+        @if not(index($return, $item)) {
+            $return: append($return, $item, $sep);
+        }
+    }
+    @return $return;
+}
+
+@function join-str($list, $str) {
+    $return: "";
+    @for $i from 1 to length($list) {
+        $return: $return + nth($list, $i) + $str;
+    }
+    $return: $return + nth($list, length($list));
+    @return $return;
+}

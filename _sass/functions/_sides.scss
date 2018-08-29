@@ -1,0 +1,22 @@
+$sides: "top", "bottom", "left", "right";
+$side: null;
+
+@function get-orientation($side) {
+    @if $side == "top" or $side == "bottom" {
+        @return "vertical";
+    } @else if $side == "left" or $side == "right" {
+        @return "horizontal";
+    } @else {
+        @error "Not a valid side."
+    }
+}
+
+@mixin all-sides {
+    @each $name in $sides {
+        $side: $name !global;
+        $o: str-slice(get-orientation($side), 1, 1);
+        &, &-#{$o}, &-#{str-slice($side, 1, 1)} {
+            @content;
+        }
+    }
+}
