@@ -2,6 +2,16 @@
  * Wrappers
  */
 
+.wrapper-padding {
+    padding-left: map-get($spacings, l);
+    padding-right: map-get($spacings, l);
+
+    @media screen and (max-width: map-get($bp, mobile)) {
+        padding-left: map-get($spacings, m);
+        padding-right: map-get($spacings, m);
+    }
+}
+
 .content-wrapper {
     @include wrapper(map-values($bp));
 }
