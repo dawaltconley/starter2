@@ -281,51 +281,7 @@
     };
 
 /*
- * Header
- */
-
-    var siteMenu = document.querySelector("[data-menu]");
-    siteMenu = new CollapsibleMenu(siteMenu);
-
-    function CollapsibleMenu(element) {
-        this.element = element;
-        this.button = getChildrenBySelector(element, '[data-menu-button]');
-        this.options = getChildBySelector(element, '[data-menu-options]');
-        this.state = "closed";
-    };
-
-    CollapsibleMenu.prototype.open = function () {
-        this.options.style.maxHeight = this.options.scrollHeight.toString() + "px";
-        this.state = "open";
-    };
-
-    CollapsibleMenu.prototype.close = function () {
-        this.options.style.maxHeight = "0px";
-        this.state = "closed";
-    };
-
-    CollapsibleMenu.prototype.toggle = function () {
-        if (this.state == "closed") {
-            this.open();
-        } else if (this.state == "open") {
-            this.close();
-        }
-    };
-
-    CollapsibleMenu.prototype.prime = function () {
-        this.options.style.overflow = "hidden";
-        for (var i=0; i < this.button.length; i++) {
-            var button = this.button[i];
-            var value = button.getAttribute('data-menu-button');
-            var action = value ? value : "toggle";
-            button.addEventListener("click", eval("this." + action + ".bind(this)"));
-        }
-    }
-
-    siteMenu.prime();
-
-/*
- * Fixed Header
+ * Fixed Headers
  */
 
     var fixedHeader = document.querySelector("[data-fixed-header]");
@@ -372,19 +328,70 @@
         }
     }
 
-    function addHeaderListeners() {
-        var initWidth = document.documentElement.clientWidth;
-        win.addEventListener("scroll", affixHeaderOnScroll, passive);
-        window.addEventListener("resize", function () {
-            var currentWidth = document.documentElement.clientWidth;
-            if (initWidth != currentWidth) {
-                fixedHeader2.style.width = fixedHeader.clientWidth.toString() + "px";
-                initWidth = currentWidth;
-            }
-        }, passive);
+/*
+ * Collapsible Menus
+ */
+
+    var collapsibleMenus = toArray(document.querySelectorAll("[data-menu]"));
+    for (var i = 0; i < collapsibleMenus.length; i++) {
+        collapsibleMenus[i] = new CollapsibleMenu(collapsibleMenus[i]);
     }
 
-    addHeaderListeners();
+    function CollapsibleMenu(element) {
+        this.element = element;
+        this.buttons = {
+            "open" : getChildrenBySelector(element, '[data-menu-button="open"]'),
+            "close" : getChildrenBySelector(element, '[data-menu-button="close"]'),
+            "toggle" : getChildrenBySelector(element, '[data-menu-button="toggle"],[data-menu-button=""]')
+        };
+        this.options = getChildBySelector(element, '[data-menu-options]');
+        this.state = "closed";
+    };
+
+    CollapsibleMenu.prototype.open = function () {
+        this.options.style.maxHeight = this.options.scrollHeight.toString() + "px";
+        this.buttons.open.forEach(function (button) {
+            button.classList.add("hidden");
+        });
+        this.buttons.close.forEach(function (button) {
+            button.classList.remove("hidden");
+        });
+        this.state = "open";
+    };
+
+    CollapsibleMenu.prototype.close = function () {
+        this.options.style.maxHeight = "0px";
+        this.buttons.close.forEach(function (button) {
+            button.classList.add("hidden");
+        });
+        this.buttons.open.forEach(function (button) {
+            button.classList.remove("hidden");
+        });
+        this.state = "closed";
+    };
+
+    CollapsibleMenu.prototype.toggle = function () {
+        if (this.state == "closed") {
+            this.open();
+        } else if (this.state == "open") {
+            this.close();
+        }
+    };
+
+    CollapsibleMenu.prototype.addListeners = function () {
+        this.options.style.overflow = "hidden";
+        for (method in this.buttons) {
+            if (this.buttons[method]) {
+                this.buttons[method].forEach(function (button) {
+                    button.classList.remove("target-hide", "target-display");
+                    button.addEventListener("click", function (event) {
+                        event.preventDefault();
+                        this[method]();
+                    }.bind(this));
+                }.bind(this));
+            }
+        }
+    }
 
 /*
  * Background Image Testing
@@ -584,6 +591,24 @@
         window.addEventListener("test", null, options);
     } catch (err) {}
 
+    function addHeaderListeners() {
+        var initWidth = document.documentElement.clientWidth;
+        win.addEventListener("scroll", affixHeaderOnScroll, passive);
+        window.addEventListener("resize", function () {
+            var currentWidth = document.documentElement.clientWidth;
+            if (initWidth != currentWidth) {
+                fixedHeader2.style.width = fixedHeader.clientWidth.toString() + "px";
+                initWidth = currentWidth;
+            }
+        }, passive);
+    }
+
+    function addCollapsibleMenuListeners() {
+        collapsibleMenus.forEach(function (menu) {
+            menu.addListeners();
+        });
+    }
+
     function addSmoothScrollListeners() {
         smoothLinks.forEach(function (link) {
             link.element.addEventListener("click", function (event) {
@@ -625,6 +650,8 @@
     };
 
     objectFitImages();
+    addHeaderListeners();
+    addCollapsibleMenuListeners();
 
     if (smoothLinks.length > 0 && pageScrollBehavior != "smooth") {
         addSmoothScrollListeners();
