@@ -289,17 +289,11 @@
 
     function FixedHeader(header, scrollRef) {
         var e = header.cloneNode(true);
-        var loc = page.parentElement;
+        e.style.position = "fixed";
         e.style.width = header.clientWidth.toString() + "px";
         e.classList.add("translate-up", "t-short", "t-ease-out", "t-transform");
         updateDescendentIds(e, "-fixed");
-        if (loc) {
-            e.style.position = "absolute";
-            loc.insertBefore(e, loc.firstChild);
-        } else {
-            document.body.insertBefore(e, document.body.firstChild);
-            e.position = "fixed";
-        }
+        document.body.insertBefore(e, document.body.firstChild);
         this.element = e;
         this.headerRef = header;
         this.scrollRef = scrollRef;
@@ -335,7 +329,7 @@
     }
 
     FixedHeader.prototype.addListeners = function () {
-        page.addEventListener("scroll", this.toggleOnScroll.bind(this), passive);
+        win.addEventListener("scroll", this.toggleOnScroll.bind(this), passive);
         window.addEventListener("resize", this.resize.bind(this), passive);
     }
 
