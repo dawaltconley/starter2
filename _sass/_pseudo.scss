@@ -94,8 +94,10 @@
     }
 }
 
-.target-height-auto {
+.target-max-height-expand {
     @include target {
-        height: auto;
+        max-height: 100vw;
+        transition-property: max-height;
+        transition-timing-function: ease-out;
     }
 }

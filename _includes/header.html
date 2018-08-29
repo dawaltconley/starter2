@@ -16,11 +16,11 @@
       </div>
     </div>
 
-    <div id="nav-links" class="black table float-right full-height target-height-auto border-between overflow-h font-smoothing-normal show-gt-header hide-lt-header target-display clearfix">
-      <a class="cell v-center header-link padding-s-h border-basic border-light border-0-gt-header subtle-icon hover-shade-bg t-short" href="{{ site.baseurl }}/">Home</a>
+    <div id="nav-links" class="nav-links-lt-header black table float-right full-height target-max-height-expand overflow-s show-gt-header clearfix t-long">
+      <a class="cell v-center header-link padding-s-h subtle-icon font-smoothing-normal hover-shade-bg t-short" href="{{ site.baseurl }}/">Home</a>
       {% for my_page in site.pages %}
         {% if my_page.menu-title %}
-          <a class="cell v-center header-link padding-s-h border-basic border-light border-0-gt-header subtle-icon hover-shade-bg t-short" href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.menu-title }}</a>
+          <a class="cell v-center header-link padding-s-h subtle-icon font-smoothing-normal hover-shade-bg t-short" href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.menu-title }}</a>
         {% endif %}
       {% endfor %}
     </div>
