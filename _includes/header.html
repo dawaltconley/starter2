@@ -17,10 +17,10 @@
     </div>
 
     <div class="nav-links-lt-header black table float-right full-height target-max-height-expand overflow-a show-gt-header clearfix t-default t-long" data-menu-options data-class-rm="t-long">
-      <a class="cell v-center header-link padding-s-h subtle-icon font-smoothing-normal hover-shade-bg t-short" href="{{ site.baseurl }}/">Home</a>
+      <a class="cell v-center header-link padding-s-h subtle-icon font-smoothing-normal hover hover-shade-bg t-short" href="{{ site.baseurl }}/">Home</a>
       {% for my_page in site.pages %}
         {% if my_page.menu-title %}
-          <a class="cell v-center header-link padding-s-h subtle-icon font-smoothing-normal hover-shade-bg t-short" href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.menu-title }}</a>
+          <a class="cell v-center header-link padding-s-h subtle-icon font-smoothing-normal hover hover-shade-bg t-short" href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.menu-title }}</a>
         {% endif %}
       {% endfor %}
     </div>

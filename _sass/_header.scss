@@ -18,8 +18,10 @@
             line-height: $header-height * 0.75;
 
             @include theme (
-                $background-color: #2a2a2a,
+                $background-color: mix($panel-blue, #2a2a2a, 16%),
                 $text-color: white,
+                $brand-color: $panel-blue,
+                $accessibility: none,
             );
         }
     }
