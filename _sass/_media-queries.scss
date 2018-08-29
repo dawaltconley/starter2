@@ -21,14 +21,6 @@
     }
 }
 
-.padding-m {
-    @include all-sides {
-        @include mq {
-            padding-#{$side}: map-get($spacings, m);
-        }
-    }
-}
-
 .border-0 {
     @include mq {
         border-width: 0;

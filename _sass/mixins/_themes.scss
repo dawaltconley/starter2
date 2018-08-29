@@ -9,11 +9,10 @@
     }
 }
 
-
 @mixin theme($background-color: null, $text-color: null, $brand-color: null, $light-text: null, $accessibility: "AA") {
     $light-theme: null; $ld-tx-bg: null; $ld-br-tx: null; $ld-br-bg: null; $ct-tx-bg: null; $ct-br-tx: null; $ct-br-bg: null;
-    $aa: to-upper-case(inspect($accessibility)) == "AA";
-    $aaa: to-upper-case(inspect($accessibility)) == "AAA";
+    $aa: to-upper-case(inspect($accessibility)) == inspect("AA");
+    $aaa: to-uppder-case(inspect($accessibility)) == inspect("AAA");
 
     @if $background-color and $text-color {
         $light-theme: lightness($text-color) < lightness($background-color);
@@ -35,9 +34,9 @@
         }
 
         @if $ct-tx-bg < 4.5 and $aa {
-            @warn "The contrast ratio of a theme's text (#{$text-color}) and background (#{$background-color}) colors is #{$ct-tx-bg}, which does not meet WCAG 2.0 AA standards.";
+            @warn "The contrast ratio of a theme's text (#{$text-color}) and background (#{$background-color}) colors is #{$ct-tx-bg}, which does not meet the WCAG 2.0 AA standard (4.5).";
         } @else if $ct-tx-bg < 7 and $aaa {
-            @warn "The contrast ratio of a theme's text (#{$text-color}) and background (#{$background-color}) colors is #{$ct-tx-bg}, which does not meet WCAG 2.0 AAA standards.";
+            @warn "The contrast ratio of a theme's text (#{$text-color}) and background (#{$background-color}) colors is #{$ct-tx-bg}, which does not meet WCAG 2.0 AAA standard (7).";
         }
     } @else if not($brand-color or $light-text) {
         @if $background-color { @warn "Insufficient arguments passed to theme include: $background-color needs to be accompanied by a $text-color."; }
@@ -52,12 +51,12 @@
         $ct-br-bg: ch-color-contrast($brand-color, $background-color);
 
         @if $ct-br-tx < 3 and $aa {
-            @warn "The contrast ratio of a theme's link (#{$brand-color}) and text (#{$text-color}) colors is #{$ct-br-tx}, which does not meet WCAG 2.0 AA standards.";
+            @warn "The contrast ratio of a theme's link (#{$brand-color}) and text (#{$text-color}) colors is #{$ct-br-tx}, which does not meet WCAG 2.0 AA standard (3).";
         }
         @if $ct-br-bg < 4.5 and $aa {
-            @warn "The contrast ratio of a theme's link (#{$brand-color}) and background (#{$background-color}) colors is #{$ct-br-bg}, which does not meet WCAG 2.0 AA standards.";
+            @warn "The contrast ratio of a theme's link (#{$brand-color}) and background (#{$background-color}) colors is #{$ct-br-bg}, which does not meet WCAG 2.0 AA standard (4.5).";
         } @else if $ct-br-bg < 7 and $aaa {
-            @warn "The contrast ratio of a theme's link (#{$brand-color}) and background (#{$background-color}) colors is #{$ct-br-bg}, which does not meet WCAG 2.0 AAA standards.";
+            @warn "The contrast ratio of a theme's link (#{$brand-color}) and background (#{$background-color}) colors is #{$ct-br-bg}, which does not meet WCAG 2.0 AAA standard (7).";
         }
     }
 
