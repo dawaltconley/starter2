@@ -13,7 +13,7 @@
 }
 
 .content-wrapper {
-    @include wrapper(map-values($bp));
+    @include wrapper((map-get($bp, large), map-get($bp, laptop), map-get($bp, mobile)));
 }
 
 .text-wrapper {
