@@ -1,0 +1,44 @@
+/*
+ * Display
+ */
+
+.block {
+    @include display(block);
+}
+
+.inline {
+    @include display(inline);
+}
+
+.inline-block {
+    @include display(inline-block);
+}
+
+.table {
+    @include display(table);
+}
+
+.column {
+    @include display(column);
+}
+
+.row {
+    @include display(table-row);
+}
+
+.cell {
+    @include display(table-cell);
+}
+
+%flex {
+    @include display(flex);
+}
+
+.inline-flex {
+    @include display(inline-flex);
+}
+
+.hidden {
+    display: none;
+}
+

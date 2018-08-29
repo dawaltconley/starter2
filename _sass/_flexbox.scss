@@ -2,14 +2,6 @@
  * Flexbox
  */
 
-%flex {
-    @include display(flex);
-}
-
-.inline-flex {
-    @include display(inline-flex);
-}
-
 .flex-row {
     @extend %flex;
     flex-direction: row;
