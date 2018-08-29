@@ -22,13 +22,18 @@
         }
     }
 
+    $accessibility: "AA"; // need to reset as default...not a great feature of this set up
+    @if map-has-key($settings, accessibility) {
+        $accessibility: map-get($settings, accessibility);
+    }
+
     #{$selectors} { // assign theme styles to resulting selector list
         @include theme(
             $background-color: map-get($settings, background-color),
             $text-color: map-get($settings, text-color),
             $brand-color: map-get($settings, brand-color),
             $light-text: map-get($settings, light-text),
-            $accessibility: map-get($settings, accessibility),
+            $accessibility: $accessibility,
         );
     }
 }

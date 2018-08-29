@@ -9,11 +9,11 @@
             width: 100%;
         }
 
-        #nav-links {
-            .cell {
-                display: block;
-                width: 100%;
-            }
+        .header-link {
+            display: block;
+            width: 100%;
+            padding-left: map-get($spacings, m);
+            padding-right: map-get($spacings, m);
         }
     }
 }

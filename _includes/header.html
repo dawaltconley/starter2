@@ -8,19 +8,19 @@
 
       <div class="hide-gt-header block full-height text-right font-smoothing-normal">
         <a href="#nav" class="target-hide subtle-icon">
-          Menu <i class="fa fa-bars"></i>
+          Menu <i class="fa fa-bars fa-fw fa-lg"></i>
         </a>
         <a href="#" class="hidden target-display subtle-icon">
-          Close <i class="fa fa-close"></i>
+          Close <i class="fa fa-close fa-fw fa-lg"></i>
         </a>
       </div>
     </div>
 
     <div id="nav-links" class="black table float-right full-height target-height-auto border-between overflow-h font-smoothing-normal show-gt-header hide-lt-header target-display clearfix">
-      <a class="cell v-center header-link padding-s-h padding-m-h-lt-header border-basic border-light border-0-gt-header subtle-icon hover-shade-bg t-short" href="{{ site.baseurl }}/">Home</a>
+      <a class="cell v-center header-link padding-s-h border-basic border-light border-0-gt-header subtle-icon hover-shade-bg t-short" href="{{ site.baseurl }}/">Home</a>
       {% for my_page in site.pages %}
         {% if my_page.menu-title %}
-          <a class="cell v-center header-link padding-s-h padding-m-h-lt-header border-basic border-light border-0-gt-header subtle-icon hover-shade-bg t-short" href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.menu-title }}</a>
+          <a class="cell v-center header-link padding-s-h border-basic border-light border-0-gt-header subtle-icon hover-shade-bg t-short" href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.menu-title }}</a>
         {% endif %}
       {% endfor %}
     </div>
