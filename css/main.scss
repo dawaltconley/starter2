@@ -30,7 +30,7 @@ $image-bp:              ({% if jekyll.environment == 'production' or jekyll.envi
 
 @import
     "variables",
-    "functions",
+    "functions/manifest",
     "mixins/manifest";
 
 @import

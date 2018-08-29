@@ -1,0 +1,81 @@
+@function map-sort($map, $sort-by: "values", $order: $default-order) {
+    $less:  ();
+    $equal: ();
+    $large: ();
+
+    $values: index("values" "value" "val" "v", $sort-by);
+    $keys: index("keys" "key" "k", $sort-by);
+    @if not ($values or $keys) {
+        @error "Wrong value for $sort-by argument: was #{$sort-by}, should be 'keys' or 'values'.";
+    }
+
+    @if length($map) > 1 {
+        $seed: nth($map, ceil(length($map) / 2));
+        @if $values {
+            $seed: nth($seed, 2);
+        } @else if $keys {
+            $seed: nth($seed, 1);
+        }
+
+        @each $k, $v in $map {
+            $item: null;
+            @if $values { $item: $v; } @else { $item: $k; }
+
+            @if $item == $seed {
+                $equal: map-merge($equal, ($k:$v));
+            } @else if _lt($item, $seed, $order) {
+                $less: map-merge($less, ($k:$v));
+            } @else if not _lt($item, $seed, $order) {
+                $large: map-merge($large, ($k:$v));
+            }
+        }
+
+        @return map-merge(map-merge(map-sort($less, $sort-by, $order), $equal), map-sort($large, $sort-by, $order));
+    }
+
+    @return $map;
+}
+
+@function map-sort-units($map, $sort-by: "values", $order: $default-unit-order) {
+    $sorted: ();
+
+    $values: index("values" "value" "val" "v", $sort-by);
+    $keys: index("keys" "key" "k", $sort-by);
+    @if not ($values or $keys) {
+        @error "Wrong value for $sort-by argument: was #{$sort-by}, should be 'keys' or 'values'.";
+    }
+
+    @each $unit in $order {
+        $matches: ();
+        @each $k, $v in $map {
+            $item: null;
+            @if $values { $item: $v; } @else { $item: $k; }
+            @if unit($item) == $unit {
+                $matches: map-merge($matches, ($k:$v));
+            }
+        }
+        @if length($matches) > 0 {
+            $sorted: append($sorted, $matches);
+        }
+    }
+
+    @return $sorted;
+}
+
+@function merge-all($list) {
+    $return: ();
+    @each $map in $list {
+        $return: map-merge($return, $map);
+    }
+    @return $return;
+}
+
+@function map-reverse($map) {
+    $return: ();
+    @for $i from length($map) through 1 {
+        $pair: nth($map, $i);
+        $pair: (nth($pair, 1): nth($pair, 2));
+        $return: map-merge($return, $pair);
+    }
+    @return $return;
+}
