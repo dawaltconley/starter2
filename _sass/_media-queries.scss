@@ -14,3 +14,29 @@
         display: initial;
     }
 }
+
+.padding-0 {
+    @include mq {
+        padding: 0;
+    }
+}
+
+.padding-m {
+    @include all-sides {
+        @include mq {
+            padding-#{$side}: map-get($spacings, m);
+        }
+    }
+}
+
+.border-0 {
+    @include mq {
+        border-width: 0;
+    }
+}
+
+.text-left-lt-27em {
+    @media screen and (max-width: 27em) {
+        text-align: left;
+    }
+}

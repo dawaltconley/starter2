@@ -93,3 +93,9 @@
         display: none;
     }
 }
+
+.target-height-auto {
+    @include target {
+        height: auto;
+    }
+}
