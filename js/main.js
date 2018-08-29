@@ -324,6 +324,68 @@
     siteMenu.prime();
 
 /*
+ * Fixed Header
+ */
+
+    var fixedHeader = document.querySelector("[data-fixed-header]");
+    var fixedHeaderParent = fixedHeader.parentElement;
+    var headerAffix = document.querySelector("[data-affix-header-on-scroll]");
+    var headerAffixScrollPoint = headerAffix.getAttribute("data-affix-header-on-scroll");
+
+    if (fixedHeader) {
+        var fixedHeader2 = fixedHeader.cloneNode(true);
+        fixedHeader2.style.position = "absolute";
+        fixedHeader2.style.width = fixedHeader.clientWidth.toString() + "px";
+        fixedHeader2.classList.add("translate-up", "t-short", "t-ease-out", "t-transform");
+        updateDescendentIds(fixedHeader2, "2");
+        win.parentElement.insertBefore(fixedHeader2, win.parentElement.firstChild);
+    }
+
+    function affixHeaderOnScroll() {
+        var scrollDist;
+        if (headerAffixScrollPoint == "bottom") {
+            scrollDist = headerAffix.getBoundingClientRect().bottom;
+        } else {
+            scrollDist = headerAffix.getBoundingClientRect().top;
+        }
+        console.log("affix listener:", scrollDist);
+        if (scrollDist <= 0) {
+            fixedHeader2.classList.remove("translate-up");
+            win.addEventListener("scroll", unfixHeaderOnScroll, passive);
+            win.removeEventListener("scroll", affixHeaderOnScroll, passive);
+        }
+    }
+
+    function unfixHeaderOnScroll() {
+        var scrollDist;
+        if (headerAffixScrollPoint == "bottom") {
+            scrollDist = headerAffix.getBoundingClientRect().bottom;
+        } else {
+            scrollDist = headerAffix.getBoundingClientRect().top;
+        }
+        console.log("unfix listener:", scrollDist);
+        if (scrollDist >= 0) {
+            fixedHeader2.classList.add("translate-up");
+            win.addEventListener("scroll", affixHeaderOnScroll, passive);
+            win.removeEventListener("scroll", unfixHeaderOnScroll, passive);
+        }
+    }
+
+    function addHeaderListeners() {
+        var initWidth = document.documentElement.clientWidth;
+        win.addEventListener("scroll", affixHeaderOnScroll, passive);
+        window.addEventListener("resize", function () {
+            var currentWidth = document.documentElement.clientWidth;
+            if (initWidth != currentWidth) {
+                fixedHeader2.style.width = fixedHeader.clientWidth.toString() + "px";
+                initWidth = currentWidth;
+            }
+        }, passive);
+    }
+
+    addHeaderListeners();
+
+/*
  * Background Image Testing
  */
 
