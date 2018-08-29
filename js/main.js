@@ -357,7 +357,7 @@
     };
 
     CollapsibleMenu.prototype.close = function () {
-        this.options.style.maxHeight = "0px";
+        this.options.style.maxHeight = "";
         this.buttons.close.forEach(function (button) {
             button.classList.add("hidden");
         });
