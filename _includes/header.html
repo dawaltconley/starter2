@@ -1,19 +1,26 @@
-<header class="black relative wrapper-padding header-height header-line-height z-9 clearfix">
+<header class="black relative header-height wrapper-padding padding-0-lt-header header-font z-9">
 
-  <a class="float-left block full-height padding-xxs-v" href="{{ site.baseurl }}/">
-    <img class="block full-height" itemprop="logo" src="{{ site.logo | prepend: site.baseurl }}" alt="{{ site.title }}">
-  </a>
+  <nav id="nav" class="full-size nav-lt-header target clearfix">
+    <div class="float-left full-height wrapper-padding padding-0-gt-header">
+      <a class="float-left block full-height padding-xxs-v" href="{{ site.baseurl }}/">
+        <img class="block full-height" itemprop="logo" src="{{ site.logo | prepend: site.baseurl }}" alt="{{ site.title }}">
+      </a>
 
-  <nav class="hamburger-lt-header full-height float-right text-right border-basic border-radius-5px border-0-gt-header hover">
-    <a href="#" class="menu-icon float-right hide-gt-header block hamburger-size padding-xs-t text-center fill-color-theme-text">
-      {% include hamburger-icon.svg %}
-    </a>
+      <div class="hide-gt-header block full-height text-right font-smoothing-normal">
+        <a href="#nav" class="target-hide subtle-icon">
+          Menu <i class="fa fa-bars"></i>
+        </a>
+        <a href="#" class="hidden target-display subtle-icon">
+          Close <i class="fa fa-close"></i>
+        </a>
+      </div>
+    </div>
 
-    <div class="black table full-height hover-display hover-padding-xxs-b show-gt-header font-smoothing-normal clearfix">
-      <a class="cell v-center header-link padding-s-h subtle-icon hover-shade-bg t-short" href="{{ site.baseurl }}/">Home</a>
+    <div id="nav-links" class="black table float-right full-height target-height-auto border-between overflow-h font-smoothing-normal show-gt-header hide-lt-header target-display clearfix">
+      <a class="cell v-center header-link padding-s-h padding-m-h-lt-header border-basic border-light border-0-gt-header subtle-icon hover-shade-bg t-short" href="{{ site.baseurl }}/">Home</a>
       {% for my_page in site.pages %}
         {% if my_page.menu-title %}
-          <a class="cell v-center header-link padding-s-h subtle-icon hover-shade-bg t-short" href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.menu-title }}</a>
+          <a class="cell v-center header-link padding-s-h padding-m-h-lt-header border-basic border-light border-0-gt-header subtle-icon hover-shade-bg t-short" href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.menu-title }}</a>
         {% endif %}
       {% endfor %}
     </div>

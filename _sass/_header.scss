@@ -2,35 +2,22 @@
  * Site header
  */
 
-.header-link {
-    // &:not(:last-child) {
-    //     margin-right: 20px;
-    // }
-}
-
 @media screen and (max-width: map-get($bp, header)) {
-    .hamburger-lt-header {
-        position: absolute;
-        top: 9px;
-        right: map-get($spacings, m);
-
-        .menu-icon > svg {
-            width: 18px;
-            height: 15px;
+    .nav-lt-header {
+        > * {
+            float: none;
+            width: 100%;
         }
 
-        .header-link {
-            display: block;
-            padding: 5px 10px;
-
-            &:not(:last-child) {
-                margin-right: 0;
+        #nav-links {
+            .cell {
+                display: block;
+                width: 100%;
             }
-            margin-left: 20px;
         }
     }
 }
 
-.header-line-height {
+.header-font {
     line-height: $header-height;
 }
