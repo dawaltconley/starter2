@@ -2,22 +2,6 @@
  * Basic
  */
 
-.block {
-    @include display(block);
-}
-
-.inline {
-    @include display(inline);
-}
-
-.inline-block {
-    @include display(inline-block);
-}
-
-.hidden {
-    display: none;
-}
-
 .relative {
     position: relative;
 }

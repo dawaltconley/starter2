@@ -2,28 +2,16 @@
  * Tables
  */
 
-.table {
-    @include display(table);
-}
-
 .table-fixed {
     @extend .table;
     table-layout: fixed;
 }
 
-.column {
-    @include display(column);
+.v-top {
+    vertical-align: top;
 }
 
-.row {
-    @include display(table-row);
-}
-
-.cell {
-    @include display(table-cell);
-}
-
-.v-middle {
+.v-center {
     vertical-align: middle;
 }
 

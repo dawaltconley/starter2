@@ -305,7 +305,6 @@
         } else {
             scrollDist = headerAffix.getBoundingClientRect().top;
         }
-        console.log("affix listener:", scrollDist);
         if (scrollDist <= 0) {
             fixedHeader2.classList.remove("translate-up");
             win.addEventListener("scroll", unfixHeaderOnScroll, passive);
@@ -320,7 +319,6 @@
         } else {
             scrollDist = headerAffix.getBoundingClientRect().top;
         }
-        console.log("unfix listener:", scrollDist);
         if (scrollDist >= 0) {
             fixedHeader2.classList.add("translate-up");
             win.addEventListener("scroll", affixHeaderOnScroll, passive);
