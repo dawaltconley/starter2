@@ -10,8 +10,9 @@
     overflow: hidden;
 }
 
-.overflow-s {
-    overflow: scroll;
+.overflow-a {
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 %fill {

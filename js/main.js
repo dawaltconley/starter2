@@ -91,6 +91,72 @@
         return { top: posTop, left: posLeft };
     };
 
+    function getParentBySelector(element, selector) {
+        var maxDepth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
+        var ancestor = element;
+        while (ancestor != document.documentElement && maxDepth !== 0) {
+            ancestor = ancestor.parentElement;
+            if (Sizzle.matchesSelector(ancestor, selector)) {
+                return ancestor;
+            }
+            maxDepth -= 1;
+        }
+        return null;
+    };
+
+    function getChildBySelector(element, selector) {
+        var maxDepth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
+        for (var i = 0; i < element.children.length; i++) {
+            var child = element.children[i];
+            if (Sizzle.matchesSelector(child, selector)) {
+                return child;
+            } else if (child.children.length && maxDepth !== 1) {
+                var childMatch = getChildBySelector(child, selector, maxDepth - 1);
+                if (childMatch) {
+                    return childMatch;
+                }
+            }
+        }
+        return null;
+    };
+
+    function updateDescendentIds(element, string) {
+        var position = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "suffix";
+        var maxDepth = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : undefined;
+        if (element.id && position == "suffix") {
+            element.id = element.id + string;
+        } else if (element.id && position == "prefix") {
+            element.id = string + element.id;
+        }
+        for (var i = 0; i < element.children.length && maxDepth !== 0; i++) {
+            updateDescendentIds(element.children[i], string, position, maxDepth - 1);
+        }
+    };
+
+    function getChildrenBySelector(element, selector) {
+        var maxDepth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
+        var matches = [];
+        for (var i = 0; i < element.children.length; i++) {
+            var child = element.children[i];
+            if (Sizzle.matchesSelector(child, selector)) {
+                matches.push(child);
+            }
+            if (child.children.length && maxDepth !== 1) {
+                var childMatch = getChildrenBySelector(child, selector, maxDepth - 1);
+                if (childMatch) {
+                    childMatch.forEach(function (match) {
+                        matches.push(match);
+                    });
+                }
+            }
+        }
+        if (matches.length) {
+            return matches;
+        } else {
+            return null;
+        }
+    };
+
     function getHash(element) { // for getting hash of an anchor, regardless of whether it is an HTML or SVG anchor
         var elementClass = Object.prototype.toString.call(element);
         if (elementClass == "[object SVGAElement]") {
@@ -169,6 +235,19 @@
     };
 
 /*
+ * Classes
+ */
+
+    var classRemoveElements = document.querySelectorAll("[data-class-rm]");
+
+    classRemoveElements.forEach(function (element) {
+        var rmClasses = element.getAttribute("data-class-rm").split(" ");
+        for (var i=0; i < rmClasses.length; i++) {
+            element.classList.remove(rmClasses[i]);
+        }
+    });
+
+/*
  * Scrolling
  */
 
@@ -200,6 +279,50 @@
         }
         return false;
     };
+
+/*
+ * Header
+ */
+
+    var siteMenu = document.querySelector("[data-menu]");
+    siteMenu = new CollapsibleMenu(siteMenu);
+
+    function CollapsibleMenu(element) {
+        this.element = element;
+        this.button = getChildrenBySelector(element, '[data-menu-button]');
+        this.options = getChildBySelector(element, '[data-menu-options]');
+        this.state = "closed";
+    };
+
+    CollapsibleMenu.prototype.open = function () {
+        this.options.style.maxHeight = this.options.scrollHeight.toString() + "px";
+        this.state = "open";
+    };
+
+    CollapsibleMenu.prototype.close = function () {
+        this.options.style.maxHeight = "0px";
+        this.state = "closed";
+    };
+
+    CollapsibleMenu.prototype.toggle = function () {
+        if (this.state == "closed") {
+            this.open();
+        } else if (this.state == "open") {
+            this.close();
+        }
+    };
+
+    CollapsibleMenu.prototype.prime = function () {
+        this.options.style.overflow = "hidden";
+        for (var i=0; i < this.button.length; i++) {
+            var button = this.button[i];
+            var value = button.getAttribute('data-menu-button');
+            var action = value ? value : "toggle";
+            button.addEventListener("click", eval("this." + action + ".bind(this)"));
+        }
+    }
+
+    siteMenu.prime();
 
 /*
  * Background Image Testing

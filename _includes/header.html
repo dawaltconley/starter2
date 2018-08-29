@@ -1,4 +1,4 @@
-<header class="black relative header-height wrapper-padding padding-0-lt-header header-font z-9">
+<header class="black relative header-height wrapper-padding padding-0-lt-header header-font z-9" data-menu>
 
   <nav id="nav" class="full-size nav-lt-header target clearfix">
     <div class="float-left full-height wrapper-padding padding-0-gt-header">
@@ -7,16 +7,16 @@
       </a>
 
       <div class="hide-gt-header block full-height text-right font-smoothing-normal">
-        <a href="#nav" class="target-hide subtle-icon">
+        <a href="#nav" class="target-hide subtle-icon" data-menu-button="open">
           Menu <i class="fa fa-bars fa-fw fa-lg"></i>
         </a>
-        <a href="#" class="hidden target-display subtle-icon">
+        <a href="#" class="hidden target-display subtle-icon" data-menu-button="close">
           Close <i class="fa fa-close fa-fw fa-lg"></i>
         </a>
       </div>
     </div>
 
-    <div id="nav-links" class="nav-links-lt-header black table float-right full-height target-max-height-expand overflow-s show-gt-header clearfix t-long">
+    <div class="nav-links-lt-header black table float-right full-height target-max-height-expand overflow-a show-gt-header clearfix t-default t-long" data-menu-options data-class-rm="t-long">
       <a class="cell v-center header-link padding-s-h subtle-icon font-smoothing-normal hover-shade-bg t-short" href="{{ site.baseurl }}/">Home</a>
       {% for my_page in site.pages %}
         {% if my_page.menu-title %}
