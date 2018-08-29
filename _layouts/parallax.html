@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  {% include head.html %}
+
+  <body class="parallax-body" {% if page.itemtype %} itemscope itemtype="{{ page.itemtype }}" {% endif %}>
+
+    <div class="parallax-page">
+      {{ content }}
+    </div>
+
+    {% include scripts.html %}
+
+  </body>
+
+</html>

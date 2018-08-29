@@ -3,11 +3,7 @@
 
   {% include head.html %}
 
-  {% if page.itemtype %}
-    <body itemscope itemtype="{{ page.itemtype }}">
-  {% else %}
-    <body>
-  {% endif %}
+  <body {% if page.itemtype %} itemscope itemtype="{{ page.itemtype }}" {% endif %}>
 
     {{ content }}
 

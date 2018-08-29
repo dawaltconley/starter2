@@ -1,6 +1,6 @@
 // styling for container elements of parallax pages
 
-body {
+body.parallax-body {
     @include parallax-support {
         -webkit-transform: translateZ(0);
         transform: translateZ(0);
