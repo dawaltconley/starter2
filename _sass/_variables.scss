@@ -63,7 +63,9 @@ $borders: (
 $z-range: -9, 9;
 
 $transitions: (
+    "short":    .25s,
     "default": .3s,
+    "long":     1s,
 );
 
 // Breakpoints

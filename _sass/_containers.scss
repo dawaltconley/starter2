@@ -10,6 +10,16 @@
     overflow: hidden;
 }
 
+.overflow-s {
+    overflow: scroll;
+}
+
+%fill {
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 .fill-window {
     @extend .fixed, .pos-0;
 }
