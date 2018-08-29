@@ -314,13 +314,13 @@
 
     FixedHeader.prototype.toggle = function () {
         this.element.classList.toggle("translate-up");
-        this.isOpen = this.element.classList.contains("translate-up");
+        this.isOpen = !this.element.classList.contains("translate-up");
     }
 
     FixedHeader.prototype.toggleOnScroll = function () {
         var scrollDist = this.scrollDist();
         var menu = this.menu;
-        if ((this.isOpen && scrollDist <= 0) || (!this.isOpen && scrollDist >= 0)) {
+        if ((this.isOpen && scrollDist >= 0) || (!this.isOpen && scrollDist <= 0)) {
             this.toggle();
             if (menu && menu.state == "open") {
                 menu.close();
