@@ -1,0 +1,29 @@
+<header class="black relative header-height wrapper-padding padding-0-lt-header header-line-height z-9" data-menu data-fixed-header>
+
+  <nav id="nav" class="full-size nav-lt-header target clearfix">
+    <div class="float-left full-height wrapper-padding padding-0-gt-header">
+      <a class="float-left block full-height padding-xxs-v" href="{{ site.baseurl }}/">
+        <img class="block full-height" itemprop="logo" src="{{ site.logo | prepend: site.baseurl }}" alt="{{ site.title }}">
+      </a>
+
+      <div class="hide-gt-header table float-right full-height font-smoothing-normal">
+        <a href="#nav" class="target-hide cell v-center subtle-icon" data-menu-button="open">
+          Menu <i class="fa fa-bars fa-fw fa-lg"></i>
+        </a>
+        <a href="#" class="hidden target-display cell v-center subtle-icon" data-menu-button="close">
+          Close <i class="fa fa-close fa-fw fa-lg"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="nav-links-lt-header black table float-right full-height target-max-height-expand overflow-a show-gt-header clearfix t-default t-long" data-menu-options data-class-rm="t-long">
+      <a class="cell v-center header-link padding-s-h subtle-icon font-smoothing-normal hover hover-shade-bg t-short" href="{{ site.baseurl }}/">Home</a>
+      {% for my_page in site.pages %}
+        {% if my_page.menu-title %}
+          <a class="cell v-center header-link padding-s-h subtle-icon font-smoothing-normal hover hover-shade-bg t-short" href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.menu-title }}</a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </nav>
+
+</header>

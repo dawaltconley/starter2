@@ -1,0 +1,36 @@
+/*
+ * Site header
+ */
+
+.header-link {
+    // &:not(:last-child) {
+    //     margin-right: 20px;
+    // }
+}
+
+@media screen and (max-width: map-get($bp, mobile)) {
+    .hamburger-lt-mobile {
+        position: absolute;
+        top: 9px;
+        right: map-get($spacings, m);
+
+        .menu-icon > svg {
+            width: 18px;
+            height: 15px;
+        }
+
+        .header-link {
+            display: block;
+            padding: 5px 10px;
+
+            &:not(:last-child) {
+                margin-right: 0;
+            }
+            margin-left: 20px;
+        }
+    }
+}
+
+.header-line-height {
+    line-height: $header-height;
+}
