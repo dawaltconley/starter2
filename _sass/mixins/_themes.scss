@@ -159,7 +159,7 @@
 
     @include themeify(".hover-shade-bg") {
         &:hover {
-            background-color: mix($text-color, $background-color, 15%);
+            background-color: mix($text-color, $background-color, 16%);
         }
     }
 }
