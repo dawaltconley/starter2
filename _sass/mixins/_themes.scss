@@ -157,13 +157,14 @@
     }
 
     @include themeify(".hover-shade-bg") { // make hover include; mix brand color in to some degree
+        transition-property: background-color;
+
         @include hover {
             @if $brand-color {
-                background-color: mix($brand-color, mix($text-color, $background-color, 16%), 16%);
+                background-color: mix(mix($text-color, $brand-color, 85%), $background-color, 16%);
             } @else {
                 background-color: mix($text-color, $background-color, 16%);
             }
-            transition-property: background-color;
         }
     }
 }
