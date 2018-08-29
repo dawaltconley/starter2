@@ -1,19 +1,19 @@
 <header class="black relative wrapper-padding header-height header-line-height z-9 clearfix">
 
-  <a class="float-left block full-height" href="{{ site.baseurl }}/">
+  <a class="float-left block full-height padding-xxs-v" href="{{ site.baseurl }}/">
     <img class="block full-height" itemprop="logo" src="{{ site.logo | prepend: site.baseurl }}" alt="{{ site.title }}">
   </a>
 
-  <nav class="hamburger-lt-mobile full-height float-right text-right border-basic border-radius-5px border-0-gt-mobile hover">
-    <a href="#" class="menu-icon float-right hide-gt-mobile block hamburger-size padding-xs-t text-center line-height-0 fill-color-theme-text">
+  <nav class="hamburger-lt-header full-height float-right text-right border-basic border-radius-5px border-0-gt-header hover">
+    <a href="#" class="menu-icon float-right hide-gt-header block hamburger-size padding-xs-t text-center fill-color-theme-text">
       {% include hamburger-icon.svg %}
     </a>
 
-    <div class="black table full-height hover-display hover-padding-xxs-b show-gt-mobile clear-both font-smoothing-normal clearfix">
-      <a class="cell v-center header-link padding-s-h subtle-icon base-line-height hover-shade-bg t-short" href="{{ site.baseurl }}/">Home</a>
+    <div class="black table full-height hover-display hover-padding-xxs-b show-gt-header font-smoothing-normal clearfix">
+      <a class="cell v-center header-link padding-s-h subtle-icon hover-shade-bg t-short" href="{{ site.baseurl }}/">Home</a>
       {% for my_page in site.pages %}
         {% if my_page.menu-title %}
-          <a class="cell v-center header-link padding-s-h subtle-icon base-line-height hover-shade-bg t-short" href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.menu-title }}</a>
+          <a class="cell v-center header-link padding-s-h subtle-icon hover-shade-bg t-short" href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.menu-title }}</a>
         {% endif %}
       {% endfor %}
     </div>

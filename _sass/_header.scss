@@ -8,8 +8,8 @@
     // }
 }
 
-@media screen and (max-width: map-get($bp, mobile)) {
-    .hamburger-lt-mobile {
+@media screen and (max-width: map-get($bp, header)) {
+    .hamburger-lt-header {
         position: absolute;
         top: 9px;
         right: map-get($spacings, m);
