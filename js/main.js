@@ -284,9 +284,13 @@
  * Fixed Headers
  */
 
-    var header = document.querySelector("[data-fixed-header]");
+    var fixedHeader = document.querySelector("[data-fixed-header]");
     var scrollRef = document.querySelector("[data-affix-header-on-scroll]");
-    var fixedHeader = new FixedHeader(header, scrollRef, scrollRef.getAttribute("data-affix-header-on-scroll"));
+    var hasFixedHeader = fixedHeader && scrollRef;
+
+    if (hasFixedHeader) {
+        fixedHeader = new FixedHeader(fixedHeader, scrollRef, scrollRef.getAttribute("data-affix-header-on-scroll"));
+    }
 
     function FixedHeader(header, scrollRef) {
         var e = header.cloneNode(true);
@@ -645,7 +649,7 @@
     };
 
     objectFitImages();
-    if (fixedHeader) { fixedHeader.addListeners(); }
+    if (hasFixedHeader) { fixedHeader.addListeners(); }
     addCollapsibleMenuListeners();
 
     if (smoothLinks.length > 0 && pageScrollBehavior != "smooth") {
