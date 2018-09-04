@@ -15,14 +15,15 @@
             margin-bottom: 2px;
             padding-left: map-get($spacings, m);
             padding-right: map-get($spacings, m);
-            line-height: $header-height * 0.75;
+            line-height: 2;
 
-            $parent-bg: map-get(map-get($themes, "black"), "background-color");
-            $parent-text: map-get(map-get($themes, "black"), "text-color");
+            $parent-bg: map-get(map-get($themes, "dark"), "background-color");
+            $parent-text: map-get(map-get($themes, "dark"), "text-color");
+            $parent-brand: map-get(map-get($themes, "dark"), "brand-color");
             @include theme (
-                $background-color: mix(mix($parent-text, $panel-blue, 85%), $parent-bg, 16%),
+                $background-color: mix(mix($parent-text, $parent-brand, 85%), $parent-bg, 16%),
                 $text-color: white,
-                $brand-color: $panel-blue,
+                $brand-color: $parent-brand,
                 $accessibility: none,
             );
         }
