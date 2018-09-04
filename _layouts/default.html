@@ -5,6 +5,8 @@
 
   <body {% if page.itemtype %} itemscope itemtype="{{ page.itemtype }}" {% endif %}>
 
+    {% include header.html %}
+
     {{ content }}
 
     {% include scripts.html %}
