@@ -18,8 +18,8 @@
 
     <div class="nav-links-lt-header dark table float-right full-height target-max-height-expand overflow-a show-gt-header clearfix t-default t-long" data-menu-options data-class-rm="t-long">
       {% for my_page in site.pages %}
-        {% if my_page.menu-title %}
-          <a class="cell v-center header-link padding-s-h subtle-icon font-smoothing-normal hover hover-shade-bg t-short" href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.menu-title }}</a>
+        {% if my_page.title %}
+          <a class="cell v-center header-link padding-s-h subtle-icon font-smoothing-normal hover hover-shade-bg t-short" href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.title }}</a>
         {% endif %}
       {% endfor %}
     </div>
