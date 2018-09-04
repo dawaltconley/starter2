@@ -51,6 +51,7 @@ $image-bp:              ({% if jekyll.environment == 'production' or jekyll.envi
     "transforms",
     "pseudo",
     "transitions",
+    "header",
     "parallax",
     "media-queries"
 ;
