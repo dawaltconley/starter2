@@ -89,59 +89,6 @@
         return { top: posTop, left: posLeft };
     };
 
-    function getParentBySelector(element, selector) {
-        var maxDepth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
-        var ancestor = element;
-        while (ancestor != document.documentElement && maxDepth !== 0) {
-            ancestor = ancestor.parentElement;
-            if (Sizzle.matchesSelector(ancestor, selector)) {
-                return ancestor;
-            }
-            maxDepth -= 1;
-        }
-        return null;
-    };
-
-    function getChildBySelector(element, selector) {
-        var maxDepth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
-        for (var i = 0; i < element.children.length; i++) {
-            var child = element.children[i];
-            if (Sizzle.matchesSelector(child, selector)) {
-                return child;
-            } else if (child.children.length && maxDepth !== 1) {
-                var childMatch = getChildBySelector(child, selector, maxDepth - 1);
-                if (childMatch) {
-                    return childMatch;
-                }
-            }
-        }
-        return null;
-    };
-
-    function getChildrenBySelector(element, selector) {
-        var maxDepth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
-        var matches = [];
-        for (var i = 0; i < element.children.length; i++) {
-            var child = element.children[i];
-            if (Sizzle.matchesSelector(child, selector)) {
-                matches.push(child);
-            }
-            if (child.children.length && maxDepth !== 1) {
-                var childMatch = getChildrenBySelector(child, selector, maxDepth - 1);
-                if (childMatch) {
-                    childMatch.forEach(function (match) {
-                        matches.push(match);
-                    });
-                }
-            }
-        }
-        if (matches.length) {
-            return matches;
-        } else {
-            return null;
-        }
-    };
-
     function getHash(element) { // for getting hash of an anchor, regardless of whether it is an HTML or SVG anchor
         var elementClass = Object.prototype.toString.call(element);
         if (elementClass == "[object SVGAElement]") {
