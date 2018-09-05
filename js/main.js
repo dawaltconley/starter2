@@ -297,11 +297,11 @@
     function CollapsibleMenu(element) {
         this.element = element;
         this.buttons = {
-            "open" : getChildrenBySelector(element, '[data-menu-button="open"]'),
-            "close" : getChildrenBySelector(element, '[data-menu-button="close"]'),
-            "toggle" : getChildrenBySelector(element, '[data-menu-button="toggle"],[data-menu-button=""]')
+            "open" : element.querySelectorAll('[data-menu-button="open"]'),
+            "close" : element.querySelectorAll('[data-menu-button="close"]'),
+            "toggle" : element.querySelectorAll('[data-menu-button="toggle"],[data-menu-button=""]')
         };
-        this.options = getChildBySelector(element, '[data-menu-options]');
+        this.options = element.querySelector('[data-menu-options]');
         this.state = "closed";
     };
 
