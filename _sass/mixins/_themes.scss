@@ -38,10 +38,10 @@
         } @else if $ct-tx-bg < 7 and $aaa {
             @warn "The contrast ratio of a theme's text (#{$text-color}) and background (#{$background-color}) colors is #{$ct-tx-bg}, which does not meet WCAG 2.0 AAA standard (7).";
         }
-    } @else if not($brand-color or $light-text) {
+    } @else {
         @if $background-color { @warn "Insufficient arguments passed to theme include: $background-color needs to be accompanied by a $text-color."; }
         @else if $text-color { @warn "Insufficient arguments passed to theme include: $text-color needs to be accompanied by a $background-color."; }
-        @else { @warn "No arguments passed to theme include."; }
+        @else if not($brand-color or $light-text) { @warn "No arguments passed to theme include."; }
     }
 
     @if $brand-color and $text-color and $background-color {
