@@ -9,6 +9,14 @@
     }
 }
 
+@function darken-bg($primary, $secondary, $tertiary: null) {
+    @if $tertiary {
+        @return mix(mix($primary, $tertiary, 85%), $secondary, 16%);
+    } @else {
+        @return mix($primary, $secondary, 16%);
+    }
+}
+
 @mixin theme($background-color: null, $text-color: null, $brand-color: null, $light-text: null, $accessibility: "AA") {
     $light-theme: null; $ld-tx-bg: null; $ld-br-tx: null; $ld-br-bg: null; $ct-tx-bg: null; $ct-br-tx: null; $ct-br-bg: null;
     $aa: to-upper-case(inspect($accessibility)) == inspect("AA");
@@ -63,6 +71,8 @@
     background-color: $background-color;
     color: $text-color;
     border-color: $text-color;
+
+    $dark-background: darken-bg($text-color, $background-color, $brand-color); // I don't love this solution for some reason
 
     @include themeify(".fill-color-theme") {
         &-text {
@@ -156,14 +166,21 @@
         }
     }
 
-    @include themeify(".hover-shade-bg") { // make hover include; mix brand color in to some degree
+    @include themeify(".hover-shade") { // make hover include; mix brand color in to some degree
         transition-property: background-color;
 
         @include hover {
-            @if $brand-color {
-                background-color: mix(mix($text-color, $brand-color, 85%), $background-color, 16%);
-            } @else {
-                background-color: mix($text-color, $background-color, 16%);
+            background-color: $dark-background;
+        }
+    }
+
+    @include themeify(".hover-shade-dark") {
+        @include mq("header", (lt: max)) {
+            background-color: $dark-background;
+            transition-property: background-color;
+
+            @include hover {
+                background-color: darken-bg($text-color, $dark-background, $brand-color);
             }
         }
     }
