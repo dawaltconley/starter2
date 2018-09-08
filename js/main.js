@@ -302,12 +302,12 @@
             "close" : element.querySelectorAll('[data-menu-button="close"]'),
             "toggle" : element.querySelectorAll('[data-menu-button="toggle"],[data-menu-button=""]')
         };
-        this.options = element.querySelector('[data-menu-options]');
+        this.links = element.querySelector('[data-menu-links]');
         this.state = "closed";
     };
 
     CollapsibleMenu.prototype.open = function () {
-        this.options.style.maxHeight = this.options.scrollHeight.toString() + "px";
+        this.links.style.maxHeight = this.links.scrollHeight.toString() + "px";
         this.buttons.open.forEach(function (button) {
             button.classList.add("hidden");
         });
@@ -318,7 +318,7 @@
     };
 
     CollapsibleMenu.prototype.close = function () {
-        this.options.style.maxHeight = "";
+        this.links.style.maxHeight = "";
         this.buttons.close.forEach(function (button) {
             button.classList.add("hidden");
         });
@@ -337,7 +337,7 @@
     };
 
     CollapsibleMenu.prototype.addListeners = function () {
-        this.options.style.overflow = "hidden";
+        this.links.style.overflow = "hidden";
         for (method in this.buttons) {
             if (this.buttons[method]) {
                 this.buttons[method].forEach(function (button) {

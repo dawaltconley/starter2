@@ -3,35 +3,28 @@
  */
 
 @media screen and (max-width: map-get($bp, header)) {
-    .nav-lt-header {
-        > * {
-            float: none;
-            width: 100%;
-        }
-
-        .header-link {
-            display: block;
-            width: 100%;
-            margin-bottom: 2px;
-            padding-left: map-get($spacings, m);
-            padding-right: map-get($spacings, m);
-            line-height: 2;
-
-            $parent-bg: map-get(map-get($themes, "dark"), "background-color");
-            $parent-text: map-get(map-get($themes, "dark"), "text-color");
-            $parent-brand: map-get(map-get($themes, "dark"), "brand-color");
-            @include theme (
-                $background-color: mix(mix($parent-text, $parent-brand, 85%), $parent-bg, 16%),
-                $text-color: white,
-                $brand-color: $parent-brand,
-                $accessibility: none,
-            );
-        }
-    }
-
-    .nav-links-lt-header {
+    [data-menu-links] {
         display: block;
         height: auto;
         max-height: 0;
+    }
+
+    [data-menu-link] {
+        display: block;
+        width: 100%;
+        margin-bottom: 2px;
+        padding-left: map-get($spacings, m);
+        padding-right: map-get($spacings, m);
+        line-height: 2;
+
+        $parent-bg: map-get(map-get($themes, "dark"), "background-color");
+        $parent-text: map-get(map-get($themes, "dark"), "text-color");
+        $parent-brand: map-get(map-get($themes, "dark"), "brand-color");
+        @include theme (
+            $background-color: mix(mix($parent-text, $parent-brand, 85%), $parent-bg, 16%),
+            $text-color: white,
+            $brand-color: $parent-brand,
+            $accessibility: none,
+        );
     }
 }
