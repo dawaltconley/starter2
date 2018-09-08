@@ -16,15 +16,5 @@
         padding-left: map-get($spacings, m);
         padding-right: map-get($spacings, m);
         line-height: 2;
-
-        $parent-bg: map-get(map-get($themes, "dark"), "background-color");
-        $parent-text: map-get(map-get($themes, "dark"), "text-color");
-        $parent-brand: map-get(map-get($themes, "dark"), "brand-color");
-        @include theme (
-            $background-color: mix(mix($parent-text, $parent-brand, 85%), $parent-bg, 16%),
-            $text-color: white,
-            $brand-color: $parent-brand,
-            $accessibility: none,
-        );
     }
 }
