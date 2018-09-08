@@ -290,7 +290,7 @@
     var collapsibleMenus = toArray(document.querySelectorAll("[data-menu]"));
     for (var i = 0; i < collapsibleMenus.length; i++) {
         collapsibleMenus[i] = new CollapsibleMenu(collapsibleMenus[i]);
-        if (collapsibleMenus[i].element === fixedHeader.element) {
+        if (hasFixedHeader && collapsibleMenus[i].element === fixedHeader.element) {
             fixedHeader.menu = collapsibleMenus[i];
         }
     }
