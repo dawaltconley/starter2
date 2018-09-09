@@ -70,33 +70,7 @@
 
     $dark-background: darken-bg($text-color, $background-color, $brand-color); // I don't love this solution for some reason
 
-    @include themeify(".fill-color-theme") {
-        &-text {
-            fill: $text-color;
-        }
-        &-bg {
-            fill: $background-color;
-        }
-        &-brand {
-            fill: $brand-color;
-        }
-    }
-
-    @include themeify(".stroke-color-theme") {
-        &-text {
-            stroke: $text-color;
-        }
-        &-bg {
-            stroke: $background-color;
-        }
-        &-brand {
-            stroke: $brand-color;
-        }
-    }
-
-    @include themeify(".text-light") {
-        color: $light-text;
-    }
+    // Basic
 
     @include themeify("blockquote") {
         color: $light-text;
@@ -116,18 +90,6 @@
             color: mix($text-color, $box-color, 80%);
             border-color: darken($box-color, $ld-tx-bg * 10%);
             background-color: $box-color;
-        }
-    }
-
-    @include themeify(".border-light") {
-        @include all-sides {
-            border-#{$side}-color: mix($text-color, $background-color, 10%);
-        }
-    }
-
-    @include themeify(".border-x-light") {
-        @include all-sides {
-            border-#{$side}-color: mix($text-color, $background-color, 5%);
         }
     }
 
@@ -151,7 +113,25 @@
         }
     }
 
-    @include themeify(".hover-shade") { // make hover include; mix brand color in to some degree
+    // Classes
+
+    @include themeify(".text-light") {
+        color: $light-text;
+    }
+
+    @include themeify(".border-light") {
+        @include all-sides {
+            border-#{$side}-color: mix($text-color, $background-color, 10%);
+        }
+    }
+
+    @include themeify(".border-x-light") {
+        @include all-sides {
+            border-#{$side}-color: mix($text-color, $background-color, 5%);
+        }
+    }
+
+    @include themeify(".hover-shade") {
         transition-property: background-color;
 
         @include hover {
@@ -167,6 +147,32 @@
             @include hover {
                 background-color: darken-bg($text-color, $dark-background, $brand-color);
             }
+        }
+    }
+
+    // SVG
+
+    @include themeify(".fill-color-theme") {
+        &-text {
+            fill: $text-color;
+        }
+        &-bg {
+            fill: $background-color;
+        }
+        &-brand {
+            fill: $brand-color;
+        }
+    }
+
+    @include themeify(".stroke-color-theme") {
+        &-text {
+            stroke: $text-color;
+        }
+        &-bg {
+            stroke: $background-color;
+        }
+        &-brand {
+            stroke: $brand-color;
         }
     }
 }
