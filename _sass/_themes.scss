@@ -32,7 +32,6 @@
             $background-color: map-get($settings, background-color),
             $text-color: map-get($settings, text-color),
             $brand-color: map-get($settings, brand-color),
-            $light-text: map-get($settings, light-text),
             $accessibility: $accessibility,
         );
     }
