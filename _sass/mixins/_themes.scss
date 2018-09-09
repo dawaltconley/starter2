@@ -22,37 +22,33 @@
     $aa: to-upper-case(inspect($accessibility)) == inspect("AA");
     $aaa: to-uppder-case(inspect($accessibility)) == inspect("AAA");
 
-    @if $background-color and $text-color {
-        $light-theme: lightness($text-color) < lightness($background-color);
-        $ld-tx-bg: abs(lightness($text-color) - lightness($background-color)) / 100%;
-        $ct-tx-bg: ch-color-contrast($background-color, $text-color);
-
-        @if $light-theme and not($light-text) {
-            $light-text: mix($text-color, $background-color, 58%);
-        } @else {
-            $light-text: mix($text-color, $background-color, 72%);
-        }
-
-        @if $light-theme {
-            -webkit-font-smoothing: subpixel-antialiased;
-            -moz-osx-font-smoothing: auto;
-        } @else {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        @if $ct-tx-bg < 4.5 and $aa {
-            @warn "The contrast ratio of a theme's text (#{$text-color}) and background (#{$background-color}) colors is #{$ct-tx-bg}, which does not meet the WCAG 2.0 AA standard (4.5).";
-        } @else if $ct-tx-bg < 7 and $aaa {
-            @warn "The contrast ratio of a theme's text (#{$text-color}) and background (#{$background-color}) colors is #{$ct-tx-bg}, which does not meet WCAG 2.0 AAA standard (7).";
-        }
-    } @else {
-        @if $background-color { @warn "Insufficient arguments passed to theme include: $background-color needs to be accompanied by a $text-color."; }
-        @else if $text-color { @warn "Insufficient arguments passed to theme include: $text-color needs to be accompanied by a $background-color."; }
-        @else if not($brand-color or $light-text) { @warn "No arguments passed to theme include."; }
+    @if not($background-color and $text-color) { // themes require background and text-color
+        @if $background-color { @error "Insufficient arguments passed to theme include: $background-color needs to be accompanied by a $text-color."; }
+        @else if $text-color { @error "Insufficient arguments passed to theme include: $text-color needs to be accompanied by a $background-color."; }
+        @else { @error "Insufficient arguments passed to theme include: needs to have a $text-color and $background-color."; }
     }
 
-    @if $brand-color and $text-color and $background-color {
+    $light-theme: lightness($text-color) < lightness($background-color);
+    $ld-tx-bg: abs(lightness($text-color) - lightness($background-color)) / 100%;
+    $ct-tx-bg: ch-color-contrast($background-color, $text-color);
+
+    @if $light-theme {
+        @if not($light-text) { $light-text: mix($text-color, $background-color, 58%); }
+        -webkit-font-smoothing: subpixel-antialiased;
+        -moz-osx-font-smoothing: auto;
+    } @else {
+        @if not($light-text) { $light-text: mix($text-color, $background-color, 86%); }
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    @if $ct-tx-bg < 4.5 and $aa {
+        @warn "The contrast ratio of a theme's text (#{$text-color}) and background (#{$background-color}) colors is #{$ct-tx-bg}, which does not meet the WCAG 2.0 AA standard (4.5).";
+    } @else if $ct-tx-bg < 7 and $aaa {
+        @warn "The contrast ratio of a theme's text (#{$text-color}) and background (#{$background-color}) colors is #{$ct-tx-bg}, which does not meet the WCAG 2.0 AAA standard (7).";
+    }
+
+    @if $brand-color {
         $ld-br-tx: abs(lightness($brand-color) - lightness($text-color)) / 100%;
         $ld-br-bg: abs(lightness($brand-color) - lightness($background-color)) / 100%;
         $ct-br-tx: ch-color-contrast($brand-color, $text-color);
@@ -98,51 +94,40 @@
         }
     }
 
-    @if $background-color and $text-color {
-        @include themeify("blockquote") {
-            color: $light-text;
-            border-left-color: mix($light-text, $background-color, 25%);
-        }
+    @include themeify(".text-light") {
+        color: $light-text;
+    }
 
-        @include themeify("pre", "code") {
-            @if $light-theme {
-                $box-color: darken($background-color, $ld-tx-bg * 15%);
-                $box-color: desaturate($box-color, saturation($box-color) / 2 );
-                color: mix($text-color, $box-color, 80%);
-                border-color: darken($box-color, $ld-tx-bg * 25%);
-                background-color: $box-color;
-            } @else {
-                $box-color: lighten($background-color, $ld-tx-bg * 15%);
-                $box-color: desaturate($box-color, saturation($box-color) / 2 );
-                color: mix($text-color, $box-color, 80%);
-                border-color: darken($box-color, $ld-tx-bg * 10%);
-                background-color: $box-color;
-            }
-        }
+    @include themeify("blockquote") {
+        color: $light-text;
+        border-left-color: mix($light-text, $background-color, 25%);
+    }
 
-        @include themeify(".text-light") {
-            color: $light-text;
+    @include themeify("pre", "code") {
+        @if $light-theme {
+            $box-color: darken($background-color, $ld-tx-bg * 15%);
+            $box-color: desaturate($box-color, saturation($box-color) / 2 );
+            color: mix($text-color, $box-color, 80%);
+            border-color: darken($box-color, $ld-tx-bg * 25%);
+            background-color: $box-color;
+        } @else {
+            $box-color: lighten($background-color, $ld-tx-bg * 15%);
+            $box-color: desaturate($box-color, saturation($box-color) / 2 );
+            color: mix($text-color, $box-color, 80%);
+            border-color: darken($box-color, $ld-tx-bg * 10%);
+            background-color: $box-color;
         }
+    }
 
-        @include themeify(".border-light") {
-            @include all-sides {
-                border-#{$side}-color: mix($text-color, $background-color, 10%);
-            }
+    @include themeify(".border-light") {
+        @include all-sides {
+            border-#{$side}-color: mix($text-color, $background-color, 10%);
         }
+    }
 
-        @include themeify(".border-x-light") {
-            @include all-sides {
-                border-#{$side}-color: mix($text-color, $background-color, 5%);
-            }
-        }
-    } @else if $light-text {
-        @include themeify("blockquote") {
-            color: $light-text;
-            border-left-color: lighten($light-text, 25%);
-        }
-
-        @include themeify(".text-light") {
-            color: $light-text;
+    @include themeify(".border-x-light") {
+        @include all-sides {
+            border-#{$side}-color: mix($text-color, $background-color, 5%);
         }
     }
 
