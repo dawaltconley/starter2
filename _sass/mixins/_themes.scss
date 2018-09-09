@@ -17,8 +17,8 @@
     }
 }
 
-@mixin theme($background-color: null, $text-color: null, $brand-color: null, $light-text: null, $accessibility: "AA") {
-    $light-theme: null; $ld-tx-bg: null; $ld-br-tx: null; $ld-br-bg: null; $ct-tx-bg: null; $ct-br-tx: null; $ct-br-bg: null;
+@mixin theme($background-color: null, $text-color: null, $brand-color: null, $accessibility: "AA") {
+    $light-text: null; $light-theme: null; $ld-tx-bg: null; $ld-br-tx: null; $ld-br-bg: null; $ct-tx-bg: null; $ct-br-tx: null; $ct-br-bg: null;
     $aa: to-upper-case(inspect($accessibility)) == inspect("AA");
     $aaa: to-uppder-case(inspect($accessibility)) == inspect("AAA");
 
@@ -33,11 +33,11 @@
     $ct-tx-bg: ch-color-contrast($background-color, $text-color);
 
     @if $light-theme {
-        @if not($light-text) { $light-text: mix($text-color, $background-color, 58%); }
+        $light-text: mix($text-color, $background-color, 58%);
         -webkit-font-smoothing: subpixel-antialiased;
         -moz-osx-font-smoothing: auto;
     } @else {
-        @if not($light-text) { $light-text: mix($text-color, $background-color, 86%); }
+        $light-text: mix($text-color, $background-color, 86%);
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
@@ -117,6 +117,10 @@
 
     @include themeify(".text-light") {
         color: $light-text;
+    }
+
+    @include themeify(".text-brand") {
+        color: $brand-color;
     }
 
     @include themeify(".border-light") {
