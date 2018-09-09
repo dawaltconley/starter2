@@ -64,13 +64,13 @@
         }
     }
 
+    // Basic Styles
+
     background-color: $background-color;
     color: $text-color;
     border-color: $text-color;
 
     $dark-background: darken-bg($text-color, $background-color, $brand-color); // I don't love this solution for some reason
-
-    // Basic
 
     @include themeify("blockquote") {
         color: $light-text;
@@ -93,6 +93,32 @@
         }
     }
 
+    // Text
+
+    @include themeify(".text-light") {
+        color: $light-text;
+    }
+
+    @include themeify(".text-brand") {
+        color: $brand-color;
+    }
+
+    // Borders
+
+    @include themeify(".border-light") {
+        @include all-sides {
+            border-#{$side}-color: mix($text-color, $background-color, 10%);
+        }
+    }
+
+    @include themeify(".border-x-light") {
+        @include all-sides {
+            border-#{$side}-color: mix($text-color, $background-color, 5%);
+        }
+    }
+
+    // Links
+
     @if $brand-color {
         @include themeify("a") {
             color: $brand-color;
@@ -110,28 +136,6 @@
     @include themeify(".subtle-link") {
         &, &:hover, &:visited {
             color: $text-color;
-        }
-    }
-
-    // Classes
-
-    @include themeify(".text-light") {
-        color: $light-text;
-    }
-
-    @include themeify(".text-brand") {
-        color: $brand-color;
-    }
-
-    @include themeify(".border-light") {
-        @include all-sides {
-            border-#{$side}-color: mix($text-color, $background-color, 10%);
-        }
-    }
-
-    @include themeify(".border-x-light") {
-        @include all-sides {
-            border-#{$side}-color: mix($text-color, $background-color, 5%);
         }
     }
 
