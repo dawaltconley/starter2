@@ -103,6 +103,12 @@
         color: $brand-color;
     }
 
+    // Background
+
+    @include themeify(".theme-bg") {
+        background-color: $background-color;
+    }
+
     // Borders
 
     @include themeify(".border-light") {
