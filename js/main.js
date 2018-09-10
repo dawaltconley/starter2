@@ -169,6 +169,10 @@
         }, time);
     };
 
+    function insertAfter(referenceNode, newNode) {
+        referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+    }
+
     function parseBoolean(string) {
         if (string == "true") {
             return true;
@@ -364,15 +368,46 @@
         var menuContainer = element;
         var computedStyle = window.getComputedStyle(element);
         var position = computedStyle.getPropertyValue("position");
+        var initialImage = {"name": "initial"};
 
-        if (position == "static") {
+        if (element.tagName == "IMG") { // use element.src?
+            initialImage.path = element.src;
+            initialImage.size = computedStyle.getPropertyValue("object-fit") == "contain" ? "contain" : "cover";
+            initialImage.position = computedStyle.getPropertyValue("object-position");
+
+            var divImg = document.createElement("div");
+            divImg.setAttribute("data-background-images", element.getAttribute("data-background-images"));
+            divImg.classList = element.classList;
+            divImg.classList.add("bg-img");
+            divImg.style.backgroundImage = "url('" + initialImage.path + "')";
+            divImg.style.backgroundSize = initialImage.size;
+            divImg.style.backgroundPosition = initialImage.position;
+            menuContainer = divImg;
+
+            function replaceImgWithDiv(img, replacement) {
+                replacement.style.width = img.width + "px";
+                replacement.style.height = img.height + "px";
+                img.parentNode.replaceChild(replacement, img);
+            }
+
+            if (element.complete) {
+                replaceImgWithDiv(element, divImg);
+            } else {
+                element.onload = replaceImgWithDiv.bind(null, element, divImg);
+            }
+
+            element = divImg;
+        } else {
+            initialImage.path = computedStyle.getPropertyValue("background-image").replace(/.*\s?url\([\'\"]?/, '').replace(/[\'\"]?\).*/, '');
+            initialImage.size = computedStyle.getPropertyValue("background-size");
+            initialImage.position = computedStyle.getPropertyValue("background-position");
+        }
+
+        if (position == "static" ) {
             element.style.position = "relative";
         } else if (position == "absolute") {
             menuContainer = element.parentElement;
         }
-
-        var initialImage = computedStyle.getPropertyValue("background-image");
-        initialImage = initialImage.replace(/.*\s?url\([\'\"]?/, '').replace(/[\'\"]?\).*/, '');
 
         this.element = element;
         this.controls = document.createElement("div");
@@ -383,7 +418,7 @@
         this.slider.value = "50";
 
         this.images = JSON.parse(element.getAttribute("data-background-images"));
-        this.images.unshift({ "name": "initial", "path": initialImage});
+        this.images.unshift(initialImage);
 
         for (var i=0; i < this.images.length; i++) {
             var image = this.images[i];
