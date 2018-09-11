@@ -171,11 +171,10 @@
  */
 
     var pageScrollBehavior = window.getComputedStyle(page).getPropertyValue("scroll-behavior");
-    var smoothLinks = [];
-
-    toArray(document.querySelectorAll("[data-smooth-scroll]")).forEach(function (element) {
-        smoothLinks.push(new SmoothLink(element));
-    });
+    var smoothLinks = toArray(document.querySelectorAll("[data-smooth-scroll]"));
+    for(var i = 0; i < smoothLinks.length; i++) {
+        smoothLinks[i] = new SmoothLink(smoothLinks[i]);
+    }
 
     zenscroll.setup(500, 0);
 
@@ -204,11 +203,10 @@
  * Background Image Testing
  */
 
-    bgTestingObjects = [];
-
-    toArray(document.querySelectorAll("[data-background-images]")).forEach(function (element) {
-        bgTestingObjects.push(new BgSelect(element));
-    });
+    bgTestingObjects = toArray(document.querySelectorAll("[data-background-images]"));
+    for (var i = 0; i < bgTestingObjects.length; i++) {
+        bgTestingObjects[i] = new BgSelect(bgTestingObjects[i]);
+    }
 
     function BgSelect(element) {
         var menuContainer = element;
@@ -306,11 +304,10 @@
  * Analytics
  */
 
-    analyticsObjects = [];
-
-    toArray(document.querySelectorAll("[data-analytics-category][data-analytics-action][data-analytics-label]")).forEach(function (element) {
-        analyticsObjects.push(new AnalyticsEventObj(element));
-    });
+    analyticsObjects = toArray(document.querySelectorAll("[data-analytics-category][data-analytics-action][data-analytics-label]"));
+    for (var i = 0; i < analyticsObjects.length; i++) {
+        analyticsObjects[i] = new AnalyticsEventObj(analyticsObjects[i]);
+    }
 
     function AnalyticsEventObj(element) {
         this.element = element;
