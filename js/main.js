@@ -1,7 +1,7 @@
 ---
 ---
 
-"use strict"
+"use strict";
 
 {% unless jekyll.environment == "development" %}
 (function () {
@@ -185,7 +185,7 @@
  * Classes
  */
 
-    var classRemoveElements = document.querySelectorAll("[data-class-rm]");
+    var classRemoveElements = toArray(document.querySelectorAll("[data-class-rm]"));
 
     classRemoveElements.forEach(function (element) {
         var rmClasses = element.getAttribute("data-class-rm").split(" ");
@@ -298,9 +298,9 @@
     function CollapsibleMenu(element) {
         this.element = element;
         this.buttons = {
-            "open" : element.querySelectorAll('[data-menu-button="open"]'),
-            "close" : element.querySelectorAll('[data-menu-button="close"]'),
-            "toggle" : element.querySelectorAll('[data-menu-button="toggle"],[data-menu-button=""]')
+            "open" : toArray(element.querySelectorAll('[data-menu-button="open"]')),
+            "close" : toArray(element.querySelectorAll('[data-menu-button="close"]')),
+            "toggle" : toArray(element.querySelectorAll('[data-menu-button="toggle"],[data-menu-button=""]'))
         };
         this.links = element.querySelector('[data-menu-links]');
         this.state = "closed";
@@ -338,7 +338,7 @@
 
     CollapsibleMenu.prototype.addListeners = function () {
         this.links.style.overflow = "hidden";
-        for (method in this.buttons) {
+        for (var method in this.buttons) {
             if (this.buttons[method]) {
                 this.buttons[method].forEach(function (button) {
                     button.classList.remove("target-hide", "target-display");
