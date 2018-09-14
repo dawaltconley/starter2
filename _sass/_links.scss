@@ -18,3 +18,15 @@
     }
 }
 
+.button, .subtle-button {
+    @extend .block, .font-smoothing-normal, .subtle-icon;
+    width: $button-width;
+    height: $button-height;
+    line-height: $button-height;
+    text-align: center;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 7px;
+    transition-duration: map-get($transitions, default);
+    transition-property: color, background-color;
+}
