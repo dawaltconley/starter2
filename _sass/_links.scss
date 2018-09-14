@@ -18,3 +18,13 @@
     }
 }
 
+.button, .subtle-button {
+    @extend .inline-block, .font-smoothing-normal, .subtle-icon;
+    padding: .5em 1em;
+    text-align: center;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 7px;
+    transition-duration: map-get($transitions, default);
+    transition-property: color, background-color;
+}
