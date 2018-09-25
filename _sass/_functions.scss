@@ -41,3 +41,12 @@ $side: null;
         }
     }
 }
+
+@function join-str($list, $str) {
+    $return: "";
+    @for $i from 1 to length($list) {
+        $return: $return + nth($list, $i) + $str;
+    }
+    $return: $return + nth($list, length($list));
+    @return $return;
+}

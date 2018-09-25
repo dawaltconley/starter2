@@ -5,14 +5,22 @@
         {% if include.bp_list %}
             {% assign bp_list = include.bp_list %}
         {% else %}
-            {% assign bp_list = site.image_bp | reverse %}
+            {% assign bp_list = site.data.devices.dp | reverse %}
+        {% endif %}
+        {% if include.densities %}
+            {% assign densities = include.densities %}
+        {% else %}
+            {% assign densities = site.data.devices.dppx | reverse %}
         {% endif %}
         <!--[if IE 9]><video style="display: none;"><![endif]-->
         {% for bp in bp_list %}
             {% assign x = bp | map: 'x' %}
             {% assign y = bp | map: 'y' %}
-            {% capture suffix %}-{{ x }}x{{ y }}{% endcapture %}
-            <source media="(max-width: {{ x }}px) and (max-height: {{ y }}px)" srcset="{% include file-suffix.liquid file_name=src suffix=suffix %}">
+            {% for d in densities %}
+                {% capture suffix %}-{{ x }}x{{ y }}-{{ d }}x{% endcapture %}
+                <source media="(max-width: {{ x }}px) and (max-height: {{ y }}px) and (-webkit-max-device-pixel-ratio: {{ d }})" srcset="{% include file-suffix.liquid file_name=src suffix=suffix %}">
+                <source media="(max-width: {{ x }}px) and (max-height: {{ y }}px) and (max-resolution: {{ d | times: 96 }}dpi)" srcset="{% include file-suffix.liquid file_name=src suffix=suffix %}">
+            {% endfor %}
         {% endfor %}
         <source srcset="{{ src }}">
         <!--[if IE 9]></video><![endif]-->

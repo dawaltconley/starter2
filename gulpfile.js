@@ -91,6 +91,66 @@ gulp.task("js", gulp.series("js-concat", "js-clean", "js-uglify"));
  * Images
  */
 
+function ImageType(name, dir) {
+    this.name = name;
+    this.dir = dir;
+
+    var cleanTaskName = name + "-clean";
+    gulp.task(cleanTaskName, function (cb) {
+        pump([
+            gulp.src(dir + "/responsive/*"), 
+            clean(),
+            gulp.dest(dir)
+        ], cb);
+    });
+    this.tasks = [cleanTaskName];
+}
+
+ImageType.prototype.newTask = function (settings, suffix) {
+    var taskName = this.name + suffix;
+    gulp.task(taskName, function (cb) {
+        pump([
+            gulp.src([
+                this.dir + "/*",
+                "!" + this.dir + "/responsive"
+            ]),
+            imageResize(settings),
+            rename({ suffix: suffix }),
+            gulp.dest(this.dir + "/responsive")
+        ], cb);
+    });
+    this.tasks.splice(-1, 0, taskName); // add second to last in task list; before the cleaning task
+}
+
+var images = new ImageType("images", "./_site/assets/gulp-images/");
+var srcset = new ImageType("srcset", "./_site/assets/gulp-srcset/");
+var backgrounds = new ImageType("backgrounds", "./_site/assets/gulp-backgrounds/");
+
+var imageSizes = YAML.safeLoad(fs.readFileSync("_data/devices.yml", "utf8"));
+imageSizes["dp"].forEach(function (bp) {
+    srcset.newTask({
+        width: bp.x,
+        filter: "Catrom"
+    }, "-" + bp.x + "w");
+
+    imageSizes["dppx"].forEach(function (d) {
+        images.newTask({
+            width: bp.x * d,
+            height: bp.y * d,
+            filter: "Catrom"
+        }, "-" + bp.x + "x" + bp.y + "-" + d + "x");
+
+        backgrounds.newTask({
+            width: (bp.x * d),
+            height: (bp.y * d),
+            cover: true,
+            upscale: false,
+            filter: "Catrom",
+            interlace: true
+        }, "-" + bp.x + "x" + bp.y + "-" + d + "x");
+    });
+});
+
 gulp.task("image-min", function (cb) {
     pump([
         gulp.src([
@@ -103,73 +163,15 @@ gulp.task("image-min", function (cb) {
     ], cb);
 });
 
-var imageBreakpoints = YAML.safeLoad(fs.readFileSync("_config.yml", "utf8"))["image_bp"];
+gulp.task("resize-images", gulp.series(images.tasks));
 
-gulp.task("responsive-images", function () {
-    var src = "./_site/assets/gulp-images/*";
-    var dest = "./_site/assets/gulp-images";
-    var merged = merge();
-    imageBreakpoints.forEach(function (bp) {
-        var stream = gulp.src(src)
-            .pipe(
-                imageResize({
-                    width: bp.x,
-                    height: bp.y,
-                    filter: "Catrom",
-                })
-            )
-            .pipe(rename({ suffix: "-" + bp.x + "x" + bp.y }))
-            .pipe(gulp.dest(dest));
-        merged.add(stream);
-    });
-    return merged.isEmpty() ? null : merged;
-});
+gulp.task("resize-srcset", gulp.series(srcset.tasks));
 
-gulp.task("srcset-images", function () {
-    var src = "./_site/assets/gulp-srcset/*";
-    var dest = "./_site/assets/gulp-srcset";
-    var merged = merge();
-    imageBreakpoints.forEach(function (bp) {
-        var stream = gulp.src(src)
-            .pipe(
-                imageResize({
-                    width: bp.x,
-                    filter: "Catrom",
-                })
-            )
-            .pipe(rename({ suffix: "-" + bp.x + "w" }))
-            .pipe(gulp.dest(dest));
-        merged.add(stream);
-    });
-    return merged.isEmpty() ? null : merged;
-});
-
-gulp.task("bg-images", function () {
-    var src = "./_site/assets/gulp-backgrounds/*";
-    var dest = "./_site/assets/gulp-backgrounds";
-    var merged = merge();
-    imageBreakpoints.forEach(function (bp) {
-        var stream = gulp.src(src)
-            .pipe(
-                imageResize({
-                    width: bp.x,
-                    height: bp.y,
-                    cover: true,
-                    upscale: false,
-                    filter: "Catrom",
-                    interlace: true
-                })
-            )
-            .pipe(rename({ suffix: "-" + bp.x + "x" + bp.y }))
-            .pipe(gulp.dest(dest));
-        merged.add(stream);
-    });
-    return merged.isEmpty() ? null : merged;
-});
+gulp.task("resize-backgrounds", gulp.series(backgrounds.tasks));
 
 gulp.task("images", gulp.series(
     "image-min",
-    gulp.parallel("responsive-images", "srcset-images", "bg-images")
+    gulp.parallel("resize-images", "resize-srcset", "resize-backgrounds")
 ));
 
 /*
