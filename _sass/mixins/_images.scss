@@ -1,4 +1,4 @@
-@mixin responsive-image($image, $breakpoints: $image-bp) {
+@mixin responsive-image ($image, $breakpoints: $device-dp, $densities: $device-dppx) {
     @if $breakpoints and length($breakpoints) > 0 {
         $file-types: jpg, jpeg, png, gif, svg, webp;
 
@@ -23,32 +23,53 @@
         $first: nth($breakpoints, 1);
         $x: map-get($first, x) + 1;
         $y: map-get($first, y) + 1;
-        @media screen and (min-width: #{$x}px), screen and (min-height: #{$y}px) {
+        @media (min-width: #{$x}px), (min-height: #{$y}px) {
             background-image: $image;
         }
 
-        // array values
-        @for $i from 1 to length($breakpoints) {
+        // all the rest
+        @for $i from 1 through length($breakpoints) {
             $current: nth($breakpoints, $i);
             $x: map-get($current, x);
             $y: map-get($current, y);
-            $next: nth($breakpoints, $i + 1);
-            $nx: map-get($next, x) + 1;
-            $ny: map-get($next, y) + 1;
-            @media screen and (max-width: #{$x}px) and (max-height: #{$y}px) and (min-width: #{$nx}px),
-              screen and (max-width: #{$x}px) and (max-height: #{$y}px) and (min-height: #{$ny}px) {
-                $suffix: "-#{$x}x#{$y}";
-                background-image: file-suffix($image, $suffix, $file-types);
+            $size-queries: ();
+            $size-min: "(max-width: #{$x}px) and (max-height: #{$y}px)"; // Screen will not be bigger than image
+            @if ($i < length($breakpoints)) { // Unless already the smallest image...
+                $next: nth($breakpoints, $i + 1);
+                $nx: map-get($next, x) + 1;
+                $ny: map-get($next, y) + 1;
+                $size-queries: ($size-min + " and (min-width: #{$nx}px)", $size-min + " and (min-height: #{$ny}px)"); // ...screen will not be smaller than next image
+            } @else {
+                $size-queries: ($size-min);
             }
-        }
 
-        //last
-        $last: nth($breakpoints, -1);
-        $x: map-get($last, x);
-        $y: map-get($last, y);
-        @media screen and (max-width: #{$x}px) and (max-height: #{$y}px) {
-            $suffix: "-#{$x}x#{$y}";
-            background-image: file-suffix($image, $suffix, $file-types);
+            // loop through all possible screen resolutions
+            @for $j from 1 through length($densities) {
+                $d: nth($densities, $j);
+                $webkit-res: ();
+                $resolution: ();
+                @if ($j > 1) { // Unless hightest resolution...
+                    $webkit-res: append($webkit-res, "(-webkit-max-device-pixel-ratio: #{$d})"); // ...screen will not have a higher resolution than image
+                    $resolution: append($resolution, "(max-resolution: #{$d * 96dpi})");
+                }
+                @if ($j < length($densities)) { // Unless lowest resolution...
+                    $dn: nth($densities, $j + 1);
+                    $webkit-res: append($webkit-res, "(-webkit-min-device-pixel-ratio: #{$dn + 0.01})"); // ...screen will not have a smaller resolution than the next lowest
+                    $resolution: append($resolution, "(min-resolution: #{($dn * 96dpi) + 1dpi})");
+                }
+
+                $media-queries: ();
+                @each $size-query in $size-queries { // All combinations of size and resolution queries
+                    @each $res-query in ($webkit-res, $resolution) {
+                        $media-queries: append($media-queries, "#{$size-query} and #{join-str($res-query, " and ")}", comma);
+                    }
+                }
+
+                @media #{$media-queries} {
+                    $suffix: "-#{$x}x#{$y}-#{$d}x"; // Suffix background image to match one produced by gulpfile
+                    background-image: file-suffix($image, $suffix, $file-types);
+                }
+            }
         }
     } @else {
         background-image: $image;
@@ -110,4 +131,3 @@
         background-repeat: $repeat;
     }
 }
-
