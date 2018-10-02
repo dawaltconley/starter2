@@ -15,8 +15,8 @@
         win = window;
     }
 
-    jekyllEnv = "{{ jekyll.environment }}";
-    hasGoogleAnalytics = "{{ site.google_analytics }}";
+    var jekyllEnv = "{{ jekyll.environment }}";
+    var hasGoogleAnalytics = "{{ site.google_analytics }}";
 
 /*
  * General-purpose functions
@@ -491,7 +491,7 @@
  * Analytics
  */
 
-    analyticsObjects = toArray(document.querySelectorAll("[data-analytics-category][data-analytics-action][data-analytics-label]"));
+    var analyticsObjects = toArray(document.querySelectorAll("[data-analytics-category][data-analytics-action][data-analytics-label]"));
     for (var i = 0; i < analyticsObjects.length; i++) {
         analyticsObjects[i] = new AnalyticsEventObj(analyticsObjects[i]);
     }
