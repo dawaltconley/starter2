@@ -532,7 +532,7 @@
     };
 
     function linkClickEventListener(eventObj, event) {
-        if (document.origin == eventObj.element.origin) {
+        if (window.origin == eventObj.element.origin) {
             eventObj.send();
         } else {
             event.preventDefault();
