@@ -456,7 +456,15 @@
 
     if (analyticsObjects.length > 0 && hasGoogleAnalytics) {
         analyticsObjects.forEach(function (object) {
-            object.addListener();
+            if (object.action == "view") {
+                window.addEventListener("load", function () {
+                    if (distToBottom(object.element) > 0) {
+                        object.addListener();
+                    }
+                });
+            } else {
+                object.addListener();
+            }
         });
     }
 
