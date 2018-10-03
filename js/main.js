@@ -15,8 +15,8 @@
         win = window;
     }
 
-    jekyllEnv = "{{ jekyll.environment }}";
-    hasGoogleAnalytics = "{{ site.google_analytics }}";
+    var jekyllEnv = "{{ jekyll.environment }}";
+    var hasGoogleAnalytics = "{{ site.google_analytics }}";
 
 /*
  * General-purpose functions
@@ -203,11 +203,10 @@
  */
 
     var pageScrollBehavior = window.getComputedStyle(page).getPropertyValue("scroll-behavior");
-    var smoothLinks = [];
-
-    toArray(document.querySelectorAll("[data-smooth-scroll]")).forEach(function (element) {
-        smoothLinks.push(new SmoothLink(element));
-    });
+    var smoothLinks = toArray(document.querySelectorAll("[data-smooth-scroll]"));
+    for(var i = 0; i < smoothLinks.length; i++) {
+        smoothLinks[i] = new SmoothLink(smoothLinks[i]);
+    }
 
     zenscroll.setup(500, 0);
 
@@ -360,11 +359,10 @@
  * Background Image Testing
  */
 
-    var bgTestingObjects = [];
-
-    toArray(document.querySelectorAll("[data-background-images]")).forEach(function (element) {
-        bgTestingObjects.push(new BgSelect(element));
-    });
+    var bgTestingObjects = toArray(document.querySelectorAll("[data-background-images]"));
+    for (var i = 0; i < bgTestingObjects.length; i++) {
+        bgTestingObjects[i] = new BgSelect(bgTestingObjects[i]);
+    }
 
     function BgSelect(element) {
         var menuContainer = element;
@@ -493,11 +491,10 @@
  * Analytics
  */
 
-    analyticsObjects = [];
-
-    toArray(document.querySelectorAll("[data-analytics-category][data-analytics-action][data-analytics-label]")).forEach(function (element) {
-        analyticsObjects.push(new AnalyticsEventObj(element));
-    });
+    var analyticsObjects = toArray(document.querySelectorAll("[data-analytics-category][data-analytics-action][data-analytics-label]"));
+    for (var i = 0; i < analyticsObjects.length; i++) {
+        analyticsObjects[i] = new AnalyticsEventObj(analyticsObjects[i]);
+    }
 
     function AnalyticsEventObj(element) {
         this.element = element;
@@ -530,12 +527,12 @@
             this.element.addEventListener("click", this.listener);
         } else if (this.action == "view") {
             this.listener = scrollToViewEventListener.bind(null, this);
-            window.addEventListener("scroll", this.listener, passive);
+            win.addEventListener("scroll", this.listener, passive);
         }
     };
 
     function linkClickEventListener(eventObj, event) {
-        if (document.origin == eventObj.element.origin) {
+        if (window.origin == eventObj.element.origin) {
             eventObj.send();
         } else {
             event.preventDefault();
@@ -554,7 +551,7 @@
     function scrollToViewEventListener(eventObj) {
         if (distToBottom(eventObj.element) <= 0) {
             eventObj.send();
-            window.removeEventListener("scroll", eventObj.listener, passive);
+            win.removeEventListener("scroll", eventObj.listener, passive);
         }
     };
 
@@ -652,7 +649,15 @@
 
     if (analyticsObjects.length > 0 && hasGoogleAnalytics) {
         analyticsObjects.forEach(function (object) {
-            object.addListener();
+            if (object.action == "view") {
+                window.addEventListener("load", function () {
+                    if (distToBottom(object.element) > 0) {
+                        object.addListener();
+                    }
+                });
+            } else {
+                object.addListener();
+            }
         });
     }
 
