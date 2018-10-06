@@ -128,12 +128,12 @@ var backgrounds = new ImageType("backgrounds", "./_site/assets/gulp-backgrounds/
 
 var imageSizes = YAML.safeLoad(fs.readFileSync("_data/devices.yml", "utf8"));
 imageSizes["dp"].forEach(function (bp) {
-    srcset.newTask({
-        width: bp.x,
-        filder: "Catrom"
-    }, "-" + bp.x + "w");
-
     imageSizes["dppx"].forEach(function (d) {
+        srcset.newTask({
+            width: bp.x * d,
+            filder: "Catrom"
+        }, "-" + Math.round(bp.x * d) + "w");
+
         images.newTask({
             width: bp.x * d,
             height: bp.y * d,
