@@ -19,10 +19,8 @@
 }
 
 .button, .subtle-button {
-    @extend .block, .font-smoothing-normal, .subtle-icon;
-    width: $button-width;
-    height: $button-height;
-    line-height: $button-height;
+    @extend .inline-block, .font-smoothing-normal, .subtle-icon;
+    padding: .5em 1em;
     text-align: center;
     border-width: 1px;
     border-style: solid;
