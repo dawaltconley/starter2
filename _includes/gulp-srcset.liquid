@@ -1,30 +1,57 @@
 {% capture blank %}
     {% assign src = include.src %}
     {% if jekyll.environment == 'production' or jekyll.environment == 'gulp' %}
+
+        {% if include.width %}
+            {% assign width = include.width | replace: 'px', '' | replace: 'w', '' | plus: 0 %}
+        {% else %}
+            {% assign width = nil %}
+        {% endif %}
+
         {% if include.bp_list %}
             {% assign bp_list = include.bp_list %}
         {% else %}
-            {% assign bp_list = site.image_bp | reverse %}
+            {% assign bp_list = site.data.devices.dp %}
+        {% endif %}
+        {% if include.densities %}
+            {% assign densities = include.densities %}
+        {% else %}
+            {% assign densities = site.data.devices.dppx %}
         {% endif %}
         {% assign srcset = '' %}
+
+        {% assign sorted_bp = emptyArray %}
+        {% assign divisor = 1000000.0 %}
         {% for bp in bp_list %}
-            {% assign x = bp | map: 'x' %}
-            {% assign y = bp | map: 'y' %}
-            {% capture suffix %}-{{ x }}w{% endcapture %}
-            {% capture new_src %}{% include file-suffix.liquid file_name=src suffix=suffix %} {{ x }}w, {% endcapture %}
-            {% assign srcset = srcset | append: new_src %}
+            {% for d in densities %}
+                {% assign w = bp | map: 'x' | first | times: d | plus: 0.01 | divided_by: divisor | split: '~' %}
+                {% assign sorted_bp = sorted_bp | concat: w %}
+            {% endfor %}
         {% endfor %}
+        {% assign sorted_bp = sorted_bp | sort %}
+
+        {% assign bp_prev = 0 %}
+        {% for bp_mini in sorted_bp %}
+            {% assign bp = bp_mini | times: divisor | round %}
+            {% assign bp_diff = bp | minus: bp_prev %}
+            {% if bp < width and width %}
+                {% unless bp_diff < 100 %}
+                    {% capture suffix %}-{{ bp }}w{% endcapture %}
+                    {% capture new_src %}{% include file-suffix.liquid file_name=src suffix=suffix %} {{ bp }}w, {% endcapture %}
+                    {% assign srcset = srcset | append: new_src %}
+                    {% assign bp_prev = bp %}
+                {% endunless %}
+            {% endif %}
+        {% endfor %}
+
         {% assign srcset = srcset | append: src %}
-        {% if include.width %}
-            {% assign width = include.width | replace: 'px', 'w' %}
-            {% assign width_unit = width | slice: -1 %}
-            {% unless width_unit == 'w' %}
-                {% assign width = width | append: 'w' %}
-            {% endunless %}
-            {% assign srcset = srcset | append: ' ' | append: width %}
+        {% if width %}
+            {% capture srcset %}{{ srcset }} {{ width }}w{% endcapture %}
         {% endif %}
         {% assign return = srcset %}
+
     {% else %}
         {% assign return = src %}
     {% endif %}
+
 {% endcapture %}{{ return | strip_newlines }}
