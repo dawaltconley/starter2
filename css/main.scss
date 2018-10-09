@@ -11,7 +11,7 @@ $fa-icons:              ({% for icon in site.data.icon-types %}
                             {{ icon.type }}: {{ icon.color }},{% endfor %}
                         );
 
-$device-dp:             ({% if jekyll.environment == 'aws' %}
+$device-dp:             ({% if jekyll.environment == 'production' or jekyll.environment == 'gulp' %}
                             {% for size in site.data.devices.dp %}
                                 ({% for dimension in size %}
                                     {{ dimension[0] }}: {{ dimension[1] }},
@@ -19,7 +19,7 @@ $device-dp:             ({% if jekyll.environment == 'aws' %}
                             {% endfor %}
                         {% endif %});
 
-$device-dppx:           ({% if jekyll.environment == 'aws' %}
+$device-dppx:           ({% if jekyll.environment == 'production' or jekyll.environment == 'gulp' %}
                             {% for density in site.data.devices.dppx %}
                                 {{ density }},
                             {% endfor %}
