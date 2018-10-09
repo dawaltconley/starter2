@@ -131,7 +131,7 @@ imageSizes["dp"].forEach(function (bp) {
     imageSizes["dppx"].forEach(function (d) {
         srcset.newTask({
             width: bp.x * d,
-            filder: "Catrom"
+            filter: "Catrom"
         }, "-" + Math.round(bp.x * d) + "w");
 
         images.newTask({
