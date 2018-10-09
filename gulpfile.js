@@ -108,16 +108,17 @@ function ImageType(name, dir) {
 
 ImageType.prototype.newTask = function (settings, suffix) {
     var taskName = this.name + suffix;
+    var dir = this.dir;
     gulp.task(taskName, function (cb) {
         pump([
             gulp.src([
-                this.dir + "/*",
-                "!" + this.dir + "/responsive"
+                dir + "/*",
+                "!" + dir + "/responsive"
             ]),
             imageResize(settings),
             rename({ suffix: suffix }),
-            gulp.dest(this.dir + "/responsive")
-        ], cb);
+            gulp.dest(dir + "/responsive")
+        ], cb)
     });
     this.tasks.splice(-1, 0, taskName); // add second to last in task list; before the cleaning task
 }
