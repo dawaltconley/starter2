@@ -119,7 +119,7 @@ ImageType.prototype.newTask = function (settings, suffix) {
     this.tasks.splice(-1, 0, taskName); // add second to last in task list; before the cleaning task
 }
 
-var images = new ImageType("images", "./_site/assets/gulp-images/");
+var pictures = new ImageType("pictures", "./_site/assets/gulp-pictures/");
 var srcset = new ImageType("srcset", "./_site/assets/gulp-srcset/");
 var backgrounds = new ImageType("backgrounds", "./_site/assets/gulp-backgrounds/");
 
@@ -131,7 +131,7 @@ imageSizes["dp"].forEach(function (bp) {
             filter: "Catrom"
         }, "-" + Math.round(bp.x * d) + "w");
 
-        images.newTask({
+        pictures.newTask({
             width: bp.x * d,
             height: bp.y * d,
             filter: "Catrom"
@@ -160,15 +160,15 @@ gulp.task("image-min", function (cb) {
     ], cb);
 });
 
-gulp.task("resize-images", gulp.series(images.tasks));
+gulp.task("pictures", gulp.series(pictures.tasks));
 
-gulp.task("resize-srcset", gulp.series(srcset.tasks));
+gulp.task("srcset", gulp.series(srcset.tasks));
 
-gulp.task("resize-backgrounds", gulp.series(backgrounds.tasks));
+gulp.task("backgrounds", gulp.series(backgrounds.tasks));
 
 gulp.task("images", gulp.series(
     "image-min",
-    gulp.parallel("resize-images", "resize-srcset", "resize-backgrounds")
+    gulp.parallel("pictures", "srcset", "backgrounds")
 ));
 
 /*
