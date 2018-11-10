@@ -411,7 +411,7 @@
 
         this.element = element;
         this.controls = document.createElement("div");
-        this.controls.style.cssText = "position: absolute; top: 0; left: 0;";
+        this.controls.style.cssText = "position: absolute; bottom: 0; left: 0; z-index: 999;";
         this.menu = document.createElement("select");
         this.slider = document.createElement("input");
         this.slider.type = "range";
