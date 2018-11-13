@@ -310,6 +310,14 @@
         this.state = "closed";
     };
 
+    collapsibleMenus.forEach(function (menu) {
+        menu.buttons.open.forEach(function (button) {
+            if (button.hash && location.hash == button.hash) {
+                location.href = location.href.replace(/#.*$/, "");
+            }
+        });
+    });
+
     CollapsibleMenu.prototype.open = function () {
         this.links.style.maxHeight = this.links.scrollHeight.toString() + "px";
         this.buttons.open.forEach(function (button) {
