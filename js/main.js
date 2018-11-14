@@ -270,18 +270,15 @@
         this.element.style.boxShadow = "0 0 " + (b/8).toString() + "px " + (b/16).toString() + "px rgba(0, 0, 0, 0.2)";
     }
 
-    FixedHeader.prototype.slideFrame = function () {
-        var t = parseInt(this.element.style.top);
-        if (t < page.scrollTop) {
-            this.element.style.top = (t + 1).toString() + "px";
-            this.setShadow();
-        } else {
-            window.clearInterval(this.slideInterval);
-        }
-    }
-
     FixedHeader.prototype.slideDown = function () {
-        this.slideInterval = window.setInterval(this.slideFrame.bind(this), 1);
+        var t = parseInt(this.element.style.top);
+        var w = page.scrollTop;
+        if (t < w) {
+            var dist = Math.max((w - t) / 5, 1);
+            this.element.style.top = (t + dist).toString() + "px";
+            this.setShadow();
+            requestAnimationFrame(this.slideDown.bind(this));
+        }
     }
 
     FixedHeader.prototype.toggleOnScroll = function () {
@@ -297,7 +294,7 @@
             } else {
                 this.setShadow();
                 window.clearTimeout(this.doneScrolling);
-                this.doneScrolling = window.setTimeout(this.slideDown.bind(this), 100);
+                this.doneScrolling = window.setTimeout(requestAnimationFrame.bind(null, this.slideDown.bind(this)), 100);
             }
         } else {
             this.element.style.top = this.minPos.toString() + "px";
