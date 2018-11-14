@@ -243,35 +243,49 @@
         fixedHeader = new FixedHeader(fixedHeader, scrollRef, scrollRef.getAttribute("data-affix-header-on-scroll"));
     }
 
-    function FixedHeader(header, scrollRef) {
+    function FixedHeader(header) {
         var e = header.cloneNode(true);
-        e.style.width = header.clientWidth.toString() + "px";
-        e.classList.add("fixed-header");
-        updateDescendentIds(e, "-fixed");
-        document.body.insertBefore(e, document.body.firstChild);
         this.element = e;
+        this.minPos = header.getBoundingClientRect().top;
         this.headerRef = header;
-        this.scrollRef = scrollRef;
-        this.scrollRefSide = arguments.length > 2 && arguments[2] ? arguments[2] : "top";
-        this.isOpen = false;
+        this.doneScrolling = null;
+        e.style.position = "absolute";
+        e.style.top = this.minPos.toString() + "px";
+        e.style.zIndex = "999";
+        e.style.display = "none";
+        updateDescendentIds(e, "-fixed");
+        page.insertBefore(e, page.firstChild);
     }
 
-    FixedHeader.prototype.scrollDist = function () {
-        return this.scrollRef.getBoundingClientRect()[this.scrollRefSide];
+    FixedHeader.prototype.setTop = function (pos) {
+        this.element.style.top = pos.toString() + "px";
     }
 
-    FixedHeader.prototype.toggle = function () {
-        this.isOpen = this.element.classList.toggle("fixed-header-open");
+    FixedHeader.prototype.setBottom = function (pos) {
+        this.element.style.top = (pos - this.element.clientHeight).toString() + "px";
+    }
+
+    FixedHeader.prototype.setShadow = function () {
+        var b = Math.max(this.element.getBoundingClientRect().bottom, 0);
+        this.element.style.boxShadow = "0 0 " + (b/8).toString() + "px " + (b/16).toString() + "px rgba(0, 0, 0, 0.2)";
     }
 
     FixedHeader.prototype.toggleOnScroll = function () {
-        var scrollDist = this.scrollDist();
-        var menu = this.menu;
-        if ((this.isOpen && scrollDist >= 0) || (!this.isOpen && scrollDist <= 0)) {
-            this.toggle();
-            if (menu && menu.state == "open") {
-                menu.close();
+        var pos = win.scrollTop;
+        if (pos > this.minPos) {
+            this.element.style.display = "";
+            var hRect = this.element.getBoundingClientRect();
+            if (hRect.top >= 0) { // if scrolling up past top of header
+                this.setTop(pos);
+            } else if (hRect.bottom <= 0) { // if scrolling down past header
+                window.clearTimeout(this.doneScrolling);
+                this.doneScrolling = window.setTimeout(this.setBottom.bind(this, pos), 0);
+            } else {
+                this.setShadow();
             }
+        } else {
+            this.element.style.top = this.minPos.toString() + "px";
+            this.element.style.display = "none";
         }
     }
 
