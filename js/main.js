@@ -254,7 +254,7 @@
         e.style.zIndex = "999";
         e.style.display = "none";
         updateDescendentIds(e, "-fixed");
-        page.insertBefore(e, page.firstChild);
+        header.parentNode.insertBefore(e, header.parentNode.firstChild);
     }
 
     FixedHeader.prototype.setTop = function (pos) {
@@ -272,7 +272,7 @@
 
     FixedHeader.prototype.slideFrame = function () {
         var t = parseInt(this.element.style.top);
-        if (t < win.scrollTop) {
+        if (t < page.scrollTop) {
             this.element.style.top = (t + 1).toString() + "px";
             this.setShadow();
         } else {
@@ -285,7 +285,7 @@
     }
 
     FixedHeader.prototype.toggleOnScroll = function () {
-        var pos = win.scrollTop;
+        var pos = page.scrollTop;
         if (pos > this.minPos) {
             var hRect = this.element.getBoundingClientRect();
             if (hRect.top >= 0) { // if scrolling up past top of header
