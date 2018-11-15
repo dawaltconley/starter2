@@ -246,13 +246,11 @@
     function FixedHeader(header) {
         var e = header.cloneNode(true);
         this.element = e;
+        this.pos = page.scrollTop;
         this.minPos = header.getBoundingClientRect().top;
         this.headerRef = header;
         this.doneScrolling = null;
-        e.style.position = "absolute";
-        e.style.top = this.minPos.toString() + "px";
-        e.style.zIndex = "999";
-        e.style.display = "none";
+        Object.assign(e.style, { position: "absolute", top: this.minPos.toString() + "px", zIndex: "999", display: "none" });
         updateDescendentIds(e, "-fixed");
         header.parentNode.insertBefore(e, header.parentNode.firstChild);
     }
@@ -273,33 +271,53 @@
     FixedHeader.prototype.slideDown = function () {
         var t = parseInt(this.element.style.top);
         var w = page.scrollTop;
-        if (t < w) {
+        if (t < w-1) {
             var dist = Math.max((w - t) / 5, 1);
             this.element.style.top = (t + dist).toString() + "px";
             this.setShadow();
             requestAnimationFrame(this.slideDown.bind(this));
+        } else {
+            this.affix();
         }
+    }
+
+    FixedHeader.prototype.affix = function () {
+        Object.assign(this.element.style, { position: "fixed", top: "0px", width: this.headerRef.clientWidth.toString() + "px" });
+        document.body.insertBefore(this.element, document.body.firstChild);
+    }
+
+    FixedHeader.prototype.unfix = function () {
+        Object.assign(this.element.style, { position: "absolute", top: this.pos.toString() + "px", width: "" });
+        this.headerRef.parentNode.insertBefore(this.element, this.headerRef);
     }
 
     FixedHeader.prototype.toggleOnScroll = function () {
         var pos = page.scrollTop;
+        var scrollDiff = pos - this.pos;
         if (pos > this.minPos) {
+            this.element.style.display = "";
             var hRect = this.element.getBoundingClientRect();
-            if (hRect.top >= 0) { // if scrolling up past top of header
-                this.element.style.display = "";
-                this.setTop(pos);
+            if (scrollDiff < 0 && hRect.top >= scrollDiff) { // if scrolling up past top of header
+                if (this.element.style.position != "fixed") {
+                    this.affix();
+                }
+                window.clearTimeout(this.doneScrolling);
             } else if (hRect.bottom <= 0) { // if scrolling down past header
                 window.clearTimeout(this.doneScrolling);
-                this.doneScrolling = window.setTimeout(this.setBottom.bind(this, pos), 0);
+                this.doneScrolling = window.setTimeout(this.setBottom.bind(this, pos), 10);
             } else {
-                this.setShadow();
+                if (this.element.style.position == "fixed") {
+                    this.unfix();
+                }
                 window.clearTimeout(this.doneScrolling);
-                this.doneScrolling = window.setTimeout(requestAnimationFrame.bind(null, this.slideDown.bind(this)), 100);
+                this.doneScrolling = window.setTimeout(requestAnimationFrame.bind(null, this.slideDown.bind(this)), 500);
+                this.setShadow();
             }
         } else {
             this.element.style.top = this.minPos.toString() + "px";
             this.element.style.display = "none";
         }
+        this.pos = pos;
     }
 
     FixedHeader.prototype.resize = function () {
