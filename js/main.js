@@ -312,6 +312,7 @@
                 window.clearTimeout(this.doneScrolling);
                 this.doneScrolling = window.setTimeout(requestAnimationFrame.bind(null, this.slideDown.bind(this)), 500);
                 this.setShadow();
+                this.menu.close();
             }
         } else {
             this.element.style.top = this.refPos.toString() + "px";
@@ -372,6 +373,17 @@
             button.classList.remove("hidden");
         });
         this.state = "open";
+
+        var menu = this;
+        var startPos = page.scrollTop;
+        win.addEventListener("scroll", function closeOnScrollDown() {
+            var newPos = page.scrollTop
+            if (newPos > startPos) {
+                menu.close();
+                this.removeEventListener("scroll", closeOnScrollDown, passive);
+            }
+            startPos = newPos;
+        }, passive);
     };
 
     CollapsibleMenu.prototype.close = function () {
