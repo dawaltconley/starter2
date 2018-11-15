@@ -265,7 +265,7 @@
 
     FixedHeader.prototype.setShadow = function () {
         var b = Math.max(this.element.getBoundingClientRect().bottom, 0);
-        this.element.style.boxShadow = "0 0 " + (b/8).toString() + "px " + (b/16).toString() + "px rgba(0, 0, 0, 0.2)";
+        this.element.style.boxShadow = "0 " + (b/16).toString() + "px " + (b/8).toString() + "px 0 rgba(0, 0, 0, 0.2)";
     }
 
     FixedHeader.prototype.slideDown = function () {
@@ -274,11 +274,11 @@
         if (t < w-1) {
             var dist = Math.max((w - t) / 5, 1);
             this.element.style.top = (t + dist).toString() + "px";
-            this.setShadow();
             requestAnimationFrame(this.slideDown.bind(this));
         } else {
             this.affix();
         }
+        this.setShadow();
     }
 
     FixedHeader.prototype.affix = function () {
