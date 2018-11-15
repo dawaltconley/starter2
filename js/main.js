@@ -237,9 +237,8 @@
 
     var fixedHeader = document.querySelector("[data-fixed-header]");
     var scrollRef = document.querySelector("[data-affix-header-on-scroll]");
-    var hasFixedHeader = fixedHeader && scrollRef;
 
-    if (hasFixedHeader) {
+    if (fixedHeader) {
         fixedHeader = new FixedHeader(fixedHeader, scrollRef, scrollRef.getAttribute("data-affix-header-on-scroll"));
     }
 
@@ -340,7 +339,7 @@
     var collapsibleMenus = toArray(document.querySelectorAll("[data-menu]"));
     for (var i = 0; i < collapsibleMenus.length; i++) {
         collapsibleMenus[i] = new CollapsibleMenu(collapsibleMenus[i]);
-        if (hasFixedHeader && collapsibleMenus[i].element === fixedHeader.element) {
+        if (fixedHeader && collapsibleMenus[i].element === fixedHeader.element) {
             fixedHeader.menu = collapsibleMenus[i];
         }
     }
@@ -697,7 +696,7 @@
     };
 
     objectFitImages();
-    if (hasFixedHeader) { fixedHeader.addListeners(); }
+    if (fixedHeader) { fixedHeader.addListeners(); }
     addCollapsibleMenuListeners();
 
     if (smoothLinks.length > 0 && pageScrollBehavior != "smooth") {
