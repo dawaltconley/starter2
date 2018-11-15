@@ -247,10 +247,10 @@
         var e = header.cloneNode(true);
         this.element = e;
         this.pos = page.scrollTop;
-        this.minPos = header.getBoundingClientRect().top;
+        this.refPos = header.getBoundingClientRect().top;
         this.headerRef = header;
         this.doneScrolling = null;
-        Object.assign(e.style, { position: "absolute", top: this.minPos.toString() + "px", zIndex: "999", display: "none" });
+        Object.assign(e.style, { position: "absolute", top: this.refPos.toString() + "px", zIndex: "999", display: "none" });
         updateDescendentIds(e, "-fixed");
         header.parentNode.insertBefore(e, header.parentNode.firstChild);
     }
@@ -294,7 +294,7 @@
     FixedHeader.prototype.toggleOnScroll = function () {
         var pos = page.scrollTop;
         var scrollDiff = pos - this.pos;
-        if (pos > this.minPos) {
+        if (pos > this.refPos) {
             this.element.style.display = "";
             var hRect = this.element.getBoundingClientRect();
             if (scrollDiff < 0 && hRect.top >= scrollDiff) { // if scrolling up past top of header
@@ -314,7 +314,7 @@
                 this.setShadow();
             }
         } else {
-            this.element.style.top = this.minPos.toString() + "px";
+            this.element.style.top = this.refPos.toString() + "px";
             this.element.style.display = "none";
         }
         this.pos = pos;
