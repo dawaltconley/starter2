@@ -185,6 +185,23 @@
         return Math.floor(element.getBoundingClientRect().bottom - window.innerHeight);
     };
 
+    function executeOnScroll(direction, callback) {
+        var scroller = arguments.length > 2 && arguments[2] != undefined ? arguments[2] : win;
+        var oldPos = page.scrollTop;
+
+        scroller.addEventListener("scroll", function scrollingUp() {
+            var newPos = page.scrollTop;
+            if ((newPos < oldPos && direction == "up") || (newPos > oldPos && direction == "down")) {
+                this.removeEventListener("scroll", scrollingUp, passive);
+                callback();
+            }
+            oldPos = newPos;
+        }, passive);
+    }
+
+    var executeOnScrollUp = executeOnScroll.bind(null, "up");
+    var executeOnScrollDown = executeOnScroll.bind(null, "down");
+
 /*
  * Classes
  */
