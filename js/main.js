@@ -268,6 +268,7 @@
     }
 
     FixedHeader.prototype.slideDown = function () {
+        if (this.interruptSlideDown) { return null; }
         var t = parseInt(this.element.style.top);
         var w = page.scrollTop;
         if (t < w-1) {
@@ -291,8 +292,10 @@
     }
 
     FixedHeader.prototype.toggleOnScroll = function () {
+        var header = this;
         var pos = page.scrollTop;
         var scrollDiff = pos - this.pos;
+        this.interruptSlideDown = true;
         if (pos > this.refPos) {
             this.element.style.display = "";
             var hRect = this.element.getBoundingClientRect();
@@ -309,7 +312,10 @@
                     this.unfix();
                 }
                 window.clearTimeout(this.doneScrolling);
-                this.doneScrolling = window.setTimeout(requestAnimationFrame.bind(null, this.slideDown.bind(this)), 500);
+                this.doneScrolling = window.setTimeout(function () {
+                    header.interruptSlideDown = false;
+                    requestAnimationFrame(header.slideDown.bind(header))
+                }, 500);
                 this.setShadow();
                 this.menu.close();
             }
