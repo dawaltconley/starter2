@@ -347,10 +347,9 @@
     }
 
     var fixedHeader = document.querySelector("[data-fixed-header]");
-    var scrollRef = document.querySelector("[data-affix-header-on-scroll]");
 
     if (fixedHeader) {
-        fixedHeader = new FixedHeader(fixedHeader, scrollRef, scrollRef.getAttribute("data-affix-header-on-scroll"));
+        fixedHeader = new FixedHeader(fixedHeader);
     }
 
 /*
