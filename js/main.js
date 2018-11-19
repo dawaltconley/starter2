@@ -204,15 +204,19 @@
     function executeOnScroll(direction, callback) {
         var scroller = arguments.length > 2 && arguments[2] != undefined ? arguments[2] : win;
         var oldPos = page.scrollTop;
+        var removeListener = scroller.removeEventListener.bind(scroller, "scroll", scrolling, passive);
 
-        scroller.addEventListener("scroll", function scrollingUp() {
+        function scrolling() {
             var newPos = page.scrollTop;
             if ((newPos < oldPos && direction == "up") || (newPos > oldPos && direction == "down")) {
-                this.removeEventListener("scroll", scrollingUp, passive);
+                removeListener();
                 callback();
             }
             oldPos = newPos;
-        }, passive);
+        }
+
+        scroller.addEventListener("scroll", scrolling, passive);
+        return removeListener;
     }
 
     var executeOnScrollUp = executeOnScroll.bind(null, "up");
@@ -301,7 +305,6 @@
                 top = Math.min(Math.max(top - scrollDiff, -f.height), 0);
                 e.style.top = top.toString() + "px";
                 f.setShadow();
-                f.menu.close();
                 f.doneScrolling = window.setTimeout(function () {
                     f.interruptSlideDown = false;
                     requestAnimationFrame(f.slideDown.bind(f))
@@ -392,17 +395,7 @@
             button.classList.remove("hidden");
         });
         this.state = "open";
-
-        var menu = this;
-        var startPos = page.scrollTop;
-        win.addEventListener("scroll", function closeOnScrollDown() {
-            var newPos = page.scrollTop
-            if (newPos > startPos) {
-                menu.close();
-                this.removeEventListener("scroll", closeOnScrollDown, passive);
-            }
-            startPos = newPos;
-        }, passive);
+        this.removeListener = executeOnScrollDown(this.close.bind(this));
     };
 
     CollapsibleMenu.prototype.close = function () {
@@ -414,6 +407,7 @@
             button.classList.remove("hidden");
         });
         this.state = "closed";
+        this.removeListener();
     };
 
     CollapsibleMenu.prototype.toggle = function () {
