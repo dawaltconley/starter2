@@ -281,31 +281,6 @@
         document.body.insertBefore(this.element, document.body.firstChild);
     }
 
-    FixedHeader.prototype.resize = function () {
-        window.clearTimeout(this.doneResizing);
-        win.removeEventListener("scroll", this.scrollListener, passive);
-        this.doneResizing = window.setTimeout(win.addEventListener.bind(win, "scroll", this.scrollListener, passive), 100);
-        this.refPos = pagePos(this.headerRef);
-        this.height = this.headerRef.clientHeight;
-        Object.assign(this.element.style, { width: this.headerRef.clientWidth.toString() + "px" });
-    }
-
-    FixedHeader.prototype.setShadow = function () {
-        var b = Math.max(this.element.getBoundingClientRect().bottom, 0);
-        this.element.style.boxShadow = "0 " + (b/32).toString() + "px " + (b/16).toString() + "px 0 rgba(0, 0, 0, 0.2)";
-    }
-
-    FixedHeader.prototype.slideDown = function () {
-        if (this.interruptSlideDown) { return null; }
-        var t = parseInt(this.element.style.top);
-        if (t < 0) {
-            var dist = Math.max(-t/5, 1);
-            this.element.style.top = (t + dist).toString() + "px";
-            requestAnimationFrame(this.slideDown.bind(this));
-        }
-        this.setShadow();
-    }
-
     FixedHeader.prototype.scroll = function () {
         var f = this;
         var e = this.element;
@@ -332,6 +307,31 @@
             f.setShadow();
         }
         f.pos = pos;
+    }
+
+    FixedHeader.prototype.resize = function () {
+        window.clearTimeout(this.doneResizing);
+        win.removeEventListener("scroll", this.scrollListener, passive);
+        this.doneResizing = window.setTimeout(win.addEventListener.bind(win, "scroll", this.scrollListener, passive), 100);
+        this.refPos = pagePos(this.headerRef);
+        this.height = this.headerRef.clientHeight;
+        Object.assign(this.element.style, { width: this.headerRef.clientWidth.toString() + "px" });
+    }
+
+    FixedHeader.prototype.slideDown = function () {
+        if (this.interruptSlideDown) { return null; }
+        var t = parseInt(this.element.style.top);
+        if (t < 0) {
+            var dist = Math.max(-t/5, 1);
+            this.element.style.top = (t + dist).toString() + "px";
+            requestAnimationFrame(this.slideDown.bind(this));
+        }
+        this.setShadow();
+    }
+
+    FixedHeader.prototype.setShadow = function () {
+        var b = Math.max(this.element.getBoundingClientRect().bottom, 0);
+        this.element.style.boxShadow = "0 " + (b/32).toString() + "px " + (b/16).toString() + "px 0 rgba(0, 0, 0, 0.2)";
     }
 
     FixedHeader.prototype.addListeners = function () {
