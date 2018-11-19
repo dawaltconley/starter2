@@ -201,7 +201,7 @@
         return Math.floor(element.getBoundingClientRect().bottom - window.innerHeight);
     };
 
-    function executeOnScroll(direction, callback) {
+    function onScroll(direction, callback) {
         var scroller = arguments.length > 2 && arguments[2] != undefined ? arguments[2] : win;
         var oldPos = page.scrollTop;
         var removeListener = scroller.removeEventListener.bind(scroller, "scroll", scrolling, passive);
@@ -219,8 +219,8 @@
         return removeListener;
     }
 
-    var executeOnScrollUp = executeOnScroll.bind(null, "up");
-    var executeOnScrollDown = executeOnScroll.bind(null, "down");
+    var onScrollUp = onScroll.bind(null, "up");
+    var onScrollDown = onScroll.bind(null, "down");
 
     function updateObj(obj, newObj) {
         for (var key in newObj) {
@@ -395,7 +395,7 @@
             button.classList.remove("hidden");
         });
         this.state = "open";
-        this.removeListener = executeOnScrollDown(this.close.bind(this));
+        this.removeListener = onScrollDown(this.close.bind(this));
     };
 
     CollapsibleMenu.prototype.close = function () {
