@@ -268,32 +268,23 @@
  * Fixed Headers
  */
 
-    var fixedHeader = document.querySelector("[data-fixed-header]");
-    var scrollRef = document.querySelector("[data-affix-header-on-scroll]");
-
-    if (fixedHeader) {
-        fixedHeader = new FixedHeader(fixedHeader, scrollRef, scrollRef.getAttribute("data-affix-header-on-scroll"));
-    }
-
     function FixedHeader(header) {
         var e = header.cloneNode(true);
         this.element = e;
-        this.pos = page.scrollTop;
-        this.refPos = header.getBoundingClientRect().top;
         this.headerRef = header;
-        this.doneScrolling = null;
-        this.top = 0;
-        Object.assign(this.element.style, { position: "fixed", top: "0px", width: this.headerRef.clientWidth.toString() + "px", zIndex: "999" });
+        this.pos = page.scrollTop;
+        this.refPos = pagePos(header);
+
+        this.resize();
+        Object.assign(this.element.style, { position: "fixed", top: -this.height.toString() + "px", zIndex: "999", display: "none" });
         updateDescendentIds(e, "-fixed");
         document.body.insertBefore(this.element, document.body.firstChild);
     }
 
-    FixedHeader.prototype.setTop = function (pos) {
-        this.element.style.top = pos.toString() + "px";
-    }
-
-    FixedHeader.prototype.setBottom = function (pos) {
-        this.element.style.top = (pos - this.element.clientHeight).toString() + "px";
+    FixedHeader.prototype.resize = function () {
+        this.refPos = pagePos(this.headerRef);
+        this.height = this.headerRef.clientHeight;
+        Object.assign(this.element.style, { width: this.headerRef.clientWidth.toString() + "px" });
     }
 
     FixedHeader.prototype.setShadow = function () {
@@ -312,46 +303,43 @@
         this.setShadow();
     }
 
-    FixedHeader.prototype.resize = function () {
-        var refWidth = this.headerRef.clientWidth;
-        if (this.element.clientWidth != refWidth) {
-            this.element.style.width = refWidth.toString() + "px";
-        }
-    }
-
     FixedHeader.prototype.addListeners = function () {
         var f = this;
         var e = this.element;
-        f.height = e.clientHeight;
         win.addEventListener("scroll", function scrollListener() {
-            e.style.display = "";
-            f.interruptSlideDown = true;
             var target = this;
             var pos = page.scrollTop;
             var scrollDiff = pos - f.pos;
-            var top = parseInt(e.style.top);
-            top = Math.min(Math.max(top - scrollDiff, -f.height), 0);
-            e.style.top = top.toString() + "px";
-            f.pos = pos;
-            f.setShadow();
-            f.menu.close();
             window.clearTimeout(f.doneScrolling);
-
-            if (top >= 0 || top <= -f.height) {
-                var direction = scrollDiff > 0 ? "up" : "down";
-                target.removeEventListener("scroll", scrollListener, passive);
-                executeOnScroll(direction, function () {
-                    f.height = e.clientHeight;
-                    target.addEventListener("scroll", scrollListener, passive);
-                });
-            } else {
-                f.doneScrolling = window.setTimeout(function () {
-                    f.interruptSlideDown = false;
-                    requestAnimationFrame(f.slideDown.bind(f))
-                }, 500);
+            if ((e.style.display != "none" && pos > f.refPos.top) || (e.style.display == "none" && pos > f.refPos.bottom)) {
+                e.style.display = "";
+                f.interruptSlideDown = true;
+                var top = parseInt(e.style.top);
+                if ((scrollDiff < 0 && top < 0) || (scrollDiff > 0 && top > -f.height)){
+                    top = Math.min(Math.max(top - scrollDiff, -f.height), 0);
+                    e.style.top = top.toString() + "px";
+                    f.setShadow();
+                    f.menu.close();
+                    f.doneScrolling = window.setTimeout(function () {
+                        f.interruptSlideDown = false;
+                        requestAnimationFrame(f.slideDown.bind(f))
+                    }, 500);
+                }
+            } else if (e.style.display != "none") {
+                e.style.display = "none";
+                Object.assign(e.style, { display: "none", top: -f.height.toString() + "px" });
+                f.setShadow();
             }
+            f.pos = pos;
         }, passive);
         window.addEventListener("resize", this.resize.bind(this), passive);
+    }
+
+    var fixedHeader = document.querySelector("[data-fixed-header]");
+    var scrollRef = document.querySelector("[data-affix-header-on-scroll]");
+
+    if (fixedHeader) {
+        fixedHeader = new FixedHeader(fixedHeader, scrollRef, scrollRef.getAttribute("data-affix-header-on-scroll"));
     }
 
 /*
