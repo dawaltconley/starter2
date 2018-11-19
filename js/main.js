@@ -266,9 +266,10 @@
         this.refPos = header.getBoundingClientRect().top;
         this.headerRef = header;
         this.doneScrolling = null;
-        Object.assign(e.style, { position: "absolute", top: this.refPos.toString() + "px", zIndex: "999", display: "none" });
+        this.top = 0;
+        Object.assign(this.element.style, { position: "fixed", top: "0px", width: this.headerRef.clientWidth.toString() + "px", zIndex: "999" });
         updateDescendentIds(e, "-fixed");
-        header.parentNode.insertBefore(e, header.parentNode.firstChild);
+        document.body.insertBefore(this.element, document.body.firstChild);
     }
 
     FixedHeader.prototype.setTop = function (pos) {
@@ -287,61 +288,12 @@
     FixedHeader.prototype.slideDown = function () {
         if (this.interruptSlideDown) { return null; }
         var t = parseInt(this.element.style.top);
-        var w = page.scrollTop;
-        if (t < w-1) {
-            var dist = Math.max((w - t) / 5, 1);
+        if (t < 0) {
+            var dist = Math.max(-t/5, 1);
             this.element.style.top = (t + dist).toString() + "px";
             requestAnimationFrame(this.slideDown.bind(this));
-        } else {
-            this.affix();
         }
         this.setShadow();
-    }
-
-    FixedHeader.prototype.affix = function () {
-        Object.assign(this.element.style, { position: "fixed", top: "0px", width: this.headerRef.clientWidth.toString() + "px" });
-        document.body.insertBefore(this.element, document.body.firstChild);
-    }
-
-    FixedHeader.prototype.unfix = function () {
-        Object.assign(this.element.style, { position: "absolute", top: this.pos.toString() + "px", width: "" });
-        this.headerRef.parentNode.insertBefore(this.element, this.headerRef);
-    }
-
-    FixedHeader.prototype.toggleOnScroll = function () {
-        var f = this;
-        var e = this.element;
-        var pos = page.scrollTop;
-        var scrollDiff = pos - f.pos;
-        f.interruptSlideDown = true;
-        if (pos > f.refPos) {
-            e.style.display = "";
-            var r = e.getBoundingClientRect();
-            if (scrollDiff < 0 && r.top >= scrollDiff) { // if scrolling up past top of header
-                if (e.style.position != "fixed") {
-                    f.affix();
-                }
-                window.clearTimeout(f.doneScrolling);
-            } else if (r.bottom <= 0) { // if scrolling down past header
-                window.clearTimeout(f.doneScrolling);
-                f.doneScrolling = window.setTimeout(f.setBottom.bind(f, pos), 10);
-            } else {
-                if (e.style.position == "fixed") {
-                    f.unfix();
-                }
-                window.clearTimeout(f.doneScrolling);
-                f.doneScrolling = window.setTimeout(function () {
-                    f.interruptSlideDown = false;
-                    requestAnimationFrame(f.slideDown.bind(f))
-                }, 500);
-                f.setShadow();
-                f.menu.close();
-            }
-        } else {
-            e.style.top = f.refPos.toString() + "px";
-            e.style.display = "none";
-        }
-        f.pos = pos;
     }
 
     FixedHeader.prototype.resize = function () {
@@ -352,7 +304,37 @@
     }
 
     FixedHeader.prototype.addListeners = function () {
-        win.addEventListener("scroll", this.toggleOnScroll.bind(this), passive);
+        var f = this;
+        var e = this.element;
+        f.height = e.clientHeight;
+        win.addEventListener("scroll", function scrollListener() {
+            e.style.display = "";
+            f.interruptSlideDown = true;
+            var target = this;
+            var pos = page.scrollTop;
+            var scrollDiff = pos - f.pos;
+            var top = parseInt(e.style.top);
+            top = Math.min(Math.max(top - scrollDiff, -f.height), 0);
+            e.style.top = top.toString() + "px";
+            f.pos = pos;
+            f.setShadow();
+            f.menu.close();
+            window.clearTimeout(f.doneScrolling);
+
+            if (top >= 0 || top <= -f.height) {
+                var direction = scrollDiff > 0 ? "up" : "down";
+                target.removeEventListener("scroll", scrollListener, passive);
+                executeOnScroll(direction, function () {
+                    f.height = e.clientHeight;
+                    target.addEventListener("scroll", scrollListener, passive);
+                });
+            } else {
+                f.doneScrolling = window.setTimeout(function () {
+                    f.interruptSlideDown = false;
+                    requestAnimationFrame(f.slideDown.bind(f))
+                }, 500);
+            }
+        }, passive);
         window.addEventListener("resize", this.resize.bind(this), passive);
     }
 
