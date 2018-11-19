@@ -464,14 +464,11 @@
             divImg.setAttribute("data-background-images", element.getAttribute("data-background-images"));
             divImg.classList = element.classList;
             divImg.classList.add("bg-img");
-            divImg.style.backgroundImage = "url('" + initialImage.path + "')";
-            divImg.style.backgroundSize = initialImage.size;
-            divImg.style.backgroundPosition = initialImage.position;
+            updateObj(divImg.style, { backgroundImage: "url('" + initialImage.path + "')", backgroundSize: initialImage.size, backgroundPosition: initialImage.position });
             menuContainer = divImg;
 
             function replaceImgWithDiv(img, replacement) {
-                replacement.style.width = img.width + "px";
-                replacement.style.height = img.height + "px";
+                updateObj(replacement.style, { width: img.width + "px", height: img.height + "px" });
                 img.parentNode.replaceChild(replacement, img);
             }
 
@@ -496,7 +493,7 @@
 
         this.element = element;
         this.controls = document.createElement("div");
-        this.controls.style.cssText = "position: absolute; bottom: 0; left: 0; z-index: 999;";
+        updateObj(this.controls.style, { position: "absolute", bottom: "0", left: "0", zIndex: "999" });
         this.menu = document.createElement("select");
         this.slider = document.createElement("input");
         this.slider.type = "range";
