@@ -298,7 +298,7 @@
 
     FixedHeader.prototype.setShadow = function () {
         var b = Math.max(this.element.getBoundingClientRect().bottom, 0);
-        this.element.style.boxShadow = "0 " + (b/16).toString() + "px " + (b/8).toString() + "px 0 rgba(0, 0, 0, 0.2)";
+        this.element.style.boxShadow = "0 " + (b/32).toString() + "px " + (b/16).toString() + "px 0 rgba(0, 0, 0, 0.2)";
     }
 
     FixedHeader.prototype.slideDown = function () {
