@@ -218,6 +218,12 @@
     var executeOnScrollUp = executeOnScroll.bind(null, "up");
     var executeOnScrollDown = executeOnScroll.bind(null, "down");
 
+    function updateObj(obj, newObj) {
+        for (var key in newObj) {
+            obj[key] = newObj[key];
+        }
+    }
+
 /*
  * Classes
  */
@@ -276,7 +282,7 @@
         this.refPos = pagePos(header);
 
         this.resize();
-        Object.assign(this.element.style, { position: "fixed", top: -this.height.toString() + "px", zIndex: "999", display: "none" });
+        updateObj(this.element.style, { position: "fixed", top: -this.height.toString() + "px", zIndex: "999", display: "none" });
         updateDescendentIds(e, "-fixed");
         document.body.insertBefore(this.element, document.body.firstChild);
     }
@@ -303,7 +309,7 @@
             }
         } else if (e.style.display != "none") {
             e.style.display = "none";
-            Object.assign(e.style, { display: "none", top: -f.height.toString() + "px" });
+            updateObj(e.style, { display: "none", top: -f.height.toString() + "px" });
             f.setShadow();
         }
         f.pos = pos;
@@ -315,7 +321,7 @@
         this.doneResizing = window.setTimeout(win.addEventListener.bind(win, "scroll", this.scrollListener, passive), 100);
         this.refPos = pagePos(this.headerRef);
         this.height = this.headerRef.clientHeight;
-        Object.assign(this.element.style, { width: this.headerRef.clientWidth.toString() + "px" });
+        updateObj(this.element.style, { width: this.headerRef.clientWidth.toString() + "px" });
     }
 
     FixedHeader.prototype.slideDown = function () {
