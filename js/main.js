@@ -85,11 +85,27 @@
         return elementBottom - viewBottom;
     };
 
+    function getRelativeClientRect(child, parent) {
+        var cRect = child.getBoundingClientRect();
+        var pRect = parent.getBoundingClientRect();
+        var rRect = {
+            top: cRect.top - pRect.top,
+            bottom: cRect.bottom - pRect.top,
+            left: cRect.left - pRect.left,
+            right: cRect.right - pRect.left
+        }
+        if (parent.offsetHeight != parent.scrollHeight) {
+            rRect.top = rRect.top + parent.scrollTop;
+            rRect.bottom = rRect.bottom + parent.scrollTop;
+            rRect.left = rRect.left + parent.scrollLeft;
+            rRect.right = rRect.right + parent.scrollLeft;
+        }
+        return rRect;
+    }
+
     function pagePos(element) {
-        var posTop = element.getBoundingClientRect().top + page.scrollTop;
-        var posLeft = element.getBoundingClientRect().left + page.scrollLeft;
-        return { top: posTop, left: posLeft };
-    };
+        return getRelativeClientRect(element, page);
+    }
 
     function updateDescendentIds(element, string) {
         var position = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "suffix";
