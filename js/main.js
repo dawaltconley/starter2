@@ -282,6 +282,9 @@
     }
 
     FixedHeader.prototype.resize = function () {
+        window.clearTimeout(this.doneResizing);
+        win.removeEventListener("scroll", this.scrollListener, passive);
+        this.doneResizing = window.setTimeout(win.addEventListener.bind(win, "scroll", this.scrollListener, passive), 100);
         this.refPos = pagePos(this.headerRef);
         this.height = this.headerRef.clientHeight;
         Object.assign(this.element.style, { width: this.headerRef.clientWidth.toString() + "px" });
@@ -303,35 +306,37 @@
         this.setShadow();
     }
 
-    FixedHeader.prototype.addListeners = function () {
+    FixedHeader.prototype.scroll = function () {
         var f = this;
         var e = this.element;
-        win.addEventListener("scroll", function scrollListener() {
-            var target = this;
-            var pos = page.scrollTop;
-            var scrollDiff = pos - f.pos;
-            window.clearTimeout(f.doneScrolling);
-            if ((e.style.display != "none" && pos > f.refPos.top) || (e.style.display == "none" && pos > f.refPos.bottom)) {
-                e.style.display = "";
-                f.interruptSlideDown = true;
-                var top = parseInt(e.style.top);
-                if ((scrollDiff < 0 && top < 0) || (scrollDiff > 0 && top > -f.height)){
-                    top = Math.min(Math.max(top - scrollDiff, -f.height), 0);
-                    e.style.top = top.toString() + "px";
-                    f.setShadow();
-                    f.menu.close();
-                    f.doneScrolling = window.setTimeout(function () {
-                        f.interruptSlideDown = false;
-                        requestAnimationFrame(f.slideDown.bind(f))
-                    }, 500);
-                }
-            } else if (e.style.display != "none") {
-                e.style.display = "none";
-                Object.assign(e.style, { display: "none", top: -f.height.toString() + "px" });
+        var pos = page.scrollTop;
+        var scrollDiff = pos - f.pos;
+        window.clearTimeout(f.doneScrolling);
+        if ((e.style.display != "none" && pos > f.refPos.top) || (e.style.display == "none" && pos > f.refPos.bottom)) {
+            e.style.display = "";
+            f.interruptSlideDown = true;
+            var top = parseInt(e.style.top);
+            if ((scrollDiff < 0 && top < 0) || (scrollDiff > 0 && top > -f.height)){
+                top = Math.min(Math.max(top - scrollDiff, -f.height), 0);
+                e.style.top = top.toString() + "px";
                 f.setShadow();
+                f.menu.close();
+                f.doneScrolling = window.setTimeout(function () {
+                    f.interruptSlideDown = false;
+                    requestAnimationFrame(f.slideDown.bind(f))
+                }, 500);
             }
-            f.pos = pos;
-        }, passive);
+        } else if (e.style.display != "none") {
+            e.style.display = "none";
+            Object.assign(e.style, { display: "none", top: -f.height.toString() + "px" });
+            f.setShadow();
+        }
+        f.pos = pos;
+    }
+
+    FixedHeader.prototype.addListeners = function () {
+        this.scrollListener = this.scroll.bind(this);
+        win.addEventListener("scroll", this.scrollListener, passive);
         window.addEventListener("resize", this.resize.bind(this), passive);
     }
 
