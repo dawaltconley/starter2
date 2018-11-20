@@ -91,12 +91,12 @@
     }
 }
 
-@mixin inline-columns($columns, $spacing: 0) {
+@mixin inline-columns($columns, $spacing: 0px) {
     @if not($columns > 1) { @error "inline-columns mixin must have more than one column." }
     $width: 100% / $columns;
     $row-end: $columns + "n";
     display: inline-block;
-    width: calc(#{$width} - (#{$spacing} * (#{$columns} - 1) / #{$columns}));
+    width: calc(#{$width} - #{($spacing * ($columns - 1) / $columns)});
     margin-right: $spacing;
     margin-bottom: $spacing;
 
