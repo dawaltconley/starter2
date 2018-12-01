@@ -243,6 +243,13 @@
         e.parentNode.replaceChild(shuffled, e);
     });
 
+    var now = new Date();
+    var currentYear = now.getFullYear().toString();
+    var yearsToUpdate = toArray(document.querySelectorAll("[data-current-year]"));
+    yearsToUpdate.forEach(function (y) {
+        y.innerText = currentYear;
+    });
+
 /*
  * Classes
  */
