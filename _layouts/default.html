@@ -3,11 +3,19 @@
 
   {% include head.html %}
 
-  <body {% if page.itemtype %} itemscope itemtype="{{ page.itemtype }}" {% endif %}>
+  <body class="{% if page.parallax or page.collection.parallax %}parallax-body{% endif %}" {% if page.itemtype %} itemscope itemtype="{{ page.itemtype }}" {% endif %}>
 
-    {% include header.html %}
+    {% if page.parallax or page.collection.parallax %}
+    <div class="parallax-page">
+    {% endif %}
 
-    {{ content }}
+      {% include header.html %}
+
+      {{ content }}
+
+    {% if page.parallax or page.collection.parallax %}
+    </div>
+    {% endif %}
 
     {% include scripts.html %}
 
