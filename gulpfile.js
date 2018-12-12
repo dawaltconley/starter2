@@ -20,7 +20,7 @@ var fs = require("fs");
 const jekyllEnv = process.env.CONTEXT == "production" ? "production" : "gulp";
 
 function jekyllBuild(env = "development") {
-    var cmd = "JEKYLL_ENV=" + env + " jekyll build";
+    var cmd = "JEKYLL_ENV=" + env + " bundle exec jekyll build";
     return child.exec(cmd, { stdio: "inherit" });
 }
 
