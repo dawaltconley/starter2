@@ -229,6 +229,21 @@
     }
 
 /*
+ * DOM Manipulation
+ */
+
+    var shuffleChildren = toArray(document.querySelectorAll("[data-shuffle-children]"));
+    shuffleChildren.forEach(function (e) {
+        var shuffled = e.cloneNode(false);
+        var children = toArray(e.children);
+        while (children.length > 0) {
+            var i = Math.floor(Math.random() * children.length);
+            shuffled.appendChild(children.splice(i, 1)[0]);
+        }
+        e.parentNode.replaceChild(shuffled, e);
+    });
+
+/*
  * Classes
  */
 
