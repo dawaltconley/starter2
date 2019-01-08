@@ -43,3 +43,7 @@
         $accessibility: $accessibility,
     );
 }
+
+.no-bg {
+    background-color: transparent !important;
+}
