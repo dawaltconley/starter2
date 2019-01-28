@@ -189,16 +189,6 @@
         }
     }
 
-    @if $brand-color {
-        @include themeify(".button.subtle-button") {
-            background-color: $text-color;
-
-            &:hover {
-                background-color: mix($text-color, $button-text, 80%);
-            }
-        }
-    }
-
     @include themeify(".button-o") {
         background-color: $background-color;
         border-color: $button-color;
@@ -215,6 +205,14 @@
     }
 
     @if $brand-color {
+        @include themeify(".button.subtle-button") {
+            background-color: $text-color;
+
+            &:hover {
+                background-color: mix($text-color, $button-text, 80%);
+            }
+        }
+
         @include themeify(".button-o.subtle-button") {
             &:not(:hover) {
                 border-color: $text-color;
