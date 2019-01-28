@@ -177,7 +177,7 @@
         }
     }
 
-    @include themeify(".button", ".subtle-button") {
+    @include themeify(".button") {
         background-color: $button-color;
 
         &, &:visited {
@@ -190,7 +190,7 @@
     }
 
     @if $brand-color {
-        @include themeify(".subtle-button") {
+        @include themeify(".button.subtle-button") {
             background-color: $text-color;
 
             &:hover {
@@ -199,7 +199,7 @@
         }
     }
 
-    @include themeify(".button-o", ".subtle-button-o") {
+    @include themeify(".button-o") {
         background-color: $background-color;
         border-color: $button-color;
 
@@ -215,11 +215,11 @@
     }
 
     @if $brand-color {
-        @include themeify(".subtle-button-o") {
-            border-color: $text-color;
+        @include themeify(".button-o.subtle-button") {
+            &:not(:hover) {
+                border-color: $text-color;
 
-            &, &:visited {
-                &:not(:hover) {
+                &, &:visited {
                     color: $text-color;
                 }
             }

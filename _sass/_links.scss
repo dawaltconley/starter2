@@ -18,7 +18,7 @@
     }
 }
 
-.button, .subtle-button, .button-o, .subtle-button-o {
+.button, .button-o, {
     @extend %vertical-rhythm, .inline-block, .font-smoothing-normal, .subtle-icon;
     padding: .5em 1em;
     text-align: center;
@@ -28,7 +28,7 @@
     transition-property: color, background-color;
 }
 
-.button-o, .subtle-button-o {
+.button-o, {
     $border-width: 1px;
     padding: calc(.5em - #{$border-width}) calc(1em - #{$border-width});
     border-width: $border-width;
