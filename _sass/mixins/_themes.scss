@@ -171,31 +171,28 @@
         $button-color: $brand-color;
     }
 
-    @include themeify(".button") {
+    @include themeify(".button", ".subtle-button") {
+        background-color: $background-color;
         border-color: $button-color;
 
         &, &:visited {
             color: $button-color;
+        }
+
+        &:hover {
+            color: $background-color;
+            background-color: $button-color;
+            border-color: $button-color;
         }
     }
 
     @if $brand-color {
         @include themeify(".subtle-button") {
             border-color: $text-color;
-        }
 
-        &, &:visited {
-            color: $text-color;
-        }
-    }
-
-    @include themeify(".button", ".subtle-button") {
-        background-color: $background-color;
-
-        &:hover {
-            color: $background-color;
-            background-color: $button-color;
-            border-color: $button-color;
+            &, &:visited {
+                color: $text-color;
+            }
         }
     }
 
