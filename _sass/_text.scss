@@ -25,6 +25,16 @@
     text-shadow: $full-shadow;
 }
 
+.font-smoothing-normal {
+    -webkit-font-smoothing: subpixel-antialiased !important;
+    -moz-osx-font-smoothing: auto !important;
+}
+
+.font-smoothing-dark {
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+}
+
 /*
  * Text
  */
@@ -73,16 +83,6 @@
 
 .capitalize {
     text-transform: capitalize;
-}
-
-.font-smoothing-normal {
-    -webkit-font-smoothing: subpixel-antialiased !important;
-    -moz-osx-font-smoothing: auto !important;
-}
-
-.font-smoothing-dark {
-    -webkit-font-smoothing: antialiased !important;
-    -moz-osx-font-smoothing: grayscale !important;
 }
 
 .avoid-wrap {
