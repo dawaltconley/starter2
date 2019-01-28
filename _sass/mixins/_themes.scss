@@ -167,11 +167,39 @@
     // Buttons
 
     $button-color: $text-color;
+    $button-text: $background-color;
+
     @if $brand-color {
         $button-color: $brand-color;
+
+        @if not $light-theme {
+            $button-text: $text-color;
+        }
     }
 
     @include themeify(".button", ".subtle-button") {
+        background-color: $button-color;
+
+        &, &:visited {
+            color: $button-text;
+        }
+
+        &:hover {
+            background-color: mix($button-color, $button-text, 80%);
+        }
+    }
+
+    @if $brand-color {
+        @include themeify(".subtle-button") {
+            background-color: $text-color;
+
+            &:hover {
+                background-color: mix($text-color, $button-text, 80%);
+            }
+        }
+    }
+
+    @include themeify(".button-o", ".subtle-button-o") {
         background-color: $background-color;
         border-color: $button-color;
 
@@ -180,18 +208,20 @@
         }
 
         &:hover {
-            color: $background-color;
+            color: $button-text;
             background-color: $button-color;
             border-color: $button-color;
         }
     }
 
     @if $brand-color {
-        @include themeify(".subtle-button") {
+        @include themeify(".subtle-button-o") {
             border-color: $text-color;
 
             &, &:visited {
-                color: $text-color;
+                &:not(:hover) {
+                    color: $text-color;
+                }
             }
         }
     }

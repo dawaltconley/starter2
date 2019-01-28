@@ -18,14 +18,19 @@
     }
 }
 
-.button, .subtle-button {
+.button, .subtle-button, .button-o, .subtle-button-o {
     @extend %vertical-rhythm, .inline-block, .font-smoothing-normal, .subtle-icon;
     padding: .5em 1em;
     text-align: center;
     text-shadow: none;
-    border-width: 1px;
-    border-style: solid;
     border-radius: 7px;
     transition-duration: map-get($transitions, default);
     transition-property: color, background-color;
+}
+
+.button-o, .subtle-button-o {
+    $border-width: 1px;
+    padding: calc(.5em - #{$border-width}) calc(1em - #{$border-width});
+    border-width: $border-width;
+    border-style: solid;
 }
