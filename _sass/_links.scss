@@ -19,7 +19,7 @@
 }
 
 .button, .subtle-button {
-    @extend .inline-block, .font-smoothing-normal, .subtle-icon;
+    @extend %vertical-rhythm, .inline-block, .font-smoothing-normal, .subtle-icon;
     padding: .5em 1em;
     text-align: center;
     text-shadow: none;
