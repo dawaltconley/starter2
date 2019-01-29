@@ -129,13 +129,8 @@
         @include themeify("a") {
             color: $brand-color;
 
-            @if $text-color and $background-color {
-                &:hover { color: darken($brand-color, $ld-br-tx * 45%); }
-                &:visited { color: lighten($brand-color, $ld-br-bg * 35%); }
-            } @else {
-                &:hover { color: darken($brand-color, 15%); }
-                &:visited { color: darken($brand-color, 25%); }
-            }
+            &:hover { color: darken($brand-color, $ld-br-tx * 45%); }
+            &:visited { color: lighten($brand-color, $ld-br-bg * 35%); }
         }
     }
 
