@@ -3,10 +3,8 @@
  */
 
 .hover-display {
-    display: none;
-
-    @include hover {
-        display: initial;
+    @include no-hover {
+        display: none;
     }
 }
 
@@ -81,10 +79,8 @@
  */
 
 .target-display {
-    display: none;
-
-    @include target {
-        display: initial;
+    @include no-target {
+        display: none;
     }
 }
 
