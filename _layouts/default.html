@@ -1,11 +1,29 @@
+{% capture blank %}
+  {% if page.parallax %}
+    {% assign parallax = page.parallax %}
+  {% elsif layout.parallax %}
+    {% assign parallax = layout.parallax %}
+  {% elsif page.collection.parallax %}
+    {% assign parallax = page.collection.parallax %}
+  {% endif %}
+
+  {% if page.itemtype %}
+    {% assign itemtype = page.itemtype %}
+  {% elsif layout.itemtype %}
+    {% assign itemtype = layout.itemtype %}
+  {% elsif page.collection.itemtype %}
+    {% assign itemtype = page.collection.itemtype %}
+  {% endif %}
+{% endcapture %}
+
 <!DOCTYPE html>
 <html lang="en">
 
   {% include head.html %}
 
-  <body class="{% if page.parallax or page.collection.parallax %}parallax-body{% endif %}" {% if page.itemtype %} itemscope itemtype="{{ page.itemtype }}" {% endif %}>
+  <body class="{% if parallax %} parallax-body {% endif %}" {% if itemtype %} itemscope itemtype="{{ itemtype }}" {% endif %}>
 
-    {% if page.parallax or page.collection.parallax %}
+    {% if parallax %}
     <div class="parallax-page">
     {% endif %}
 
@@ -13,7 +31,7 @@
 
       {{ content }}
 
-    {% if page.parallax or page.collection.parallax %}
+    {% if parallax %}
     </div>
     {% endif %}
 
