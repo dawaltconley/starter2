@@ -255,11 +255,19 @@
  */
 
     var classRemoveElements = toArray(document.querySelectorAll("[data-class-rm]"));
+    var classAddElements = toArray(document.querySelectorAll("[data-class-add]"));
 
     classRemoveElements.forEach(function (element) {
         var rmClasses = element.getAttribute("data-class-rm").split(" ");
         for (var i=0; i < rmClasses.length; i++) {
             element.classList.remove(rmClasses[i]);
+        }
+    });
+
+    classAddElements.forEach(function (element) {
+        var addClasses = element.getAttribute("data-class-add").split(" ");
+        for (var i=0; i < addClasses.length; i++) {
+            element.classList.add(addClasses[i]);
         }
     });
 
@@ -445,9 +453,6 @@
         for (var method in this.buttons) {
             if (this.buttons[method]) {
                 this.buttons[method].forEach(function (button) {
-                    if (button.classList.contains("target-display")) {
-                        button.classList.add("hidden");
-                    }
                     button.classList.remove("target-hide", "target-display");
                     button.addEventListener("click", function (event) {
                         event.preventDefault();
