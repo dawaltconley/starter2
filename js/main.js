@@ -445,6 +445,9 @@
         for (var method in this.buttons) {
             if (this.buttons[method]) {
                 this.buttons[method].forEach(function (button) {
+                    if (button.classList.contains("target-display")) {
+                        button.classList.add("hidden");
+                    }
                     button.classList.remove("target-hide", "target-display");
                     button.addEventListener("click", function (event) {
                         event.preventDefault();
