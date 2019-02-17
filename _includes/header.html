@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <div class="table float-right float-none-lt-header full-width-lt-header full-height target-max-height-expand theme-bg overflow-a show-gt-header clearfix t-default t-long" data-menu-links data-class-rm="t-long">
+    <div class="table float-right float-none-lt-header full-width-lt-header full-height target-max-height-expand theme-bg overflow-a clearfix t-default t-long" data-menu-links data-class-rm="t-long">
       {% for my_page in site.pages %}
         {% if my_page.title %}
           <a class="cell v-center header-link padding-s-h subtle-icon font-smoothing-normal hover hover-shade hover-shade-dark-lt-header t-short" href="{{ my_page.url | prepend: site.baseurl }}" data-menu-link>{{ my_page.title }}</a>

@@ -3,39 +3,39 @@
  */
 
 .block {
-    @include display(block);
+    display: block;
 }
 
 .inline {
-    @include display(inline);
+    display: inline;
 }
 
 .inline-block {
-    @include display(inline-block);
+    display: inline-block;
 }
 
 .table {
-    @include display(table);
+    display: table;
 }
 
 .column {
-    @include display(column);
+    display: column;
 }
 
 .row {
-    @include display(table-row);
+    display: table-row;
 }
 
 .cell {
-    @include display(table-cell);
+    display: table-cell;
 }
 
 %flex {
-    @include display(flex);
+    display: flex;
 }
 
 .inline-flex {
-    @include display(inline-flex);
+    display: inline-flex;
 }
 
 .hidden {

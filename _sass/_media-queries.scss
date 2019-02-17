@@ -8,13 +8,6 @@
     }
 }
 
-.show {
-    @include mq {
-        display: block;
-        display: initial;
-    }
-}
-
 .padding-0 {
     @include mq("header") {
         padding: 0;

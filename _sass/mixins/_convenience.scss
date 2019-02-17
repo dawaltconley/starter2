@@ -36,16 +36,6 @@
     }
 }
 
-@mixin display($display) {
-    display: $display;
-
-    &.show {
-        @include mq {
-            display: $display;
-        }
-    }
-}
-
 @mixin fixed-ratio($x, $y, $width: 100%) {
     width: $width;
     height: 0;

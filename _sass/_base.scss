@@ -192,6 +192,6 @@ pre {
  */
 
 svg {
-    @include display(inline); // for ie and others
-    @include display(initial);
+    display: inline; // for ie and others
+    display: initial;
 }
