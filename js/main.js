@@ -449,7 +449,6 @@
     };
 
     CollapsibleMenu.prototype.addListeners = function () {
-        this.links.style.overflow = "hidden";
         for (var method in this.buttons) {
             if (this.buttons[method]) {
                 this.buttons[method].forEach(function (button) {

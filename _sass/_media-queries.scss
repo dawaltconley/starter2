@@ -15,6 +15,12 @@
     }
 }
 
+.overflow-h {
+    @include mq("header") {
+        overflow: hidden;
+    }
+}
+
 .padding-0 {
     @include mq("header") {
         padding: 0;
