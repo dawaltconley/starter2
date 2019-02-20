@@ -112,3 +112,19 @@
 
     @return $result;
 }
+
+@function depth($list, $starting-depth: 1) {
+    @if type-of($list) != list {
+        @error "depth function only accepts lists; recieved #{$list}"
+    }
+
+    $depth: $starting-depth;
+
+    @each $item in $list {
+        @if type-of($item) == list {
+            $depth: max($depth, depth($item, $starting-depth + 1));
+        }
+    }
+
+    @return $depth;
+}
