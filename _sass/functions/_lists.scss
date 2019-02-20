@@ -114,10 +114,6 @@
 }
 
 @function depth($list, $starting-depth: 1) {
-    @if type-of($list) != list {
-        @error "depth function only accepts lists; recieved #{$list}"
-    }
-
     $depth: $starting-depth;
 
     @each $item in $list {

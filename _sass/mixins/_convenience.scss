@@ -90,26 +90,26 @@
 // This mixin applies the effects its contents when a element
 // with class "hover" (either same element or a parent) is hovered
 @mixin hover($hover-class: "hover") {
-    &.#{$hover-class}:hover, .#{$hover-class}:hover & {
+    @at-root &.#{$hover-class}:hover, #{last-selector(&, ".#{$hover-class}:hover", ":not(.#{$hover-class})")} {
         @content;
     }
 }
 
 @mixin no-hover($hover-class: "hover") {
-    &.#{$hover-class}:not(:hover), .#{$hover-class}:not(:hover) & {
+    @at-root &.#{$hover-class}:not(:hover), #{last-selector(&, ".#{$hover-class}:not(:hover)", ":not(.#{$hover-class})")} {
         @content;
     }
 }
 
 // same idea with a target class
 @mixin target($target-class: "target") {
-    &.#{$target-class}:target, .#{$target-class}:target & {
+    @at-root &.#{$target-class}:target, #{last-selector(&, ".#{$target-class}:target", ":not(.#{$target-class})")} {
         @content;
     }
 }
 
 @mixin no-target($target-class: "target") {
-    &.#{$target-class}:not(:target), .#{$target-class}:not(:target) & {
+    @at-root &.#{$target-class}:not(:target), #{last-selector(&, ".#{$target-class}:not(:target)", ":not(.#{$target-class})")} {
         @content;
     }
 }

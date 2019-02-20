@@ -1,0 +1,14 @@
+@function last-selector($selectors, $prepend: null, $append: null) {
+    @for $i from 1 through length($selectors) {
+        $s-group: nth($selectors, $i);
+        @if $prepend {
+            $s-group: insert-nth($s-group, length($s-group), $prepend);
+        }
+        @if $append {
+            $s-group: selector-append($s-group, $append);
+        }
+        $selectors: set-nth($selectors, $i, $s-group);
+    }
+
+    @return $selectors;
+}
