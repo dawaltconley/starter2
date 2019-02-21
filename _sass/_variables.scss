@@ -54,6 +54,7 @@ $spacings: (
     "s":        15px,
     "m":        30px,
     "l":        60px,
+    "full":     100%,
 );
 
 $default-spacing: map-get($spacings, m);

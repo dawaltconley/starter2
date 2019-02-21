@@ -85,8 +85,12 @@
     text-transform: capitalize;
 }
 
-.avoid-wrap {
+.no-wrap {
     white-space: nowrap;
+}
+
+.avoid-wrap {
+    @extend .no-wrap;
 
     @supports(text-wrap: avoid) {
         white-space: initial;
