@@ -41,6 +41,12 @@
     }
 }
 
+.cursor-pointer {
+    @include mq("header") {
+        cursor: pointer;
+    }
+}
+
 .text-left-lt-27em {
     @media screen and (max-width: 27em) {
         text-align: left;

@@ -32,7 +32,7 @@
         <div class="relative hover">
         {% endif %}
 
-          <a class="block flex-row-gt-header flex-align-center full-height padding-s-h subtle-icon no-wrap {% unless link.dropdown %} hover {% endunless %} hover-shade hover-shade-dark-lt-header t-short" {% if match %} href="{{ match.url | prepend: site.baseurl }}" {% endif %} data-menu-link>
+          <a class="block flex-row-gt-header flex-align-center full-height padding-s-h subtle-icon no-wrap {% unless link.dropdown %} hover {% endunless %} hover-shade hover-shade-dark-lt-header t-short cursor-pointer-gt-header" {% if match %} href="{{ match.url | prepend: site.baseurl }}" {% endif %} data-menu-link>
             {{ link.text }}
           </a>
 
