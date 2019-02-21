@@ -18,9 +18,9 @@
       </div>
     </div>
 
-    <div class="flex-row margin-auto-l full-height target-max-height-expand theme-bg overflow-v overflow-h-lt-header t-default t-long" data-menu-links data-class-rm="t-long">
+    <div class="flex-row-gt-header margin-auto-l full-height target-max-height-expand theme-bg overflow-v overflow-h-lt-header t-default t-long" data-menu-links data-class-rm="t-long">
       {% for link in site.data.header %}
-        {% for doc in site.documents %}
+        {% for doc in site.pages %}
           {% assign match = nil %}
           {% if link.page == doc.path %}
             {% assign match = doc %}
@@ -32,28 +32,28 @@
         <div class="relative hover">
         {% endif %}
 
-          <a class="flex-col flex-justify-center header-link full-height padding-s-h subtle-icon no-wrap hover hover-shade hover-shade-dark-lt-header t-short" {% if match %} href="{{ match.url | prepend: site.baseurl }}" {% endif %} data-menu-link>
+          <a class="block flex-row-gt-header flex-align-center header-link full-height padding-s-h subtle-icon no-wrap hover hover-shade hover-shade-dark-lt-header t-short" {% if match %} href="{{ match.url | prepend: site.baseurl }}" {% endif %} data-menu-link>
             {{ link.text }}
           </a>
 
-        {% if link.dropdown %}
-          <div class="absolute pos-0-l pos-full-t full-width-min hover-display">
-            {% for sub_link in link.dropdown %}
-              {% for doc in site.documents %}
-                {% assign match = nil %}
-                {% if sub_link.page == doc.path %}
-                  {% assign match = doc %}
-                  {% break %}
-                {% endif %}
+          {% if link.dropdown %}
+            <div class="absolute-gt-header pos-0-l pos-full-t full-width-min hover-display-gt-header" data-menu-dropdown>
+              {% for sub_link in link.dropdown %}
+                {% for doc in site.pages %}
+                  {% assign match = nil %}
+                  {% if sub_link.page == doc.path %}
+                    {% assign match = doc %}
+                    {% break %}
+                  {% endif %}
+                {% endfor %}
+
+                <a class="block flex-row-gt-header flex-align-center theme-bg header-link header-height padding-s-h subtle-icon no-wrap hover hover-shade hover-shade-dark-lt-header t-short" {% if match %} href="{{ match.url | prepend: site.baseurl }}" {% endif %} data-menu-link>
+                  {{ sub_link.text }}
+                </a>
+
               {% endfor %}
-
-              <a class="flex-col flex-justify-center theme-bg header-link header-height padding-s-h subtle-icon no-wrap hover hover-shade hover-shade-dark-lt-header t-short" {% if match %} href="{{ match.url | prepend: site.baseurl }}" {% endif %} data-menu-link>
-                {{ sub_link.text }}
-              </a>
-
-            {% endfor %}
+            </div>
           </div>
-        </div>
         {% endif %}
 
       {% endfor %}

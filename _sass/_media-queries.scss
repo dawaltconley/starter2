@@ -8,6 +8,20 @@
     }
 }
 
+.absolute {
+    @include mq {
+        position: absolute;
+    }
+}
+
+.hover-display {
+    @include mq {
+        @include no-hover {
+            display: none;
+        }
+    }
+}
+
 .flex-row {
     @include mq("header") {
         display: flex;

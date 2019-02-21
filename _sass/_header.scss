@@ -4,17 +4,24 @@
 
 @media screen and (max-width: map-get($bp, header)) {
     [data-menu-links] {
-        display: block;
         height: auto;
         max-height: 0;
+
+        & > * {
+            width: 100%;
+            margin-bottom: 2px;
+            line-height: 2;
+        }
     }
 
     [data-menu-link] {
-        display: block;
-        width: 100%;
-        margin-bottom: 2px;
-        padding-left: map-get($spacings, m);
-        padding-right: map-get($spacings, m);
-        line-height: 2;
+        $spacing: map-get($spacings, m);
+        height: auto;
+        padding-left: $spacing;
+        padding-right: $spacing;
+
+        [data-menu-dropdown] & {
+            padding-left: 2 * $spacing;
+        }
     }
 }
