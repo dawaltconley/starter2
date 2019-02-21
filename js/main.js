@@ -209,7 +209,6 @@
         function scrolling() {
             var newPos = page.scrollTop;
             if ((newPos < oldPos && direction == "up") || (newPos > oldPos && direction == "down")) {
-                removeListener();
                 callback();
             }
             oldPos = newPos;
@@ -425,7 +424,10 @@
             button.classList.remove("hidden");
         });
         this.state = "open";
-        this.removeListener = onScrollDown(this.close.bind(this));
+        this.removeListener = onScrollDown(function () { 
+            this.close();
+            this.removeListener();
+        }.bind(this));
     };
 
     CollapsibleMenu.prototype.close = function () {
