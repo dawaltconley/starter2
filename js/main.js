@@ -424,9 +424,11 @@
             button.classList.remove("hidden");
         });
         this.state = "open";
-        this.removeListener = onScrollDown(function () { 
-            this.close();
-            this.removeListener();
+        this.removeListener = onScrollDown(function () {
+            if (this.element.getBoundingClientRect().top <=0) {
+                this.close();
+                this.removeListener();
+            }
         }.bind(this));
     };
 
