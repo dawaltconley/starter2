@@ -32,7 +32,7 @@
         <div class="relative hover">
         {% endif %}
 
-          <a class="block flex-row-gt-header flex-align-center header-link full-height padding-s-h subtle-icon no-wrap hover hover-shade hover-shade-dark-lt-header t-short" {% if match %} href="{{ match.url | prepend: site.baseurl }}" {% endif %} data-menu-link>
+          <a class="block flex-row-gt-header flex-align-center full-height padding-s-h subtle-icon no-wrap {% unless link.dropdown %} hover {% endunless %} hover-shade hover-shade-dark-lt-header t-short" {% if match %} href="{{ match.url | prepend: site.baseurl }}" {% endif %} data-menu-link>
             {{ link.text }}
           </a>
 
@@ -47,7 +47,7 @@
                   {% endif %}
                 {% endfor %}
 
-                <a class="block flex-row-gt-header flex-align-center theme-bg header-link header-height padding-s-h subtle-icon no-wrap hover hover-shade hover-shade-dark-lt-header t-short" {% if match %} href="{{ match.url | prepend: site.baseurl }}" {% endif %} data-menu-link>
+                <a class="block flex-row-gt-header flex-align-center theme-bg header-height padding-s-h subtle-icon no-wrap hover hover-shade-dark t-short" {% if match %} href="{{ match.url | prepend: site.baseurl }}" {% endif %} data-menu-link>
                   {{ sub_link.text }}
                 </a>
 
