@@ -41,12 +41,6 @@
     }
 }
 
-.float-none {
-    @include mq("header") {
-        float: none;
-    }
-}
-
 .text-left-lt-27em {
     @media screen and (max-width: 27em) {
         text-align: left;
