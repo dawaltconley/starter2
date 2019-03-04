@@ -320,6 +320,16 @@
         document.body.insertBefore(this.element, document.body.firstChild);
     }
 
+    FixedHeader.prototype.hideHeaderRef = function () {
+        this.headerRef.setAttribute("aria-hidden", "true");
+        this.headerRef.setAttribute("role", "presentation");
+    }
+
+    FixedHeader.prototype.showHeaderRef = function () {
+        this.headerRef.removeAttribute("aria-hidden");
+        this.headerRef.removeAttribute("role");
+    }
+
     FixedHeader.prototype.scroll = function () {
         var f = this;
         var e = this.element;
@@ -328,6 +338,7 @@
         window.clearTimeout(f.doneScrolling);
         if ((e.style.display != "none" && pos > f.refPos.top) || (e.style.display == "none" && pos > f.refPos.bottom)) {
             e.style.display = "";
+            f.hideHeaderRef();
             f.interruptSlideDown = true;
             var top = parseInt(e.style.top);
             if ((scrollDiff < 0 && top < 0) || (scrollDiff > 0 && top > -f.height)){
@@ -341,6 +352,7 @@
             }
         } else if (e.style.display != "none") {
             e.style.display = "none";
+            f.showHeaderRef();
             updateObj(e.style, { display: "none", top: -f.height.toString() + "px" });
             f.setShadow();
         }
