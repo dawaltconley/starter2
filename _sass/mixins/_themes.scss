@@ -186,7 +186,7 @@
     @include themeify(".button") {
         background-color: $button-color;
 
-        &, &:visited {
+        &, &:hover, &:visited {
             color: $button-text;
         }
 
