@@ -1,0 +1,129 @@
+@mixin animate($delay: 0s) {
+    .animate & {
+        @content;
+    }
+
+    .animate-js & {
+        animation-delay: $delay;
+    }
+}
+
+$swipe-animation-count: 0;
+
+@mixin swipe-anim($items, $dir: left, $dist: 20%, $dur: 4s, $trans: 0.5s, $init-delay: 0s, $load-delay: 0s, $y: 0, $overlap: false) {
+    $swipe-animation-count: $swipe-animation-count + 1 !global;
+    $swipe-animation-name: swipe-animation-#{$swipe-animation-count}; // give the keyframe a unique name
+
+    $total-dur: if($overlap, $dur + $trans, $dur + (2 * $trans)); // total time element is animating or visible
+
+    $trans-ratio: $trans / $total-dur; // percentage of total animation time taken by single transition
+    $start: 100% / $items * $trans-ratio; // frame at which the element should be visible (first animation concluded)
+    $end: 100% / $items * (1 - $trans-ratio); // frame at which the element should begin to fade out (second animation begins)
+    $pause: 100% / $items; // frame at which the element has faded out and is waiting for next cycle
+
+    @if $overlap {
+        $trans-percent: $trans-ratio / $items * 100%;
+        $end: $end + $trans-percent;
+        $pause: $pause + $trans-percent;
+    }
+
+    $reverse: 1;
+
+    @if $dir == "right" {
+        $reverse: -1;
+    } @else if $dir != "left" {
+        @warn "`#{$dir}` is an invalid value for the $dir variable. Only `left` or `right` are supported."
+    }
+    
+    @keyframes #{$swipe-animation-name} {
+        0% {
+            opacity: 0;
+            transform: translate($dist * $reverse, $y);
+            animation-timing-function: if($trans <= 0s, step-end, if($overlap, linear, ease-out));
+        }
+        #{$start} {
+            opacity: 1;
+            transform: translate(0, $y);
+            animation-timing-function: linear;
+        }
+        #{$end} {
+            opacity: 1;
+            transform: translate(0, $y);
+            animation-timing-function: if($trans <= 0s, step-start, if($overlap, linear, ease-in));
+        }
+        #{$pause}, 100% {
+            opacity: 0;
+            transform: translate(-$dist * $reverse, $y);
+            animation-timing-function: linear;
+        }
+    }
+
+    .animate & {
+        animation-name: $swipe-animation-name;
+        animation-duration: $total-dur * $items;
+        animation-iteration-count: infinite;
+        animation-fill-mode: both;
+
+        @for $i from 1 through $items {
+            &:nth-child(#{$i}) {
+                animation-delay: ($i - 1) * $total-dur + $init-delay + $load-delay;
+            }
+        }
+    }
+
+    @for $i from 1 through $items {
+        .animate-js &:nth-child(#{$i}) {
+            animation-delay: ($i - 1) * $total-dur + $init-delay;
+        }
+    }
+
+}
+
+$slide-animation-count: 0;
+
+@mixin slideshow($items, $dur: 4s, $trans: 0.5s, $init-delay: 0s, $load-delay: 0s, $z: 0) {
+    $slide-animation-count: $slide-animation-count + 1 !global;
+    $slide-animation-name: slide-animation-#{$slide-animation-count}; // give the keyframe a unique name
+
+    $total-dur: $dur + $trans;                     // animation time for single element
+    $trans-ratio: $trans / $total-dur;             // fraction of animation time taken by single element's transition
+    $trans-percent: $trans-ratio / $items * 100%;  // percent of animation time taken by single element's transition relative to whole cycle
+    $fade-start: 100% / $items;                    // frame at which the element should begin to fade out (second animation begins)
+    $fade-end: 100% / $items + $trans-percent;     // frame at which the element has faded out and is waiting for next cycle
+
+    @keyframes #{$slide-animation-name} {
+        0% {
+            z-index: $z;
+            opacity: 1;
+            animation-timing-function: step-end;
+        }
+        #{$fade-start} {
+            z-index: $z + 1;
+            opacity: 1;
+            animation-timing-function: if($trans > 0s, ease-in, step-end);
+        }
+        #{$fade-end}, 100% {
+            opacity: 0;
+        }
+    }
+
+    .animate & {
+        animation-name: $slide-animation-name;
+        animation-duration: $total-dur * $items;
+        animation-iteration-count: infinite;
+        animation-fill-mode: forwards;
+
+        @for $i from 1 through $items {
+            &:nth-child(#{$i}) {
+                animation-delay: ($i - 1) * $total-dur + $init-delay + $load-delay;
+            }
+        }
+    }
+
+    @for $i from 1 through $items {
+        .animate-js &:nth-child(#{$i}) {
+            animation-delay: ($i - 1) * $total-dur + $init-delay;
+        }
+    }
+
+}

@@ -583,6 +583,27 @@
     });
 
 /*
+ * Animations
+ */
+
+    var animatedElements = toArray(document.querySelectorAll(".animate"));
+
+    animatedElements.forEach(function (element) {
+        var hasStarted = parseBoolean(element.getAttribute("data-animation-start"));
+        if (!hasStarted) {
+            element.classList.remove("animate");
+        } else {
+            console.log("Page load was too late for " + element.id + " animation.");
+        }
+    });
+
+    function playAnimations() {
+        animatedElements.forEach(function (element) {
+            element.classList.add("animate", "animate-js");
+        });
+    }
+
+/*
  * Fullscreen
  */
 
