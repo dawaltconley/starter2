@@ -23,10 +23,8 @@
 
     $ct-tx-bg: ch-color-contrast($background-color, $text-color);
 
-    @if $ct-tx-bg < 4.5 and $aa {
-        @warn "The contrast ratio of the '#{$name}' theme's text (#{$text-color}) and background (#{$background-color}) colors is #{$ct-tx-bg}, which does not meet WCAG 2.0 AA standard (4.5).";
-    } @else if $ct-tx-bg < 7 and $aaa {
-        @warn "The contrast ratio of the '#{$name}' theme's text (#{$text-color}) and background (#{$background-color}) colors is #{$ct-tx-bg}, which does not meet WCAG 2.0 AAA standard (7).";
+    @if ($ct-tx-bg < 4.5 and $aa) or ($ct-tx-bg < 7 and $aaa) {
+        @warn "The contrast ratio of the '#{$name}' theme's text (#{$text-color}) and background (#{$background-color}) colors is #{$ct-tx-bg}, which does not meet WCAG 2.0 #{if($aaa, "AAA standard (7)", "AA standard (4.5)")}.";
     }
 
     @if $brand-color {
@@ -36,10 +34,8 @@
         @if $ct-br-tx < 3 and $aa {
             @warn "The contrast ratio of the '#{$name}' theme's link (#{$brand-color}) and text (#{$text-color}) colors is #{$ct-br-tx}, which does not meet WCAG 2.0 AA standard (3).";
         }
-        @if $ct-br-bg < 4.5 and $aa {
-            @warn "The contrast ratio of the '#{$name}' theme's link (#{$brand-color}) and background (#{$background-color}) colors is #{$ct-br-bg}, which does not meet WCAG 2.0 AA standard (4.5).";
-        } @else if $ct-br-bg < 7 and $aaa {
-            @warn "The contrast ratio of the '#{$name}' theme's link (#{$brand-color}) and background (#{$background-color}) colors is #{$ct-br-bg}, which does not meet WCAG 2.0 AAA standard (7).";
+        @if ($ct-br-bg < 4.5 and $aa) or ($ct-br-bg < 7 and $aaa) {
+            @warn "The contrast ratio of the '#{$name}' theme's link (#{$brand-color}) and background (#{$background-color}) colors is #{$ct-br-bg}, which does not meet WCAG 2.0 #{if($aaa, "AAA standard (7)", "AA standard (4.5)")}.";
         }
     }
 }
@@ -78,19 +74,13 @@
     }
 
     @include themeify("pre", "code") {
-        @if $light-theme {
-            $box-color: darken($background-color, $ld-tx-bg * 15%);
-            $box-color: desaturate($box-color, saturation($box-color) / 2 );
-            color: mix($text-color, $box-color, 80%);
-            border-color: darken($box-color, $ld-tx-bg * 25%);
-            background-color: $box-color;
-        } @else {
-            $box-color: lighten($background-color, $ld-tx-bg * 15%);
-            $box-color: desaturate($box-color, saturation($box-color) / 2 );
-            color: mix($text-color, $box-color, 80%);
-            border-color: darken($box-color, $ld-tx-bg * 10%);
-            background-color: $box-color;
-        }
+        $box-color: if($light-theme,
+            darken($background-color, $ld-tx-bg * 15%),
+            lighten($background-color, $ld-tx-bg * 15%));
+        $box-color: desaturate($box-color, saturation($box-color) / 2 );
+        color: mix($text-color, $box-color, 80%);
+        border-color: darken($box-color, $ld-tx-bg * if($light-theme, 25%, 10%));
+        background-color: $box-color;
     }
 
     // Text
@@ -172,16 +162,8 @@
 
     // Buttons
 
-    $button-color: $text-color;
-    $button-text: $background-color;
-
-    @if $brand-color {
-        $button-color: $brand-color;
-
-        @if not $light-theme {
-            $button-text: $text-color;
-        }
-    }
+    $button-color: if($brand-color, $brand-color, $text-color);
+    $button-text: if($brand-color and not $light-theme, $text-color, $background-color);
 
     @include themeify(".button") {
         background-color: $button-color;

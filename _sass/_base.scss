@@ -117,10 +117,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @for $i from 1 through 6 { // generate header styles
-    $font-size: 1em;
-    @if $i <= length($header-sizes) {
-        $font-size: nth($header-sizes, $i);
-    }
+    $font-size: if($i > length($header-sizes), 1em, nth($header-sizes, $i));
 
     h#{$i} {
         font-size: $font-size;

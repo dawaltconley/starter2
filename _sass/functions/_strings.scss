@@ -10,11 +10,7 @@
             $ext-index: str-index(to-lower-case($name), to-lower-case($ext));
             $i: $i + 1;
         }
-        @if $ext-index {
-            $return: append($return, str-insert($name, $suffix, $ext-index), $separator);
-        } @else {
-            $return: append($return, $name, $separator);
-        }
+        $return: append($return, if($ext-index, str-insert($name, $suffix, $ext-index), $name), $separator);
     }
     @return $return;
 }

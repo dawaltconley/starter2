@@ -11,15 +11,10 @@
 
     @if length($map) > 1 {
         $seed: nth($map, ceil(length($map) / 2));
-        @if $values {
-            $seed: nth($seed, 2);
-        } @else if $keys {
-            $seed: nth($seed, 1);
-        }
+        $seed: nth($seed, if($values, 2, 1));
 
         @each $k, $v in $map {
-            $item: null;
-            @if $values { $item: $v; } @else { $item: $k; }
+            $item: if($values, $v, $k);
 
             @if $item == $seed {
                 $equal: map-merge($equal, ($k:$v));
@@ -48,8 +43,7 @@
     @each $unit in $order {
         $matches: ();
         @each $k, $v in $map {
-            $item: null;
-            @if $values { $item: $v; } @else { $item: $k; }
+            $item: if($values, $v, $k);
             @if unit($item) == $unit {
                 $matches: map-merge($matches, ($k:$v));
             }

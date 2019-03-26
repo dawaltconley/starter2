@@ -30,10 +30,7 @@
         );
     }
 
-    $accessibility: "AA";
-    @if map-has-key($settings, accessibility) {
-        $accessibility: map-get($settings, accessibility);
-    }
+    $accessibility: if(map-has-key($settings, accessibility), map-get($settings, accessibility), "AA");
 
     @include accessibility(
         $name: $theme,

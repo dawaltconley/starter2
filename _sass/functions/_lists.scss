@@ -45,11 +45,8 @@
     $reversedList: ();
     @for $i from length($list) through 1 {
         $item: nth($list, $i);
-        @if type-of($item) == list and $recursive {
-            $reversedList: append($reversedList, reverse($item, $recursive), $sep);
-        } @else {
-            $reversedList: append($reversedList, $item, $sep);
-        }
+        $recursive: $recursive and type-of($item) == list;
+        $reversedList: append($reversedList, if($recursive, reverse($item, $recursive), $item), $sep);
     }
     @return $reversedList;
 }
@@ -62,11 +59,7 @@
         $return: join($return, $sub-list, $sep);
         $max-l: max($max-l, length($sub-list));
     }
-    @if $recursive and $max-l > 1 {
-        @return flatten($return);
-    } @else {
-        @return $return;
-    }
+    @return if($recursive and $max-l > 1, flatten($return), $return);
 }
 
 @function unique($list) {
