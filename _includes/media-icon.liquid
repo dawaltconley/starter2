@@ -1,4 +1,17 @@
 {% capture blank %}
+    {% assign global_scope_icon_type = icon_type %}
+    {% assign global_scope_icon_link = icon_link %}
+    {% assign global_scope_alt_text = alt_text %}
+    {% assign global_scope_first_char = first_char %}
+    {% assign global_scope_new_tab = new_tab %}
+    {% assign global_scope_icon_class = icon_class %}
+    {% assign global_scope_link_text = link_text %}
+    {% assign global_scope_analytics_category = analytics_category %}
+    {% assign global_scope_analytics_label = analytics_label %}
+    {% assign global_scope_blank = blank %}
+    {% assign global_scope_return = return %}
+    {% assign global_scope_icon = icon %}
+
     {% assign icon_type = include.type %}
     {% assign icon_link = include.link %}
     {% for icon in site.data.icon-types %}
@@ -66,4 +79,16 @@
 
         {% endif %}
     {% endfor %}
-{% endcapture %}{{ return }}
+
+    {% assign icon_type = global_scope_icon_type %}
+    {% assign icon_link = global_scope_icon_link %}
+    {% assign alt_text = global_scope_alt_text %}
+    {% assign first_char = global_scope_first_char %}
+    {% assign new_tab = global_scope_new_tab %}
+    {% assign icon_class = global_scope_icon_class %}
+    {% assign link_text = global_scope_link_text %}
+    {% assign analytics_category = global_scope_analytics_category %}
+    {% assign analytics_label = global_scope_analytics_label %}
+    {% assign blank = global_scope_blank %}
+    {% assign icon = global_scope_icon %}
+{% endcapture %}{{ return }}{% assign return = global_scope_return %}

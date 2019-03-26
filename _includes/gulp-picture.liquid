@@ -1,3 +1,13 @@
+{% assign global_scope_img = img %}
+{% assign global_scope_src = src %}
+{% assign global_scope_bp_list = bp_list %}
+{% assign global_scope_densities = densities %}
+{% assign global_scope_x = x %}
+{% assign global_scope_y = y %}
+{% assign global_scope_suffix = suffix %}
+{% assign global_scope_bp = bp %}
+{% assign global_scope_d = d %}
+
 {% assign img = include.img %}
 {% if jekyll.environment == 'production' or jekyll.environment == 'gulp' %}
     {% assign src = img | split: 'src="' | last | split: '"' | first %}
@@ -28,3 +38,13 @@
 {% else %}
     {{ img }}
 {% endif %}
+
+{% assign img = global_scope_img %}
+{% assign src = global_scope_src %}
+{% assign bp_list = global_scope_bp_list %}
+{% assign densities = global_scope_densities %}
+{% assign x = global_scope_x %}
+{% assign y = global_scope_y %}
+{% assign suffix = global_scope_suffix %}
+{% assign bp = global_scope_bp %}
+{% assign d = global_scope_d %}

@@ -1,4 +1,22 @@
 {% capture blank %}
+    {% assign global_scope_src = src %}
+    {% assign global_scope_width = width %}
+    {% assign global_scope_bp_list = bp_list %}
+    {% assign global_scope_densities = densities %}
+    {% assign global_scope_srcset = srcset %}
+    {% assign global_scope_sorted_bp = sorted_bp %}
+    {% assign global_scope_divisor = divisor %}
+    {% assign global_scope_w = w %}
+    {% assign global_scope_bp_prev = bp_prev %}
+    {% assign global_scope_bp = bp %}
+    {% assign global_scope_bp_diff = bp_diff %}
+    {% assign global_scope_return = return %}
+    {% assign global_scope_blank = blank %}
+    {% assign global_scope_suffix = suffix %}
+    {% assign global_scope_new_src = new_src %}
+    {% assign global_scope_d = d %}
+    {% assign global_scope_bp_mini = bp_mini %}
+
     {% assign src = include.src %}
     {% if jekyll.environment == 'production' or jekyll.environment == 'gulp' %}
 
@@ -54,4 +72,20 @@
         {% assign return = src %}
     {% endif %}
 
-{% endcapture %}{{ return | strip_newlines }}
+    {% assign src = global_scope_src %}
+    {% assign width = global_scope_width %}
+    {% assign bp_list = global_scope_bp_list %}
+    {% assign densities = global_scope_densities %}
+    {% assign srcset = global_scope_srcset %}
+    {% assign sorted_bp = global_scope_sorted_bp %}
+    {% assign divisor = global_scope_divisor %}
+    {% assign w = global_scope_w %}
+    {% assign bp_prev = global_scope_bp_prev %}
+    {% assign bp = global_scope_bp %}
+    {% assign bp_diff = global_scope_bp_diff %}
+    {% assign blank = global_scope_blank %}
+    {% assign suffix = global_scope_suffix %}
+    {% assign new_src = global_scope_new_src %}
+    {% assign d = global_scope_d %}
+    {% assign bp_mini = global_scope_bp_mini %}
+{% endcapture %}{{ return | strip_newlines }}{% assign return = global_scope_return %}
