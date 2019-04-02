@@ -604,6 +604,118 @@
     }
 
 /*
+ * Slideshows
+ */
+
+    function Slideshow(e) {
+        this.frame = e;
+        this.slides = toArray(e.querySelectorAll("[data-slide]"));
+        for (var i = 0; i < this.slides.length; i++) {
+            this.slides[i] = new Slide(this.slides[i], i);
+        }
+        this.slides = this.slides.sort(function (a, b) {
+            return a.index - b.index;
+        });
+        this.arrange(this.slides[0].index);
+        this.first = this.slides[0].index;
+        this.last = this.slides.slice(-1)[0].index;
+        this.slides[0].element.style.opacity = "1"; // set first element's opacity, rest are set by fadeTo
+
+        var timing = e.getAttribute("data-slideshow").split(":").map(function (t) {
+            return Number(t) * 1000;
+        });
+        this.cycle = timing[0] ? timing[0] : 10000;
+        this.fadeTime = timing[0] && timing[1] ? timing[1] : this.cycle / 4;
+        this.paused = false; // need some way to distinguish between automatically pausing (reset on next animationFrame) and manually pausing (don't)
+    }
+
+    function Slide(e, i) {
+        var slideNum = Number(e.getAttribute("data-slide"));
+        this.element = e;
+        this.index = slideNum ? slideNum : i;
+    }
+
+    Slide.prototype.fadeOut = function (dur) {
+        var slide = this.element;
+        var initOpacity = parseInt(slide.style.opacity);
+        if (initOpacity) {
+            var start = performance.now();
+            var frame = requestAnimationFrame(function fade() {
+                var elapsed = (performance.now() - start) / dur;
+                elapsed = Math.min(elapsed, 1);
+                slide.style.opacity = ((1 - elapsed) / initOpacity).toString();
+                if (elapsed < 1) {
+                    frame = requestAnimationFrame(fade);
+                }
+            });
+            window.setTimeout(cancelAnimationFrame.bind(window, frame), dur);
+        }
+    }
+
+    Slideshow.prototype.arrange = function (i) {
+        var totalSlides = this.slides.length;
+        this.current = i;
+        this.slides.forEach(function (slide) {
+            if (slide.index < i) {
+                slide.element.style.zIndex = i - slide.index - totalSlides;
+            } else {
+                slide.element.style.zIndex = i - slide.index;
+            }
+        });
+    }
+
+    Slideshow.prototype.fadeTo = function (i) {
+        var fadeTime = this.fadeTime;
+        this.slides.forEach(function (slide) {
+            if (slide.index === i) {
+                slide.element.style.opacity = "1";
+                slide.current = true;
+            } else {
+                slide.fadeOut(fadeTime);
+                slide.current = false;
+            }
+        });
+        window.setTimeout(this.arrange.bind(this, i), fadeTime + 100);
+    }
+
+    Slideshow.prototype.fadeToNext = function () {
+        var next = this.current + 1;
+        if (next > this.last) {
+            next = this.first;
+        }
+        this.fadeTo(next);
+    }
+
+    var slideshows = toArray(document.querySelectorAll("[data-slideshow]"));
+    for (var i = 0; i < slideshows.length; i++) {
+        slideshows[i] = new Slideshow(slideshows[i]);
+    }
+
+    window.addEventListener("load", function () {
+        slideshows.forEach(function (s) {
+            var start = performance.now();
+            var now, timePaused, timeout;
+            requestAnimationFrame(function next() {
+                now = performance.now();
+                window.clearTimeout(timeout);
+                timeout = window.setTimeout(function () {
+                    timePaused = now;
+                    s.paused = true;
+                }, 100);
+                if (s.paused) {
+                    start = now - (timePaused - start);
+                    s.paused = false;
+                }
+                if (now - start >= s.cycle) {
+                    s.fadeToNext();
+                    start = performance.now();
+                }
+                requestAnimationFrame(next);
+            });
+        });
+    }, passive);
+
+/*
  * Fullscreen
  */
 
