@@ -611,16 +611,12 @@
         this.frame = e;
         this.slides = toArray(e.querySelectorAll("[data-slide]"));
         for (var i = 0; i < this.slides.length; i++) {
-            this.slides[i] = new Slide(this.slides[i], i);
+            this.slides[i] = new Slide(this.slides[i]);
         }
-        this.slides = this.slides.sort(function (a, b) {
-            return a.index - b.index;
-        });
-        this.arrange(this.slides[0].index);
-        this.first = this.slides[0];
-        this.last = this.slides.slice(-1)[0];
-        this.current = this.first;
-        this.first.element.style.opacity = "1"; // set first element's opacity, rest are set by fadeTo
+        this.slides = this.slides.sort(function (a, b) { return a.order - b.order; });
+        this.slides.forEach(function (slide, i) { slide.index = i })
+        this.arrange(0);
+        this.current.element.style.opacity = "1"; // set first element's opacity, rest are set by fadeTo
 
         var timing = e.getAttribute("data-slideshow").split(":").map(function (t) {
             return Number(t) * 1000;
@@ -630,10 +626,10 @@
         this.paused = false; // need some way to distinguish between automatically pausing (reset on next animationFrame) and manually pausing (don't)
     }
 
-    function Slide(e, i) {
+    function Slide(e) {
         var slideNum = Number(e.getAttribute("data-slide"));
         this.element = e;
-        this.index = slideNum ? slideNum : i;
+        this.order = slideNum ? slideNum : undefined;
     }
 
     Slide.prototype.fadeOut = function (dur) {
@@ -653,42 +649,29 @@
         }
     }
 
-    Slideshow.prototype.getSlide = function (i) {
-        this.slides.filter(function (slide) {
-            return slide.index === i;
-        })
-    }
-
     Slideshow.prototype.arrange = function (i) {
-        var totalSlides = this.slides.length;
-        this.current = this.getSlide(i);
-        this.slides.forEach(function (slide) {
-            if (slide.index < i) {
-                slide.element.style.zIndex = i - slide.index - totalSlides;
-            } else {
-                slide.element.style.zIndex = i - slide.index;
-            }
-        });
+        this.current = this.slides[i];
+        for (var j = 0; j < i; j++) {
+            this.slides[j].element.style.zIndex = i - j - this.slides.length;
+        }
+        for (j = i; j < this.slides.length; j++) {
+            this.slides[j].element.style.zIndex = i - j;
+        }
     }
 
     Slideshow.prototype.fadeTo = function (i) {
-        var fadeTime = this.fadeTime;
-        this.slides.forEach(function (slide) {
-            if (slide.index === i) {
-                slide.element.style.opacity = "1";
-                slide.current = true;
-            } else {
-                slide.fadeOut(fadeTime);
-                slide.current = false;
-            }
-        });
-        window.setTimeout(this.arrange.bind(this, i), fadeTime + 100);
+        var last = this.current;
+        var next = this.slides[i];
+        next.element.style.opacity = "1";
+        last.fadeOut(this.fadeTime);
+        this.current = next;
+        window.setTimeout(this.arrange.bind(this, i), this.fadeTime + 100);
     }
 
     Slideshow.prototype.fadeToNext = function () {
         var next = this.current.index + 1;
-        if (next > this.last.index) {
-            next = this.first.index;
+        if (next >= this.slides.length) {
+            next = 0;
         }
         this.fadeTo(next);
     }
