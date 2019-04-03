@@ -617,9 +617,10 @@
             return a.index - b.index;
         });
         this.arrange(this.slides[0].index);
-        this.first = this.slides[0].index;
-        this.last = this.slides.slice(-1)[0].index;
-        this.slides[0].element.style.opacity = "1"; // set first element's opacity, rest are set by fadeTo
+        this.first = this.slides[0];
+        this.last = this.slides.slice(-1)[0];
+        this.current = this.first;
+        this.first.element.style.opacity = "1"; // set first element's opacity, rest are set by fadeTo
 
         var timing = e.getAttribute("data-slideshow").split(":").map(function (t) {
             return Number(t) * 1000;
@@ -652,9 +653,15 @@
         }
     }
 
+    Slideshow.prototype.getSlide = function (i) {
+        this.slides.filter(function (slide) {
+            return slide.index === i;
+        })
+    }
+
     Slideshow.prototype.arrange = function (i) {
         var totalSlides = this.slides.length;
-        this.current = i;
+        this.current = this.getSlide(i);
         this.slides.forEach(function (slide) {
             if (slide.index < i) {
                 slide.element.style.zIndex = i - slide.index - totalSlides;
@@ -679,9 +686,9 @@
     }
 
     Slideshow.prototype.fadeToNext = function () {
-        var next = this.current + 1;
-        if (next > this.last) {
-            next = this.first;
+        var next = this.current.index + 1;
+        if (next > this.last.index) {
+            next = this.first.index;
         }
         this.fadeTo(next);
     }
