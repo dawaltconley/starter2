@@ -18,6 +18,10 @@
     }
 }
 
+.cursor-pointer {
+    cursor: pointer;
+}
+
 .button, .button-o, {
     @extend %vertical-rhythm, .inline-block, .font-smoothing-normal, .subtle-icon;
     padding: .5em 1em;
