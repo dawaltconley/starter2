@@ -33,6 +33,11 @@ $device-dppx:           ({% if jekyll.environment == 'production' or jekyll.envi
     @function ch-color-contrast($args...) { @return 21 }; // used by theme mixins
 {% endunless %}
 
+{% unless jekyll.environment == 'aws' or jekyll.environment == 'gulp' %}
+    @import url(https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css); // import normalize sheets when not running postcss
+{% endunless %}
+
+
 @import
     "variables",
     "functions/manifest",

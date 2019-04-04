@@ -31,13 +31,15 @@ gulp.task("build", jekyllBuild.bind(null, jekyllEnv));
  */
 
 gulp.task("css", function (cb) {
-    pump([
-        gulp.src("./_site/css/main.css"),
-        postcss([
+    const normalize = gulp.src("./node_modules/normalize.css/normalize.css");
+    const main = gulp.src("./_site/css/main.css")
+        .pipe(postcss([
             autoprefixer()
-        ]),
-        gulp.dest("./_site/css")
-    ], cb);
+        ]));
+
+    return merge(normalize, main)
+        .pipe(concat("main.css"))
+        .pipe(gulp.dest("./_site/css"));
 });
 
 /*
