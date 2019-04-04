@@ -74,6 +74,38 @@
     }
 }
 
+%hover-shadow {
+    @extend .relative;
+
+    &::before {
+        @extend .fill-parent;
+        content: "";
+        opacity: 0;
+        transition-duration: inherit;
+        transition-property: opacity;
+        transition-timing-function: ease-out;
+    }
+
+    @include hover {
+        &::before {
+            opacity: 1;
+        }
+    }
+}
+
+.hover-shadow {
+    $angles: ("top": 0deg, "left": 90deg, "right": 270deg, "bottom": 180deg);
+    @each $side in $sides {
+        &-#{str-slice($side, 1, 1)} {
+            @extend %hover-shadow;
+
+            &::before {
+                background: linear-gradient(map-get($angles, $side), rgba(black, 0.3), rgba(black, 0));
+            }
+        }
+    }
+}
+
 /*
  * Target
  */
