@@ -609,14 +609,21 @@
 
     function Slideshow(e) {
         this.frame = e;
+
         this.slides = toArray(e.querySelectorAll("[data-slide]"));
         for (var i = 0; i < this.slides.length; i++) {
             this.slides[i] = new Slide(this.slides[i]);
         }
         this.slides = this.slides.sort(function (a, b) { return a.order - b.order; });
-        this.slides.forEach(function (slide, i) { slide.index = i })
+        this.slides.forEach(function (slide, i) {
+            slide.index = i;
+            if (i === 0) {
+                slide.element.style.opacity = "1";
+            } else {
+                slide.element.style.opacity = "0";
+            }
+        })
         this.arrange(0);
-        this.current.element.style.opacity = "1"; // set first element's opacity, rest are set by fadeTo
 
         var timing = e.getAttribute("data-slideshow").split(":").map(function (t) {
             return Number(t) * 1000;
@@ -651,11 +658,13 @@
 
     Slideshow.prototype.arrange = function (i) {
         this.current = this.slides[i];
-        for (var j = 0; j < i; j++) {
-            this.slides[j].element.style.zIndex = i - j - this.slides.length;
-        }
-        for (j = i; j < this.slides.length; j++) {
-            this.slides[j].element.style.zIndex = i - j;
+        for (var j = 0; j < this.slides.length; j++) {
+            var style = this.slides[j].element.style;
+            if (j === i) {
+                style.zIndex = "0";
+            } else {
+                style.zIndex = "-1";
+            }
         }
     }
 
@@ -664,7 +673,6 @@
         var next = this.slides[i];
         next.element.style.opacity = "1";
         last.fadeOut(this.fadeTime);
-        this.current = next;
         window.setTimeout(this.arrange.bind(this, i), this.fadeTime + 100);
     }
 
