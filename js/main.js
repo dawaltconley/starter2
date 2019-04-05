@@ -684,6 +684,29 @@
         this.fadeTo(next);
     }
 
+    Slideshow.prototype.play = function () {
+        var s = this;
+        s.paused = false;
+        s.start = performance.now();
+        requestAnimationFrame(function next() {
+            s.now = performance.now();
+            window.clearTimeout(s.timeout);
+            s.timeout = window.setTimeout(function () {
+                s.timePaused = s.now;
+                s.paused = true;
+            }, 100);
+            if (s.paused) {
+                s.start = s.now - (s.timePaused - s.start);
+                s.paused = false;
+            }
+            if (s.now - s.start >= s.cycle) {
+                s.fadeToNext();
+                start = performance.now();
+            }
+            requestAnimationFrame(next);
+        });
+    }
+
     var slideshows = toArray(document.querySelectorAll("[data-slideshow]"));
     for (var i = 0; i < slideshows.length; i++) {
         slideshows[i] = new Slideshow(slideshows[i]);
@@ -691,25 +714,7 @@
 
     window.addEventListener("load", function () {
         slideshows.forEach(function (s) {
-            var start = performance.now();
-            var now, timePaused, timeout;
-            requestAnimationFrame(function next() {
-                now = performance.now();
-                window.clearTimeout(timeout);
-                timeout = window.setTimeout(function () {
-                    timePaused = now;
-                    s.paused = true;
-                }, 100);
-                if (s.paused) {
-                    start = now - (timePaused - start);
-                    s.paused = false;
-                }
-                if (now - start >= s.cycle) {
-                    s.fadeToNext();
-                    start = performance.now();
-                }
-                requestAnimationFrame(next);
-            });
+            s.play();
         });
     }, passive);
 
