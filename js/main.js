@@ -630,7 +630,25 @@
         });
         this.cycle = timing[0] ? timing[0] : 10000;
         this.fadeTime = timing.length > 1 && timing[1] ? timing[1] : this.cycle / 4;
-        this.paused = false; // need some way to distinguish between automatically pausing (reset on next animationFrame) and manually pausing (don't)
+        this.now = 0;
+
+        this.controls = toArray(e.querySelectorAll("[data-button]"));
+        this.controls.forEach(function (c) {
+            var action;
+            switch (c.getAttribute("data-button")) {
+                case "next":
+                    action = this.fadeToNext.bind(this);
+                    break;
+                case "prev":
+                    action = this.fadeToPrev.bind(this);
+            }
+            c.addEventListener("click", function () {
+                action();
+                window.clearTimeout(this.timeout);
+                this.timePaused = this.now;
+                this.paused = true;
+            }.bind(this));
+        }.bind(this))
     }
 
     function Slide(e) {
@@ -669,11 +687,18 @@
     }
 
     Slideshow.prototype.fadeTo = function (i) {
-        var last = this.current;
-        var next = this.slides[i];
-        next.element.style.opacity = "1";
-        last.fadeOut(this.fadeTime);
-        window.setTimeout(this.arrange.bind(this, i), this.fadeTime + 100);
+        if (!this.fading) {
+            var last = this.current;
+            var next = this.slides[i];
+            this.fading = true;
+            this.start = performance.now();
+            next.element.style.opacity = "1";
+            last.fadeOut(this.fadeTime);
+            window.setTimeout(function () {
+                this.arrange(i);
+                this.fading = false;
+            }.bind(this), this.fadeTime + 100);
+        }
     }
 
     Slideshow.prototype.fadeToNext = function () {
@@ -682,6 +707,15 @@
             next = 0;
         }
         this.fadeTo(next);
+    }
+
+    Slideshow.prototype.fadeToPrev = function () {
+        var dur = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
+        var prev = this.current.index - 1;
+        if (prev < 0) {
+            prev = this.slides.length - 1;
+        }
+        this.fadeTo(prev, dur);
     }
 
     Slideshow.prototype.play = function () {
@@ -693,17 +727,18 @@
             window.clearTimeout(s.timeout);
             s.timeout = window.setTimeout(function () {
                 s.timePaused = s.now;
-                s.paused = true;
+                s.frameTimedOut = true;
             }, 100);
-            if (s.paused) {
+            if (s.frameTimedOut) {
                 s.start = s.now - (s.timePaused - s.start);
-                s.paused = false;
+                s.frameTimedOut = false;
             }
             if (s.now - s.start >= s.cycle) {
                 s.fadeToNext();
-                start = performance.now();
             }
-            requestAnimationFrame(next);
+            if (!s.paused) {
+                requestAnimationFrame(next);
+            }
         });
     }
 
