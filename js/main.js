@@ -629,7 +629,7 @@
             return Number(t) * 1000;
         });
         this.cycle = timing[0] ? timing[0] : 10000;
-        this.fadeTime = timing[0] && timing[1] ? timing[1] : this.cycle / 4;
+        this.fadeTime = timing.length > 1 && timing[1] ? timing[1] : this.cycle / 4;
         this.paused = false; // need some way to distinguish between automatically pausing (reset on next animationFrame) and manually pausing (don't)
     }
 
