@@ -634,13 +634,14 @@
 
         this.controls = toArray(e.querySelectorAll("[data-button]"));
         this.controls.forEach(function (c) {
-            var action;
-            switch (c.getAttribute("data-button")) {
-                case "next":
-                    action = this.fadeToNext.bind(this);
-                    break;
-                case "prev":
-                    action = this.fadeToPrev.bind(this);
+            var action = c.getAttribute("data-button").split(":");
+            var clickTime = action.length > 1 && action[1] ? Number(action[1])*1000 : this.fadeTime;
+            if (action[0] == "next") {
+                action = this.fadeToNext.bind(this, clickTime);
+            } else if (action[0] == "prev") {
+                action = this.fadeToPrev.bind(this, clickTime);
+            } else {
+                action = function () {};
             }
             c.addEventListener("click", function () {
                 action();
@@ -688,29 +689,31 @@
 
     Slideshow.prototype.fadeTo = function (i) {
         if (!this.fading) {
+            var dur = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.fadeTime;
             var last = this.current;
             var next = this.slides[i];
             this.fading = true;
             this.start = performance.now();
             next.element.style.opacity = "1";
-            last.fadeOut(this.fadeTime);
+            last.fadeOut(dur);
             window.setTimeout(function () {
                 this.arrange(i);
                 this.fading = false;
-            }.bind(this), this.fadeTime + 100);
+            }.bind(this), dur + 100);
         }
     }
 
     Slideshow.prototype.fadeToNext = function () {
+        var dur = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
         var next = this.current.index + 1;
         if (next >= this.slides.length) {
             next = 0;
         }
-        this.fadeTo(next);
+        this.fadeTo(next, dur);
     }
 
     Slideshow.prototype.fadeToPrev = function () {
-        var dur = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
+        var dur = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
         var prev = this.current.index - 1;
         if (prev < 0) {
             prev = this.slides.length - 1;
