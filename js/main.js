@@ -231,6 +231,52 @@
  * DOM Manipulation
  */
 
+    function imgLoaded(img) {
+        return img.complete && img.naturalHeight !== 0;
+    }
+
+    function afterImageLoad(img, cb) {
+        if (imgLoaded(img)) {
+            return cb();
+        } else {
+            return img.addEventListener("load", cb);
+        }
+    }
+
+    var lazyImages = toArray(document.querySelectorAll("img[data-lazy]"));
+    for (var i = 0; i < lazyImages.length; i++) {
+        lazyImages[i] = new LazyImage(lazyImages[i]);
+    }
+
+    function LazyImage(img) {
+        if (imgLoaded(img)){
+            this.alreadyLoaded = true;
+        } else {
+            var attributes = ["src", "srcset"];
+            this.element = img;
+            this.assets = {};
+            ["src", "srcset"].forEach(function (a) {
+                var asset = img.getAttribute(a);
+                this.assets[a] = asset ? asset : "";
+                img.setAttribute(a, "");
+            }.bind(this));
+        }
+    }
+
+    LazyImage.prototype.load = function () {
+        if (!this.alreadyLoaded) {
+            for (var attribute in this.assets) {
+                this.element.setAttribute(attribute, this.assets[attribute]);
+            }
+        }
+    }
+
+    window.addEventListener("load", function () {
+        lazyImages.forEach(function (e) {
+            e.load();
+        });
+    });
+
     var shuffleChildren = toArray(document.querySelectorAll("[data-shuffle-children]"));
     shuffleChildren.forEach(function (e) {
         var shuffled = e.cloneNode(false);
