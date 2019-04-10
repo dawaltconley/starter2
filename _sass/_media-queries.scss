@@ -41,6 +41,20 @@
     }
 }
 
+.pos-xs {
+    @include all-sides {
+        @include mq("mobile") {
+            #{$side}: map-get($spacings, xs);
+        }
+    }
+}
+
+.icon-size {
+    @include mq("mobile") {
+        font-size: $base-icon-size;
+    }
+}
+
 .cursor-pointer {
     @include mq("header") {
         cursor: pointer;
