@@ -682,9 +682,10 @@
         this.controls.forEach(function (c) {
             var action = c.getAttribute("data-button").split(":");
             var clickTime = action.length > 1 && action[1] ? Number(action[1])*1000 : this.fadeTime;
-            if (action[0] == "next") {
+            action = action[0].trim().toLowerCase();
+            if (action == "next") {
                 action = this.fadeToNext.bind(this, clickTime);
-            } else if (action[0] == "prev") {
+            } else if (action == "prev") {
                 action = this.fadeToPrev.bind(this, clickTime);
             } else {
                 action = function () {};
