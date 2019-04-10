@@ -94,7 +94,6 @@
 }
 
 .hover-shadow {
-    $angles: ("top": 0deg, "left": 90deg, "right": 270deg, "bottom": 180deg);
     @each $side in $sides {
         &-#{str-slice($side, 1, 1)} {
             @extend %hover-shadow;

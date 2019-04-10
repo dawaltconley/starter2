@@ -83,3 +83,10 @@ $bp: (
     "mobile":   600px,
     "header":   600px,
 );
+
+// Functional
+
+$sides: "top", "bottom", "left", "right";
+$side: null;
+
+$angles: ("top": 0deg, "bottom": 180deg, "left": 90deg, "right": 270deg);

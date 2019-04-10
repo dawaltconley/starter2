@@ -1,6 +1,3 @@
-$sides: "top", "bottom", "left", "right";
-$side: null;
-
 @function get-orientation($side) {
     @if $side == "top" or $side == "bottom" {
         @return "vertical";
