@@ -1,0 +1,39 @@
+{% assign global_scope_blank = blank %}{% capture blank %}
+  {% assign global_scope_type = type %}
+  {% assign global_scope_side = side %}
+  {% assign global_scope_s = s %}
+  {% assign global_scope_t = t %}
+  {% assign global_scope_return = return %}
+
+  {% case include.type %}
+    {% when 'next' or 'n' or 'right' or 'r' %}
+      {% assign type = 'next' %}
+      {% assign side = 'right' %}
+      {% assign s = 'r' %}
+    {% when 'prev' or 'previous' or 'p' or 'left' or 'l' %}
+      {% assign type = 'prev' %}
+      {% assign side = 'left' %}
+      {% assign s = 'l' %}
+    {% else %}
+      {% assign type = nil %}
+  {% endcase %}
+
+  {% if include.transition %}
+    {% assign t = include.transition %}
+  {% else %}
+    {% assign t = nil %}
+  {% endif %}
+
+  {% if type %}
+    {% capture return %}
+      <button class="no-focus absolute pos-0-v pos-0-{{ s }} slide-button-width subtle-icon shadow cursor-pointer hw-accel hover hover-shadow-{{ s }} t-short hidden" data-class-rm="hidden" data-button="{{ type }}{% if t %}:{{ t }}{% endif %}">
+        <i class="abs-center-v pos-m-{{ s }} pos-xs-{{ s }}-lt-mobile fa fa-fw fa-chevron-{{ side }} icon-size-gt-mobile z-1"></i>
+      </button>
+  {% endcapture %}
+  {% endif %}
+
+  {% assign type = global_scope_type %}
+  {% assign side = global_scope_side %}
+  {% assign s = global_scope_s %}
+  {% assign t = global_scope_t %}
+{% endcapture %}{{ return }}{% assign blank = global_scope_blank %}{% assign return = global_scope_return %}
