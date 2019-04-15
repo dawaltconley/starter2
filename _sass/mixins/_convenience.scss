@@ -82,6 +82,58 @@
     }
 }
 
+@mixin inline-columns($breakpoints, $spacing: null) {
+    $bp-col-map: ();
+    @extend .font-0;
+
+    > * {
+        @extend .inline-block, .full-width;
+        margin-bottom: $spacing;
+
+        @for $i from 1 through length($breakpoints) {
+            $breakpoint: nth($breakpoints, $i);
+            $columns: null;
+            @if length($breakpoint) > 2 {
+                @error "the responsive-columns mixin only accepts one or two items per breakpoint: the breakpoint and (optionally) the number of columns.";
+            } @else if length($breakpoint) == 2 {
+                $columns: nth($breakpoint, 2);
+                $breakpoint: nth($breakpoint, 1);
+            } @else if type-of($breakpoint) == map {
+                $columns: nth(map-values($breakpoint), 1);
+                $breakpoint: nth(map-keys($breakpoint), 1);
+            }
+
+            @if type-of($breakpoint) == string and map-has-key($bp, $breakpoint) {
+                $breakpoint: map-get($bp, $breakpoint);
+            } @else if type-of($breakpoint) == string {
+                @error 'responsive-columns mixin: breakpoint name #{$breakpoint} is not a valid breakpoint name; must match a key in the global $bp map.'
+            } @else if type-of($breakpoint) != number {
+                @error 'responsive-columns mixin: breakpoint must be either a number or a string identifier; encountered #{$breakpoint} which is a #{type-of($breakpoint)}'
+            }
+
+            $bp-col-map: map-merge($bp-col-map, ($breakpoint: $columns));
+        }
+
+        $bp-col-map: map-sort($bp-col-map, keys);
+        $last-col: 1;
+
+        @for $i from 1 through length($bp-col-map) {
+            $bp: nth(nth($bp-col-map, $i), 1);
+            $col: nth(nth($bp-col-map, $i), 2);
+            @if not $col { $col: $last-col + 1; }
+            $query: "screen and (min-width: #{$bp})";
+            @if $i < length($bp-col-map) {
+                $bp-next: nth(nth($bp-col-map, $i+1), 1);
+                $query: "#{$query} and (max-width: #{$bp-next - 1px})";
+                $last-col: $col;
+            }
+            @media #{$query} {
+                @include columns($col, $spacing);
+            }
+        }
+    }
+}
+
 @mixin blur($blur) {
     -webkit-filter: blur($blur);
     filter: blur($blur);
