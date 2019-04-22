@@ -22,11 +22,11 @@
 }
 
 .fill-window {
-    @extend .fixed, .pos-0;
+    @extend .fixed, .pos-0, .screen-size;
 }
 
 .fill-parent {
-    @extend .absolute, .pos-0;
+    @extend .absolute, .pos-0, .full-size;
 }
 
 .expand-children {
