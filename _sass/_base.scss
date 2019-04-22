@@ -48,12 +48,13 @@ body {
 h1, h2, h3, h4, h5, h6,
 p, blockquote, pre,
 ul, ol, dl, figure,
-%vertical-rhythm {
+%vertical-rhythm,
+.v-rhythm > * {
     margin-bottom: $default-spacing;
+}
 
-    &:last-child {
-        margin-bottom: 0;
-    }
+*:last-child {
+    margin-bottom: 0;
 }
 
 /**

@@ -22,14 +22,6 @@
     float: right;
 }
 
-.v-rhythm > * {
-    @extend %vertical-rhythm;
-
-    &:last-child {
-        margin-bottom: 0;
-    }
-}
-
 .transparent {
     opacity: 0;
 }
