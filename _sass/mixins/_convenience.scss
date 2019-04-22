@@ -42,6 +42,22 @@
     padding-top: $y/$x * $width;
 }
 
+@mixin bg-video-wrapper($x: 100vw, $y: 100vh, $ratio: 16/9) {
+    @if unit($x) != vw or unit($y) != vh {
+        @error "Error in bg-video-wrapper mixin: height and width of the wrapper must be specified in the corresponding viewport unit.";
+    }
+
+    width: $x;
+    height: $y;
+
+    > iframe {
+        width: $x;
+        height: $x / $ratio;
+        min-width: $y * $ratio;
+        min-height: $y;
+    }
+}
+
 @mixin columns-reset($break-point) { // mobile reset
     @media screen and (max-width: $break-point) {
         .cell {
