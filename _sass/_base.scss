@@ -51,10 +51,36 @@ ul, ol, dl, figure,
 %vertical-rhythm,
 .v-rhythm > * {
     margin-bottom: $default-spacing;
+    margin-right: 0;
+}
+
+%horizontal-rhythm,
+.h-rhythm > * {
+    margin-right: $default-spacing;
+    margin-bottom: 0;
+}
+
+.v-rhythm {
+    @include mq {
+        & > * {
+            margin-bottom: $default-spacing;
+            margin-right: 0;
+        }
+    }
+}
+
+.h-rhythm {
+    @include mq {
+        & > * {
+            margin-right: $default-spacing;
+            margin-bottom: 0;
+        }
+    }
 }
 
 *:last-child {
     margin-bottom: 0;
+    margin-right: 0;
 }
 
 /**
@@ -96,13 +122,12 @@ ul, ol {
 
 li {
     > ul,
-    > ol,
-    > p:only-child {
+    > ol {
          margin-bottom: 0;
     }
 }
 
-ul.unlist {
+.unlist {
     margin-left: 0;
     list-style: none;
 }
@@ -161,10 +186,6 @@ blockquote {
     font-size: smaller;
     letter-spacing: -1px;
     font-style: italic;
-
-    > :last-child {
-        margin-bottom: 0;
-    }
 }
 
 /*
