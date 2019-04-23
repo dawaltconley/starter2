@@ -27,13 +27,8 @@ body.parallax-body {
 }
 
 .parallax-group {
-    @extend .relative;
+    @extend .relative, .click-through;
     background-color: transparent !important;
-    pointer-events: none;
-
-    > * {
-        pointer-events: auto;
-    }
 
     @include parallax-support {
         -webkit-transform-style: preserve-3d;

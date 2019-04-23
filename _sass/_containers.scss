@@ -64,3 +64,15 @@
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
 }
+
+.no-click {
+    pointer-events: none;
+}
+
+.click-through {
+    @extend .no-click;
+
+    * > {
+        pointer-events: auto;
+    }
+}
