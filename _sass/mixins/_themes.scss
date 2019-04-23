@@ -202,10 +202,11 @@
 
     @if $brand-color {
         @include themeify(".button.subtle-button") {
+            color: $background-color;
             background-color: $text-color;
 
             &:hover {
-                background-color: mix($text-color, $button-text, 80%);
+                background-color: mix($text-color, $background-color, 80%);
             }
         }
 
