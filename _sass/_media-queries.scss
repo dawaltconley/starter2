@@ -23,9 +23,24 @@
 }
 
 .flex-row {
-    @include mq("header") {
+    @include mq {
         display: flex;
         flex-direction: row;
+
+        &.inline-flex {
+            display: inline-flex;
+        }
+    }
+}
+
+.flex-col {
+    @include mq {
+        display: flex;
+        flex-direction: column;
+
+        &.inline-flex {
+            display: inline-flex;
+        }
     }
 }
 

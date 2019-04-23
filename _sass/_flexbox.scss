@@ -28,7 +28,7 @@
     align-items: flex-end;
 }
 
-.fill-flex-parent {
+.flex-fill > *, .fill-flex-parent {
     flex: 1 1 auto;
 }
 
