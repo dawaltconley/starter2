@@ -39,7 +39,7 @@
 @each $icon-name, $color in $fa-icons {
     .#{$icon-name}-icon {
         &, &:hover {
-            color: $color;
+            color: $color !important;
             background-color: $color !important;
             border-color: $color !important;
         }
@@ -48,7 +48,7 @@
 
 // styling resets, including inherit fallback for older browsers
 %reset-color {
-    color: inherit;
+    color: inherit !important;
 }
 
 %reset-background-color {
@@ -105,7 +105,7 @@
 // square buttons. white icons with brand-color background. hovering animates to white background with icons in their brand color.
 .media-icon-button .media-icon {
     @extend .media-icon-bloat;
-    color: white;
+    color: white !important;
 
     &:hover::after {
         background-color: rgba(white, 0.2);
@@ -116,7 +116,7 @@
     @extend .media-icon-bloat;
 
     &:not(:hover) {
-        color: white;
+        color: white !important;
     }
 
     &::after {
@@ -189,7 +189,7 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle {
     }
 
     &:hover {
-        color: white;
+        color: white !important;
         text-shadow: none;
 
         &::before {
