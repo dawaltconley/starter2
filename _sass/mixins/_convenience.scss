@@ -47,8 +47,8 @@
         @error "Error in bg-video-wrapper mixin: height and width of the wrapper must be specified in the corresponding viewport unit.";
     }
 
-    width: $x;
-    height: $y;
+    max-width: $x;
+    max-height: $y;
 
     > iframe {
         width: $x;
