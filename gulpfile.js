@@ -83,7 +83,15 @@ gulp.task("js-uglify", function (cb) {
     ], cb);
 });
 
-gulp.task("js", gulp.series("js-concat", "js-clean", "js-uglify"));
+gulp.task("js-yaml", function (cb) {
+    return gulp.src("./node_modules/js-yaml/dist/js-yaml.min.js")
+        .pipe(gulp.dest("./_site/admin/js"));
+})
+
+gulp.task("js", gulp.parallel(
+    "js-yaml",
+    gulp.series("js-concat", "js-clean", "js-uglify")
+));
 
 /*
  * Images
