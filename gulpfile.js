@@ -84,8 +84,10 @@ gulp.task("js-uglify", function (cb) {
 });
 
 gulp.task("js-yaml", function (cb) {
-    return gulp.src("./node_modules/js-yaml/dist/js-yaml.min.js")
-        .pipe(gulp.dest("./_site/admin/js"));
+    pump([
+        gulp.src("./node_modules/js-yaml/dist/js-yaml.min.js"),
+        gulp.dest("./_site/admin/js")
+    ], cb);
 })
 
 gulp.task("js", gulp.parallel(
