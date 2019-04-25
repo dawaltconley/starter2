@@ -1,0 +1,32 @@
+---
+---
+
+# https://www.netlifycms.org/docs/configuration-options/
+
+backend:
+  name: git-gateway
+  branch: master
+media_folder: "assets/uploads"
+site_url: {{ site.url }}
+logo_url: {% if site.logo %}{{ site.logo }}{% endif %}
+collections:
+  - label: Posts
+    label_singular: Post
+    name: posts
+    folder: _posts
+    extension: md
+    create: true
+    slug: {% raw %}"{{ title }}"{% endraw %}
+    preview_page: {% raw %}"{{ slug }}"{% endraw %}
+    description: >
+      The basic type of content.
+    fields:
+      - label: Title
+        name: title
+        widget: string
+        default: New Post
+        hint: Full title, used at the top of the page.
+      - label: Body
+        name: body
+        widget: markdown
+        default: New day, new post!
