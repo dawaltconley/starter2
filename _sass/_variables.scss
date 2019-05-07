@@ -1,7 +1,6 @@
 // Basic Variables
 
 $base-font-family:      "Raleway", sans-serif;
-$base-font-size:        1.25rem;
 $base-font-weight:      400;
 $base-line-height:      1.4;
 $base-line-length:      36em;
@@ -36,6 +35,12 @@ $themes: (
 );
 
 $theme-depth: 1; // controls the depth (in a series nested themes) at which an element still inherits the styles of its immediate ancestor theme. stylesheets get much larger and more complex as this number increases, so it should be set as low as possible.
+
+$font-sizes: (
+    "base": 1.25rem,
+);
+
+$base-font-size: map-get($font-sizes, base);
 
 $sizes: (
     "full":             100%,
