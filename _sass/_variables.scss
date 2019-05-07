@@ -4,7 +4,6 @@ $base-font-family:      "Raleway", sans-serif;
 $base-font-weight:      400;
 $base-line-height:      1.4;
 $base-line-length:      36em;
-$base-icon-size:        1.5rem;
 
 $header-sizes:          2em, 1.2em, 1.1em;
 $header-font-family:    null;
@@ -38,6 +37,7 @@ $theme-depth: 1; // controls the depth (in a series nested themes) at which an e
 
 $font-sizes: (
     "base": 1.25rem,
+    "icon": 1.5rem,
 );
 
 $base-font-size: map-get($font-sizes, base);

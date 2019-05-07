@@ -64,9 +64,9 @@
     }
 }
 
-.icon-size {
+.fs-icon {
     @include mq("mobile") {
-        font-size: $base-icon-size;
+        font-size: map-get($font-sizes, icon);
     }
 }
 
