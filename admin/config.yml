@@ -8,7 +8,9 @@ backend:
   branch: master
 media_folder: "assets/uploads"
 site_url: {{ site.url }}
-logo_url: {% if site.logo %}{{ site.logo }}{% endif %}
+{% if site.logo %}
+logo_url: {{ site.logo }}
+{% endif %}
 collections:
   - label: Posts
     label_singular: Post
