@@ -72,11 +72,25 @@
     }
 }
 
+/*
+ * Header Only
+ */
+
 .overflow-h {
     @include mq("header") {
         overflow: hidden;
     }
 }
+
+.cursor-pointer {
+    @include mq("header") {
+        cursor: pointer;
+    }
+}
+
+/*
+ * Mobile Only
+ */
 
 .pos-xs {
     @include all-sides {
@@ -89,11 +103,5 @@
 .fs-icon {
     @include mq("mobile") {
         font-size: map-get($font-sizes, icon);
-    }
-}
-
-.cursor-pointer {
-    @include mq("header") {
-        cursor: pointer;
     }
 }
