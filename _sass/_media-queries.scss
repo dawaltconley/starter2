@@ -22,6 +22,12 @@
     }
 }
 
+.float-none {
+    @include mq {
+        float: none;
+    }
+}
+
 .flex-row {
     @include mq {
         display: flex;
@@ -44,15 +50,31 @@
     }
 }
 
-.overflow-h {
-    @include mq("header") {
-        overflow: hidden;
+.full-width {
+    @include mq {
+        width: 100%;
+    }
+}
+
+.margin-0 {
+    @include all-sides {
+        @include mq {
+            margin-#{$side}: 0;
+        }
     }
 }
 
 .padding-0 {
+    @include all-sides {
+        @include mq {
+            padding-#{$side}: 0;
+        }
+    }
+}
+
+.overflow-h {
     @include mq("header") {
-        padding: 0;
+        overflow: hidden;
     }
 }
 
