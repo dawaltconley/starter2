@@ -1,4 +1,9 @@
 @mixin wrapper($breakpoints, $min-margins: 0) {
+    @for $i from 1 through length($breakpoints) {
+        $bp: check-bp(nth($breakpoints, $i));
+        $breakpoints: set-nth($breakpoints, $i, $bp);
+    }
+
     $bp-first: nth($breakpoints, 1);
     $bp-last: nth($breakpoints, length($breakpoints));
 
