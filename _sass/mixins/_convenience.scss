@@ -1,18 +1,10 @@
 @mixin mq($breakpoints: $bp, $queries: (lt: max, gt: min)) {
-    @if type-of(nth($breakpoints, 1)) == "string" {
-        $new-breakpoints: ();
-        @for $i from 1 through length($breakpoints) {
-            $name: nth($breakpoints, $i);
-            @if map-has-key($bp, $name) {
-                $new-breakpoints: map-merge($new-breakpoints, ($name: map-get($bp, $name)));
-            } @else {
-                @warn "No value in $bp corresponding to breakpoint name '#{$name}', skipping.";
-            }
-        }
-        $breakpoints: $new-breakpoints;
+    $bp-map: ();
+    @each $name, $value in $breakpoints {
+        $bp-map: map-merge($bp-map, ($name: if($value, $value, check-bp($name))));
     }
     @each $prefix, $query in $queries {
-        $sorted-bp: map-sort-units($breakpoints, $order: px em);
+        $sorted-bp: map-sort-units($bp-map, $order: px em);
         @for $i from 1 through length($sorted-bp) {
             $unit-set: map-sort(nth($sorted-bp, $i));
             @if $query == "max" {
@@ -22,13 +14,13 @@
         }
         $sorted-bp: merge-all($sorted-bp);
 
-        @each $name, $breakpoint in $sorted-bp {
-            @if ($query == "min") and (index('px', unit($breakpoint))) {
-                $breakpoint: $breakpoint + 1;
+        @each $name, $value in $sorted-bp {
+            @if ($query == "min") and (index('px', unit($value))) {
+                $value: $value + 1;
             }
 
             &-#{$prefix}-#{$name} {
-                @media screen and (#{$query}-width: $breakpoint) {
+                @media screen and (#{$query}-width: $value) {
                     @content;
                 }
             }
