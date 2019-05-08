@@ -17,3 +17,18 @@
 
   @return str-length($a) < str-length($b);
 }
+
+@function check-bp($breakpoint, $bp-list: $bp) {
+    $type: type-of($breakpoint);
+    @if $type == string {
+        @if map-has-key($bp-list, $breakpoint) {
+            $breakpoint: map-get($bp-list, $breakpoint);
+        } @else {
+            @error "#{$breakpoint} is not a known breakpoint."
+        }
+    } @else if $type != number {
+        @error "Breakpoint must either be a number or the name of a known breakpoint. '#{$breakpoint}' is a #{$type}"
+    }
+
+    @return $breakpoint;
+}
