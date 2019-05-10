@@ -18,7 +18,7 @@ collections:
     folder: _posts
     extension: md
     create: true
-    slug: {% raw %}"{{ title }}"{% endraw %}
+    slug: {% raw %}"{{ year }}-{{ month }}-{{ day }}-{{ title }}"{% endraw %}
     preview_page: {% raw %}"{{ slug }}"{% endraw %}
     description: >
       The basic type of content.
@@ -28,6 +28,10 @@ collections:
         widget: string
         default: New Post
         hint: Full title, used at the top of the page.
+      - label: Publish Date
+        name: date
+        widget: datetime
+        format: "YYYY-MM-DD HH:MM:SS"
       - label: Body
         name: body
         widget: markdown
