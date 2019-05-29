@@ -18,6 +18,12 @@
     }
 }
 
+.no-decoration {
+    &, &:hover {
+        text-decoration: none;
+    }
+}
+
 .cursor-pointer {
     cursor: pointer;
 }
