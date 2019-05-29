@@ -18,8 +18,8 @@
 }
 
 @mixin accessibility($name, $background-color, $text-color, $brand-color: null, $accessibility: "AA") {
-    $aa: to-upper-case(inspect($accessibility)) == inspect("AA");
-    $aaa: to-upper-case(inspect($accessibility)) == inspect("AAA");
+    $aa: to-upper-case($accessibility) == "AA";
+    $aaa: to-upper-case($accessibility) == "AAA";
 
     $ct-tx-bg: ch-color-contrast($background-color, $text-color);
 
