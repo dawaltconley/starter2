@@ -127,8 +127,8 @@
         @include themeify("a") {
             color: $brand-color;
 
-            &:hover { color: darken($brand-color, if($light-theme, $ld-br-tx, $ld-br-bg) * 45%); }
             &:visited { color: lighten($brand-color, if($light-theme, $ld-br-bg, $ld-br-tx) * 35%); }
+            &:hover { color: darken($brand-color, if($light-theme, $ld-br-tx, $ld-br-bg) * 45%); }
         }
     }
 
