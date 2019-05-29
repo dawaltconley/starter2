@@ -56,6 +56,14 @@
     }
 }
 
+.margin-auto {
+    @include all-sides {
+        @include mq {
+            margin-#{$side}: auto;
+        }
+    }
+}
+
 .margin-0 {
     @include all-sides {
         @include mq {
