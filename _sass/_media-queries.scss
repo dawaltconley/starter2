@@ -53,6 +53,8 @@
 .full-width {
     @include mq {
         width: 100%;
+        min-width: auto;
+        max-width: none;
     }
 }
 
