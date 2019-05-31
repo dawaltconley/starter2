@@ -10,7 +10,7 @@ og_image: # default og image used for entire site; can be overridden if specifie
 google_analytics: # tracking number
 permalink: /:title/ # default permalink structure for pages
 copyright:
-  date: 2019 # date (usually year) the site was created
+  date: 2019-05-31T17:24:00-4:00 # date the site was created
   owner: Site Owner # owner of the site
 
 timezone: America/New_York # used for liquid-generated datetimes
