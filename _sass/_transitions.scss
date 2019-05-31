@@ -39,6 +39,10 @@
     transition-timing-function: linear;
 }
 
+.t-all {
+    transition-property: all !important;
+}
+
 .t-transform {
     transition-property: transform;
 }
