@@ -36,3 +36,17 @@ collections:
         name: body
         widget: markdown
         default: New day, new post!
+  - label: Data
+    name: data
+    description: >
+      This is where you will be able to update different
+      types of data, which are used throughout the site.
+    files:
+      - label: Contact Info
+        name: contact
+        file: _data/contact.yml
+        fields: {% for c in site.data.contact %}
+          - label: {{ c[0] | capitalize }}
+            name: {{ c[0] }}
+            required: false
+            widget: string {% endfor %}
