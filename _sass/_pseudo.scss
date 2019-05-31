@@ -105,6 +105,15 @@
     }
 }
 
+.hover-drop-shadow {
+    $size: 2px;
+    transition-property: box-shadow;
+
+    @include hover {
+        box-shadow: $size $size (2*$size) rgba(black, 0.2);
+    }
+}
+
 /*
  * Target
  */
