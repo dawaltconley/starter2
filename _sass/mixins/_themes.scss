@@ -221,6 +221,20 @@
         }
     }
 
+    // Decoration
+
+    @include themeify(".bottom-fade") {
+        @extend .relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            height: map-get($spacings, l);
+            background: linear-gradient(to bottom, transparent, $background-color 80%);
+        }
+    }
+
     // SVG
 
     @include themeify(".fill-color-theme") {
