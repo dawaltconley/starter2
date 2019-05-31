@@ -93,8 +93,14 @@ img {
 }
 
 figcaption {
+    @extend .text-light !optional;
     font-style: italic;
+    font-synthesis: bold;
     text-align: center;
+
+    & > * {
+        font-synthesis: initial;
+    }
 }
 
 iframe {
