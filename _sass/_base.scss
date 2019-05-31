@@ -159,7 +159,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 hr {
+    @extend .border-light-t !optional;
     margin: $default-spacing 0;
+    height: 1px;
+    border: 0;
+    border-top-width: 1px;
+    border-top-style: solid;
 }
 
 /**
