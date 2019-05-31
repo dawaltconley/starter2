@@ -52,7 +52,7 @@
         {% for bp_mini in sorted_bp %}
             {% assign bp = bp_mini | times: divisor | round %}
             {% assign bp_diff = bp | minus: bp_prev %}
-            {% if bp < width and width %}
+            {% if width == nil or bp < width and width %}
                 {% unless bp_diff < 100 %}
                     {% capture suffix %}-{{ bp }}w{% endcapture %}
                     {% capture new_src %}{% include file-suffix.liquid file_name=src suffix=suffix %} {{ bp }}w, {% endcapture %}
