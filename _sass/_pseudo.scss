@@ -137,3 +137,12 @@
 .no-focus:focus {
     outline: none;
 }
+
+/*
+ * Pseudo Element
+ */
+
+.pseudo-fill-parent::before {
+    @extend .fill-parent;
+    content: "";
+}
