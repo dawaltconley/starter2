@@ -42,7 +42,43 @@ collections:
       This is where you will be able to update different
       types of data, which are used throughout the site.
     files:
-      - label: Contact Info
+      - label: Site Data
+        name: site
+        file: _config.yml
+        fields:
+          - label: Site title
+            name: title
+            widget: string
+          - label: Site description
+            name: description
+            widget: string
+          - label: Copyright
+            name: copyright
+            widget: object
+            fields:
+              - label: Copyright date
+                name: date
+                widget: datetime
+                format: "YYYY-MM-DDTHH:MM:SSZ"
+                hint: >
+                  Usually the date the site was created,
+                  unless otherwise renewed.
+              - label: Site owner
+                name: owner
+                widget: string
+          - label: Site image
+            name: og_image
+            required: false
+            widget: image
+            allow_multiple: false
+          - label: Google Analytics
+            name: google_analytics
+            required: false
+            widget: string
+            hint: >
+              Enter your tracking number to turn on analytics
+              for the site.
+      - label: Contact info
         name: contact
         file: _data/contact.yml
         fields: {% for c in site.data.contact %}
