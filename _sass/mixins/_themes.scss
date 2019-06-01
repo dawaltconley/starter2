@@ -223,7 +223,7 @@
 
     // Decoration
 
-    @include themeify(".bottom-fade") {
+    @include themeify(".fade-bottom") {
         @extend .relative;
 
         &::after {
