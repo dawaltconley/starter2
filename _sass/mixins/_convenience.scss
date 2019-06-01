@@ -77,10 +77,14 @@
     }
 }
 
-@mixin columns ($columns, $spacing: 0px) {
+@mixin columns ($columns, $spacing: 0px, $offset: null) {
     @if not($columns > 1) { @error "columns mixin must have more than one column." }
     $width: 100% / $columns;
     $row-end: $columns + "n";
+    @if $offset {
+        $row-end: $row-end + "+#{$offset}";
+    }
+
     width: calc(#{$width} - #{($spacing * ($columns - 1) / $columns)});
     margin-right: $spacing;
     margin-bottom: $spacing;
