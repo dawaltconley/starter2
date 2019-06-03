@@ -14,15 +14,24 @@
         }
         $sorted-bp: merge-all($sorted-bp);
 
+        $last-bp: null;
         @each $name, $value in $sorted-bp {
-            @if ($query == "min") and (index('px', unit($value))) {
-                $value: $value + 1;
-            }
-
-            &-#{$prefix}-#{$name} {
-                @media screen and (#{$query}-width: $value) {
-                    @content;
+            @if $value == map-get($sorted-bp, $last-bp) {
+                @each $selector in selector-parse(#{&}) {
+                    @at-root #{$selector}-#{$prefix}-#{$name} {
+                        @extend #{$selector}-#{$prefix}-#{$last-bp};
+                    }
                 }
+            } @else {
+                @if ($query == "min") and (index('px', unit($value))) {
+                    $value: $value + 1;
+                }
+                &-#{$prefix}-#{$name} {
+                    @media screen and (#{$query}-width: $value) {
+                        @content;
+                    }
+                }
+                $last-bp: $name;
             }
         }
     }
