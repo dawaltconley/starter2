@@ -1,17 +1,3 @@
 /*
  * Javascript Classes
  */
-
-.fixed-header {
-    $transition: map-get($transitions, short);
-    @extend .fixed, .translate-up;
-    top: 0; left: 0;
-    opacity: 0;
-    transition: transform $transition ease-out, opacity 0s $transition;
-
-    &-open {
-        @extend .translate-y-none;
-        opacity: 1;
-        transition: transform $transition ease-out;
-    }
-}
