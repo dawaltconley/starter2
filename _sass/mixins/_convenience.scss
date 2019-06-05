@@ -59,34 +59,7 @@
     }
 }
 
-@mixin columns-reset($break-point) { // mobile reset
-    @media screen and (max-width: $break-point) {
-        .cell {
-            display: block;
-
-            .button {
-                position: static;
-                margin: 0 auto $default-spacing;
-            }
-
-            &:last-child > :last-child { // mobile only: remove bottom margin of last element in table
-                margin-bottom: 0;
-            }
-        }
-
-        &.button-columns .cell {
-            padding-bottom: 0;
-        }
-    }
-
-    @media screen and (min-width: $break-point + 1px) { // desktop only: remove bottom margin of all last element in each cell
-        .cell > :last-child {
-            margin-bottom: 0;
-        }
-    }
-}
-
-@mixin columns ($columns, $spacing: 0px, $offset: null) {
+@mixin columns($columns, $spacing: 0px, $offset: null) {
     @if not($columns > 1) { @error "columns mixin must have more than one column." }
     $width: 100% / $columns;
     $row-end: $columns + "n";
@@ -100,6 +73,20 @@
 
     &:nth-child(#{$row-end}), &:last-child {
         margin-right: 0;
+    }
+}
+
+@mixin table-columns($breakpoint, $spacing: $default-spacing) {
+    @media screen and (min-width: if(unit($breakpoint) == px, $breakpoint + 1px, $breakpoint)) {
+        display: table;
+        table-layout: fixed;
+        width: calc(100% + (#{$spacing} * 2));
+        margin: -$spacing;
+        border-spacing: $spacing;
+
+        & .column {
+            display: table-cell;
+        }
     }
 }
 

@@ -15,22 +15,16 @@
     vertical-align: middle;
 }
 
-%columns {
-    $spacing: $default-spacing;
-    @extend .table;
-    width: calc(100% + (#{$spacing} * 2));
-    margin: -$spacing;
-    border-spacing: $spacing;
-    table-layout: fixed;
+.v-bottom {
+    vertical-align: bottom;
+}
 
-    &:last-child > :last-child {
-        margin-bottom: 0;
-    }
+.border-collapse {
+    border-collapse: collapse;
 }
 
 @each $name, $breakpoint in $bp {
     .#{$name}-columns {
-        @extend %columns;
-        @include columns-reset($breakpoint);
+        @include table-columns($breakpoint);
     }
 }
