@@ -76,17 +76,15 @@
     }
 }
 
-@mixin table-columns($breakpoint, $spacing: $default-spacing) {
-    @media screen and (min-width: if(unit($breakpoint) == px, $breakpoint + 1px, $breakpoint)) {
-        display: table;
-        table-layout: fixed;
-        width: calc(100% + (#{$spacing} * 2));
-        margin: -$spacing;
-        border-spacing: $spacing;
+@mixin table-columns($spacing: $default-spacing) {
+    display: table;
+    table-layout: fixed;
+    width: calc(100% + (#{$spacing} * 2));
+    margin: -$spacing;
+    border-spacing: $spacing;
 
-        & .column {
-            display: table-cell;
-        }
+    & .column {
+        display: table-cell;
     }
 }
 

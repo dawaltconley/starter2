@@ -22,9 +22,3 @@
 .border-collapse {
     border-collapse: collapse;
 }
-
-@each $name, $breakpoint in $bp {
-    .#{$name}-columns {
-        @include table-columns($breakpoint);
-    }
-}

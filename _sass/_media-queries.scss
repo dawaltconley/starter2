@@ -28,6 +28,12 @@
     }
 }
 
+.table-columns {
+    @include mq {
+        @include table-columns;
+    }
+}
+
 .flex-row {
     @include mq {
         display: flex;
