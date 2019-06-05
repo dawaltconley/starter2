@@ -24,10 +24,8 @@ emptyArray: [] # variable for easy array creation
 markdown: kramdown
 exclude:
   - "README.md"
-  - "Gemfile"
-  - "Gemfile.lock"
-  - "package.json"
-  - "package-lock.json"
+  - "Gemfile*"
+  - "package*.json"
   - "node_modules"
   - "gulpfile.js"
   - "assets/test"
