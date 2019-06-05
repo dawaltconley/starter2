@@ -127,7 +127,7 @@ figcaption {
 ul, ol {
     margin-left: $default-spacing * 2;
 
-    @media screen and (max-width: map-get($bp, "mobile")) {
+    @media screen and (max-width: map-get($bp, mobile)) {
         margin-left: $default-spacing;
     }
 }
