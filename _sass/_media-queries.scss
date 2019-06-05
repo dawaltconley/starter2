@@ -29,7 +29,7 @@
 }
 
 .table-columns {
-    @include mq {
+    @include mq($queries: (gt: min)) {
         @include table-columns;
     }
 }
