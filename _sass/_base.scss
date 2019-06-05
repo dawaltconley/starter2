@@ -149,14 +149,14 @@ li {
  */
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: $header-font-family;
-    font-weight: $header-font-weight;
+    font-family: $heading-font-family;
+    font-weight: $heading-font-weight;
     line-height: 1;
     text-decoration: none;
 }
 
 @for $i from 1 through 6 { // generate header styles
-    $font-size: if($i > length($header-sizes), 1em, nth($header-sizes, $i));
+    $font-size: if($i > length($heading-sizes), 1em, nth($heading-sizes, $i));
 
     h#{$i}, .fs-h#{$i} {
         font-size: $font-size;
