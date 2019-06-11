@@ -404,12 +404,12 @@
         var pos = page.scrollTop;
         var scrollDiff = pos - f.pos;
         window.clearTimeout(f.doneScrolling);
-        if ((e.style.display != "none" && pos > f.refPos.top) || (e.style.display == "none" && pos > f.refPos.bottom)) {
+        if (e.style.display != "none" && pos > f.refPos.top || e.style.display == "none" && pos > f.refPos.bottom) {
             e.style.display = "";
             f.hideHeaderRef();
             f.interruptSlideDown = true;
             var top = parseInt(e.style.top);
-            if ((scrollDiff < 0 && top < 0) || (scrollDiff > 0 && top > -f.height)){
+            if (scrollDiff < 0 && top < 0 || scrollDiff > 0 && top > -f.height) {
                 top = Math.min(Math.max(top - scrollDiff, -f.height), 0);
                 e.style.top = top.toString() + "px";
                 f.setShadow();
