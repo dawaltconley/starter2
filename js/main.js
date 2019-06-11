@@ -470,7 +470,7 @@
     };
 
     FixedHeader.prototype.setShadow = function () {
-        var b = Math.max(this.element.getBoundingClientRect().bottom, 0);
+        var b = parseInt(this.element.style.top) + this.height;
         this.element.style.boxShadow = "0 " + (b/32).toString() + "px " + (b/16).toString() + "px 0 rgba(0, 0, 0, 0.2)";
     }
 
