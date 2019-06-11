@@ -381,7 +381,7 @@
         this.pos = page.scrollTop;
         this.refPos = pagePos(header);
 
-        this.resize();
+        this.matchRef();
         updateObj(this.element.style, { position: "fixed", top: -this.height.toString() + "px", zIndex: "999", display: "none" });
         updateDescendentIds(e, "-fixed");
         document.body.insertBefore(this.element, document.body.firstChild);
@@ -426,14 +426,27 @@
         f.pos = pos;
     }
 
-    FixedHeader.prototype.resize = function () {
-        window.clearTimeout(this.doneResizing);
+    FixedHeader.prototype.disableScroll = function () {
         win.removeEventListener("scroll", this.scrollListener, passive);
-        this.doneResizing = window.setTimeout(win.addEventListener.bind(win, "scroll", this.scrollListener, passive), 100);
+    };
+
+    FixedHeader.prototype.enableScroll = function () {
+        this.pos = page.scrollTop;
+        win.addEventListener("scroll", this.scrollListener, passive);
+    };
+
+    FixedHeader.prototype.matchRef = function () {
         this.refPos = pagePos(this.headerRef);
         this.height = this.headerRef.clientHeight;
         updateObj(this.element.style, { width: this.headerRef.clientWidth.toString() + "px", height: this.height.toString() + "px" });
     }
+
+    FixedHeader.prototype.resize = function () {
+        this.disableScroll();
+        this.matchRef();
+        window.clearTimeout(this.doneResizing);
+        this.doneResizing = window.setTimeout(this.enableScroll(), 100);
+    };
 
     FixedHeader.prototype.slideDown = function () {
         if (this.interruptSlideDown) { return null; }
