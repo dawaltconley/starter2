@@ -221,6 +221,27 @@
     var onScrollUp = onScroll.bind(null, "up");
     var onScrollDown = onScroll.bind(null, "down");
 
+    function onScrollEnd(callback) {
+        var buffer = arguments.length > 1 && arguments[1] != undefined ? arguments[1] : 100;
+        var scroller = arguments.length > 2 && arguments[2] != undefined ? arguments[2] : win;
+        var removeListener = scroller.removeEventListener.bind(scroller, "scroll", scrolling, passive);
+        var doneScrolling;
+
+        function scrolling() {
+            window.clearTimeout(doneScrolling);
+            doneScrolling = window.setTimeout(function () {
+                removeListener();
+                callback();
+            }, buffer);
+        };
+
+        scroller.addEventListener("scroll", scrolling, passive);
+        return function () {
+            removeListener();
+            window.clearTimeout(doneScrolling);
+        };
+    };
+
     function updateObj(obj, newObj) {
         for (var key in newObj) {
             obj[key] = newObj[key];
