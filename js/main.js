@@ -381,6 +381,7 @@
         this.pos = page.scrollTop;
         this.refPos = pagePos(header);
 
+        this.scrollListener = this.scroll.bind(this);
         this.matchRef();
         updateObj(this.element.style, { position: "fixed", top: -this.height.toString() + "px", zIndex: "999", display: "none" });
         updateDescendentIds(e, "-fixed");
@@ -465,7 +466,6 @@
     }
 
     FixedHeader.prototype.addListeners = function () {
-        this.scrollListener = this.scroll.bind(this);
         win.addEventListener("scroll", this.scrollListener, passive);
         window.addEventListener("resize", this.resize.bind(this), passive);
     }
