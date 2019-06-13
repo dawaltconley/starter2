@@ -382,6 +382,9 @@
         this.refPos = pagePos(header);
 
         this.scrollListener = this.scroll.bind(this);
+        this.slideUp = this.slide.bind(this, "up");
+        this.slideDown = this.slide.bind(this, "down");
+
         this.matchRef();
         updateObj(this.element.style, { position: "fixed", top: -this.height.toString() + "px", zIndex: "999", display: "none" });
         updateDescendentIds(e, "-fixed");
@@ -404,18 +407,20 @@
         var pos = page.scrollTop;
         var scrollDiff = pos - f.pos;
         window.clearTimeout(f.doneScrolling);
+        f.doneScrolling = window.setTimeout(function () {
+            f.interruptSlide = false;
+        }, 50);
         if (e.style.display != "none" && pos > f.refPos.top || e.style.display == "none" && pos > f.refPos.bottom) {
             e.style.display = "";
             f.hideHeaderRef();
-            f.interruptSlideDown = true;
+            f.interruptSlide = true;
             var top = parseInt(e.style.top);
             if (scrollDiff < 0 && top < 0 || scrollDiff > 0 && top > -f.height) {
                 top = Math.min(Math.max(top - scrollDiff, -f.height), 0);
                 e.style.top = top.toString() + "px";
                 f.setShadow(top + f.height);
                 f.doneScrolling = window.setTimeout(function () {
-                    f.interruptSlideDown = false;
-                    requestAnimationFrame(f.slideDown.bind(f))
+                    requestAnimationFrame(f.slideDown.bind(f));
                 }, 500);
             }
         } else if (e.style.display != "none") {
@@ -448,24 +453,19 @@
         this.doneResizing = window.setTimeout(this.enableScroll(), 100);
     };
 
-    FixedHeader.prototype.slideDown = function () {
-        if (this.interruptSlideDown) { return null; }
+    FixedHeader.prototype.slide = function (direction) {
+        var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
         var t = parseInt(this.element.style.top);
-        if (t < 0) {
-            var dist = Math.max(-t/5, 1);
-            this.element.style.top = (t + dist).toString() + "px";
-            requestAnimationFrame(this.slideDown.bind(this));
+        var b = t + this.height;
+        if (this.interruptSlide) { return null; } // run callback?
+        if (direction === "down" && t < 0 || direction === "up" && b > 0) {
+            var dist = direction === "down" ? Math.min(t/5, -1) : Math.max(b/5, 1);
+            this.element.style.top = (t - dist).toString() + "px";
+            window.clearTimeout(callback);
+            requestAnimationFrame(this.slide.bind(this, direction, callback));
         }
-        this.setShadow();
-    }
-
-    FixedHeader.prototype.slideUp = function () {
-        var b = parseInt(this.element.style.top) + this.height;
-        if (b > 0) {
-            var dist = Math.max(b/5, 1);
-            this.element.style.top = (b - dist - this.height).toString() + "px";
-            requestAnimationFrame(this.slideUp.bind(this));
-        }
+        this.setShadow(b);
+        window.setTimeout(callback, 50);
     };
 
     FixedHeader.prototype.setShadow = function () {
