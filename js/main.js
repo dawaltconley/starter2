@@ -412,7 +412,7 @@
             if (scrollDiff < 0 && top < 0 || scrollDiff > 0 && top > -f.height) {
                 top = Math.min(Math.max(top - scrollDiff, -f.height), 0);
                 e.style.top = top.toString() + "px";
-                f.setShadow();
+                f.setShadow(top + f.height);
                 f.doneScrolling = window.setTimeout(function () {
                     f.interruptSlideDown = false;
                     requestAnimationFrame(f.slideDown.bind(f))
@@ -470,7 +470,7 @@
     };
 
     FixedHeader.prototype.setShadow = function () {
-        var b = parseInt(this.element.style.top) + this.height;
+        var b = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : parseInt(this.element.style.top) + this.height;
         this.element.style.boxShadow = "0 " + (b/32).toString() + "px " + (b/16).toString() + "px 0 rgba(0, 0, 0, 0.2)";
     }
 
