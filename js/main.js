@@ -419,7 +419,6 @@
                 }, 500);
             }
         } else if (e.style.display != "none") {
-            e.style.display = "none";
             f.showHeaderRef();
             updateObj(e.style, { display: "none", top: -f.height.toString() + "px" });
             f.setShadow();
