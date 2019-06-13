@@ -1,8 +1,8 @@
 /**
- * Zenscroll 4.0.0
+ * Zenscroll 4.0.2
  * https://github.com/zengabor/zenscroll/
  *
- * Copyright 2015–2017 Gabor Lenard
+ * Copyright 2015–2018 Gabor Lenard
  *
  * This is free and unencumbered software released into the public domain.
  * 
@@ -58,7 +58,7 @@
 
 	// Detect if the browser already supports native smooth scrolling (e.g., Firefox 36+ and Chrome 49+) and it is enabled:
 	var isNativeSmoothScrollEnabledOn = function (elem) {
-		return ("getComputedStyle" in window) &&
+		return elem && "getComputedStyle" in window &&
 			window.getComputedStyle(elem)["scroll-behavior"] === "smooth"
 	}
 
@@ -177,6 +177,7 @@
 		 * @param {elem} The element.
 		 * @param {duration} Optionally the duration of the scroll operation.
 		 * @param {offset} Optionally the offset of the top of the element from the center of the screen.
+		 *        A value of 0 is ignored.
 		 * @param {onDone} An optional callback function to be invoked once the scroll finished.
 		 */
 		var scrollToCenterOf = function (elem, duration, offset, onDone) {
@@ -257,8 +258,8 @@
 	// Exclude IE8- or when native is enabled or Zenscroll auto- is disabled
 	if ("addEventListener" in window && !window.noZensmooth && !isNativeSmoothScrollEnabledOn(document.body)) {
 
-
-		var isScrollRestorationSupported = "scrollRestoration" in history
+		var isHistorySupported = "history" in window && "pushState" in history
+		var isScrollRestorationSupported = isHistorySupported && "scrollRestoration" in history
 
 		// On first load & refresh make sure the browser restores the position first
 		if (isScrollRestorationSupported) {
@@ -312,8 +313,10 @@
 			}
 			// Save the current scrolling position so it can be used for scroll restoration:
 			if (isScrollRestorationSupported) {
+				var historyState = history.state && typeof history.state === "object" ? history.state : {}
+				historyState.zenscrollY = zenscroll.getY()
 				try {
-					history.replaceState({ zenscrollY: zenscroll.getY() }, "")
+					history.replaceState(historyState, "")
 				} catch (e) {
 					// Avoid the Chrome Security exception on file protocol, e.g., file://index.html
 				}
@@ -337,7 +340,9 @@
 				var edgeOffset = zenscroll.setup().edgeOffset
 				if (edgeOffset) {
 					targetY = Math.max(0, targetY - edgeOffset)
-					onDone = function () { history.pushState(null, "", href) }
+					if (isHistorySupported) {
+						onDone = function () { history.pushState({}, "", href) }
+					}
 				}
 				zenscroll.toY(targetY, null, onDone)
 			}
