@@ -798,63 +798,77 @@
  * Search
  */
 
-    var searchForm = document.querySelector("[data-search]");
     var searchOptions = {
         "/posts.json": {
             id: "id",
             shouldSort: true,
-            threshold: 0.2,
+            threshold: 0.3,
             location: 0,
             distance: 240, // max characters to expect from article lead
             keys: [ "title", "author", "categories", "tags", "date.full", "date.month", "url", "excerpt", "imageCaption" ]
         }
     };
 
-    if (searchForm) {
-        var fuse;
-        var searchItemsContainer = document.querySelector("[data-search-items]");
-        var searchItems = toArray(searchItemsContainer.children);
-        var searchInfo = document.querySelector("[data-search-info]");
-        if (searchInfo) {
-            searchInfo.style.display = "none";
-        }
-
-        function search(form) {
-            event.preventDefault();
-            var query = form.elements["search"].value;
-            if (query) {
-                if (!fuse) {
-                    var file = searchForm.getAttribute("data-search");
-                    return getData(file, function (r) {
-                        fuse = new Fuse(JSON.parse(r), searchOptions[file]);
-                        search(form);
-                    });
-                }
-                var results = fuse.search(query);
-                var matchedElements = document.createDocumentFragment();
-                results.forEach(function (id) {
-                    for (var i = 0; i < searchItems.length; i++) {
-                        if (searchItems[i].id === id) {
-                            matchedElements.appendChild(searchItems[i]);
-                            break;
-                        }
-                    }
-                })
-                if (searchInfo) {
-                    var n = results.length;
-                    searchInfo.innerText = "Search returned " + n + " result" + (n > 1 ? "s" : "") + " for '" + query + "'.";
-                    searchInfo.style.display = "";
-                }
-                removeChildren(searchItemsContainer);
-                searchItemsContainer.appendChild(matchedElements);
-            }
-        }
-
-        searchForm.addEventListener("submit", function(event) {
-            event.preventDefault();
-            search(this);
-        });
+    var searchObjects = toArray(document.querySelectorAll("[data-search]"));
+    for (var i = 0; i < searchObjects.length; i++) {
+        searchObjects[i] = new Search(searchObjects[i]);
     }
+
+    function Search(form) {
+        this.form = form;
+        this.field = form.elements["search"];
+        this.file = form.getAttribute("data-search");
+        this.options = searchOptions[this.file];
+        this.outputContainer = document.querySelector('[data-search-items="' + this.file + '"]') || document.querySelector("[data-search-items]");
+        this.items = toArray(this.outputContainer.children);
+        this.info = document.querySelector('[data-search-info="' + this.file + '"]') || document.querySelector("[data-search-info]");
+        if (this.info) this.info.style.display = "none";
+    };
+
+    Search.prototype.configure = function (cb) {
+        var self = this;
+        getData(this.file, function (r) {
+            self.data = JSON.parse(r);
+            self.fuse = new Fuse(self.data, self.options);
+            cb();
+        })
+    };
+
+    Search.prototype.submit = function () {
+        var query = this.field.value;
+        if (!query) return null;
+        if (!this.fuse) return this.configure(this.submit.bind(this));
+
+        var items = this.items;
+        var results = this.fuse.search(query);
+        var matches = document.createDocumentFragment();
+        results.forEach(function (id) {
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].id === id) {
+                    matches.appendChild(items[i]);
+                    break;
+                }
+            }
+        });
+        if (this.info) {
+            var n = results.length;
+            this.info.innerText = "Search returned " + n + " result" + (n > 1 ? "s" : "") + " for '" + query + "'.";
+            this.info.style.display = "";
+        }
+        removeChildren(this.outputContainer);
+        this.outputContainer.appendChild(matches);
+    };
+
+    Search.prototype.addListeners = function () {
+        this.form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            this.submit();
+        }.bind(this))
+    };
+
+    searchObjects.forEach(function (obj) {
+        obj.addListeners();
+    });
 
 /*
  * Analytics
