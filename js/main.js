@@ -813,7 +813,7 @@
 
         function search(form) {
             event.preventDefault();
-            var query = new FormData(form).get("search");
+            var query = form.elements["search"].value;
             if (query) {
                 if (!fuse) {
                     var file = searchForm.getAttribute("data-search");
