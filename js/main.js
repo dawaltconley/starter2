@@ -298,6 +298,14 @@
         });
     });
 
+    function removeChildren(e) {
+        var child = e.lastChild;
+        while (child) {
+            e.removeChild(child);
+            child = e.lastChild;
+        }
+    }
+
     var shuffleChildren = toArray(document.querySelectorAll("[data-shuffle-children]"));
     shuffleChildren.forEach(function (e) {
         var shuffled = e.cloneNode(false);
