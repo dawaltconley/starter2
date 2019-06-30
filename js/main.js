@@ -801,8 +801,12 @@
     var searchForm = document.querySelector("[data-search]");
     var searchOptions = {
         "/posts.json": {
-            keys: [ "title", "author", "categories", "tags", "date.full", "date.month", "url", "excerpt", "imageCaption" ],
-            id: "id"
+            id: "id",
+            shouldSort: true,
+            threshold: 0.2,
+            location: 0,
+            distance: 240, // max characters to expect from article lead
+            keys: [ "title", "author", "categories", "tags", "date.full", "date.month", "url", "excerpt", "imageCaption" ]
         }
     };
 
