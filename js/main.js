@@ -248,6 +248,26 @@
         }
     }
 
+    function getData(path, callback) {
+        var request = new XMLHttpRequest();
+        request.open("GET", path);
+        request.onload = function () {
+            if (this.status >= 200 && this.status < 400) {
+                callback(this.response);
+            } else {
+                // server error
+                callback(undefined);
+            }
+        }
+
+        request.onerror = function () {
+            // error handling
+            callback(undefined);
+        }
+
+        request.send();
+    }
+
 /*
  * DOM Manipulation
  */
