@@ -795,6 +795,54 @@
     };
 
 /*
+ * Search
+ */
+
+    var searchForm = document.querySelector("[data-search]");
+    var searchOptions = {
+        "/posts.json": {
+            keys: [ "title", "author", "categories", "tags", "date.full", "date.month", "url", "excerpt", "imageCaption" ],
+            id: "id"
+        }
+    };
+
+    if (searchForm) {
+        var fuse;
+        var searchItemsContainer = document.querySelector("[data-search-items]");
+        var searchItems = toArray(searchItemsContainer.children);
+
+        function search(form) {
+            event.preventDefault();
+            var query = new FormData(form).get("search");
+            if (query) {
+                if (!fuse) {
+                    var file = searchForm.getAttribute("data-search");
+                    return getData(file, function (r) {
+                        fuse = new Fuse(JSON.parse(r), searchOptions[file]);
+                        search(form);
+                    });
+                }
+                var searchResults = document.createDocumentFragment();
+                fuse.search(query).forEach(function (id) {
+                    for (var i = 0; i < searchItems.length; i++) {
+                        if (searchItems[i].id === id) {
+                            searchResults.appendChild(searchItems[i]);
+                            break;
+                        }
+                    }
+                })
+                removeChildren(searchItemsContainer);
+                searchItemsContainer.appendChild(searchResults);
+            }
+        }
+
+        searchForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            search(this);
+        });
+    }
+
+/*
  * Analytics
  */
 
