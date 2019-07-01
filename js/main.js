@@ -875,7 +875,7 @@
                 }
             }
         }
-        return data.map(function (r) { return r.id; });
+        return data === this.data ? [] : data.map(function (r) { return r.id; });
     };
 
     Search.prototype.search = function (query) {
