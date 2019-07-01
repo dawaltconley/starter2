@@ -836,6 +836,7 @@
     };
 
     Search.prototype.dateSearch = function (query) {
+        if (!this.data[0].date) return null;
         var keys = {
             year: /^\d{4}$/,
             month: /^\w{1,9}$/,
@@ -864,7 +865,7 @@
         if (!query) return null;
         if (!this.fuse) return this.configure(this.search.bind(this, query));
 
-        if (this.data[0].date) var dateResults = this.dateSearch(query);
+        var dateResults = this.dateSearch(query);
         var results = dateResults && dateResults.length ? dateResults : this.fuse.search(query);
         var items = this.items;
         var matches = document.createDocumentFragment();
