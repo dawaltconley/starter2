@@ -835,40 +835,36 @@
         });
     };
 
+    Search.prototype.dateSearch = function (query) {
+        var keys = {
+            year: /^\d{4}$/,
+            month: /^\w{1,9}$/,
+            day: /^\d{1,2}$/
+        }
+        var queries = query.replace(/-/g, " ").replace(/\//g, " ").split(" ");
+        var data = this.data;
+        for (var k in keys) {
+            var regex = keys[k];
+            for (var i = 0; i < queries.length; i++) {
+                var q = queries[i];
+                if (!q.match(regex)) continue;
+                var match = data.filter(function (d) {
+                    return q.toLowerCase() === d.date[k].toLowerCase();
+                })
+                if (match.length) {
+                    data = match;
+                    break;
+                }
+            }
+        }
+        return data.map(function (r) { return r.id; });
+    };
+
     Search.prototype.search = function (query) {
         if (!query) return null;
         if (!this.fuse) return this.configure(this.search.bind(this, query));
 
-        var dateResults = [];
-        if (this.data[0].date) {
-            var dateQuery = query.replace(/-/g, " ").replace(/\//g, " ").split(" ");
-            var keys = {
-                year: /^\d{4}$/,
-                month: /^\w{1,9}$/,
-                day: /^\d{1,2}$/
-            }
-            var data = this.data;
-            for (var k in keys) {
-                // iterate thru search keys
-                var regex = keys[k];
-                for (var i = 0; i < dateQuery.length; i++) {
-                    // iterate thru queries
-                    var q = dateQuery[i];
-                    if (!q.match(regex)) continue;
-                    var match = data.filter(function (d) {
-                        return q.toLowerCase() === d.date[k].toLowerCase();
-                    })
-                    if (match.length) {
-                        dateResults = match;
-                        data = match;
-                        break;
-                    }
-                    console.log("query", q, "key", k, "data", data, "results", dateResults);
-                }
-            }
-            dateResults = dateResults.map(function (r) { return r.id; });
-        }
-
+        if (this.data[0].date) var dateResults = this.dateSearch(query);
         var results = dateResults && dateResults.length ? dateResults : this.fuse.search(query);
         var items = this.items;
         var matches = document.createDocumentFragment();
