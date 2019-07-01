@@ -802,9 +802,9 @@
         "/posts.json": {
             id: "id",
             shouldSort: true,
-            threshold: 0.2,
+            threshold: 0.3,
             location: 0,
-            distance: 240, // max characters to expect from article lead
+            distance: 2400,
             keys: [ "title", "author", "categories", "tags", "url", "excerpt", "imageCaption" ]
         }
     };
