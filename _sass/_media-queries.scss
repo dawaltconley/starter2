@@ -59,8 +59,6 @@
 .full-width {
     @include mq {
         width: 100%;
-        min-width: auto;
-        max-width: none;
     }
 }
 
@@ -109,6 +107,17 @@
 .cursor-pointer {
     @include mq("header") {
         cursor: pointer;
+    }
+}
+
+/*
+ * Large Only
+ */
+
+.text-wrapper {
+    @include mq("large") {
+        box-sizing: content-box;
+        max-width: $base-line-length;
     }
 }
 

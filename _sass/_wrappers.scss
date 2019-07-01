@@ -17,6 +17,7 @@
 }
 
 .text-wrapper {
+    box-sizing: content-box;
     max-width: $base-line-length;
 }
 
