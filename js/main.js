@@ -837,20 +837,37 @@
 
     Search.prototype.dateSearch = function (query) {
         if (!this.data[0].date) return null;
-        var keys = {
-            year: /^\d{4}$/,
-            month: /^\w{1,9}$/,
-            day: /^\d{1,2}$/
+        if (!this.months || !this.fuseMonth || this.dateKeys) {
+            this.months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+            this.fuseMonth = new Fuse(this.months, { threshold: 0.3, distance: 2 });
+            this.dateKeys = [
+                {
+                    name: "year",
+                    convert: function (q) { return 999 < q && parseInt(q) },
+                },
+                {
+                    name: "month",
+                    convert: function (q) { return isNaN(q) && this.fuseMonth.search(q)[0] + 1 }.bind(this),
+                },
+                {
+                    name: "month",
+                    convert: function (q) { return 0 < q && q < 13 && parseInt(q); }, // can make this run conditionally with a second arg
+                },
+                {
+                    name: "day",
+                    convert: function (q) { return 0 < q && q < 32 && parseInt(q) },
+                }
+            ]
         }
         var queries = query.replace(/-/g, " ").replace(/\//g, " ").split(" ");
         var data = this.data;
-        for (var k in keys) {
-            var regex = keys[k];
+        for (var j = 0; j < this.dateKeys.length; j++) {
+            var k = this.dateKeys[j];
             for (var i = 0; i < queries.length; i++) {
-                var q = queries[i];
-                if (!q.match(regex)) continue;
+                var q = k.convert(queries[i]);
+                if (!q) continue;
                 var match = data.filter(function (d) {
-                    return q.toLowerCase() === d.date[k].toLowerCase();
+                    return q === d.date[k.name];
                 })
                 if (match.length) {
                     data = match;
