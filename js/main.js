@@ -802,10 +802,10 @@
         "/posts.json": {
             id: "id",
             shouldSort: true,
-            threshold: 0.3,
+            threshold: 0.2,
             location: 0,
             distance: 240, // max characters to expect from article lead
-            keys: [ "title", "author", "categories", "tags", "date.full", "date.month", "url", "excerpt", "imageCaption" ]
+            keys: [ "title", "author", "categories", "tags", "url", "excerpt", "imageCaption" ]
         }
     };
 
@@ -825,22 +825,52 @@
         if (this.info) this.info.style.display = "none";
     };
 
-    Search.prototype.configure = function (cb) {
+    Search.prototype.configure = function () {
+        var cb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
         var self = this;
         getData(this.file, function (r) {
             self.data = JSON.parse(r);
             self.fuse = new Fuse(self.data, self.options);
             cb();
-        })
+        });
     };
 
-    Search.prototype.submit = function () {
-        var query = this.field.value;
+    Search.prototype.search = function (query) {
         if (!query) return null;
-        if (!this.fuse) return this.configure(this.submit.bind(this));
+        if (!this.fuse) return this.configure(this.search.bind(this, query));
 
+        var dateResults = [];
+        if (this.data[0].date) {
+            var dateQuery = query.replace(/-/g, " ").replace(/\//g, " ").split(" ");
+            var keys = {
+                year: /^\d{4}$/,
+                month: /^\w{1,9}$/,
+                day: /^\d{1,2}$/
+            }
+            var data = this.data;
+            for (var k in keys) {
+                // iterate thru search keys
+                var regex = keys[k];
+                for (var i = 0; i < dateQuery.length; i++) {
+                    // iterate thru queries
+                    var q = dateQuery[i];
+                    if (!q.match(regex)) continue;
+                    var match = data.filter(function (d) {
+                        return q.toLowerCase() === d.date[k].toLowerCase();
+                    })
+                    if (match.length) {
+                        dateResults = match;
+                        data = match;
+                        break;
+                    }
+                    console.log("query", q, "key", k, "data", data, "results", dateResults);
+                }
+            }
+            dateResults = dateResults.map(function (r) { return r.id; });
+        }
+
+        var results = dateResults && dateResults.length ? dateResults : this.fuse.search(query);
         var items = this.items;
-        var results = this.fuse.search(query);
         var matches = document.createDocumentFragment();
         results.forEach(function (id) {
             for (var i = 0; i < items.length; i++) {
@@ -862,7 +892,7 @@
     Search.prototype.addListeners = function () {
         this.form.addEventListener("submit", function(event) {
             event.preventDefault();
-            this.submit();
+            this.search(this.field.value);
         }.bind(this))
     };
 
