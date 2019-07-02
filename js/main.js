@@ -908,11 +908,25 @@
         this.outputContainer.appendChild(matches);
     };
 
+    Search.prototype.searchQueryString = function () {
+        var qs = new URLSearchParams(window.location.search);
+        this.field.value = qs.get(this.field.name);
+        this.search(this.field.value);
+    };
+
+    Search.prototype.setQueryString = function () {
+        var qs = new URLSearchParams;
+        qs.set(this.field.name, this.field.value);
+        pushQuery(qs);
+    };
+
     Search.prototype.addListeners = function () {
         this.form.addEventListener("submit", function(event) {
             event.preventDefault();
             this.search(this.field.value);
+            this.setQueryString();
         }.bind(this))
+        window.addEventListener("popstate", this.searchQueryString.bind(this));
     };
 
     searchObjects.forEach(function (obj) {
