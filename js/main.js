@@ -173,9 +173,14 @@
         return element.clientHeight + elementMargin;
     };
 
-    function pushState(hash) {
-        window.history.pushState({ hasFocus: hash}, hash.slice(1), hash);
+    function pushHash(hash) {
+        window.history.pushState({ hasFocus: hash }, hash.slice(1), hash);
     };
+
+    function pushQuery(q) {
+        var query = q instanceof URLSearchParams ? q.toString() : q.replace(/^\?/, "");
+        window.history.pushState({ queryString: "?" + query }, query, window.location.pathname + "?" + query);
+    }
 
     function executeQueue(array, time) {
         window.setTimeout(function () {
