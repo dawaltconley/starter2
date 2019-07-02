@@ -5,6 +5,7 @@
 @media screen and (max-width: map-get($bp, header)) {
     [data-menu-links] {
         height: auto;
+        min-height: 0;
         max-height: 0;
 
         & > * {
