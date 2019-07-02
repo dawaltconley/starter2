@@ -14,6 +14,11 @@ function BgSelect(element) {
     var initialImage = {"name": "initial"};
 
     if (element.tagName == "IMG") { // use element.src?
+        var replaceImgWithDiv = function (img, replacement) {
+            updateObj(replacement.style, { width: img.width + "px", height: img.height + "px" });
+            img.parentNode.replaceChild(replacement, img);
+        };
+
         initialImage.path = element.src;
         initialImage.size = computedStyle.getPropertyValue("object-fit") == "contain" ? "contain" : "cover";
         initialImage.position = computedStyle.getPropertyValue("object-position");
@@ -24,11 +29,6 @@ function BgSelect(element) {
         divImg.classList.add("bg-img");
         updateObj(divImg.style, { backgroundImage: "url('" + initialImage.path + "')", backgroundSize: initialImage.size, backgroundPosition: initialImage.position });
         menuContainer = divImg;
-
-        function replaceImgWithDiv(img, replacement) {
-            updateObj(replacement.style, { width: img.width + "px", height: img.height + "px" });
-            img.parentNode.replaceChild(replacement, img);
-        }
 
         if (element.complete) {
             replaceImgWithDiv(element, divImg);

@@ -24,7 +24,7 @@
 
     function toArray(collection) {
         return Array.prototype.slice.call(collection);
-    };
+    }
 
     function getScrollableParent(element) {
         var maxDepth = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
@@ -37,7 +37,7 @@
             maxDepth -= 1;
         }
         return null;
-    };
+    }
 
     function getScrollableChild(element) {
         var maxDepth = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
@@ -54,7 +54,7 @@
             }
         }
         return null;
-    };
+    }
 
     function getTransitionTime(element) {
         var properties, durSet = [ 0 ];
@@ -67,7 +67,7 @@
         var tDur = computedStyle.getPropertyValue(prefix + "transition-duration").split(", ");
         var tDelay = computedStyle.getPropertyValue(prefix + "transition-delay").split(", ");
         properties.forEach(function (property) {
-            for (var i=0; i < tProperty.length; i++) {
+            for (var i = 0; i < tProperty.length; i++) {
                 if (property == tProperty[i] || tProperty[i] == "all" || property == "all") {
                     var dur = Number(tDur[i].replace("s", ""));
                     var delay = Number(tDelay[i].replace("s", ""));
@@ -76,14 +76,14 @@
             }
         });
         return Math.max.apply(null, durSet);
-    };
+    }
 
     function scrollBottom(element) {
         //opposite of .scrollTop: measures dist between bottom of view and bottom of element
         var elementBottom = element.scrollHeight;
         var viewBottom = element.scrollTop + element.clientHeight;
         return elementBottom - viewBottom;
-    };
+    }
 
     function getRelativeClientRect(child, parent) {
         var cRect = child.getBoundingClientRect();
@@ -118,7 +118,7 @@
         for (var i = 0; element.children && i < element.children.length && maxDepth !== 0; i++) {
             updateDescendentIds(element.children[i], string, position, maxDepth - 1);
         }
-    };
+    }
 
     function getHash(element) { // for getting hash of an anchor, regardless of whether it is an HTML or SVG anchor
         var elementClass = Object.prototype.toString.call(element);
@@ -130,7 +130,7 @@
         } else {
             return null;
         }
-    };
+    }
 
     function clearClass(string, elements) {
         var className, allOfClass;
@@ -147,35 +147,35 @@
         allOfClass.forEach(function (element) {
             element.classList.remove(className);
         });
-    };
+    }
 
     function contentWidth(element) {
         var elementStyle = window.getComputedStyle(element);
         var elementPadding = parseInt(elementStyle.getPropertyValue("padding-left")) + parseInt(elementStyle.getPropertyValue("padding-right"));
         return element.clientWidth - elementPadding;
-    };
+    }
 
     function contentHeight(element) {
         var elementStyle = window.getComputedStyle(element);
         var elementPadding = parseInt(elementStyle.getPropertyValue("padding-top")) + parseInt(elementStyle.getPropertyValue("padding-bottom"));
         return element.clientHeight - elementPadding;
-    };
+    }
 
     function marginWidth(element) {
         var elementStyle = window.getComputedStyle(element);
         var elementMargin = parseInt(elementStyle.getPropertyValue("margin-left")) + parseInt(elementStyle.getPropertyValue("margin-right"));
         return element.clientWidth + elementMargin;
-    };
+    }
 
     function marginHeight(element) {
         var elementStyle = window.getComputedStyle(element);
         var elementMargin = parseInt(elementStyle.getPropertyValue("margin-top")) + parseInt(elementStyle.getPropertyValue("margin-bottom"));
         return element.clientHeight + elementMargin;
-    };
+    }
 
     function pushHash(hash) {
         window.history.pushState({ hasFocus: hash }, hash.slice(1), hash);
-    };
+    }
 
     function pushQuery(q) {
         var query = q instanceof URLSearchParams ? q.toString() : q.replace(/^\?/, "");
@@ -188,7 +188,7 @@
                 array.shift().call();
             }
         }, time);
-    };
+    }
 
     function insertAfter(referenceNode, newNode) {
         referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
@@ -200,11 +200,11 @@
         } else {
             return false;
         }
-    };
+    }
 
     function distToBottom(element) {
         return Math.floor(element.getBoundingClientRect().bottom - window.innerHeight);
-    };
+    }
 
     function onScroll(direction, callback) {
         var scroller = arguments.length > 2 && arguments[2] != undefined ? arguments[2] : win;
@@ -238,14 +238,14 @@
                 removeListener();
                 callback();
             }, buffer);
-        };
+        }
 
         scroller.addEventListener("scroll", scrolling, passive);
         return function () {
             removeListener();
             window.clearTimeout(doneScrolling);
         };
-    };
+    }
 
     function updateObj(obj, newObj) {
         for (var key in newObj) {
@@ -295,7 +295,7 @@
     }
 
     function LazyImage(img) {
-        if (imgLoaded(img)){
+        if (imgLoaded(img)) {
             this.alreadyLoaded = true;
         } else {
             var attributes = ["src", "srcset"];
@@ -315,7 +315,7 @@
                 this.element.setAttribute(attribute, this.assets[attribute]);
             }
         }
-    }
+    };
 
     window.addEventListener("load", function () {
         lazyImages.forEach(function (e) {
@@ -384,7 +384,7 @@
     function SmoothLink(link) {
         this.element = link;
         this.target = document.querySelector(link.hash);
-    };
+    }
 
     SmoothLink.prototype.scroll = function () {
         var dur = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
@@ -393,14 +393,13 @@
     };
 
     function receivesSmoothScroll(element) {
-        for (var i=0; i < smoothLinks.length; i++) {
-            var link = smoothLinks[i];
-            if (element === link.target) {
+        for (var i = 0; i < smoothLinks.length; i++) {
+            if (element === smoothLinks[i].target) {
                 return true;
             }
         }
         return false;
-    };
+    }
 
 /*
  * Fixed Headers
@@ -426,12 +425,12 @@
     FixedHeader.prototype.hideHeaderRef = function () {
         this.headerRef.setAttribute("aria-hidden", "true");
         this.headerRef.setAttribute("role", "presentation");
-    }
+    };
 
     FixedHeader.prototype.showHeaderRef = function () {
         this.headerRef.removeAttribute("aria-hidden");
         this.headerRef.removeAttribute("role");
-    }
+    };
 
     FixedHeader.prototype.scroll = function () {
         var f = this;
@@ -461,7 +460,7 @@
             f.setShadow();
         }
         f.pos = pos;
-    }
+    };
 
     FixedHeader.prototype.disableScroll = function () {
         win.removeEventListener("scroll", this.scrollListener, passive);
@@ -476,7 +475,7 @@
         this.refPos = pagePos(this.headerRef);
         this.height = this.headerRef.clientHeight;
         updateObj(this.element.style, { width: this.headerRef.clientWidth.toString() + "px", height: this.height.toString() + "px" });
-    }
+    };
 
     FixedHeader.prototype.resize = function () {
         this.disableScroll();
@@ -503,12 +502,12 @@
     FixedHeader.prototype.setShadow = function () {
         var b = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : parseInt(this.element.style.top) + this.height;
         this.element.style.boxShadow = "0 " + (b/32).toString() + "px " + (b/16).toString() + "px 0 rgba(0, 0, 0, 0.2)";
-    }
+    };
 
     FixedHeader.prototype.addListeners = function () {
         win.addEventListener("scroll", this.scrollListener, passive);
         window.addEventListener("resize", this.resize.bind(this), passive);
-    }
+    };
 
     var fixedHeader = document.querySelector("[data-fixed-header]");
 
@@ -537,7 +536,7 @@
         };
         this.links = element.querySelector('[data-menu-links]');
         this.state = "closed";
-    };
+    }
 
     collapsibleMenus.forEach(function (menu) {
         menu.buttons.open.forEach(function (button) {
@@ -596,7 +595,7 @@
                 }.bind(this));
             }
         }
-    }
+    };
 
 /*
  * Animations
@@ -638,7 +637,7 @@
             } else {
                 slide.element.style.opacity = "0";
             }
-        })
+        });
         this.arrange(0);
 
         var timing = e.getAttribute("data-slideshow").split(":").map(function (t) {
@@ -666,7 +665,7 @@
                 this.timePaused = this.now;
                 this.paused = true;
             }.bind(this));
-        }.bind(this))
+        }.bind(this));
     }
 
     function Slide(e) {
@@ -690,7 +689,7 @@
             });
             window.setTimeout(cancelAnimationFrame.bind(window, frame), dur);
         }
-    }
+    };
 
     Slideshow.prototype.arrange = function (i) {
         this.current = this.slides[i];
@@ -702,7 +701,7 @@
                 style.zIndex = "-1";
             }
         }
-    }
+    };
 
     Slideshow.prototype.fadeTo = function (i) {
         if (!this.fading) {
@@ -718,7 +717,7 @@
                 this.fading = false;
             }.bind(this), dur + 100);
         }
-    }
+    };
 
     Slideshow.prototype.fadeToNext = function () {
         var dur = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
@@ -727,7 +726,7 @@
             next = 0;
         }
         this.fadeTo(next, dur);
-    }
+    };
 
     Slideshow.prototype.fadeToPrev = function () {
         var dur = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
@@ -736,7 +735,7 @@
             prev = this.slides.length - 1;
         }
         this.fadeTo(prev, dur);
-    }
+    };
 
     Slideshow.prototype.play = function () {
         var s = this;
@@ -760,7 +759,7 @@
                 requestAnimationFrame(next);
             }
         });
-    }
+    };
 
     var slideshows = toArray(document.querySelectorAll("[data-slideshow]")).map(function (e) {
         return new Slideshow(e);
@@ -789,13 +788,13 @@
                 element.style.height = viewHeight.toString() + "px";
             }
         }
-    };
+    }
 
     function forceFullscreenAll() {
         fullscreenElements.forEach(function (element) {
             forceFullscreen(element);
         });
-    };
+    }
 
 /*
  * Search
@@ -825,7 +824,7 @@
         this.items = toArray(this.outputContainer.children);
         this.info = document.querySelector('[data-search-info="' + this.file + '"]') || document.querySelector("[data-search-info]");
         if (this.info) this.info.style.display = "none";
-    };
+    }
 
     Search.prototype.configure = function () {
         var cb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
@@ -947,21 +946,21 @@
         this.action = element.getAttribute("data-analytics-action");
         this.label = element.getAttribute("data-analytics-label");
         this.new_tab = element.getAttribute("target") == "_blank";
-    };
+    }
 
-    if (jekyllEnv == 'production') {
+    if (jekyllEnv == "production") {
         AnalyticsEventObj.prototype.send = function () {
-            var callback = arguments.length > 0 && arguments[0] != undefined ? arguments[0] : function(){};
+            var callback = arguments.length > 0 && arguments[0] != undefined ? arguments[0] : function () {};
             ga("send", "event", this.category, this.action, this.label, {
                 "hitCallback": callback
             });
-        }
+        };
     } else {
         AnalyticsEventObj.prototype.send = function (callback) {
             var cbString = callback ? ', {\n    "hitCallback": ' + callback + '\n}' : '';
             console.log('Google Analytics Event: ga("send", "event", "%s", "%s", "%s"%s)', this.category, this.action, this.label, cbString);
             callback ? callback() : undefined;
-        }
+        };
     }
 
     AnalyticsEventObj.prototype.addListener = function () {
@@ -969,7 +968,7 @@
             this.listener = iFrameClickEventListener.bind(null, this);
             window.addEventListener("blur", this.listener, passive);
         } else if (this.action == "click") {
-            this.listener = linkClickEventListener.bind(null, this)
+            this.listener = linkClickEventListener.bind(null, this);
             this.element.addEventListener("click", this.listener);
         } else if (this.action == "view") {
             this.listener = scrollToViewEventListener.bind(null, this);
@@ -983,23 +982,23 @@
         } else {
             event.preventDefault();
             var linkFollowed = false;
-            function followLink() {
+            var followLink = function () {
                 if (!linkFollowed) {
                     linkFollowed = true;
                     window.open(eventObj.element.href, eventObj.element.target);
                 }
-            }
+            };
             window.setTimeout(followLink, 1000);
             eventObj.send(followLink);
         }
-    };
+    }
 
     function scrollToViewEventListener(eventObj) {
         if (distToBottom(eventObj.element) <= 0) {
             eventObj.send();
             win.removeEventListener("scroll", eventObj.listener, passive);
         }
-    };
+    }
 
     function iFrameClickEventListener(eventObj) {
         window.setTimeout(function () {
@@ -1012,7 +1011,7 @@
                 window.removeEventListener("blur", eventObj.listener, passive);
             }
         }, 0);
-    };
+    }
 
 /*
  * Event Listeners
@@ -1026,7 +1025,6 @@
                 passive = { passive: true };
             }
         });
-
         window.addEventListener("test", null, options);
     } catch (err) {}
 
@@ -1043,7 +1041,7 @@
                 link.scroll();
             });
         });
-    };
+    }
 
     function addOrientationChangeListener() {
         var initOrientation = window.innerHeight > window.innerWidth;
@@ -1056,7 +1054,7 @@
                 initOrientation = newOrientation;
             }, passive);
         }
-    };
+    }
 
     var elementsToHideOnScroll = toArray(document.querySelectorAll("[data-hide-on-scroll]"));
 
@@ -1074,10 +1072,10 @@
                 });
             }
         }, passive);
-    };
+    }
 
     objectFitImages();
-    if (fixedHeader) { fixedHeader.addListeners(); }
+    if (fixedHeader) fixedHeader.addListeners();
     addCollapsibleMenuListeners();
 
     if (smoothLinks.length > 0 && pageScrollBehavior != "smooth") {
