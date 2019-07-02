@@ -928,6 +928,7 @@
     };
 
     searchObjects.forEach(function (obj) {
+        obj.searchQueryString();
         obj.addListeners();
     });
 
