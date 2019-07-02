@@ -849,7 +849,7 @@
                 },
                 {
                     name: "month",
-                    convert: function (q) { return isNaN(q) && this.fuseMonth.search(q)[0] + 1 }.bind(this),
+                    convert: function (q) { return isNaN(q) && q.length > 2 && this.fuseMonth.search(q)[0] + 1 }.bind(this),
                 },
                 {
                     name: "month",
