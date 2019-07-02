@@ -883,9 +883,10 @@
         return data === this.data ? [] : data.map(function (r) { return r.id; });
     };
 
-    Search.prototype.search = function (query) {
+    Search.prototype.search = function () {
+        var query = this.field.value;
         if (!query) return null;
-        if (!this.fuse) return this.configure(this.search.bind(this, query));
+        if (!this.fuse) return this.configure(this.search.bind(this));
 
         var dateResults = this.dateSearch(query);
         var results = dateResults && dateResults.length ? dateResults : this.fuse.search(query);
@@ -911,7 +912,7 @@
     Search.prototype.searchQueryString = function () {
         var qs = new URLSearchParams(window.location.search);
         this.field.value = qs.get(this.field.name);
-        this.search(this.field.value);
+        this.search();
     };
 
     Search.prototype.setQueryString = function () {
@@ -923,7 +924,7 @@
     Search.prototype.addListeners = function () {
         this.form.addEventListener("submit", function(event) {
             event.preventDefault();
-            this.search(this.field.value);
+            this.search();
             this.setQueryString();
         }.bind(this))
         window.addEventListener("popstate", this.searchQueryString.bind(this));
