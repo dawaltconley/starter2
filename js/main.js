@@ -46,7 +46,7 @@
         if (element.scrollHeight > element.clientHeight) {
             return element;
         }
-        for (var i = 0; i < element.children.length && maxDepth > currentDepth; i++) {
+        for (var i = 0; element.children && i < element.children.length && maxDepth > currentDepth; i++) {
             var child = element.children[i];
             var childMatch = getScrollableChild(child, maxDepth, currentDepth += currentDepth);
             if (childMatch) {
@@ -115,7 +115,7 @@
         } else if (element.id && position == "prefix") {
             element.id = string + element.id;
         }
-        for (var i = 0; i < element.children.length && maxDepth !== 0; i++) {
+        for (var i = 0; element.children && i < element.children.length && maxDepth !== 0; i++) {
             updateDescendentIds(element.children[i], string, position, maxDepth - 1);
         }
     };
