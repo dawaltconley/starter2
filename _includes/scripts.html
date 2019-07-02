@@ -1,6 +1,7 @@
 {% unless site.auto_scroll %}
   <script>window.noZensmooth = true</script>
 {% endunless %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.2.20171210/classList.min.js"></script>
 {% if jekyll.environment == 'production' or jekyll.environment == 'gulp' %}
   <script src="{{ site.baseurl }}/js/all.js"></script>
 {% else %}
