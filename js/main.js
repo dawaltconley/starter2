@@ -375,10 +375,9 @@
  */
 
     var pageScrollBehavior = window.getComputedStyle(page).getPropertyValue("scroll-behavior");
-    var smoothLinks = toArray(document.querySelectorAll("[data-smooth-scroll]"));
-    for(var i = 0; i < smoothLinks.length; i++) {
-        smoothLinks[i] = new SmoothLink(smoothLinks[i]);
-    }
+    var smoothLinks = toArray(document.querySelectorAll("[data-smooth-scroll]")).map(function (e) {
+        return new SmoothLink(e);
+    });
 
     zenscroll.setup(500, 0);
 
@@ -521,13 +520,13 @@
  * Collapsible Menus
  */
 
-    var collapsibleMenus = toArray(document.querySelectorAll("[data-menu]"));
-    for (var i = 0; i < collapsibleMenus.length; i++) {
-        collapsibleMenus[i] = new CollapsibleMenu(collapsibleMenus[i]);
-        if (fixedHeader && collapsibleMenus[i].element === fixedHeader.element) {
-            fixedHeader.menu = collapsibleMenus[i];
+    var collapsibleMenus = toArray(document.querySelectorAll("[data-menu]")).map(function (e) {
+        var o = new CollapsibleMenu(e)
+        if (fixedHeader && fixedHeader === e) {
+            fixedHeader.menu = o;
         }
-    }
+        return o;
+    });
 
     function CollapsibleMenu(element) {
         this.element = element;
@@ -763,10 +762,9 @@
         });
     }
 
-    var slideshows = toArray(document.querySelectorAll("[data-slideshow]"));
-    for (var i = 0; i < slideshows.length; i++) {
-        slideshows[i] = new Slideshow(slideshows[i]);
-    }
+    var slideshows = toArray(document.querySelectorAll("[data-slideshow]")).map(function (e) {
+        return new Slideshow(e);
+    });
 
     window.addEventListener("load", function () {
         slideshows.forEach(function (s) {
@@ -814,10 +812,9 @@
         }
     };
 
-    var searchObjects = toArray(document.querySelectorAll("[data-search]"));
-    for (var i = 0; i < searchObjects.length; i++) {
-        searchObjects[i] = new Search(searchObjects[i]);
-    }
+    var searchObjects = toArray(document.querySelectorAll("[data-search]")).map(function (e) {
+        return new Search(e);
+    });
 
     function Search(form) {
         this.form = form;
@@ -939,9 +936,9 @@
  */
 
     var analyticsObjects = toArray(document.querySelectorAll("[data-analytics-category][data-analytics-action][data-analytics-label]"));
-    for (var i = 0; i < analyticsObjects.length; i++) {
-        analyticsObjects[i] = new AnalyticsEventObj(analyticsObjects[i]);
-    }
+    analyticsObjects = analyticsObjects.map(function (e) {
+        return new AnalyticsEventObj(e);
+    });
 
     function AnalyticsEventObj(element) {
         this.element = element;
