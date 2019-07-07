@@ -133,18 +133,9 @@
     }
 
     function clearClass(string, elements) {
-        var className, allOfClass;
-        if (string.charAt(0) === ".") {
-            className = string.slice(1);
-        } else {
-            className = string;
-        }
-        if (elements === undefined) {
-            allOfClass = toArray(document.querySelectorAll("." + className));
-        } else {
-            allOfClass = toArray(elements);
-        }
-        allOfClass.forEach(function (element) {
+        var className = string.charAt(0) === "." ? string.slice(1) : string;
+        var elements = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : document.querySelectorAll("." + className);
+        toArray(allOfClass).forEach(function (element) {
             element.classList.remove(className);
         });
     }
@@ -357,17 +348,17 @@
     var classAddElements = toArray(document.querySelectorAll("[data-class-add]"));
 
     classRemoveElements.forEach(function (element) {
-        var rmClasses = element.getAttribute("data-class-rm").split(" ");
-        for (var i=0; i < rmClasses.length; i++) {
-            element.classList.remove(rmClasses[i]);
-        }
+        element.getAttribute("data-class-rm")
+            .split(" ").forEach(function (c) {
+                element.classList.remove(c);
+            });
     });
 
     classAddElements.forEach(function (element) {
-        var addClasses = element.getAttribute("data-class-add").split(" ");
-        for (var i=0; i < addClasses.length; i++) {
-            element.classList.add(addClasses[i]);
-        }
+        element.getAttribute("data-class-add")
+            .split(" ").forEach(function (c) {
+                element.classList.add(c);
+            });
     });
 
 /*
@@ -778,15 +769,10 @@
     var fullscreenElements = toArray(document.querySelectorAll("[data-force-fullscreen]"));
 
     function forceFullscreen(element) {
-        var viewHeight = window.innerHeight;
-        if (element.clientHeight != viewHeight) {
-            if (element.getAttribute("data-force-fullscreen") === "min") {
-                element.style.minHeight = viewHeight.toString() + "px";
-            } else if (element.getAttribute("data-force-fullscreen") === "max") {
-                element.style.maxHeight = viewHeight.toString() + "px";
-            } else {
-                element.style.height = viewHeight.toString() + "px";
-            }
+        if (element.clientHeight !== viewHeight) {
+            var p = element.getAttribute("data-force-fullscreen");
+            var p = p === "min" || p === "max" ? p + "Height" : "height";
+            element.style[p] = window.innerHeight.toString() + "px";
         }
     }
 
