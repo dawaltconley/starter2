@@ -375,12 +375,14 @@
 
     function SmoothLink(link) {
         this.element = link;
+        this.hash = link.hash;
         this.target = document.querySelector(link.hash);
     }
 
     SmoothLink.prototype.scroll = function () {
         var dur = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
         var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+        pushHash(this.hash);
         smoothScroller.to(this.target, dur, offset);
     };
 
