@@ -365,12 +365,13 @@
  * Scrolling
  */
 
+    var smoothScroller = zenscroll;
+    smoothScroller.setup(500, 0);
+
     var pageScrollBehavior = window.getComputedStyle(page).getPropertyValue("scroll-behavior");
     var smoothLinks = toArray(document.querySelectorAll("[data-smooth-scroll]")).map(function (e) {
         return new SmoothLink(e);
     });
-
-    zenscroll.setup(500, 0);
 
     function SmoothLink(link) {
         this.element = link;
@@ -380,7 +381,7 @@
     SmoothLink.prototype.scroll = function () {
         var dur = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
         var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-        zenscroll.to(this.target, dur, offset);
+        smoothScroller.to(this.target, dur, offset);
     };
 
     function receivesSmoothScroll(element) {
