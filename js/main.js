@@ -10,7 +10,7 @@
     var page = document.querySelector(".parallax-page");
     var win = page;
 
-    if (!page || window.getComputedStyle(page).getPropertyValue("perspective") == "none") {
+    if (!page || window.getComputedStyle(page).getPropertyValue("perspective") === "none") {
         page = document.scrollingElement ? document.scrollingElement : getScrollableChild(document.documentElement);
         win = window;
     }
@@ -29,7 +29,7 @@
     function getScrollableParent(element) {
         var maxDepth = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
         var ancestor = element;
-        while (ancestor != document.documentElement && maxDepth !== 0) {
+        while (ancestor !== document.documentElement && maxDepth !== 0) {
             ancestor = ancestor.parentElement;
             if (ancestor.scrollHeight > ancestor.clientHeight) {
                 return ancestor;
@@ -68,7 +68,7 @@
         var tDelay = computedStyle.getPropertyValue(prefix + "transition-delay").split(", ");
         properties.forEach(function (property) {
             for (var i = 0; i < tProperty.length; i++) {
-                if (property == tProperty[i] || tProperty[i] == "all" || property == "all") {
+                if (property === tProperty[i] || tProperty[i] === "all" || property === "all") {
                     var dur = Number(tDur[i].replace("s", ""));
                     var delay = Number(tDelay[i].replace("s", ""));
                     durSet.push((dur + delay) * 1000);
@@ -110,9 +110,9 @@
     function updateDescendentIds(element, string) {
         var position = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "suffix";
         var maxDepth = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : undefined;
-        if (element.id && position == "suffix") {
+        if (element.id && position === "suffix") {
             element.id = element.id + string;
-        } else if (element.id && position == "prefix") {
+        } else if (element.id && position === "prefix") {
             element.id = string + element.id;
         }
         for (var i = 0; element.children && i < element.children.length && maxDepth !== 0; i++) {
@@ -122,10 +122,10 @@
 
     function getHash(element) { // for getting hash of an anchor, regardless of whether it is an HTML or SVG anchor
         var elementClass = Object.prototype.toString.call(element);
-        if (elementClass == "[object SVGAElement]") {
+        if (elementClass === "[object SVGAElement]") {
             var link = element.href.baseVal;
             return link.slice(link.search("#"));
-        } else if (elementClass == "[object HTMLAnchorElement]") {
+        } else if (elementClass === "[object HTMLAnchorElement]") {
             return element.hash;
         } else {
             return null;
@@ -195,7 +195,7 @@
     }
 
     function parseBoolean(string) {
-        if (string == "true") {
+        if (string === "true") {
             return true;
         } else {
             return false;
@@ -207,13 +207,13 @@
     }
 
     function onScroll(direction, callback) {
-        var scroller = arguments.length > 2 && arguments[2] != undefined ? arguments[2] : win;
+        var scroller = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : win;
         var oldPos = page.scrollTop;
         var removeListener = scroller.removeEventListener.bind(scroller, "scroll", scrolling, passive);
 
         function scrolling() {
             var newPos = page.scrollTop;
-            if ((newPos < oldPos && direction == "up") || (newPos > oldPos && direction == "down")) {
+            if ((newPos < oldPos && direction === "up") || (newPos > oldPos && direction === "down")) {
                 callback();
             }
             oldPos = newPos;
@@ -227,8 +227,8 @@
     var onScrollDown = onScroll.bind(null, "down");
 
     function onScrollEnd(callback) {
-        var buffer = arguments.length > 1 && arguments[1] != undefined ? arguments[1] : 100;
-        var scroller = arguments.length > 2 && arguments[2] != undefined ? arguments[2] : win;
+        var buffer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
+        var scroller = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : win;
         var removeListener = scroller.removeEventListener.bind(scroller, "scroll", scrolling, passive);
         var doneScrolling;
 
@@ -441,7 +441,7 @@
         f.doneScrolling = window.setTimeout(function () {
             f.interruptSlide = false;
         }, 50);
-        if (e.style.display != "none" && pos > f.refPos.top || e.style.display == "none" && pos > f.refPos.bottom) {
+        if (e.style.display !== "none" && pos > f.refPos.top || e.style.display === "none" && pos > f.refPos.bottom) {
             e.style.display = "";
             f.hideHeaderRef();
             f.interruptSlide = true;
@@ -454,7 +454,7 @@
                     requestAnimationFrame(f.slideDown.bind(f));
                 }, 500);
             }
-        } else if (e.style.display != "none") {
+        } else if (e.style.display !== "none") {
             f.showHeaderRef();
             updateObj(e.style, { display: "none", top: -f.height.toString() + "px" });
             f.setShadow();
@@ -540,7 +540,7 @@
 
     collapsibleMenus.forEach(function (menu) {
         menu.buttons.open.forEach(function (button) {
-            if (button.hash && location.hash == button.hash) {
+            if (button.hash && location.hash === button.hash) {
                 location.href = location.href.replace(/#.*$/, "");
             }
         });
@@ -576,9 +576,9 @@
     };
 
     CollapsibleMenu.prototype.toggle = function () {
-        if (this.state == "closed") {
+        if (this.state === "closed") {
             this.open();
-        } else if (this.state == "open") {
+        } else if (this.state === "open") {
             this.close();
         }
     };
@@ -652,9 +652,9 @@
             var action = c.getAttribute("data-button").split(":");
             var clickTime = action.length > 1 && action[1] ? Number(action[1])*1000 : this.fadeTime;
             action = action[0].trim().toLowerCase();
-            if (action == "next") {
+            if (action === "next") {
                 action = this.fadeToNext.bind(this, clickTime);
-            } else if (action == "prev") {
+            } else if (action === "prev") {
                 action = this.fadeToPrev.bind(this, clickTime);
             } else {
                 action = function () {};
@@ -945,12 +945,12 @@
         this.category = element.getAttribute("data-analytics-category");
         this.action = element.getAttribute("data-analytics-action");
         this.label = element.getAttribute("data-analytics-label");
-        this.new_tab = element.getAttribute("target") == "_blank";
+        this.new_tab = element.getAttribute("target") === "_blank";
     }
 
-    if (jekyllEnv == "production") {
+    if (jekyllEnv === "production") {
         AnalyticsEventObj.prototype.send = function () {
-            var callback = arguments.length > 0 && arguments[0] != undefined ? arguments[0] : function () {};
+            var callback = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
             ga("send", "event", this.category, this.action, this.label, {
                 "hitCallback": callback
             });
@@ -964,13 +964,13 @@
     }
 
     AnalyticsEventObj.prototype.addListener = function () {
-        if (this.element instanceof HTMLIFrameElement && this.action == "click") {
+        if (this.element instanceof HTMLIFrameElement && this.action === "click") {
             this.listener = iFrameClickEventListener.bind(null, this);
             window.addEventListener("blur", this.listener, passive);
-        } else if (this.action == "click") {
+        } else if (this.action === "click") {
             this.listener = linkClickEventListener.bind(null, this);
             this.element.addEventListener("click", this.listener);
-        } else if (this.action == "view") {
+        } else if (this.action === "view") {
             this.listener = scrollToViewEventListener.bind(null, this);
             win.addEventListener("scroll", this.listener, passive);
         }
@@ -1048,7 +1048,7 @@
         if (fullscreenElements.length > 0) {
             window.addEventListener("resize", function () {
                 var newOrientation = window.innerHeight > window.innerWidth;
-                if (newOrientation != initOrientation) {
+                if (newOrientation !== initOrientation) {
                     forceFullscreenAll();
                 }
                 initOrientation = newOrientation;
@@ -1061,7 +1061,7 @@
     function addHideOnScrollListener() {
         win.addEventListener("scroll", function hideOnScroll() {
             var stop = this.removeEventListener.bind(this, "scroll", hideOnScroll, false);
-            if (elementsToHideOnScroll.length == 0) {
+            if (elementsToHideOnScroll.length === 0) {
                 stop();
             } else {
                 elementsToHideOnScroll.forEach(function (element, i) {
@@ -1078,7 +1078,7 @@
     if (fixedHeader) fixedHeader.addListeners();
     addCollapsibleMenuListeners();
 
-    if (smoothLinks.length > 0 && pageScrollBehavior != "smooth") {
+    if (smoothLinks.length > 0 && pageScrollBehavior !== "smooth") {
         addSmoothScrollListeners();
     }
 
@@ -1093,7 +1093,7 @@
 
     if (analyticsObjects.length > 0 && hasGoogleAnalytics) {
         analyticsObjects.forEach(function (object) {
-            if (object.action == "view") {
+            if (object.action === "view") {
                 window.addEventListener("load", function () {
                     if (distToBottom(object.element) > 0) {
                         object.addListener();
