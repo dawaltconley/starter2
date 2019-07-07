@@ -1032,6 +1032,19 @@
         });
     }
 
+    function addPopStateListener() {
+        window.addEventListener("popstate", function () {
+            if (event.state) {
+                var target = document.querySelector(event.state.hasFocus);
+                if (receivesSmoothScroll(target)) {
+                    smoothScroller.to(target);
+                }
+            } else {
+                smoothScroller.toY(0);
+            }
+        }, passive);
+    }
+
     function addOrientationChangeListener() {
         var initOrientation = window.innerHeight > window.innerWidth;
         if (fullscreenElements.length > 0) {
@@ -1069,6 +1082,7 @@
 
     if (smoothLinks.length > 0 && pageScrollBehavior !== "smooth") {
         addSmoothScrollListeners();
+        addPopStateListener();
     }
 
     if (fullscreenElements.length > 0) {
