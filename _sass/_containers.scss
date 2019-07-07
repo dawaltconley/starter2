@@ -72,7 +72,7 @@
 .click-through {
     @extend .no-click;
 
-    * > {
+    & > * {
         pointer-events: auto;
     }
 }
