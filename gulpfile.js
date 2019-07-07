@@ -7,6 +7,7 @@ var imageResize = require("gulp-image-resize");
 var imageMin = require("gulp-imagemin");
 var postcss = require("gulp-postcss");
 var autoprefixer = require("autoprefixer");
+var flexbugs = require("postcss-flexbugs-fixes");
 var pump = require("pump");
 var merge = require("merge-stream");
 var child = require("child_process");
@@ -34,7 +35,8 @@ gulp.task("css", function (cb) {
     const normalize = gulp.src("./node_modules/normalize.css/normalize.css");
     const main = gulp.src("./_site/css/main.css")
         .pipe(postcss([
-            autoprefixer()
+            autoprefixer(),
+            flexbugs()
         ]));
 
     return merge(normalize, main)
