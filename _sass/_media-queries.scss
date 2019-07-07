@@ -111,17 +111,6 @@
 }
 
 /*
- * Large Only
- */
-
-.text-wrapper {
-    @include mq("large") {
-        box-sizing: content-box;
-        max-width: $base-line-length;
-    }
-}
-
-/*
  * Mobile Only
  */
 
