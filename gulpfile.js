@@ -17,7 +17,7 @@ var fs = require("fs");
  * Jekyll
  */
 
-const jekyllEnv = process.env.CONTEXT == "production" ? "production" : "gulp";
+const jekyllEnv = process.env.CONTEXT === "production" ? "production" : "gulp";
 
 function jekyllBuild(env = "development") {
     var cmd = `JEKYLL_ENV=${env} bundle exec jekyll build`;
@@ -155,7 +155,7 @@ imageSizes["dp"].forEach(function (bp) {
             cover: true,
             upscale: false,
             filter: "Catrom",
-            interlace: jekyllEnv == "production" ? true : false
+            interlace: jekyllEnv === "production" ? true : false
         }, `-${bp.x}x${bp.y}-${d}x`);
     });
 });
