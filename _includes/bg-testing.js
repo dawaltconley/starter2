@@ -2,10 +2,9 @@
  * Background Image Testing
  */
 
-var bgTestingObjects = toArray(document.querySelectorAll("[data-background-images]"));
-for (var i = 0; i < bgTestingObjects.length; i++) {
-    bgTestingObjects[i] = new BgSelect(bgTestingObjects[i]);
-}
+var bgTestingObjects = toArray(document.querySelectorAll("[data-background-images]")).map(function (e) {
+    return new BgSelect(e);
+});
 
 function BgSelect(element) {
     var menuContainer = element;
