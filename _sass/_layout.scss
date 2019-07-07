@@ -85,6 +85,12 @@
     max-height: none;
 }
 
+#header.header-size, #header.header-height {
+    & + .parallax-group {
+        margin-top: -1 * map-get($sizes, header); // should check for last item in heaer list, using function, to be safe
+    }
+}
+
 .slide-button-width {
     width: 20%;
     min-width: 80px;
