@@ -194,6 +194,6 @@ ul.media-icon-basic, ul.media-icon-button, ul.media-icon-circle, ul.media-icon-s
     }
 }
 
-.media-icon-shadow .media-icon::before {
+.media-icon-shadow .media-icon {
     box-shadow: 2px 1px 6px rgba(0, 0, 0, 0.4), 2px 1px 6px rgba(0, 0, 0, 0.4) inset;
 }
