@@ -1,4 +1,4 @@
-{% capture blank %} 
+{% capture blank %}
     {% assign global_scope_return = return %}
     {% assign global_scope_icon_type = icon_type %}
     {% assign global_scope_icon_link = icon_link %}
@@ -9,8 +9,18 @@
     {% assign return = nil %}
     {% for contact in include.icon_set %}
         {% if include.collection %}
-            {% assign icon_type = contact %}
-            {% assign icon_link = include.icon_set[contact] %}
+            {% assign is_valid = false %}
+            {% for valid_icon in site.data.icon-types %}
+                {% if contact == valid_icon.type %}
+                    {% assign is_valid = true %}
+                {% endif %}
+            {% endfor %}
+            {% if is_valid %}
+                {% assign icon_type = contact %}
+                {% assign icon_link = include.icon_set[contact] %}
+            {% else %}
+                {% continue %}
+            {% endif %}
         {% else %}
             {% assign icon_type = contact[0] %}
             {% assign icon_link = contact[1] %}

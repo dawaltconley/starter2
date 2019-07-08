@@ -80,6 +80,8 @@ $transitions: (
     "long":     1s,
 );
 
+$t-icons: map-get($transitions, default);
+
 // Breakpoints
 
 $bp: (
