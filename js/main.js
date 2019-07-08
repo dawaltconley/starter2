@@ -135,7 +135,7 @@
     function clearClass(string, elements) {
         var className = string.charAt(0) === "." ? string.slice(1) : string;
         var elements = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : document.querySelectorAll("." + className);
-        toArray(allOfClass).forEach(function (element) {
+        toArray(elements).forEach(function (element) {
             element.classList.remove(className);
         });
     }
