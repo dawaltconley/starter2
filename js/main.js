@@ -465,6 +465,15 @@
         win.addEventListener("scroll", this.scrollListener, passive);
     };
 
+    FixedHeader.prototype.hide = function () {
+        fixedHeader.disableScroll();
+        onScrollEnd(fixedHeader.enableScroll.bind(fixedHeader));
+        fixedHeader.slideUp();
+        if (fixedHeader.menu && fixedHeader.menu.state === "open") {
+            fixedHeader.menu.close();
+        }
+    };
+
     FixedHeader.prototype.matchRef = function () {
         this.refPos = pagePos(this.headerRef);
         this.height = this.headerRef.clientHeight;
