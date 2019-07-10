@@ -393,7 +393,7 @@
         smoothScroller.to(this.target, dur, offset);
     };
 
-    function addPopStateListener() {
+    function addSmoothScrollListeners() {
         window.addEventListener("popstate", function () {
             if (event.state) {
                 var hash = event.state.hasFocus;
@@ -1077,7 +1077,7 @@
     addCollapsibleMenuListeners();
 
     if (Object.keys(smoothLinks).length && pageScrollBehavior !== "smooth") {
-        addPopStateListener();
+        addSmoothScrollListeners();
     }
 
     if (fullscreenElements.length > 0) {
