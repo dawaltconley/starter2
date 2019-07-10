@@ -369,30 +369,39 @@
     smoothScroller.setup(500, 0);
 
     var pageScrollBehavior = window.getComputedStyle(page).getPropertyValue("scroll-behavior");
-    var smoothLinks = toArray(document.querySelectorAll("[data-smooth-scroll]")).map(function (e) {
-        return new SmoothLink(e);
+    var smoothLinks = {};
+    toArray(document.querySelectorAll("[data-smooth-scroll]")).forEach(function (e) {
+        smoothLinks[e.hash] = new SmoothLink(e);
     });
 
     function SmoothLink(link) {
         this.element = link;
         this.hash = link.hash;
         this.target = document.querySelector(link.hash);
+
+        link.addEventListener("click", function (event) {
+            event.preventDefault();
+            pushHash(this.hash);
+            this.scroll();
+        }.bind(this));
     }
 
     SmoothLink.prototype.scroll = function () {
         var dur = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
         var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-        pushHash(this.hash);
+        if (fixedHeader) fixedHeader.hide();
         smoothScroller.to(this.target, dur, offset);
     };
 
-    function receivesSmoothScroll(element) {
-        for (var i = 0; i < smoothLinks.length; i++) {
-            if (element === smoothLinks[i].target) {
-                return true;
+    function addPopStateListener() {
+        window.addEventListener("popstate", function () {
+            if (event.state) {
+                var hash = event.state.hasFocus;
+                if (smoothLinks[hash]) smoothLinks[hash].scroll();
+            } else {
+                smoothScroller.toY(0);
             }
-        }
-        return false;
+        }, passive);
     }
 
 /*
@@ -1032,28 +1041,6 @@
         });
     }
 
-    function addSmoothScrollListeners() {
-        smoothLinks.forEach(function (link) {
-            link.element.addEventListener("click", function (event) {
-                event.preventDefault();
-                link.scroll();
-            });
-        });
-    }
-
-    function addPopStateListener() {
-        window.addEventListener("popstate", function () {
-            if (event.state) {
-                var target = document.querySelector(event.state.hasFocus);
-                if (receivesSmoothScroll(target)) {
-                    smoothScroller.to(target);
-                }
-            } else {
-                smoothScroller.toY(0);
-            }
-        }, passive);
-    }
-
     function addOrientationChangeListener() {
         var initOrientation = window.innerHeight > window.innerWidth;
         if (fullscreenElements.length > 0) {
@@ -1089,8 +1076,7 @@
     if (fixedHeader) fixedHeader.addListeners();
     addCollapsibleMenuListeners();
 
-    if (smoothLinks.length > 0 && pageScrollBehavior !== "smooth") {
-        addSmoothScrollListeners();
+    if (Object.keys(smoothLinks).length && pageScrollBehavior !== "smooth") {
         addPopStateListener();
     }
 
