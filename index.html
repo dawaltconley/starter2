@@ -47,12 +47,14 @@ function(arg1, arg2) {
     <li>A final item.</li>
   </ul>
 
+  <p>Some contact icons:</p>
+  <p class="media-icon-button media-icon-list fs-icon">
+  {% include all-media-icons.liquid icon_set=site.data.contact style='simple' %}
+  </p>
+
+  <p>A device-optimized image:</p>
   {% assign img = '/assets/gulp-srcset/selfie.jpg' | prepend: site.baseurl %}
   {% assign text_wrapper_bp = 36 | times: 1.25 | round %}
   <img src="{{ img }}" alt="A self portrait." srcset="{% include gulp-srcset.liquid src=img width='1080' %}" sizes="(max-width: {{ text_wrapper_bp }}em) calc(100vw - 60px), calc({{ text_wrapper_bp }}em - 60px)">
 
-</div>
-
-<div class="flex-row flex-center media-icon-button media-icon-list fs-icon">
-  {% include all-media-icons.liquid icon_set=site.data.contact %}
 </div>
