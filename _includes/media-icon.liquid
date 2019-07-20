@@ -39,12 +39,23 @@
                 {% assign new_tab = false %}
             {% endunless %}
 
-            {% if include.style == 'square' and icon.fa-square != nil %}
-                {% assign fa_class = icon.fa-square %}
-            {% elsif include.style == 'simple' and icon.fa-simple != nil %}
-                {% assign fa_class = icon.fa-simple %}
-            {% else %}
-                {% assign fa_class = icon.fa-default %}
+            {% assign fa_class = icon.fa-default %}
+            {% assign fa_style = 'fas' %}
+            {% assign icon_styles = include.style | split: ' ' %}
+            {% for style in icon_styles %}
+                {% if style == 'square' and icon.fa-square != nil %}
+                    {% assign fa_class = icon.fa-square %}
+                {% elsif style == 'simple' and icon.fa-simple != nil %}
+                    {% assign fa_class = icon.fa-simple %}
+                {% endif %}
+                {% if style == 'regular' or style == 'far' or style == 'r' %}
+                    {% assign fa_style = 'far' %}
+                {% elsif style == 'light' or style == 'fal' or style == 'l' %}
+                    {% assign fa_style = 'fal' %}
+                {% endif %}
+            {% endfor %}
+            {% if icon.brand %}
+                {% assign fa_style = 'fab' %}
             {% endif %}
 
             {% if include.link_text %}
@@ -73,7 +84,7 @@
                   {% if site.google_analytics %} data-analytics-category="{{ analytics_category }}" data-analytics-action="click" data-analytics-label="{{ analytics_label }}" {% endif %}
                   {% unless include.show_link %} aria-label="{{ alt_text }}" {% endunless %}
                   href="{{ icon_link }}"><!--
-                 --><i class="fa-icon {{ fa_class }} no-select
+                  --><i class="fa-icon {{ fa_style }} fa-{{ fa_class }} no-select
                       {% if include.list %} fa-li {% endif %}" aria-hidden="true"></i><!--
                       {% if include.show_link %}
                      --><span class="media-icon-text">{{ link_text }}</span><!--

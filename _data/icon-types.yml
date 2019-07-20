@@ -1,54 +1,65 @@
 - type: email
   color: '#d14836'
-  fa-default: 'far fa-envelope'
-  fa-square: 'fas fa-envelope-square'
+  fa-default: 'envelope'
+  fa-square: 'envelope-square'
 - type: phone
   color: '#45a145'
-  fa-default: 'fas fa-phone'
-  fa-square: 'fas fa-phone-square'
+  fa-default: 'phone'
+  fa-square: 'phone-square'
 - type: location
   color: '#208000'
-  fa-default: 'fas fa-map-marker-alt'
+  fa-default: 'map-marker-alt'
 - type: google-plus
   color: '#dd4b39'
-  fa-default: 'fab fa-google-plus'
-  fa-square: 'fab fa-google-plus-square'
-  fa-simple: 'fab fa-google-plus-g'
+  brand: true
+  fa-default: 'google-plus'
+  fa-square: 'google-plus-square'
+  fa-simple: 'google-plus-g'
 - type: facebook
   color: '#3b5998'
-  fa-default: 'fab fa-facebook'
-  fa-square: 'fab fa-facebook-square'
-  fa-simple: 'fab fa-facebook-f'
+  brand: true
+  fa-default: 'facebook'
+  fa-square: 'facebook-square'
+  fa-simple: 'facebook-f'
 - type: twitter
   color: '#1da1f2'
-  fa-default: 'fab fa-twitter'
-  fa-square: 'fab fa-twitter-square'
+  brand: true
+  fa-default: 'twitter'
+  fa-square: 'twitter-square'
 - type: youtube
   color: '#cd201f'
-  fa-default: 'fab fa-youtube'
-  fa-square: 'fab fa-youtube-square'
+  brand: true
+  fa-default: 'youtube'
+  fa-square: 'youtube-square'
 - type: linkedin
   color: '#0077b5'
-  fa-default: 'fab fa-linkedin'
-  fa-simple: 'fab fa-linkedin-in'
+  brand: true
+  fa-default: 'linkedin'
+  fa-simple: 'linkedin-in'
 - type: vimeo
   color: '#1ab7ea'
-  fa-default: 'fab fa-vimeo'
-  fa-square: 'fab fa-vimeo-square'
-  fa-simple: 'fab fa-vimeo-v'
+  brand: true
+  fa-default: 'vimeo'
+  fa-square: 'vimeo-square'
+  fa-simple: 'vimeo-v'
 - type: instagram
   color: '#c13584'
-  fa-default: 'fab fa-instagram'
+  brand: true
+  fa-default: 'instagram'
 - type: bandcamp
   color: '#629aa9'
-  fa-default: 'fab fa-bandcamp'
+  brand: true
+  fa-default: 'bandcamp'
 - type: soundcloud
   color: '#ff8800'
-  fa-default: 'fab fa-soundcloud'
+  brand: true
+  fa-default: 'soundcloud'
 - type: spotify
   color: '#1db954'
-  fa-default: 'fab fa-spotify'
+  brand: true
+  fa-default: 'spotify'
 - type: apple_music
   color: 'inherit'
-  fa-default: 'fab fa-itunes-note'
-  fa-square: 'fab fa-itunes'
+  brand: true
+  fa-default: 'itunes-note'
+  fa-square: 'itunes'
