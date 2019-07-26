@@ -20,9 +20,13 @@ var fs = require("fs");
 
 const jekyllEnv = process.env.CONTEXT === "production" ? "production" : "gulp";
 
-function jekyllBuild(env = "development") {
-    var cmd = `JEKYLL_ENV=${env} bundle exec jekyll build`;
-    return child.exec(cmd, { stdio: "inherit" });
+function jekyllBuild(env = "development", cb) {
+    const eachLine = (buffer, callback) => buffer.toString().split("\n").filter(s => s).forEach(callback);
+    const childEnv = { ...process.env, JEKYLL_ENV: env };
+    const build = child.spawn("bundle", ["exec", "jekyll", "build"], { env: childEnv });
+    build.on("close", cb);
+    build.stdout.on("data", data => eachLine(data, l => console.log(l)));
+    build.stderr.on("data", data => eachLine(data, l => console.error(l)));
 }
 
 gulp.task("build", jekyllBuild.bind(null, jekyllEnv));
