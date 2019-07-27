@@ -192,6 +192,17 @@
             }
         }
     }
+
+    .h-line-#{$name} {
+        @extend %h-line;
+        &::before, &::after {
+            border-top-width: map-get($styles, width);
+            border-top-style: map-get($styles, style);
+            @if map-has-key($styles, color) {
+                border-top-color: map-get($styles, color) !important;
+            }
+        }
+    }
 }
 
 .border-between > * {
@@ -215,4 +226,26 @@
 
 .border-smooth {
     border-radius: 10px;
+}
+
+.ellipse {
+    border-radius: 50%;
+}
+
+%h-line {
+    @extend .flex-row, .flex-align-center;
+
+    &::before, &::after {
+        content: "";
+        flex: 1 1 auto;
+        border-top-color: inherit;
+    }
+
+    &::before {
+        margin-right: .5em;
+    }
+
+    &::after {
+        margin-left: .5em;
+    }
 }
