@@ -1,0 +1,29 @@
+{% assign global_scope_post = post %}
+{% assign global_scope_h = h %}
+
+{% assign post = include.post %}
+{% if include.heading %}
+  {% assign h = include.heading %}
+{% else %}
+  {% assign h = 2 %}
+{% endif %}
+
+<article id="{{ post.id | slugify }}">
+  <header class="margin-s-b">
+    <time class="fs-smaller text-light" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %-d, %Y" }}</time>
+    <h{{ h }} class="margin-0-b">
+      <a class="no-decoration" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+    </h{{ h }}>
+    {% if post.author %}
+      <p>by {{ post.author }}</p>
+    {% endif %}
+  </header>
+  {% if include.excerpt_length %}
+    {{ post.excerpt | truncate: include.excerpt_length }}
+  {% else %}
+    {{ post.excerpt }}
+  {% endif %}
+</article>
+
+{% assign post = global_scope_post %}
+{% assign h = global_scope_h %}
