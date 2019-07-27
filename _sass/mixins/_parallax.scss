@@ -19,7 +19,7 @@
     top: 0; bottom: 0; left: 0; right: 0;
 
     @include parallax-support {
-        $scale: 1 - ($depth / $perspective);
+        $scale: 1 + abs($depth / $perspective);
         $height-adjust: calc(#{ 1 - (1 / $scale) } * (50% - 50vh));
         top: $height-adjust; bottom: $height-adjust;
         -webkit-transform-origin: right;
