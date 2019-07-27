@@ -21,7 +21,7 @@
                     {% assign icon_link = icon_link | prepend: 'mailto:' %}
                     {% assign alt_text = 'Email link' %}
                 {% when 'phone' %}
-                    {% assign icon_link = icon_link | prepend: 'tel:' %}
+                    {% assign icon_link = icon_link | remove: ' ' | remove: '-' | remove: '(' | remove: ')' | remove: '.' | prepend: 'tel:' %}
                     {% assign alt_text = 'Phone link' %}
                 {% when 'twitter' %}
                     {% assign first_char = icon_link | slice: 0 %}
