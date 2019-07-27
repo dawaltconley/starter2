@@ -36,6 +36,10 @@
     flex: 1 1 0%;
 }
 
+.flex-none > * {
+    flex: none;
+}
+
 .flex-space-between {
     justify-content: space-between;
 }
