@@ -81,8 +81,8 @@ collections:
       - label: Contact info
         name: contact
         file: _data/contact.yml
-        fields: {% for c in site.data.contact %}
-          - label: {{ c[0] | capitalize }}
-            name: {{ c[0] }}
+        fields: {% for c in site.data.icon-types %}
+          - label: {{ c.label }}
+            name: {{ c.type }}
             required: false
             widget: string {% endfor %}
