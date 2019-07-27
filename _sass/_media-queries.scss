@@ -119,6 +119,18 @@
 }
 
 /*
+ * Large Only
+ */
+
+.sidebar {
+    @include mq("large") {
+        width: (100% / 3);
+        min-width: 240px;
+        max-width: $base-line-length / 2;
+    }
+}
+
+/*
  * Mobile Only
  */
 
