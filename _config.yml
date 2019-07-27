@@ -19,6 +19,15 @@ native_scroll: false # enables smooth scrolling by the scroll-behavior property,
 bg_testing: false # turn on to enable the bg-testing.html include
 emptyArray: [] # variable for easy array creation
 
+# Collections
+
+defaults:
+  - scope:
+      path: _posts
+    values:
+      layout: post
+      permalink: /:year/:month/:day/:title/
+
 # Build settings
 
 markdown: kramdown
