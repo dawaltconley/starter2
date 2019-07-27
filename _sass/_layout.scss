@@ -166,10 +166,12 @@
 }
 
 .front {
+    @extend .relative;
     z-index: nth($z-range, 2) + 1;
 }
 
 .back {
+    @extend .relative;
     z-index: nth($z-range, 1) - 1;
 }
 
