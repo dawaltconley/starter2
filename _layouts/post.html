@@ -8,7 +8,7 @@ layout: default
 
     <header>
       <time class="fs-smaller text-light" datetime="{{ page.date | date_to_xmlschema }}"><!--field name="date"-->{{ page.date | date: "%B %-d, %Y" }}<!--/field--></time>
-      <h1 class="margin-0-b"><!--field name="title"-->{{ page.title }}<!--/field--></h1>
+      <h1 class="margin-0-b"><!--field name="title"-->{{ page.title | smartify }}<!--/field--></h1>
       {% if page.author %}
         <p>by <!--field name="author"-->{{ page.author }}<!--/field--></p>
       {% endif %}
