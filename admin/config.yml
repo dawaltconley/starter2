@@ -18,7 +18,7 @@ collections:
     folder: _posts
     extension: md
     create: true
-    slug: {% raw %}"{{year}}-{{month}}-{{day}}-{{title}}"{% endraw %}
+    slug: {% raw %}"{{year}}-{{month}}-{{day}}-{{slug}}"{% endraw %}
     preview_page: {% raw %}"{{slug}}"{% endraw %}
     description: >
       The basic type of content.
