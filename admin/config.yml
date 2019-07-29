@@ -39,6 +39,8 @@ collections:
         default: New day, new post!
   - label: Data
     name: data
+    editor:
+      preview: false
     description: >
       This is where you will be able to update different
       types of data, which are used throughout the site.
