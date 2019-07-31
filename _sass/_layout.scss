@@ -87,7 +87,10 @@
 
 #header.header-size, #header.header-height {
     & + .parallax-group {
-        margin-top: -1 * map-get($sizes, header); // should check for last item in heaer list, using function, to be safe
+        $hh: map-get($sizes, header);
+        $hh: nth($hh, length($hh));
+        margin-top: -$hh;
+        padding-top: $hh;
     }
 }
 
