@@ -5,6 +5,15 @@ body.parallax-body {
         -webkit-transform: translateZ(0);
         transform: translateZ(0);
     }
+
+    &::before { // fixes rendering issues on Edge
+        content: "";
+        position: fixed;
+        top: 0;
+        width: 1px;
+        height: 1px;
+        z-index: 1;
+    }
 }
 
 .parallax-page {
