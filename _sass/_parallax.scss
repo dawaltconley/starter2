@@ -39,6 +39,10 @@ body.parallax-body {
     @extend .relative, .click-through;
     background-color: transparent !important;
 
+    & > * {
+        @extend .relative;
+    }
+
     @include parallax-support {
         -webkit-transform-style: preserve-3d;
         transform-style: preserve-3d;
