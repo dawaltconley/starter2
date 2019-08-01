@@ -1,6 +1,4 @@
 // checks to rule out browsers that won't support css parallax effect
-// last value is a hack to rule out edge, which currently works but renders badly (bug)
-// https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/5084491/
 
 @mixin parallax-support {
     @supports (((-webkit-perspective: 1px) or (perspective: 1px)) and (not (-webkit-overflow-scrolling: touch))) {
