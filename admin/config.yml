@@ -17,9 +17,10 @@ collections:
     name: posts
     folder: _posts
     extension: md
+    format: yaml-frontmatter
     create: true
-    slug: {% raw %}"{{ year }}-{{ month }}-{{ day }}-{{ title }}"{% endraw %}
-    preview_page: {% raw %}"{{ slug }}"{% endraw %}
+    slug: {% raw %}"{{year}}-{{month}}-{{day}}-{{slug}}"{% endraw %}
+    preview_page: {% raw %}"{{slug}}"{% endraw %}
     description: >
       The basic type of content.
     fields:
@@ -38,6 +39,8 @@ collections:
         default: New day, new post!
   - label: Data
     name: data
+    editor:
+      preview: false
     description: >
       This is where you will be able to update different
       types of data, which are used throughout the site.
