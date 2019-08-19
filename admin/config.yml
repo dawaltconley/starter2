@@ -17,6 +17,7 @@ collections:
     name: posts
     folder: _posts
     extension: md
+    format: yaml-frontmatter
     create: true
     slug: {% raw %}"{{year}}-{{month}}-{{day}}-{{slug}}"{% endraw %}
     preview_page: {% raw %}"{{slug}}"{% endraw %}
