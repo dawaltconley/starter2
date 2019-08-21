@@ -1,52 +1,75 @@
 ---
 ---
 
-fetch('/admin/config.yml').then(r => r.text()).then(data => generatePreviews(data))
-CMS.registerPreviewStyle('/css/main.css')
+fetch('/admin/config.yml').then(r => r.text()).then(data => generatePreviews(jsyaml.load(data)))
 
-var docs = [
+const docs = [
     {% for doc in site.documents %}
         {
-            collection: '{{ doc.collection }}',
-            path: '{{ doc.path }}',
-            html: '{{ doc | strip_newlines | split: "<body" | last | split: "</body>" | first | prepend: "<div" | append: "</div>" }}'
+            collection: `{{ doc.collection }}`,
+            path: `{{ doc.path }}`,
+            html: `{{ doc | strip_newlines | replace: '`', '\\`' }}`
         },
     {% endfor %}
 ]
 
-var fieldsRegEx = /<!-- *?field +?(\w+?)="(\w*?)".*?-->.*?<!-- *?\/field *?-->/
-var ignoreRegEx = /<!-- *?ignore *?-->.*?<!-- *?\/ignore *?-->/
-
-const updateHTML = (html, props, regEx = fieldsRegEx) => {
-    let match, replace
-    while (match = regEx.exec(html)) {
-        if (match[1] == 'name') {
-            replace = props.entry.getIn(['data', match[2]])
-        } else if (match[1] == 'widget') {
-            replace = ReactDOMServer.renderToString(props.widgetFor(match[2]))
-        }
-        html = html.replace(match[0], replace)
+const cloneAttributes = (e, clone) => {
+    for (var a of e.attributes) {
+        clone.setAttribute(a.nodeName, a.nodeValue)
     }
-    return html
+    return clone
 }
 
-const cleanHTML = (html, regEx = ignoreRegEx) => html.replace(regEx, '')
+const extractBody = html => {
+    let body = document.createElement('html')
+    body.innerHTML = html
+    body = body.querySelector('body')
+    return body.outerHTML
+}
 
-const generatePreviews = configData => {
-    const config = jsyaml.load(configData)
-    config.collections.forEach(c => {
-        const collection = c.folder.match(/_(.*?)(?:\/.*)?$/)[1] // don't creat this variable, name is too confusing
-        const cDocs = docs.filter(d => d.collection === collection) // may not even need to do this...can i just use the document path? should always be unique? --> right now collection just serves as a way to get a generic layout for new docs
-        if (cDocs) {
-            CMS.registerPreviewTemplate(c.name, createClass({
-                render () {
-                    const path = this.props.entry.get('path')
-                    const match = cDocs.find(d => d.path === path)
-                    const matchDir = cDocs.find(d => d.path.match(`${c.folder}/`))
-                    const html = match ? match.html : matchDir ? cleanHTML(matchDir.html) : cleanHTML(cDocs[0].html)
-                    return h('div', { 'dangerouslySetInnerHTML' : {__html: updateHTML(html, this.props) } })
+const getStyleSheets = html => {
+    let head = document.createElement('html')
+    head.innerHTML = html
+    return Array.from(head.querySelectorAll('link[rel="stylesheet"]')).map(s => s.href)
+}
+
+class FolderTemplate extends React.Component {
+    constructor (props) {
+        super(props)
+        this.path = props.entry.get('path')
+        this.html = docs.find(d => d.path === this.path).html
+        getStyleSheets(this.html).forEach(s => CMS.registerPreviewStyle(s))
+        this.html = extractBody(this.html)
+    }
+    render () {
+        return HTMLReactParser(this.html, {
+            replace: ({ name, attribs }) => {
+                if (attribs) {
+                    let field = attribs['data-preview-field']
+                    let widget = attribs['data-preview-widget']
+                    let asset = attribs['data-preview-asset']
+                    if (field) {
+                        return h(name, attribs, this.props.entry.getIn(['data', ...field.split('.')]))
+                    }
+                    if (widget) {
+                        return h(name, attribs, this.props.widgetFor(widget))
+                    }
+                    if (asset && name === 'img') {
+                        let image = this.props.entry.getIn(['data', ...asset.split('.')])
+                        image = this.props.getAsset(image)
+                        return h(name, Object.assign(attribs, { src: image.toString(), srcset: null }))
+                    }
                 }
-            }))
+            }
+        })
+    }
+}
+
+const generatePreviews = config => {
+    const collections = config.collections.filter(c => c.editor === undefined || c.editor.preview !== false)
+    collections.forEach(c => {
+        if (c.folder) {
+            CMS.registerPreviewTemplate(c.name, FolderTemplate)
         }
     })
 }
