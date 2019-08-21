@@ -71,7 +71,7 @@
         {% assign return = srcset %}
 
     {% else %}
-        {% assign return = src %}
+        {% assign return = src | append: ' 1w' %}
     {% endif %}
 
     {% assign src = global_scope_src %}
