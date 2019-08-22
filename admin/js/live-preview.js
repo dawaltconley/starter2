@@ -43,26 +43,25 @@ class FolderTemplate extends React.Component {
     }
     render () {
         return HTMLReactParser(this.html, {
-            replace: ({ name, attribs }) => {
+            replace: ({ name, attribs, children }) => {
                 if (attribs) {
-                    let field = attribs['data-preview-field']
-                    let widget = attribs['data-preview-widget']
-                    let asset = attribs['data-preview-asset']
+                    let { 'data-preview-field': field, 'data-preview-widget': widget, 'data-preview-asset': asset } = attribs
                     if (field) {
-                        return h(name, attribs, this.props.entry.getIn(['data', ...field.split('.')]))
-                    }
-                    if (widget) {
+                        return h(name, attribs, this.props.entry.getIn(['data', ...field.split('.')]) || children)
+                    } else if (widget) {
                         let w = widget.split('.')
-                        if (w.length === 2) {
-                            return h(name, attribs, this.props.widgetsFor(w[0]).getIn(['widgets', w[1]]))
-                        } else if (w.length === 1) {
-                            return h(name, attribs, this.props.widgetFor(w[0]))
+                        if (w.length === 1) {
+                            return h(name, attribs, this.props.widgetFor(w[0]) || children)
+                        } else if (w.length === 2) {
+                            return h(name, attribs, this.props.widgetsFor(w[0]).getIn(['widgets', w[1]]) || children)
                         }
                     }
                     if (asset && name === 'img') {
-                        let image = this.props.entry.getIn(['data', ...asset.split('.')])
-                        image = this.props.getAsset(image)
-                        return h(name, image ? Object.assign(attribs, { src: image.toString(), srcset: null }) : attribs)
+                        asset = this.props.entry.getIn(['data', ...asset.split('.')])
+                        asset = this.props.getAsset(asset)
+                        if (asset) {
+                            return h(name, Object.assign(attribs, { src: asset.toString(), srcset: null }))
+                        }
                     }
                 }
             }
