@@ -52,12 +52,17 @@ class FolderTemplate extends React.Component {
                         return h(name, attribs, this.props.entry.getIn(['data', ...field.split('.')]))
                     }
                     if (widget) {
-                        return h(name, attribs, this.props.widgetFor(widget))
+                        let w = widget.split('.')
+                        if (w.length === 2) {
+                            return h(name, attribs, this.props.widgetsFor(w[0]).getIn(['widgets', w[1]]))
+                        } else if (w.length === 1) {
+                            return h(name, attribs, this.props.widgetFor(w[0]))
+                        }
                     }
                     if (asset && name === 'img') {
                         let image = this.props.entry.getIn(['data', ...asset.split('.')])
                         image = this.props.getAsset(image)
-                        return h(name, Object.assign(attribs, { src: image.toString(), srcset: null }))
+                        return h(name, image ? Object.assign(attribs, { src: image.toString(), srcset: null }) : attribs)
                     }
                 }
             }
