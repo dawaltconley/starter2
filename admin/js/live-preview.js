@@ -11,6 +11,13 @@ const docs = [
             url: `{{ doc.url }}`,
         },
     {% endfor %}
+    {% for page in site.html_pages %}
+        {
+            collection: 'pages',
+            path: `{{ page.path }}`,
+            url: `{{ page.url }}`
+        },
+    {% endfor %}
 ]
 
 const cloneAttributes = (e, clone) => {
@@ -69,6 +76,8 @@ const generatePreviews = config => {
     collections.forEach(c => {
         if (c.folder) {
             CMS.registerPreviewTemplate(c.name, FolderTemplate)
+        } else if (c.files) {
+            c.files.forEach(file => CMS.registerPreviewTemplate(file.name, FolderTemplate))
         }
     })
 }
