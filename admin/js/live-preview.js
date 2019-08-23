@@ -27,7 +27,7 @@ const cloneAttributes = (e, clone) => {
     return clone
 }
 
-const FolderTemplate = createClass({
+const DefaultTemplate = createClass({
     componentWillMount: function () {
         this.path = this.props.entry.get('path')
         Object.assign(this, docs.find(d => d.path === this.path))
@@ -75,9 +75,9 @@ const generatePreviews = config => {
     const collections = config.collections.filter(c => c.editor === undefined || c.editor.preview !== false)
     collections.forEach(c => {
         if (c.folder) {
-            CMS.registerPreviewTemplate(c.name, FolderTemplate)
+            CMS.registerPreviewTemplate(c.name, DefaultTemplate)
         } else if (c.files) {
-            c.files.forEach(file => CMS.registerPreviewTemplate(file.name, FolderTemplate))
+            c.files.forEach(file => CMS.registerPreviewTemplate(file.name, DefaultTemplate))
         }
     })
 }
