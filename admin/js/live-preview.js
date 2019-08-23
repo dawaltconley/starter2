@@ -47,9 +47,11 @@ const DefaultTemplate = createClass({
         return HTMLReactParser(this.html, {
             replace: ({ name, attribs, children }) => {
                 if (attribs) {
-                    let { 'data-preview-field': field, 'data-preview-widget': widget, 'data-preview-asset': asset } = attribs
+                    let { 'data-preview-field': field, 'data-preview-widget': widget, 'data-preview-asset': asset, 'data-preview-date': date } = attribs
                     if (field) {
-                        return h(name, attribs, this.props.entry.getIn(['data', ...field.split('.')]) || children)
+                        let value = this.props.entry.getIn(['data', ...field.split('.')]) || children
+                        if (date) value = dayjs(value).format(date)
+                        return h(name, attribs, value)
                     } else if (widget) {
                         let w = widget.split('.')
                         if (w.length === 1) {
