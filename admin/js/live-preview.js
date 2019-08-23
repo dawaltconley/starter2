@@ -8,7 +8,7 @@ const docs = [
         {
             collection: `{{ doc.collection }}`,
             path: `{{ doc.path }}`,
-            html: `{{ doc | strip_newlines | replace: '`', '\\`' }}`
+            url: `{{ doc.url }}`,
         },
     {% endfor %}
 ]
@@ -20,25 +20,21 @@ const cloneAttributes = (e, clone) => {
     return clone
 }
 
-const extractBody = html => {
-    let body = document.createElement('html')
-    body.innerHTML = html
-    body = body.querySelector('body')
-    return body.outerHTML
-}
-
-const getStyleSheets = html => {
-    let head = document.createElement('html')
-    head.innerHTML = html
-    return Array.from(head.querySelectorAll('link[rel="stylesheet"]')).map(s => s.href)
-}
-
 const FolderTemplate = createClass({
     componentWillMount: function () {
         this.path = this.props.entry.get('path')
-        this.html = docs.find(d => d.path === this.path).html
-        getStyleSheets(this.html).forEach(s => CMS.registerPreviewStyle(s))
-        this.html = extractBody(this.html)
+        Object.assign(this, docs.find(d => d.path === this.path))
+        this.html = '<p>loading...</p>'
+        fetch(this.url)
+            .then(r => r.text())
+            .then(html => {
+                let doc = new DOMParser().parseFromString(html, 'text/html')
+                Array.from(doc.querySelectorAll('link[rel="stylesheet"]'))
+                    .map(s => s.href)
+                    .forEach(s => CMS.registerPreviewStyle(s))
+                this.html = doc.querySelector('body').outerHTML
+                this.render()
+            })
     },
     render: function () {
         return HTMLReactParser(this.html, {
