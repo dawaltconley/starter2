@@ -29,22 +29,30 @@ const cloneAttributes = (e, clone) => {
 
 const DefaultTemplate = createClass({
     componentWillMount: function () {
-        this.path = this.props.entry.get('path')
-        Object.assign(this, docs.find(d => d.path === this.path))
-        this.html = '<p>loading...</p>'
-        fetch(this.url)
+        const path = this.props.entry.get('path')
+        const url = docs.find(d => d.path === path).url
+        this.setState({ html: '<p>loading...</p>' })
+        fetch(url)
             .then(r => r.text())
             .then(html => {
-                let doc = new DOMParser().parseFromString(html, 'text/html')
-                Array.from(doc.querySelectorAll('link[rel="stylesheet"]'))
-                    .map(s => s.href)
-                    .forEach(s => CMS.registerPreviewStyle(s))
-                this.html = doc.querySelector('body').outerHTML
-                this.render()
+                const doc = new DOMParser().parseFromString(html, 'text/html')
+                this.setState({
+                    styles: Array.from(doc.querySelectorAll('link[rel="stylesheet"]')).map(s => s.href),
+                    html: doc.querySelector('body').outerHTML
+                })
             })
     },
+    componentWillUpdate: function (nextProps, nextState) {
+        if (this.state && nextState.styles) {
+            nextState.styles.forEach(s => {
+                if (!(this.state.styles && this.state.styles.includes(s))) {
+                    CMS.registerPreviewStyle(s);
+                }
+            })
+        }
+    },
     render: function () {
-        return HTMLReactParser(this.html, {
+        return HTMLReactParser(this.state.html, {
             replace: ({ name, attribs, children }) => {
                 if (attribs) {
                     let { 'data-preview-field': field, 'data-preview-widget': widget, 'data-preview-asset': asset, 'data-preview-date': date } = attribs
