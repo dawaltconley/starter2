@@ -33,15 +33,14 @@ const getStyleSheets = html => {
     return Array.from(head.querySelectorAll('link[rel="stylesheet"]')).map(s => s.href)
 }
 
-class FolderTemplate extends React.Component {
-    constructor (props) {
-        super(props)
-        this.path = props.entry.get('path')
+const FolderTemplate = createClass({
+    componentWillMount: function () {
+        this.path = this.props.entry.get('path')
         this.html = docs.find(d => d.path === this.path).html
         getStyleSheets(this.html).forEach(s => CMS.registerPreviewStyle(s))
         this.html = extractBody(this.html)
-    }
-    render () {
+    },
+    render: function () {
         return HTMLReactParser(this.html, {
             replace: ({ name, attribs, children }) => {
                 if (attribs) {
@@ -67,7 +66,7 @@ class FolderTemplate extends React.Component {
             }
         })
     }
-}
+})
 
 const generatePreviews = config => {
     const collections = config.collections.filter(c => c.editor === undefined || c.editor.preview !== false)
