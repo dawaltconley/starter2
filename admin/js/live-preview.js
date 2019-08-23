@@ -73,6 +73,8 @@ const DefaultTemplate = createClass({
                         asset = this.props.getAsset(asset)
                         if (asset) {
                             return h(name, Object.assign(attribs, { src: asset.toString(), srcset: null }))
+                        } else {
+                            return h('Fragment')
                         }
                     }
                 }
