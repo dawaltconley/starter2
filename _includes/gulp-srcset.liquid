@@ -55,21 +55,23 @@
             {% if width == nil or bp < width and width %}
                 {% unless bp_diff < 100 %}
                     {% capture suffix %}-{{ bp }}w{% endcapture %}
-                    {% capture new_src %}{% include file-suffix.liquid file_name=src suffix=suffix %} {{ bp }}w, {% endcapture %}
+                    {% capture new_src %}{% include file-suffix.liquid file_name=src suffix=suffix %} {{ bp }}w{% endcapture %}
+                    {% unless srcset == '' %}
+                        {% assign new_src = new_src | prepend: ', ' %}
+                    {% endunless %}
                     {% assign srcset = srcset | append: new_src %}
                     {% assign bp_prev = bp %}
                 {% endunless %}
             {% endif %}
         {% endfor %}
 
-        {% assign srcset = srcset | append: src %}
         {% if width %}
-            {% capture srcset %}{{ srcset }} {{ width }}w{% endcapture %}
+            {% capture srcset %}{{ srcset }}, {{ src }} {{ width }}w{% endcapture %}
         {% endif %}
         {% assign return = srcset %}
 
     {% else %}
-        {% assign return = src %}
+        {% assign return = src | append: ' 1w' %}
     {% endif %}
 
     {% assign src = global_scope_src %}

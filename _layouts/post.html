@@ -7,28 +7,25 @@ layout: default
   <article class="text-wrapper margin-l-r margin-auto-h-lt-large">
 
     <header>
-      <time class="fs-smaller text-light" datetime="{{ page.date | date_to_xmlschema }}"><!--field name="date"-->{{ page.date | date: "%B %-d, %Y" }}<!--/field--></time>
-      <h1 class="margin-0-b"><!--field name="title"-->{{ page.title | smartify }}<!--/field--></h1>
+      <time class="fs-smaller text-light" datetime="{{ page.date | date_to_xmlschema }}" data-preview-field="date" data-preview-date="MMM D, YYYY">{{ page.date | date: "%B %-d, %Y" }}</time>
+      <h1 class="margin-0-b" data-preview-field="title">{{ page.title | smartify }}</h1>
       {% if page.author %}
-        <p>by <!--field name="author"-->{{ page.author }}<!--/field--></p>
+        <p data-preview-field="author">by {{ page.author }}</p>
       {% endif %}
       {% if page.header.image %}
         {% assign image = page.header.image | prepend: site.baseurl %}
         <figure class="margin-m-t">
           <img src="{{ image }}" alt=""
               srcset="{% include gulp-srcset.liquid src=image width=page.header.width %}"
-              sizes="(max-width: 730px) 100vw, (max-width: 1000px) 600px, 720px">
-          {% if page.header.caption %}
-            <figcaption class="margin-s-t text-left"><!--field name="caption"-->{{ page.header.caption | markdownify }}<!--/field--></figcaption>
-          {% endif %}
+              sizes="(max-width: 840px) 100vw, 720px"
+              data-preview-asset="header.image">
+          <figcaption class="margin-s-t text-left" data-preview-widget="header.caption">{{ page.header.caption | markdownify }}</figcaption>
         </figure>
       {% endif %}
     </header>
 
-    <div>
-      <!--field widget="body"-->
+    <div data-preview-widget="body">
       {{ page.content }}
-      <!--/field-->
     </div>
 
   </article>

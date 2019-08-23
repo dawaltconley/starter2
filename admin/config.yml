@@ -7,7 +7,7 @@ backend:
   name: git-gateway
   branch: sample
 media_folder: "assets/uploads"
-site_url: {{ site.url }}
+site_url: {{ site.url | prepend: site.baseurl }}
 {% if site.logo %}
 logo_url: {{ site.logo }}
 {% endif %}
@@ -33,10 +33,40 @@ collections:
         name: date
         widget: datetime
         format: "YYYY-MM-DD HH:mm:ss ZZ"
+      - label: Show on website
+        name: published
+        widget: boolean
+        default: false
       - label: Body
         name: body
         widget: markdown
         default: New day, new post!
+      - label: Post Image
+        name: header
+        widget: object
+        hint: >
+          The main image for the article. Will appear at the
+          top of the body and will be featured in previews
+          and thumbnails.
+        fields:
+          - label: Image
+            name: image
+            required: false
+            widget: image
+            allow_multiple: false
+          - label: Width
+            name: width
+            required: false
+            widget: number
+            valueType: int
+            hint: >
+              The width, in pixels, of the uploaded image.
+              This allows better loading on multiple devices.
+          - label: Caption
+            name: caption
+            required: false
+            widget: markdown
+            buttons: [ bold, italic, link ]
   - label: Data
     name: data
     editor:

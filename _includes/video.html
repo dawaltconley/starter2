@@ -1,0 +1,18 @@
+{% assign link = include.link %}
+{% if link contains 'youtube.com' %}
+  {% assign link = link | replace: '/watch?v=', '/embed/' %}
+{% elsif link contains 'youtu.be' %}
+  {% assign link = link | replace: 'youtu.be/', 'www.youtube.com/embed/' %}
+{% elsif link contains 'vimeo.com' %}
+  {% assign link = link | remove: 'https://vimeo.com/' | prepend: 'https://player.vimeo.com/video/' | append: '?title=0&byline=0&portrait=0' %}
+{% endif %}
+
+<figure>
+  <div class="aspect-16-9 expand-children">
+    {% include loading.html %}
+    <iframe class="full-size" src="{{ link }}" allowfullscreen></iframe>
+  </div>
+  {% if include.caption %}
+    <figcaption class="margin-s-t">{{ include.caption | markdownify }}</figcaption>
+  {% endif %}
+</figure>
