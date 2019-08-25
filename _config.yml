@@ -21,12 +21,16 @@ emptyArray: [] # variable for easy array creation
 
 # Collections
 
+collections:
+  templates:
+    output: false
+
 defaults:
   - scope:
-      path: _posts
+      path: "_posts"
     values:
-      layout: post
-      permalink: /:year/:month/:day/:title/
+      layout: "post"
+      permalink: "/:year/:month/:day/:title/"
 
 # Build settings
 
