@@ -3,19 +3,11 @@
 
 fetch('/admin/config.yml').then(r => r.text()).then(data => generatePreviews(jsyaml.load(data)))
 
-const docs = [
-    {% for doc in site.documents %}
+const templates = [
+    {% for template in site.templates %}
         {
-            collection: `{{ doc.collection }}`,
-            path: `{{ doc.path }}`,
-            url: `{{ doc.url }}`,
-        },
-    {% endfor %}
-    {% for page in site.html_pages %}
-        {
-            collection: 'pages',
-            path: `{{ page.path }}`,
-            url: `{{ page.url }}`
+            name: `{{ template.template }}`,
+            html: `{{ template | strip_newlines | replace: '`', '\\`' }}`
         },
     {% endfor %}
 ]
@@ -29,27 +21,20 @@ const cloneAttributes = (e, clone) => {
 
 const DefaultTemplate = createClass({
     componentWillMount: function () {
-        const path = this.props.entry.get('path')
-        const url = docs.find(d => d.path === path).url
-        this.setState({ html: '<p>loading...</p>' })
-        fetch(url)
-            .then(r => r.text())
-            .then(html => {
-                const doc = new DOMParser().parseFromString(html, 'text/html')
-                this.setState({
-                    styles: Array.from(doc.querySelectorAll('link[rel="stylesheet"]')).map(s => s.href),
-                    html: doc.querySelector('body').outerHTML
-                })
+        const template = this.props.collection.get('files')
+            ? this.props.entry.get('slug')
+            : this.props.collection.get('name')
+        const html = templates.find(t => t.name === template).html
+        const doc = new DOMParser().parseFromString(html, 'text/html')
+        Array.from(doc.querySelectorAll('link[rel="stylesheet"]'))
+            .map(s => s.href)
+            .forEach(s => {
+                CMS.registerPreviewStyle(s)
+                console.log('registered style: '+s)
             })
-    },
-    componentWillUpdate: function (nextProps, nextState) {
-        if (this.state && nextState.styles) {
-            nextState.styles.forEach(s => {
-                if (!(this.state.styles && this.state.styles.includes(s))) {
-                    CMS.registerPreviewStyle(s);
-                }
-            })
-        }
+        this.setState({
+            html: doc.querySelector('body').outerHTML
+        })
     },
     render: function () {
         return HTMLReactParser(this.state.html, {
