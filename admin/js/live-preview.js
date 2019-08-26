@@ -7,6 +7,7 @@ const templates = [
     {% for template in site.templates %}
         {
             name: `{{ template.template }}`,
+            path: `{{ template.path }}`,
             html: `{{ template | strip_newlines | replace: '`', '\\`' }}`
         },
     {% endfor %}
@@ -21,11 +22,15 @@ const cloneAttributes = (e, clone) => {
 
 const DefaultTemplate = createClass({
     componentWillMount: function () {
-        const template = this.props.collection.get('files')
-            ? this.props.entry.get('slug')
-            : this.props.collection.get('name')
-        const html = templates.find(t => t.name === template).html
-        const doc = new DOMParser().parseFromString(html, 'text/html')
+        const p = this.props
+        const collection = p.collection.get('name')
+        const file = p.collection.get('files') && p.entry.get('slug')
+        const path = p.entry.get('path')
+        const template = path && templates.find(t => t.path === path)
+            || file && templates.find(t => t.name === file)
+            || templates.find(t => t.name === collection)
+            || templates.find(t => t.name === 'default')
+        const doc = new DOMParser().parseFromString(template.html, 'text/html')
         Array.from(doc.querySelectorAll('link[rel="stylesheet"]'))
             .map(s => s.href)
             .forEach(s => {
