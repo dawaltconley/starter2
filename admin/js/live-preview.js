@@ -33,10 +33,7 @@ const DefaultTemplate = createClass({
         const doc = new DOMParser().parseFromString(template.html, 'text/html')
         Array.from(doc.querySelectorAll('link[rel="stylesheet"]'))
             .map(s => s.href)
-            .forEach(s => {
-                CMS.registerPreviewStyle(s)
-                console.log('registered style: '+s)
-            })
+            .forEach(s => CMS.registerPreviewStyle(s))
         this.setState({
             html: doc.querySelector('body').outerHTML
         })
