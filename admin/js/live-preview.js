@@ -13,13 +13,6 @@ const templates = [
     {% endfor %}
 ]
 
-const cloneAttributes = (e, clone) => {
-    for (var a of e.attributes) {
-        clone.setAttribute(a.nodeName, a.nodeValue)
-    }
-    return clone
-}
-
 class ChildPreview extends React.Component {
     constructor (props) {
         super(props)
