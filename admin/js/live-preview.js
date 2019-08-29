@@ -44,10 +44,9 @@ class ImagePreview extends React.Component {
 class DefaultTemplate extends React.Component {
     constructor (props) {
         super(props)
-        const p = props
-        const collection = p.collection.get('name')
-        const file = p.collection.get('files') && p.entry.get('slug')
-        const path = p.entry.get('path')
+        const collection = props.collection.get('name')
+        const file = props.collection.get('files') && props.entry.get('slug')
+        const path = props.entry.get('path')
         const template = path && templates.find(t => t.path === path)
             || file && templates.find(t => t.name === file)
             || templates.find(t => t.name === collection)
