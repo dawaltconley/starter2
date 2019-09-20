@@ -2,7 +2,7 @@
 
 A set of shared code between my Jekyll projects.
 
-## Install
+## Installation
 
 Depends on Jekyll, bundler, and npm.
 
@@ -72,7 +72,7 @@ Many basic CSS classes are generated from Sass maps located in the `_sass/_varia
 
 Sizes take one or two values for width & height:
 
-```sass
+```scss
 $sizes: (
     "full":   100%,         // width: 100%;  height: 100%
     "screen": 100vw 100vh,  // width: 100vw; height: 100vh
@@ -81,7 +81,7 @@ $sizes: (
 
 The `screen` key in that map will generate classes named `screen-width`, and `screen-height`, plus a `screen-size` class, which is shorthand for both:
 
-```css
+```scss
 .screen-size, .screen-width {
   width: 100vw; }
 .screen-size, .screen-height {
@@ -90,7 +90,7 @@ The `screen` key in that map will generate classes named `screen-width`, and `sc
 
 It will also generate classes with `-min` and `-max` appended, which style min- and max-height respectively:
 
-```css
+```scss
 .screen-size-min, .screen-width-min {
   min-width: 100vw; }
 .screen-size-min, .screen-height-min {
@@ -105,7 +105,7 @@ It will also generate classes with `-min` and `-max` appended, which style min- 
 
 Spacings take a single value:
 
-```sass
+```scss
 $spacings: (
   "s":    15px,
   "m":    30px,
@@ -125,7 +125,7 @@ The `margin-m` class will set all of an element's margins to `30px`. To set spec
 
 The CSS output looks like this:
 
-```css
+```scss
 .margin-m, .margin-m-v, .margin-m-t {
   margin-top: 30px; }
 .margin-m, .margin-m-v, .margin-m-b {
@@ -142,7 +142,7 @@ There is also a `$default-spacing` variable, which controls the spacing used by 
 
 The borders map takes a map of width and style values (each optional). Colors are inherited from themes and theme classes.
 
-```sass
+```scss
 $borders: (
     "basic": (
         width: 1px,
@@ -155,7 +155,7 @@ This creates `border-basic` class that styles all of an element's borders. You c
 
 The generated CSS looks like this:
 
-```css
+```scss
 .border-basic, .border-basic-v, .border-basic-t {
   border-top-width: 1px;
   border-top-style: solid; }
@@ -174,7 +174,7 @@ The generated CSS looks like this:
 
 The `$z-range` variable takes a list of two numbers, and will generate classes for z-indexes between those values. So setting `$z-range: -1, 1;` will output the following:
 
-```css
+```scss
 // position set via @extend, can be overridden by the 'absolute' class
 .relative, .z-neg-1, .z-0, .z-1 {
   position: relative;
@@ -190,7 +190,7 @@ The `$z-range` variable takes a list of two numbers, and will generate classes f
 
 It will also create two classes that override other z-indexes: `front` and `back`. These are the highest and lowest z-index, plus or minus one, respectively. In this case:
 
-```css
+```scss
 .front {
   z-index: 2; }
 .back {
@@ -201,7 +201,7 @@ It will also create two classes that override other z-indexes: `front` and `back
 
 The font sizes map defines a single font size value.
 
-```sass
+```scss
 $font-sizes: (
     "base": 1.25rem,
     "double": 2em,
@@ -218,7 +218,7 @@ Default properties for headings are defined by the `$heading-font-family` and `$
 
 The `$heading-sizes` variable takes a list of values which define the base font sizes for headings in descending order. Any undefined headings are set to `1em`. So setting `$heading-sizes: 2em, 1.2em, 1.1em;` will output:
 
-```css
+```scss
 // letter-spacing adjusted based on font size, can be removed in _sass/_base.scss
 h1, .fs-h1 {
   font-size: 2em;
@@ -239,7 +239,7 @@ h4, .fs-h4, h5, .fs-h5, h6, .fs-h6 {
 
 Font weight classes are always generated and do not depend on anything in the `_sass/_variables.scss` module.
 
-```css
+```scss
 .fw-100 {
   font-weight: 100; }
 
@@ -259,7 +259,7 @@ Font weight classes are always generated and do not depend on anything in the `_
 
 The transitions map defines transition times.
 
-```sass
+```scss
 $transitions: (
     "default": .3s, // used by _includes/header.html
     "long":     1s,
