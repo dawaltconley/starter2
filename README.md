@@ -11,7 +11,7 @@ site_directory=path/to/site
 git clone https://github.com/dawaltconley/starter.git $site_directory
 cd $site_directory
 bundle install
-npm install
+npm install # dev dependencies are used by jekyll
 ```
 
 To build and serve locally: `bundle exec jekyll serve`
@@ -72,7 +72,7 @@ Many basic CSS classes are generated from Sass maps located in the `_sass/_varia
 
 Sizes take one or two values for width & height:
 
-```scss
+```sass
 $sizes: (
     "full":   100%,         // width: 100%;  height: 100%
     "screen": 100vw 100vh,  // width: 100vw; height: 100vh
@@ -81,7 +81,7 @@ $sizes: (
 
 The `screen` key in that map will generate classes named `screen-width`, and `screen-height`, plus a `screen-size` class, which is shorthand for both:
 
-```scss
+```css
 .screen-size, .screen-width {
   width: 100vw; }
 .screen-size, .screen-height {
@@ -90,7 +90,7 @@ The `screen` key in that map will generate classes named `screen-width`, and `sc
 
 It will also generate classes with `-min` and `-max` appended, which style min- and max-height respectively:
 
-```scss
+```css
 .screen-size-min, .screen-width-min {
   min-width: 100vw; }
 .screen-size-min, .screen-height-min {
@@ -105,7 +105,7 @@ It will also generate classes with `-min` and `-max` appended, which style min- 
 
 Spacings take a single value:
 
-```scss
+```sass
 $spacings: (
   "s":    15px,
   "m":    30px,
@@ -137,3 +137,135 @@ The CSS output looks like this:
 ```
 
 There is also a `$default-spacing` variable, which controls the spacing used by a number of classes, such as `v-rhythm`. By default, this is `map-get($spacings, m)`.
+
+#### Borders
+
+The borders map takes a map of width and style values (each optional). Colors are inherited from themes and theme classes.
+
+```sass
+$borders: (
+    "basic": (
+        width: 1px,
+        style: solid,
+    ),
+);
+```
+
+This creates `border-basic` class that styles all of an element's borders. You can limit it to specific borders using the same appends as the spacing classes.
+
+The generated CSS looks like this:
+
+```css
+.border-basic, .border-basic-v, .border-basic-t {
+  border-top-width: 1px;
+  border-top-style: solid; }
+.border-basic, .border-basic-v, .border-basic-b {
+  border-bottom-width: 1px;
+  border-bottom-style: solid; }
+.border-basic, .border-basic-h, .border-basic-l {
+  border-left-width: 1px;
+  border-left-style: solid; }
+.border-basic, .border-basic-h, .border-basic-r {
+  border-right-width: 1px;
+  border-right-style: solid; }
+```
+
+#### Z-Index
+
+The `$z-range` variable takes a list of two numbers, and will generate classes for z-indexes between those values. So setting `$z-range: -1, 1;` will output the following:
+
+```css
+// position set via @extend, can be overridden by the 'absolute' class
+.relative, .z-neg-1, .z-0, .z-1 {
+  position: relative;
+}
+
+.z-neg-1 {
+  z-index: -1; }
+.z-0 {
+  z-index: 0; }
+.z-1 {
+  z-index: 1; }
+```
+
+It will also create two classes that override other z-indexes: `front` and `back`. These are the highest and lowest z-index, plus or minus one, respectively. In this case:
+
+```css
+.front {
+  z-index: 2; }
+.back {
+  z-index: -2; }
+```
+
+#### Fonts
+
+The font sizes map defines a single font size value.
+
+```sass
+$font-sizes: (
+    "base": 1.25rem,
+    "double": 2em,
+);
+```
+
+This outputs classes named `fs-base` and `fs-icon` which set an element's font-size to that value. There are also `fs-larger` and `fs-smaller` classes, which set the font-size to the default `larger` and `smaller` values, unless overriden by a font-size defined in that map.
+
+There is a `$base-font-size` variable, which sets the font size used by the document body. It is the value named `"base"`, unless changed. Other variables (`$base-font-family`, `$base-font-weight`, and `$base-line-height`) also affect the document body. `$base-line-length` defines the max-width of the `text-wrapper` class, and should be set to whatever value is appropriate to keep the base font at around 70-80 chars per line.
+
+Default properties for headings are defined by the `$heading-font-family` and `$heading-font-weight` variables.
+
+`ff-base` and `ff-heading` are created based on the `$base-font-family` and `heading-font-family` classes.
+
+The `$heading-sizes` variable takes a list of values which define the base font sizes for headings in descending order. Any undefined headings are set to `1em`. So setting `$heading-sizes: 2em, 1.2em, 1.1em;` will output:
+
+```css
+// letter-spacing adjusted based on font size, can be removed in _sass/_base.scss
+h1, .fs-h1 {
+  font-size: 2em;
+  letter-spacing: -0.02em; }
+
+h2, .fs-h2 {
+  font-size: 1.2em;
+  letter-spacing: -0.012em; }
+
+h3, .fs-h3 {
+  font-size: 1.1em;
+  letter-spacing: -0.011em; }
+
+h4, .fs-h4, h5, .fs-h5, h6, .fs-h6 {
+  font-size: 1em;
+  letter-spacing: -0.01em; }
+```
+
+Font weight classes are always generated and do not depend on anything in the `_sass/_variables.scss` module.
+
+```css
+.fw-100 {
+  font-weight: 100; }
+
+.fw-200 {
+  font-weight: 200; }
+
+// etc., up to 900...
+
+.fw-normal {
+  font-weight: normal; }
+
+.fw-bold {
+  font-weight: bold; }
+```
+
+#### Transitions
+
+The transitions map defines transition times.
+
+```sass
+$transitions: (
+    "default": .3s, // used by _includes/header.html
+    "long":     1s,
+);
+```
+
+This outputs classes named `t-default` and `t-long` that set an element's `transition-duration` to the specified amount. This will override the transition times of other classes, which is otherwise set to `inherit`.
+
+The variable `$t-icons` is used to set the transitions for media icons. It is the transtion named `"default"`, unless changed.
