@@ -269,3 +269,52 @@ $transitions: (
 This outputs classes named `t-default` and `t-long` that set an element's `transition-duration` to the specified amount. This will override the transition times of other classes, which is otherwise set to `inherit`.
 
 The variable `$t-icons` is used to set the transitions for media icons. It is the transtion named `"default"`, unless changed.
+
+### Themes
+
+Themes are a special set of classes which define colors for (almost) the entire site. They are defined in the `$themes` map in the `_sass/_variables.scss` module. Each theme is a map that defines three colors: `text-color`, `background-color`, and (optionally) `brand-color`.
+
+It can also take an `accessibility` argument (`AA`, `AAA`, or `null`), which warns if the contrast ratios of the theme colors fail those WCAG standards (default is `AA`).
+
+```sass
+$themes: (
+    "light": (
+        text-color: #171717,
+        background-color: white,
+        brand-color: royalblue,
+        accessibility: AAA
+    ),
+    "dark": (
+        text-color: white,
+        background-color: #171717,
+        brand-color: royalblue,
+    ),
+);
+```
+
+This produces `light` and `dark` classes, which are used to style the colors of an element ***and*** all of it's children. This is important. It means that an element can be styled according to a given theme by either inheritance...
+
+```html
+<div class="light">
+  <a class="button" href="/foo">Theme Button</a>
+</div>
+```
+
+...or direct assignment.
+
+```html
+<a class="light button" href="/foo">Theme Button</a>
+```
+
+This allows you to style elements within a theme differently without extra markup.
+
+```html
+<div class="light">
+  <p>I am the color set by the light theme</p>
+  <p class="dark">I'm the color set by the dark theme!</p>
+</div>
+```
+
+This behavior is set by using the `themeify` mixin to define theme classes in `_sass/mixins/_themes.scss`.
+
+By default, the first theme defined in the `$theme` map will also apply to the document body.
