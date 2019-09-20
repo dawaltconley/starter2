@@ -272,9 +272,9 @@ The variable `$t-icons` is used to set the transitions for media icons. It is th
 
 ### Themes
 
-Themes are a special set of classes which define colors for (almost) the entire site. They are defined in the `$themes` map in the `_sass/_variables.scss` module. Each theme is a map that defines three colors: `text-color`, `background-color`, and (optionally) `brand-color`.
+Themes are a special set of classes which define colors for (almost) the entire site. They are defined in the `$themes` map in the `_sass/_variables.scss` module. Each theme is a map that defines three colors: `text-color`, `background-color`, and (optionally) `brand-color`. It can also take an `accessibility` argument (`AA`, `AAA`, or `null`), which warns if the contrast ratios of the theme colors fail those WCAG standards (default is `AA`).
 
-It can also take an `accessibility` argument (`AA`, `AAA`, or `null`), which warns if the contrast ratios of the theme colors fail those WCAG standards (default is `AA`).
+By default, the first theme defined in the `$theme` map will also apply to the document body.
 
 ```scss
 $themes: (
@@ -316,5 +316,3 @@ This allows you to style elements within a theme differently without extra marku
 ```
 
 This behavior is set by using the `themeify` mixin to define theme classes in `_sass/mixins/_themes.scss`.
-
-By default, the first theme defined in the `$theme` map will also apply to the document body.
