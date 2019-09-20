@@ -7,9 +7,8 @@ A set of shared code between my Jekyll projects.
 Depends on Jekyll, bundler, and npm.
 
 ```sh
-site_directory=path/to/site
-git clone https://github.com/dawaltconley/starter.git $site_directory
-cd $site_directory
+git clone https://github.com/dawaltconley/starter.git
+cd starter
 bundle install
 npm install # dev dependencies are used by jekyll
 ```
