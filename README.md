@@ -276,7 +276,7 @@ Themes are a special set of classes which define colors for (almost) the entire 
 
 It can also take an `accessibility` argument (`AA`, `AAA`, or `null`), which warns if the contrast ratios of the theme colors fail those WCAG standards (default is `AA`).
 
-```sass
+```scss
 $themes: (
     "light": (
         text-color: #171717,
