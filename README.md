@@ -209,11 +209,9 @@ $font-sizes: (
 
 This outputs classes named `fs-base` and `fs-icon` which set an element's font-size to that value. There are also `fs-larger` and `fs-smaller` classes, which set the font-size to the default `larger` and `smaller` values, unless overriden by a font-size defined in that map.
 
-There is a `$base-font-size` variable, which sets the font size used by the document body. It is the value named `"base"`, unless changed. Other variables (`$base-font-family`, `$base-font-weight`, and `$base-line-height`) also affect the document body. `$base-line-length` defines the max-width of the `text-wrapper` class, and should be set to whatever value is appropriate to keep the base font at around 70-80 chars per line.
+There is a `$base-font-size` variable, which sets the font size used by the document body. It is `$font-sizes` value named "base", unless changed. Other variables (`$base-font-family`, `$base-font-weight`, and `$base-line-height`) also affect the document body. `$base-line-length` defines the max-width of the `text-wrapper` class, and should be set to whatever value is appropriate to keep the base font at around 70-80 chars per line.
 
 Default properties for headings are defined by the `$heading-font-family` and `$heading-font-weight` variables.
-
-`ff-base` and `ff-heading` are created based on the `$base-font-family` and `heading-font-family` classes.
 
 The `$heading-sizes` variable takes a list of values which define the base font sizes for headings in descending order. Any undefined headings are set to `1em`. So setting `$heading-sizes: 2em, 1.2em, 1.1em;` will output:
 
@@ -235,6 +233,8 @@ h4, .fs-h4, h5, .fs-h5, h6, .fs-h6 {
   font-size: 1em;
   letter-spacing: -0.01em; }
 ```
+
+Font family classes (`ff-base` and `ff-heading`) are created based on the `$base-font-family` and `$heading-font-family` variables.
 
 Font weight classes are always generated and do not depend on anything in the [\_sass/\_variables.scss](https://github.com/dawaltconley/starter/blob/master/_sass/_variables.scss) module.
 
@@ -267,7 +267,7 @@ $transitions: (
 
 This outputs classes named `t-default` and `t-long` that set an element's `transition-duration` to the specified amount. This will override the transition times of other classes, which is otherwise set to `inherit`.
 
-The variable `$t-icons` is used to set the transitions for media icons. It is the transtion named `"default"`, unless changed.
+The variable `$t-icons` is used to set the transitions for media icons. It is the transtion named "default", unless changed.
 
 ### Themes
 
