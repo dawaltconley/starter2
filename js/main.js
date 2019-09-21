@@ -244,9 +244,9 @@
         }
     }
 
-    function getData(path, callback) {
+    function sendHttpRequest(method, body, path, callback) {
         var request = new XMLHttpRequest();
-        request.open("GET", path);
+        request.open(method, path);
         request.onload = function () {
             if (this.status >= 200 && this.status < 400) {
                 callback(this.response);
@@ -261,7 +261,28 @@
             callback(undefined);
         }
 
-        request.send();
+        request.send(body);
+        return request
+    }
+
+    var getData = sendHttpRequest.bind(null, "GET", null);
+    var postData = sendHttpRequest.bind(null, "POST");
+
+    function onResponse(request, callback) {
+        request.onload = function () {
+            if (this.status >= 200 && this.status < 400) {
+                callback(this.response);
+            } else {
+                // server error
+                callback(null, this.response);
+            }
+        }
+
+        request.onerror = function () {
+            // error handling
+            callback(null, this.response);
+        }
+
     }
 
 /*
@@ -782,6 +803,77 @@
             s.play();
         });
     }, passive);
+
+/*
+ * Forms
+ */
+
+function JSONForm (e) {
+    var validFields = [ "input", "select", "textarea", "button", "datalist", "output" ];
+    this.element = e;
+    this.url = e.getAttribute("action");
+    this.fields = [];
+    this.data = {};
+    var formFields = toArray(e.querySelectorAll(validFields.join("[name],").slice(0, -1)));
+    this.fields = this.fields.concat(formFields);
+}
+
+JSONForm.prototype.getData = function () {
+    this.fields.forEach(function (f) {
+        this.data[f.name] = f.value;
+    }.bind(this));
+    return this.data;
+};
+
+JSONForm.prototype.sendJSON = function (callback) {
+    var request = new XMLHttpRequest();
+    request.open("POST", this.url);
+    request.setRequestHeader("Content-Type", "application/json");
+    onResponse(request, callback);
+    request.send(JSON.stringify(this.data));
+};
+
+function CommentForm (e) {
+    JSONForm.call(this, e);
+
+    var self = this;
+    e.addEventListener("submit", function (event) {
+        event.preventDefault();
+        self.getData();
+        self.loading();
+        self.sendJSON(function (r, e) {
+            if (e) {
+                self.error();
+            } else {
+                self.post();
+            }
+        });
+    });
+};
+
+CommentForm.prototype = Object.create(JSONForm.prototype);
+CommentForm.prototype.constructor = CommentForm;
+
+CommentForm.prototype.loading = function () {
+    removeChildren(this.element)
+    this.element.innerText = "Submitting...";
+};
+
+CommentForm.prototype.post = function () {
+    this.element.innerText = "The comment was submitted for moderation!"
+};
+
+CommentForm.prototype.error = function () {
+    this.element.innerText = "Something went wrong, submission failed."
+};
+
+var forms = toArray(document.querySelectorAll('form[data-content-type="application/json"]')).map(function(e) {
+    if (e.hasAttribute("data-comment-form")) {
+        return new CommentForm(e);
+    } else {
+        return new JSONForm(e);
+    }
+});
 
 /*
  * Fullscreen

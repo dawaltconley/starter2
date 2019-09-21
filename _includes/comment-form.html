@@ -1,0 +1,7 @@
+<form id="comment-form" action="https://7uoj7r2as8.execute-api.us-east-1.amazonaws.com/default" method="post" data-content-type="application/json" data-comment-form>
+  <input type="hidden" name="replyTo" value="{{ include.on }}">
+  <input type="text" name="name" placeholder="Name">
+  <input type="text" name="email" placeholder="Email">
+  <textarea name="comment" form="comment-form"></textarea>
+  <button type="submit">Submit</button>
+</form>
