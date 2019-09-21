@@ -65,7 +65,7 @@ Since the `@extend` feature of Sass preserves the original class order, the rela
 
 ### Generated classes
 
-Many basic CSS classes are generated from Sass maps located in the `_sass/_variables.scss` module.
+Many basic CSS classes are generated from Sass maps located in the [\_sass/\_variables.scss](https://github.com/dawaltconley/starter/blob/master/_sass/_variables.scss) module.
 
 #### Sizes
 
@@ -236,7 +236,7 @@ h4, .fs-h4, h5, .fs-h5, h6, .fs-h6 {
   letter-spacing: -0.01em; }
 ```
 
-Font weight classes are always generated and do not depend on anything in the `_sass/_variables.scss` module.
+Font weight classes are always generated and do not depend on anything in the [\_sass/\_variables.scss](https://github.com/dawaltconley/starter/blob/master/_sass/_variables.scss) module.
 
 ```scss
 .fw-100 {
@@ -314,4 +314,97 @@ This allows you to style elements within a theme differently without extra marku
 </div>
 ```
 
-This behavior is set by using the `themeify` mixin to define theme classes in `_sass/mixins/_themes.scss`.
+This behavior is set by using the `themeify` mixin to define theme classes in [\_sass/mixins/\_themes.scss](https://github.com/dawaltconley/starter/blob/master/_sass/mixins/_themes.scss).
+
+#### Theme classes
+
+Theme classes are written inside the main `theme` mixin using the `themeify` mixin.
+
+```scss
+@mixin theme($background-color, $text-color, $brand-color: null) {
+    $light-text: mix($text-color, $background-color, 58%);
+
+    @include themeify(".text-light") {
+        color: $light-text;
+    }
+}
+```
+
+This sets the class `.text-light` to apply a mix of the theme's text and background colors. If the theme is a light one (dark text on a light background), this will lighten the text, as the name implies. If the theme has light text on a dark background, this will _darkening_ it, to bring it closer to the background color.
+
+Perhaps counter-intuitive. But when styling a site I am usually thinking of the colors of elements as relative to the rest of the page, or as serving the same _role_ within a theme. Theme classes do exactly that; they perform a function which is relative to the theme. This means that themes can be tried out, updated, and adjusted easily, even well into a site's development.
+
+#### Themes and speceficity
+
+Speceficity can get a little tricky when working like this. Theme styles automatically have more speceficity, since they are relative to a class. The CSS output for `text-light` looks like this:
+
+```scss
+.light .text-light, .light.text-light {
+  color: #787878; }
+```
+
+As long as color is the sole and exclusive domain of themes, this works great. But if anything else is trying to set a color it will have to contend with this.
+
+#### Theme depth
+
+The intended (and intuitive) behavior of theme classes is that they will be styled relative to the _nearest parent theme_. Unfortunately, CSS needs some coaxing to work like this.
+
+This is what the `$theme-depth` variable is for. `$theme-depth` controls the level at which nested themes will inherit from their nearest parent, reworking the generated CSS like so:
+
+```scss
+// $theme-depth: 1;
+.light.text-light, .light .text-light,
+.dark .light.text-light, .dark .light .text-light {
+    color: #787878; }
+
+// $theme-depth: 2;
+.light.text-light, .light .text-light,
+.dark .light.text-light, .dark .light .text-light, 
+.light .dark .light.text-light, .light .dark .light .text-light {
+    color: #787878; }
+```
+
+As you can see, increasing the `$theme-depth` makes each theme class _significantly_ heavier—even more so if you have three or four theme classes! I recommend nothing higher than a 1 for production sites, and a theme depth of 0 if possible.
+
+Why are you nesting so many themes inside each other, anyway? Why did I even make this a thing you could do??
+
+## Images
+
+The starter site has a variety of tools for optimizing images when serving the site to production. Optimized images are split into three types, named `background`, `srcset`, and `picture`. Each live in different directories in the assets folder (`gulp-backgrounds`, `gulp-srcset`, and `gulp-pictures`).
+
+The `gulp images` task resizes the images in these folders according to the sizes defined in [\_data/devices.yml](https://github.com/dawaltconley/starter/blob/master/_data/devices.yml). Because the responsive images are generated into the `\_site` directory by gulp, which Jekyll overwrites, images have to remain unoptimized when rebuilding using Jekyll. As a result, all of the following methods only create links to the optimized images when `JEKYLL_ENV` is set to `gulp` or `production`.
+
+None of these methods use Javascript, so none of them are 100% accurate at serving the best image at all times.
+
+### Backgrounds
+
+CSS background images are styled using the `$responsive` argument of the `background-image` mixin.
+
+```scss
+.responsive-image {
+  $img: url(#{$baseurl}/assets/gulp-backgrounds/example.jpg);
+  @include background-image($img, $responsive: true);
+}
+```
+
+This mixin uses media queries to serve an image that can _cover_ the screen (width and height), and is intended to be used with `background-size: cover;`, whith the `background-image` mixin sets by default.
+
+### Srcset
+
+Most `<img>` elements can be made responsive with the `gulp-srcset` include ([\_includes/gulp-srcset.liquid](https://github.com/dawaltconley/starter/blob/master/_includes/gulp-srcset.liquid)). Use it within an image's `srcset` property, passing in the image `src` and `width`. Then set the image `sizes` like you [normally would](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images).
+
+```liquid
+{% assign img = '/assets/gulp-srcset/example.jpg' | prepend: site.baseurl %}
+<img src="{{ img }}" alt="" srcset="{% include gulp-srcset.liquid src=img width='1080px' %}" sizes="100w">
+```
+
+### Picture
+
+The previous method only lets you specify the _width_ that the image should have on different devices. This is fine in most cases, but if you need to constrain the image by height as well (say, with very tall and thin images), you can use the `gulp-picture` include. For this, just pass the entire `<img>` element as a parameter and it will generate a responsive `<picture>` element using the same rules as the `background-image` mixin: always at least big enough to cover the screen. 
+
+```liquid
+{% capture img %}
+  <img src="{{ site.baseurl }}/assets/gulp-pictures/example.jpg" alt="">
+{% endcapture %}
+{% include gulp-picture.liquid img=img %}
+```
