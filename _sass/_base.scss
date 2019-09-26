@@ -236,6 +236,22 @@ pre {
 }
 
 /*
+ * Forms
+ */
+
+input[type="text"], textarea {
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 3px;
+    padding: .5em;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 8em;
+}
+
+/*
  * Icons
  */
 

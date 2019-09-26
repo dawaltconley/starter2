@@ -83,6 +83,17 @@
         background-color: $box-color;
     }
 
+    @include themeify('input[type="text"]', "textarea") {
+        color: $text-color;
+        background: mix($text-color, $background-color, if($light-theme, 0%, 5%));
+        border-color: mix($text-color, $background-color, 25%);
+
+        &::placeholder {
+            color: $light-text;
+            opacity: 1;
+        }
+    }
+
     // Text
 
     @include themeify(".text-light") {
