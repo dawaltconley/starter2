@@ -251,6 +251,16 @@ textarea {
     min-height: 8em;
 }
 
+input[type="checkbox"], label {
+    cursor: pointer;
+}
+
+input[type="checkbox"] + label,
+label > input[type="checkbox"] + * {
+    margin-left: 0.7ex;
+    line-height: 0;
+}
+
 /*
  * Icons
  */
