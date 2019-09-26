@@ -1,6 +1,6 @@
 {% assign id = include.on %}
 
-<form action="https://7uoj7r2as8.execute-api.us-east-1.amazonaws.com/default" method="post" data-content-type="application/json" data-comment-form>
+<form class="margin-m-v" action="https://7uoj7r2as8.execute-api.us-east-1.amazonaws.com/default" method="post" data-content-type="application/json" data-comment-form>
   <input type="hidden" name="replyTo" value="{{ id }}">
   <input type="text" name="name" placeholder="Name">
   <input type="text" name="email" placeholder="Email">
@@ -8,16 +8,19 @@
   <button type="submit">Submit</button>
 </form>
 
-{% assign sorted_comments = site.comments | where: 'replyTo', id | sort: 'date' | reverse %}
-{% for comment in sorted_comments %}
-  <div class="padding-m-l">
-    <p class="ff-heading">{{ comment.name }}</p>
-    {% assign content = comment.content | markdownify %}
-    {{ comment }}
+<ul class="subtle-list v-rhythm">
+  {% assign sorted_comments = site.comments | where: 'replyTo', id | sort: 'date' | reverse %}
+  {% for comment in sorted_comments %}
+    <li>
+      <p class="ff-heading">{{ comment.name }}</p>
 
-    <a class="block" href="#reply-to-{{ comment.id }}">Reply</a>
-    <div id="reply-to-{{ comment.id }}" class="target target-display v-rhythm">
-      {% include comment-form.html on=comment.id %}
-    </div>
-  </div>
-{% endfor %}
+      {% assign content = comment.content | markdownify %}
+      {{ comment }}
+
+      <a class="block" href="#reply-to-{{ comment.id }}">Reply</a>
+      <div id="reply-to-{{ comment.id }}" class="target target-display v-rhythm">
+        {% include comment-form.html on=comment.id %}
+      </div>
+    </li>
+  {% endfor %}
+</ul>
