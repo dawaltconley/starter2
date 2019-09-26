@@ -1,11 +1,19 @@
 {% assign id = include.on %}
+{% if include.type %}
+  {% assign type = include.type %}
+{% else %}
+  {% assign type = 'comment' %}
+{% endif %}
 
-<form class="margin-m-v" action="https://7uoj7r2as8.execute-api.us-east-1.amazonaws.com/default" method="post" data-content-type="application/json" data-comment-form>
+
+<form class="margin-m-v text-wrapper" action="https://7uoj7r2as8.execute-api.us-east-1.amazonaws.com/default" method="post" data-content-type="application/json" data-comment-form>
   <input type="hidden" name="replyTo" value="{{ id }}">
-  <input type="text" name="name" placeholder="Name">
-  <input type="text" name="email" placeholder="Email">
-  <textarea name="comment"></textarea>
-  <button type="submit">Submit</button>
+  <textarea class="full-width" name="comment" placeholder="Leave a {{ type }}..."></textarea>
+  <div class="flex-row margin-s-t h-rhythm">
+    <button class="button cursor-pointer" type="submit">Submit</button>
+    <input class="full-width" type="text" name="name" placeholder="Name">
+    <input class="full-width" type="text" name="email" placeholder="Email">
+  </div>
 </form>
 
 <ul class="subtle-list v-rhythm">
@@ -19,7 +27,7 @@
 
       <a class="block" href="#reply-to-{{ comment.id }}">Reply</a>
       <div id="reply-to-{{ comment.id }}" class="target target-display v-rhythm">
-        {% include comment-form.html on=comment.id %}
+        {% include comment-form.html on=comment.id type='reply' %}
       </div>
     </li>
   {% endfor %}
