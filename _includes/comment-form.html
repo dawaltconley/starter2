@@ -8,12 +8,16 @@
 
 <form class="margin-m-v text-wrapper" action="https://7uoj7r2as8.execute-api.us-east-1.amazonaws.com/default" method="post" data-content-type="application/json" data-comment-form>
   <input type="hidden" name="replyTo" value="{{ id }}">
-  <textarea class="full-width" name="comment" placeholder="Leave a {{ type }}..."></textarea>
-  <div class="flex-row margin-s-t h-rhythm">
-    <button class="button cursor-pointer" type="submit">Submit</button>
-    <input class="full-width" type="text" name="name" placeholder="Name">
-    <input class="full-width" type="text" name="email" placeholder="Email">
+  <textarea class="block full-width" name="comment" placeholder="Leave a {{ type }}..."></textarea>
+  <div class="flex-row flex-align-center margin-s-t h-rhythm">
+    <input type="text" class="full-width" name="name" placeholder="Name">
+    <input type="text" class="full-width" name="email" placeholder="Email">
+    <button type="submit" class="button cursor-pointer">Submit</button>
   </div>
+  <label class="flex-row flex-align-center margin-s-t text-light fs-smaller">
+    <input type="checkbox" data-save="name email">
+    <span>Remember me</span>
+  </label>
 </form>
 
 <ul class="subtle-list v-rhythm">
