@@ -816,7 +816,30 @@ function JSONForm (e) {
     this.data = {};
     var formFields = toArray(e.querySelectorAll(validFields.join("[name],").slice(0, -1)));
     this.fields = this.fields.concat(formFields);
+    this.rememberMe = e.querySelector("[data-save]");
+    this.savedPrefix = "savedForm-";
+    this.fillSaved();
 }
+
+JSONForm.prototype.saveData = function () {
+    this.rememberMe.getAttribute("data-save").split(" ").forEach(function (fieldName) {
+        var fieldValue = this.data[fieldName];
+        if (fieldValue) {
+            window.localStorage.setItem(this.savedPrefix + fieldName, fieldValue);
+        }
+    }.bind(this));
+};
+
+JSONForm.prototype.fillSaved = function () {
+    var hasSaved = false;
+    this.fields.forEach(function (f) {
+        var saved = window.localStorage.getItem(this.savedPrefix + f.name);
+        f.value = saved;
+        if (saved && this.rememberMe) {
+            this.rememberMe.checked = true;
+        }
+    }.bind(this));
+};
 
 JSONForm.prototype.getData = function () {
     this.fields.forEach(function (f) {
@@ -841,6 +864,8 @@ function CommentForm (e) {
         event.preventDefault();
         self.getData();
         self.loading();
+        if (self.rememberMe && self.rememberMe.checked)
+            self.saveData();
         self.sendJSON(function (r, e) {
             if (e) {
                 self.error();
