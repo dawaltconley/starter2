@@ -111,6 +111,14 @@
     }
 }
 
+.indented-comment {
+    margin-left: $default-spacing;
+
+    & .indented-comment .indented-comment { // stop indenting after 2 levels
+        margin-left: 0;
+    }
+}
+
 /*
  * Paddings
  */

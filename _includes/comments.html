@@ -32,7 +32,7 @@
             {% assign summary = replies | append: ' replies' %}
           {% endif %}
           <summary class="text-light fs-smaller">{{ summary }}</summary>
-          <div class="margin-m-l margin-0-l-gt-mobile margin-s-t">
+          <div class="indented-comment margin-0-l-gt-mobile margin-s-t">
             {% include comment-form.html for=comment.id type='reply' %}
             {% include comments.html for=comment.id %}
           </div>
