@@ -4,15 +4,15 @@
   {% assign type = 'comment' %}
 {% endif %}
 
-<form class="margin-m-b" action="{{ site.jekyll_comments.api }}" method="post" data-content-type="application/json" data-comment-form>
+<form class="margin-m-b v-rhythm-s" action="{{ site.jekyll_comments.api }}" method="post" data-content-type="application/json" data-comment-form>
   <input type="hidden" name="replyTo" value="{{ include.for }}">
   <textarea class="block full-width" name="comment" placeholder="Leave a {{ type }}..."></textarea>
-  <div class="flex-row flex-align-center margin-s-t h-rhythm">
+  <div class="flex-row-gt-mobile flex-align-center h-rhythm-s v-rhythm-s h-rhythm-0-lt-mobile v-rhythm-0-gt-mobile">
     <input type="text" class="full-width" name="name" placeholder="Name">
     <input type="text" class="full-width" name="email" placeholder="Email">
-    <button type="submit" class="button cursor-pointer">Submit</button>
+    <button type="submit" class="button cursor-pointer float-right">Submit</button>
   </div>
-  <label class="flex-row flex-align-center margin-s-t text-light fs-smaller">
+  <label class="flex-row flex-align-center text-light fs-smaller">
     <input type="checkbox" data-save="name email">
     <span>Remember me</span>
   </label>
