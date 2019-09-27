@@ -1,5 +1,7 @@
+{% assign comments = site.jekyll_comments.collection %}
+
 <ul class="unlist v-rhythm border-around fs-smaller">
-  {% assign sorted_comments = site.comments | where: 'replyTo', include.for | sort: 'date' | reverse %}
+  {% assign sorted_comments = site[comments] | where: 'replyTo', include.for | sort: 'date' | reverse %}
   {% for comment in sorted_comments %}
     <li class="margin-0-v padding-m-v border-basic border-light">
       <!-- <div> -->
@@ -19,7 +21,7 @@
 
       <details>
         {% assign summary = 'Reply' %}
-        {% assign replies = site.comments | where: 'replyTo', comment.id | size %}
+        {% assign replies = site[comments] | where: 'replyTo', comment.id | size %}
         {% if replies == 1 %}
           {% assign summary = '1 reply' %}
         {% elsif replies > 1 %}
