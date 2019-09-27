@@ -5,8 +5,7 @@
   {% assign type = 'comment' %}
 {% endif %}
 
-
-<form class="margin-m-v text-wrapper" action="https://7uoj7r2as8.execute-api.us-east-1.amazonaws.com/default" method="post" data-content-type="application/json" data-comment-form>
+<form class="margin-m-b text-wrapper" action="https://7uoj7r2as8.execute-api.us-east-1.amazonaws.com/default" method="post" data-content-type="application/json" data-comment-form>
   <input type="hidden" name="replyTo" value="{{ id }}">
   <textarea class="block full-width" name="comment" placeholder="Leave a {{ type }}..."></textarea>
   <div class="flex-row flex-align-center margin-s-t h-rhythm">
@@ -20,19 +19,35 @@
   </label>
 </form>
 
-<ul class="unlist v-rhythm">
+<ul class="unlist v-rhythm border-around fs-smaller">
   {% assign sorted_comments = site.comments | where: 'replyTo', id | sort: 'date' | reverse %}
   {% for comment in sorted_comments %}
-    <li>
-      <p class="ff-heading">{{ comment.name }}</p>
-
-      {% assign content = comment.content | markdownify %}
-      {{ comment }}
-
-      <a class="block" href="#reply-to-{{ comment.id }}">Reply</a>
-      <div id="reply-to-{{ comment.id }}" class="indented target target-display v-rhythm">
-        {% include comment-form.html on=comment.id type='reply' %}
+    <li class="margin-0-v padding-m-v border-basic border-light">
+      <div class="margin-0-b ff-heading">
+        {{ comment.name }}
+        <time class="text-light" datetime="{{ comment.date | date_to_xmlschema }}">
+          &bull; {{ comment.date | date: "%b %-d, %Y" }}
+        </time>
       </div>
+
+      <div class="margin-xs-b">
+        {% assign content = comment.content | markdownify %}
+        {{ content }}
+      </div>
+
+      <details>
+        {% assign summary = 'Reply' %}
+        {% assign replies = site.comments | where: 'replyTo', comment.id | size %}
+        {% if replies == 1 %}
+          {% assign summary = '1 reply' %}
+        {% elsif replies > 1 %}
+          {% assign summary = replies | append: ' replies' %}
+        {% endif %}
+        <summary class="text-light">{{ summary }}</summary>
+        <div class="indented margin-s-t fs-base">
+          {% include comment-form.html on=comment.id type='reply' %}
+        </div>
+      </details>
     </li>
   {% endfor %}
 </ul>
