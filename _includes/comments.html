@@ -1,3 +1,10 @@
+{% assign global_scope_comments = comments %}
+{% assign global_scope_sorted_comments = sorted_comments %}
+{% assign global_scope_content = content %}
+{% assign global_scope_summary = summary %}
+{% assign global_scope_replies = replies %}
+{% assign global_scope_comment = comment %}
+
 {% assign comments = site.jekyll_comments.collection %}
 
 <ul class="unlist v-rhythm border-around">
@@ -41,3 +48,10 @@
     </li>
   {% endfor %}
 </ul>
+
+{% assign comments = global_scope_comments %}
+{% assign sorted_comments = global_scope_sorted_comments %}
+{% assign content = global_scope_content %}
+{% assign summary = global_scope_summary %}
+{% assign replies = global_scope_replies %}
+{% assign comment = global_scope_comment %}

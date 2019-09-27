@@ -1,3 +1,5 @@
+{% assign global_scope_type = type %}
+
 {% if include.type %}
   {% assign type = include.type %}
 {% else %}
@@ -17,3 +19,5 @@
     <span>Remember me</span>
   </label>
 </form>
+
+{% assign type = global_scope_type %}
