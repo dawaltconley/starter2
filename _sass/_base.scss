@@ -61,20 +61,33 @@ article header,
     margin-bottom: 0;
 }
 
-.v-rhythm {
-    @include mq {
-        & > * {
-            margin-bottom: $default-spacing;
-            margin-right: 0;
+@each $name, $value in $spacings {
+    .v-rhythm-#{$name} > * {
+        @extend %vertical-rhythm;
+        @if $value != $default-spacing {
+            margin-bottom: $value;
+        }
+    }
+    .h-rhythm-#{$name} > * {
+        @extend %horizontal-rhythm;
+        @if $value != $default-spacing {
+            margin-right: $value;
         }
     }
 }
 
-.h-rhythm {
+.v-rhythm-0 {
     @include mq {
         & > * {
-            margin-right: $default-spacing;
             margin-bottom: 0;
+        }
+    }
+}
+
+.h-rhythm-0 {
+    @include mq {
+        & > * {
+            margin-right: 0;
         }
     }
 }
