@@ -56,6 +56,12 @@
     }
 }
 
+.inline-flex {
+    @include mq("mobile") {
+        display: inline-flex;
+    }
+}
+
 .full-width {
     @include mq {
         width: 100%;
