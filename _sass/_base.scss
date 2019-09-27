@@ -87,6 +87,7 @@ article header,
 /**
  * Media
  */
+
 img {
     max-width: 100%;
     vertical-align: middle;
@@ -190,6 +191,10 @@ button {
     border: 0;
     background-color: transparent;
     color: inherit;
+}
+
+summary {
+    @extend .cursor-pointer, .no-select;
 }
 
 /*
