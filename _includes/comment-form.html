@@ -4,7 +4,7 @@
   {% assign type = 'comment' %}
 {% endif %}
 
-<form class="margin-m-b" action="https://7uoj7r2as8.execute-api.us-east-1.amazonaws.com/default" method="post" data-content-type="application/json" data-comment-form>
+<form class="margin-m-b" action="{{ site.jekyll_comments.api }}" method="post" data-content-type="application/json" data-comment-form>
   <input type="hidden" name="replyTo" value="{{ include.for }}">
   <textarea class="block full-width" name="comment" placeholder="Leave a {{ type }}..."></textarea>
   <div class="flex-row flex-align-center margin-s-t h-rhythm">

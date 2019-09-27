@@ -49,6 +49,7 @@ jekyll_comments:
   branch: master
   collection: comments
   path: _comments
+  api: # path to comments API
 
 # Prose
 
