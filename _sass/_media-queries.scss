@@ -70,6 +70,14 @@
     }
 }
 
+.auto-height {
+    @include mq {
+        height: auto;
+        min-height: auto;
+        max-height: none;
+    }
+}
+
 .margin-auto {
     @include all-sides {
         @include mq {
