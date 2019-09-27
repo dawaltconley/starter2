@@ -45,6 +45,9 @@ exclude:
   - "gulpfile.js"
   - "assets/test"
 
+plugins:
+  - liquid-md5
+
 jekyll_comments:
   branch: master
   collection: comments
