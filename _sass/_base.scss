@@ -124,7 +124,7 @@ figcaption {
  * Lists
  */
 
-ul, ol {
+ul, ol, .indented {
     margin-left: $default-spacing * 2;
 
     @media screen and (max-width: map-get($bp, mobile)) {
@@ -141,10 +141,6 @@ li {
 
 .unlist {
     margin-left: 0;
-    list-style: none;
-}
-
-.subtle-list {
     list-style: none;
 }
 

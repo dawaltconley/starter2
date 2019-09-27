@@ -20,7 +20,7 @@
   </label>
 </form>
 
-<ul class="subtle-list v-rhythm">
+<ul class="unlist v-rhythm">
   {% assign sorted_comments = site.comments | where: 'replyTo', id | sort: 'date' | reverse %}
   {% for comment in sorted_comments %}
     <li>
@@ -30,7 +30,7 @@
       {{ comment }}
 
       <a class="block" href="#reply-to-{{ comment.id }}">Reply</a>
-      <div id="reply-to-{{ comment.id }}" class="target target-display v-rhythm">
+      <div id="reply-to-{{ comment.id }}" class="indented target target-display v-rhythm">
         {% include comment-form.html on=comment.id type='reply' %}
       </div>
     </li>
