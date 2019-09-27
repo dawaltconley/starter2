@@ -219,7 +219,7 @@
     border-left-width: 0;
     border-right-width: 0;
 
-    &:nth-child(n + 1) {
+    &:nth-child(n + 2) {
         border-top-width: 0;
     }
 }
