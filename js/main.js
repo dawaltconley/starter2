@@ -238,6 +238,10 @@
         };
     }
 
+    function unique(value, index, self) {
+        return self.indexOf(value) === index;
+    }
+
     function updateObj(obj, newObj) {
         for (var key in newObj) {
             obj[key] = newObj[key];
