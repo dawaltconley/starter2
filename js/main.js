@@ -799,20 +799,27 @@
  */
 
 function JSONForm (e) {
-    var validFields = [ "input", "select", "textarea", "button", "datalist", "output" ];
     this.element = e;
     this.url = e.getAttribute("action");
-    this.fields = [];
     this.data = {};
-    var formFields = toArray(e.querySelectorAll(validFields.join("[name],").slice(0, -1)));
-    this.fields = this.fields.concat(formFields);
-    this.rememberMe = e.querySelector("[data-save]");
+
+    var validFields = [ "input", "select", "textarea", "button", "datalist", "output" ];
+    this.fields = [];
+    this.fields = this.fields.concat(toArray(e.querySelectorAll(validFields.join("[name],").slice(0, -1))));
+    if (e.id)
+        this.fields = this.fields.concat(toArray(document.querySelectorAll(validFields.join('[name][form="'+e.id+'"],').slice(0, -1))));
+    this.fields = this.fields.filter(unique);
+
+    this.remember = e.querySelector("[data-save]");
+    if (this.remember)
+        this.save = this.remember.getAttribute("data-save").split(" ");
     this.savedPrefix = "savedForm-";
+
     this.fillSaved();
 }
 
 JSONForm.prototype.saveData = function () {
-    this.rememberMe.getAttribute("data-save").split(" ").forEach(function (fieldName) {
+    this.save.forEach(function (fieldName) {
         var fieldValue = this.data[fieldName];
         if (fieldValue) {
             window.localStorage.setItem(this.savedPrefix + fieldName, fieldValue);
@@ -822,11 +829,15 @@ JSONForm.prototype.saveData = function () {
 
 JSONForm.prototype.fillSaved = function () {
     var hasSaved = false;
-    this.fields.forEach(function (f) {
+    var savedFields = this.fields.filter(function (f) {
+        return this.save.indexOf(f.name) >= 0;
+    }.bind(this))
+    savedFields.forEach(function (f) {
         var saved = window.localStorage.getItem(this.savedPrefix + f.name);
-        f.value = saved;
-        if (saved && this.rememberMe) {
-            this.rememberMe.checked = true;
+        if (saved) {
+            f.value = saved;
+            if (this.remember)
+                this.remember.checked = true;
         }
     }.bind(this));
 };
@@ -842,6 +853,7 @@ JSONForm.prototype.sendJSON = function (callback) {
     var request = new XMLHttpRequest();
     request.open("POST", this.url);
     request.setRequestHeader("Content-Type", "application/json");
+    request.setRequestHeader("Accept", "application/json");
     onResponse(request, callback);
     request.send(JSON.stringify(this.data));
 };
@@ -854,7 +866,7 @@ function CommentForm (e) {
         event.preventDefault();
         self.getData();
         self.loading();
-        if (self.rememberMe && self.rememberMe.checked)
+        if (self.remember && self.remember.checked)
             self.saveData();
         self.sendJSON(function (r, e) {
             if (e) {
