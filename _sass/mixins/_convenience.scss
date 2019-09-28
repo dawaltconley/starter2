@@ -127,10 +127,10 @@
             $bp: nth(nth($bp-col-map, $i), 1);
             $col: nth(nth($bp-col-map, $i), 2);
             @if not $col { $col: $last-col + 1; }
-            $query: "screen and (min-width: #{$bp})";
+            $query: "screen and (min-width: #{$bp + 1px})";
             @if $i < length($bp-col-map) {
                 $bp-next: nth(nth($bp-col-map, $i+1), 1);
-                $query: "#{$query} and (max-width: #{$bp-next - 1px})";
+                $query: "#{$query} and (max-width: #{$bp-next})";
                 $last-col: $col;
             }
             @media #{$query} {
