@@ -325,6 +325,10 @@
         });
     });
 
+    function remove(e) {
+        e.parentNode.removeChild(e);
+    }
+
     function removeChildren(e) {
         var child = e.lastChild;
         while (child) {
