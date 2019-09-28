@@ -279,6 +279,10 @@ label > input[type="checkbox"] + * {
     line-height: 0;
 }
 
+*:focus:invalid {
+    @extend .invalid;
+}
+
 /*
  * Icons
  */
