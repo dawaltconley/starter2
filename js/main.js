@@ -248,30 +248,6 @@
         }
     }
 
-    function sendHttpRequest(method, body, path, callback) {
-        var request = new XMLHttpRequest();
-        request.open(method, path);
-        request.onload = function () {
-            if (this.status >= 200 && this.status < 400) {
-                callback(this.response);
-            } else {
-                // server error
-                callback(undefined);
-            }
-        }
-
-        request.onerror = function () {
-            // error handling
-            callback(undefined);
-        }
-
-        request.send(body);
-        return request
-    }
-
-    var getData = sendHttpRequest.bind(null, "GET", null);
-    var postData = sendHttpRequest.bind(null, "POST");
-
     function onResponse(request, callback) {
         request.onload = function () {
             if (this.status >= 200 && this.status < 400) {
@@ -286,8 +262,18 @@
             // error handling
             callback(null, this.response);
         }
-
     }
+
+    function sendHttpRequest(method, body, path, callback) {
+        var request = new XMLHttpRequest();
+        request.open(method, path);
+        onResponse(request, callback);
+        request.send(body);
+        return request
+    }
+
+    var getData = sendHttpRequest.bind(null, "GET", null);
+    var postData = sendHttpRequest.bind(null, "POST");
 
 /*
  * DOM Manipulation
