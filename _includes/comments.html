@@ -67,6 +67,8 @@
       </li>
     {% endfor %}
   </ul>
+{% else %}
+  {{ include.else }}
 {% endif  %}
 
 {% assign comments = global_scope_comments %}
