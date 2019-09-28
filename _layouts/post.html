@@ -32,13 +32,15 @@ layout: default
 
   {% assign posts = site.posts | size %}
   {% if posts > 1 %}
-    <aside class="v-rhythm sidebar-gt-large fs-smaller">
+    <aside class="sidebar-gt-large">
       <h2>Recent Articles</h2>
-      {% for post in site.posts limit: 6 %}
-        {% unless post.id == page.id %}
-          {% include post-preview.html post=post heading=3 excerpt_length=220 %}
-        {% endunless %}
-      {% endfor %}
+      <div class="v-rhythm fs-smaller">
+        {% for post in site.posts limit: 6 %}
+          {% unless post.id == page.id %}
+            {% include post-preview.html post=post heading=3 excerpt_length=220 %}
+          {% endunless %}
+        {% endfor %}
+      </div>
     </aside>
   {% endif %}
 
