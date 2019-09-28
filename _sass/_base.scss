@@ -260,6 +260,10 @@ input[type="text"], textarea {
     padding: .5em;
 }
 
+select {
+    height: 2em;
+}
+
 textarea {
     resize: vertical;
     min-height: 8em;
