@@ -886,7 +886,8 @@ CommentForm.prototype = Object.create(JSONForm.prototype);
 CommentForm.prototype.constructor = CommentForm;
 
 CommentForm.prototype.loading = function () {
-    removeChildren(this.element)
+    this.fields.forEach(remove);
+    removeChildren(this.element);
     this.element.innerText = "Submitting...";
 };
 
