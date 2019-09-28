@@ -307,7 +307,7 @@
                 var asset = img.getAttribute(a);
                 this.assets[a] = asset ? asset : "";
                 img.setAttribute(a, "");
-            }.bind(this));
+            }, this);
         }
     }
 
@@ -615,7 +615,7 @@
                         event.preventDefault();
                         this[method]();
                     }.bind(this));
-                }.bind(this));
+                }, this);
             }
         }
     };
@@ -688,7 +688,7 @@
                 this.timePaused = this.now;
                 this.paused = true;
             }.bind(this));
-        }.bind(this));
+        }, this);
     }
 
     function Slide(e) {
@@ -824,14 +824,14 @@ JSONForm.prototype.saveData = function () {
         if (fieldValue) {
             window.localStorage.setItem(this.savedPrefix + fieldName, fieldValue);
         }
-    }.bind(this));
+    }, this);
 };
 
 JSONForm.prototype.fillSaved = function () {
     var hasSaved = false;
     var savedFields = this.fields.filter(function (f) {
         return this.save.indexOf(f.name) >= 0;
-    }.bind(this))
+    }, this)
     savedFields.forEach(function (f) {
         var saved = window.localStorage.getItem(this.savedPrefix + f.name);
         if (saved) {
@@ -839,13 +839,13 @@ JSONForm.prototype.fillSaved = function () {
             if (this.remember)
                 this.remember.checked = true;
         }
-    }.bind(this));
+    }, this);
 };
 
 JSONForm.prototype.getData = function () {
     this.fields.forEach(function (f) {
         this.data[f.name] = f.value;
-    }.bind(this));
+    }, this);
     return this.data;
 };
 
