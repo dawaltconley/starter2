@@ -23,7 +23,7 @@
 
 {% if num_comments > 0 %}
   <ul class="unlist v-rhythm border-around">
-    {% for comment in sorted_comments %}
+    {% for comment in sorted_comments limit: include.max %}
       <li class="flex-row-gt-mobile margin-0-v padding-m-v border-basic border-light clearfix">
         {% if gravatar %}
           <div class="float-left margin-s-r">
@@ -59,7 +59,7 @@
               <summary class="text-light fs-smaller">{{ summary }}</summary>
               <div class="indented-comment margin-s-t {% if gravatar %} margin-0-l-gt-mobile {% endif %}">
                 {% include comment-form.html for=comment.id type='reply' %}
-                {% include comments.html for=comment.id gravatar=gravatar replies=replies %}
+                {% include comments.html for=comment.id gravatar=gravatar replies=replies max=include.max %}
               </div>
             </details>
           {% endif %}
