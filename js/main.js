@@ -814,6 +814,18 @@ function JSONForm (e) {
         this.fields = this.fields.concat(toArray(document.querySelectorAll(validFields.join('[name][form="'+e.id+'"],').slice(0, -1))));
     this.fields = this.fields.filter(unique);
 
+    this.fields.forEach(function (f) {
+        var maxLength = f.getAttribute("maxlength");
+        if (!maxLength) return;
+        f.addEventListener("keyup", function () {
+            if (f.value.length >= Number(maxLength)) {
+                f.classList.add("invalid");
+            } else {
+                f.classList.remove("invalid");
+            }
+        });
+    });
+
     this.remember = e.querySelector("[data-save]");
     if (this.remember)
         this.save = this.remember.getAttribute("data-save").split(" ");
