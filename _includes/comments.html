@@ -4,6 +4,8 @@
 {% assign global_scope_summary = summary %}
 {% assign global_scope_replies = replies %}
 {% assign global_scope_comment = comment %}
+{% assign global_scope_num_comments = num_comments %}
+{% assign global_scope_gravatar = gravatar %}
 
 {% assign comments = site.jekyll_comments.collection %}
 {% assign sorted_comments = site[comments] | where: 'replyTo', include.for | sort: 'date' | reverse %}
@@ -77,3 +79,5 @@
 {% assign summary = global_scope_summary %}
 {% assign replies = global_scope_replies %}
 {% assign comment = global_scope_comment %}
+{% assign num_comments = global_scope_num_comments %}
+{% assign gravatar = global_scope_gravatar %}
