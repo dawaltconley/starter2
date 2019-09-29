@@ -22,6 +22,8 @@ emptyArray: [] # variable for easy array creation
 # Collections
 
 collections:
+  comments:
+    output: false
   templates:
     output: false
 
@@ -42,6 +44,15 @@ exclude:
   - "node_modules"
   - "gulpfile.js"
   - "assets/test"
+
+plugins:
+  - liquid-md5
+
+jekyll_comments:
+  branch: master
+  collection: comments
+  path: _comments
+  api: # path to comments API
 
 # Prose
 

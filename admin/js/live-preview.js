@@ -7,77 +7,93 @@ const templates = [
     {% for template in site.templates %}
         {
             name: `{{ template.template }}`,
+            path: `{{ template.path }}`,
             html: `{{ template | strip_newlines | replace: '`', '\\`' }}`
         },
     {% endfor %}
 ]
 
-const cloneAttributes = (e, clone) => {
-    for (var a of e.attributes) {
-        clone.setAttribute(a.nodeName, a.nodeValue)
+class ChildPreview extends React.Component {
+    constructor (props) {
+        super(props)
+        this.update = props.update
+        if (props.dateFormat)
+            this.update = () => dayjs(props.update()).format(props.dateFormat)
     }
-    return clone
+    render () {
+        return h(this.props.name, this.props.attribs, this.update())
+    }
 }
 
-const DefaultTemplate = createClass({
-    componentWillMount: function () {
-        const template = this.props.collection.get('files')
-            ? this.props.entry.get('slug')
-            : this.props.collection.get('name')
-        const html = templates.find(t => t.name === template).html
-        const doc = new DOMParser().parseFromString(html, 'text/html')
+class ImagePreview extends React.Component {
+    constructor (props) {
+        super(props)
+        this.attribs = props.attribs
+        this.attribs.srcset = null
+    }
+    render () {
+        let src = this.props.update()
+        if (src) {
+            return h('img', Object.assign(this.attribs, { src: src }))
+        } else {
+            return h('Fragment')
+        }
+    }
+}
+
+class DefaultTemplate extends React.Component {
+    constructor (props) {
+        super(props)
+        const collection = props.collection.get('name')
+        const file = props.collection.get('files') && props.entry.get('slug')
+        const path = props.entry.get('path')
+        const template = path && templates.find(t => t.path === path)
+            || file && templates.find(t => t.name === file)
+            || templates.find(t => t.name === collection)
+            || templates.find(t => t.name === 'default')
+        const doc = new DOMParser().parseFromString(template.html, 'text/html')
         Array.from(doc.querySelectorAll('link[rel="stylesheet"]'))
             .map(s => s.href)
-            .forEach(s => {
-                CMS.registerPreviewStyle(s)
-                console.log('registered style: '+s)
-            })
-        this.setState({
-            html: doc.querySelector('body').outerHTML
-        })
-    },
-    render: function () {
-        return HTMLReactParser(this.state.html, {
+            .forEach(s => CMS.registerPreviewStyle(s))
+        this.html = this.parseHTML(doc.querySelector('body').outerHTML)
+    }
+    parseHTML (html) {
+        return HTMLReactParser(html, {
             replace: ({ name, attribs, children }) => {
                 if (!attribs) return
-                let { 'data-preview-field': field, 'data-preview-widget': widget, 'data-preview-asset': asset, 'data-preview-date': date, 'data-preview-hide': hide } = attribs
-                if (
-                    field
-                    && ( field = this.props.entry.getIn(['data', ...field.split('.')]) ) !== undefined
-                ) {
-                    if (date) field = dayjs(field).format(date)
-                    return h(name, attribs, field)
+                let {
+                    'data-preview-field': field,
+                    'data-preview-widget': widget,
+                    'data-preview-asset': asset,
+                    'data-preview-date': date,
+                    'data-preview-hide': hide
+                } = attribs
+                if (field) {
+                    const update = () => this.props.entry.getIn(['data', ...field.split('.')])
+                    if (update() !== undefined)
+                        return h(ChildPreview, { name: name, attribs: attribs, update: update, dateFormat: date })
                 }
                 if (widget) {
                     let w = widget.split('.')
-                    if (
-                        w.length === 1
-                            && ( widget = this.props.widgetFor(w[0]) ) !== undefined
-                        || w.length === 2
-                            && ( widget = this.props.widgetsFor(w[0]) ) !== undefined
-                            && ( widget = widget.getIn(['widgets', w[1]]) ) !== undefined
-                    ) {
-                        return h(name, attribs, widget)
-                    }
+                    let update = () => this.props.widgetFor(w[0])
+                    if (w.length === 2 && this.props.widgetsFor(w[0]) !== undefined)
+                        update = () => this.props.widgetsFor(w[0]).getIn(['widgets', w[1]])
+                    if (update() !== undefined)
+                        return h(ChildPreview, { name: name, attribs: attribs, update: update })
                 }
-                if (
-                    asset
-                    && ( asset = this.props.entry.getIn(['data', ...asset.split('.')]) ) !== undefined
-                    && ( asset = this.props.getAsset(asset) ) !== undefined
-                ) {
-                    if (name === 'img') {
-                        if (asset) {
-                            return h(name, Object.assign(attribs, { src: asset.toString(), srcset: null }))
-                        } else {
-                            return h('Fragment')
-                        }
-                    }
+                if (asset) {
+                    const update = () => this.props.entry.getIn(['data', ...asset.split('.')])
+                    if (name === 'img' && update() !== undefined)
+                        return h(ImagePreview, { attribs: attribs, update: () => this.props.getAsset(update()) })
                 }
                 if (hide) return h('Fragment')
             }
         })
     }
-})
+    render () {
+        return this.html
+    }
+}
 
 const generatePreviews = config => {
     const collections = config.collections.filter(c => c.editor === undefined || c.editor.preview !== false)

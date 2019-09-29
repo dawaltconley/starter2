@@ -61,20 +61,33 @@ article header,
     margin-bottom: 0;
 }
 
-.v-rhythm {
-    @include mq {
-        & > * {
-            margin-bottom: $default-spacing;
-            margin-right: 0;
+@each $name, $value in $spacings {
+    .v-rhythm-#{$name} > * {
+        @extend %vertical-rhythm;
+        @if $value != $default-spacing {
+            margin-bottom: $value;
+        }
+    }
+    .h-rhythm-#{$name} > * {
+        @extend %horizontal-rhythm;
+        @if $value != $default-spacing {
+            margin-right: $value;
         }
     }
 }
 
-.h-rhythm {
+.v-rhythm-0 {
     @include mq {
         & > * {
-            margin-right: $default-spacing;
             margin-bottom: 0;
+        }
+    }
+}
+
+.h-rhythm-0 {
+    @include mq {
+        & > * {
+            margin-right: 0;
         }
     }
 }
@@ -87,6 +100,7 @@ article header,
 /**
  * Media
  */
+
 img {
     max-width: 100%;
     vertical-align: middle;
@@ -124,7 +138,7 @@ figcaption {
  * Lists
  */
 
-ul, ol {
+ul, ol, .indented {
     margin-left: $default-spacing * 2;
 
     @media screen and (max-width: map-get($bp, mobile)) {
@@ -192,15 +206,19 @@ button {
     color: inherit;
 }
 
+summary {
+    @extend .cursor-pointer, .no-select;
+}
+
 /*
  * Blockquotes
  */
 
 blockquote {
-    border-left-width: 4px;
+    $border-size: 4px;
+    border-left-width: $border-size;
     border-left-style: solid;
-    padding-left: $default-spacing;
-    font-size: smaller;
+    padding-left: $default-spacing - $border-size;
     letter-spacing: -1px;
     font-style: italic;
 }
@@ -229,6 +247,40 @@ pre {
         padding-right: 0;
         padding-left: 0;
     }
+}
+
+/*
+ * Forms
+ */
+
+input[type="text"], textarea {
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 3px;
+    padding: .5em;
+}
+
+select {
+    height: 2em;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 8em;
+}
+
+input[type="checkbox"], label {
+    cursor: pointer;
+}
+
+input[type="checkbox"] + label,
+label > input[type="checkbox"] + * {
+    margin-left: 0.7ex;
+    line-height: 0;
+}
+
+*:focus:invalid {
+    @extend .invalid;
 }
 
 /*

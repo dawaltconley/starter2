@@ -56,6 +56,12 @@
     }
 }
 
+.inline-flex {
+    @include mq("mobile") {
+        display: inline-flex;
+    }
+}
+
 .full-width {
     @include mq {
         width: 100%;
@@ -67,6 +73,14 @@
         width: auto;
         min-width: auto;
         max-width: none;
+    }
+}
+
+.auto-height {
+    @include mq {
+        height: auto;
+        min-height: auto;
+        max-height: none;
     }
 }
 

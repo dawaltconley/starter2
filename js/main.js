@@ -238,31 +238,42 @@
         };
     }
 
+    function unique(value, index, self) {
+        return self.indexOf(value) === index;
+    }
+
     function updateObj(obj, newObj) {
         for (var key in newObj) {
             obj[key] = newObj[key];
         }
     }
 
-    function getData(path, callback) {
-        var request = new XMLHttpRequest();
-        request.open("GET", path);
+    function onResponse(request, callback) {
         request.onload = function () {
             if (this.status >= 200 && this.status < 400) {
                 callback(this.response);
             } else {
                 // server error
-                callback(undefined);
+                callback(null, this.response);
             }
         }
 
         request.onerror = function () {
             // error handling
-            callback(undefined);
+            callback(null, this.response);
         }
-
-        request.send();
     }
+
+    function sendHttpRequest(method, body, path, callback) {
+        var request = new XMLHttpRequest();
+        request.open(method, path);
+        onResponse(request, callback);
+        request.send(body);
+        return request
+    }
+
+    var getData = sendHttpRequest.bind(null, "GET", null);
+    var postData = sendHttpRequest.bind(null, "POST");
 
 /*
  * DOM Manipulation
@@ -296,7 +307,7 @@
                 var asset = img.getAttribute(a);
                 this.assets[a] = asset ? asset : "";
                 img.setAttribute(a, "");
-            }.bind(this));
+            }, this);
         }
     }
 
@@ -313,6 +324,10 @@
             e.load();
         });
     });
+
+    function remove(e) {
+        e.parentNode.removeChild(e);
+    }
 
     function removeChildren(e) {
         var child = e.lastChild;
@@ -604,7 +619,7 @@
                         event.preventDefault();
                         this[method]();
                     }.bind(this));
-                }.bind(this));
+                }, this);
             }
         }
     };
@@ -677,7 +692,7 @@
                 this.timePaused = this.now;
                 this.paused = true;
             }.bind(this));
-        }.bind(this));
+        }, this);
     }
 
     function Slide(e) {
@@ -782,6 +797,127 @@
             s.play();
         });
     }, passive);
+
+/*
+ * Forms
+ */
+
+function JSONForm (e) {
+    this.element = e;
+    this.url = e.getAttribute("action");
+    this.data = {};
+
+    var validFields = [ "input", "select", "textarea", "button", "datalist", "output" ];
+    this.fields = [];
+    this.fields = this.fields.concat(toArray(e.querySelectorAll(validFields.join("[name],").slice(0, -1))));
+    if (e.id)
+        this.fields = this.fields.concat(toArray(document.querySelectorAll(validFields.join('[name][form="'+e.id+'"],').slice(0, -1))));
+    this.fields = this.fields.filter(unique);
+
+    this.fields.forEach(function (f) {
+        var maxLength = f.getAttribute("maxlength");
+        if (!maxLength) return;
+        f.addEventListener("keyup", function () {
+            if (f.value.length >= Number(maxLength)) {
+                f.classList.add("invalid");
+            } else {
+                f.classList.remove("invalid");
+            }
+        });
+    });
+
+    this.remember = e.querySelector("[data-save]");
+    if (this.remember)
+        this.save = this.remember.getAttribute("data-save").split(" ");
+    this.savedPrefix = "savedForm-";
+
+    this.fillSaved();
+}
+
+JSONForm.prototype.saveData = function () {
+    this.save.forEach(function (fieldName) {
+        var fieldValue = this.data[fieldName];
+        if (fieldValue) {
+            window.localStorage.setItem(this.savedPrefix + fieldName, fieldValue);
+        }
+    }, this);
+};
+
+JSONForm.prototype.fillSaved = function () {
+    var hasSaved = false;
+    var savedFields = this.fields.filter(function (f) {
+        return this.save.indexOf(f.name) >= 0;
+    }, this)
+    savedFields.forEach(function (f) {
+        var saved = window.localStorage.getItem(this.savedPrefix + f.name);
+        if (saved) {
+            f.value = saved;
+            if (this.remember)
+                this.remember.checked = true;
+        }
+    }, this);
+};
+
+JSONForm.prototype.getData = function () {
+    this.fields.forEach(function (f) {
+        this.data[f.name] = f.value;
+    }, this);
+    return this.data;
+};
+
+JSONForm.prototype.sendJSON = function (callback) {
+    var request = new XMLHttpRequest();
+    request.open("POST", this.url);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.setRequestHeader("Accept", "application/json");
+    onResponse(request, callback);
+    request.send(JSON.stringify(this.data));
+};
+
+function CommentForm (e) {
+    JSONForm.call(this, e);
+
+    var self = this;
+    e.addEventListener("submit", function (event) {
+        event.preventDefault();
+        self.getData();
+        self.loading();
+        if (self.remember && self.remember.checked)
+            self.saveData();
+        self.sendJSON(function (r, e) {
+            if (e) {
+                self.error();
+            } else {
+                self.post();
+            }
+        });
+    });
+};
+
+CommentForm.prototype = Object.create(JSONForm.prototype);
+CommentForm.prototype.constructor = CommentForm;
+
+CommentForm.prototype.loading = function () {
+    this.fields.forEach(remove);
+    removeChildren(this.element);
+    this.element.innerText = "Submitting...";
+};
+
+CommentForm.prototype.post = function () {
+    this.element.innerText = "The comment was submitted for moderation!"
+};
+
+CommentForm.prototype.error = function () {
+    this.element.innerText = "Something went wrong, submission failed."
+};
+
+var forms = toArray(document.querySelectorAll('form[data-content-type="application/json"]')).map(function(e) {
+    if (e.hasAttribute("data-comment-form")) {
+        return new CommentForm(e);
+    } else {
+        return new JSONForm(e);
+    }
+});
 
 /*
  * Fullscreen
