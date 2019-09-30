@@ -355,6 +355,18 @@
         y.innerText = currentYear;
     });
 
+    if (location.hash) {
+        var detailsElements = toArray(document.querySelectorAll("details"));
+        for (var i = 0; i < detailsElements.length; i++) {
+            var details = detailsElements[i];
+            var element = details.querySelector(location.hash.replace(/\//g, '\\/'));
+            if (element) {
+                details.setAttribute("open", "");
+                location.hash = location.hash
+            }
+        }
+    }
+
 /*
  * Classes
  */
