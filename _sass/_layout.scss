@@ -56,23 +56,22 @@
     }
 
     .#{$name} {
-        &-size, &-width {
+        &-width {
             width: $width;
+            &-min { min-width: $width; }
+            &-max { max-width: $width; }
         }
-        &-size, &-height {
+        &-height {
             height: $height;
+            &-min { min-height: $height; }
+            &-max { max-height: $height; }
         }
-        &-size-min, &-width-min {
-            min-width: $width;
-        }
-        &-size-min, &-height-min {
-            min-height: $height;
-        }
-        &-size-max, &-width-max {
-            max-width: $width;
-        }
-        &-size-max, &-height-max {
-            max-height: $height;
+        @if $width and $height {
+            &-size {
+                @extend .#{$name}-width, .#{$name}-height;
+                &-min { @extend .#{$name}-width-min, .#{$name}-height-min; }
+                &-max { @extend .#{$name}-width-max, .#{$name}-height-max; }
+            }
         }
     }
 }
