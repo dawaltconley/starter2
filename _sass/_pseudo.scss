@@ -155,3 +155,15 @@
     @extend .fill-parent;
     content: "";
 }
+
+.fade-bottom {
+    @extend .relative;
+
+    &::after {
+        content: "";
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        height: map-get($spacings, l);
+        pointer-events: none;
+    }
+}
