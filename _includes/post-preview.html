@@ -1,5 +1,8 @@
 {% assign global_scope_post = post %}
 {% assign global_scope_h = h %}
+{% assign global_scope_sp = sp %}
+{% assign global_scope_sizes = sizes %}
+{% assign global_scope_image = image %}
 
 {% assign post = include.post %}
 {% if include.heading %}
@@ -8,31 +11,51 @@
   {% assign h = 2 %}
 {% endif %}
 
-<article id="{{ post.id | slugify }}" class="full-width">
-  <header class="margin-s-b v-rhythm-s">
+{% if include.spacing %}
+  {% assign sp = include.spacing %}
+{% else %}
+  {% assign sp = 'm' %}
+{% endif %}
+
+{% if include.sizes %}
+  {% assign sizes = include.sizes %}
+{% else %}
+  {% assign sizes = "100vw" %}
+{% endif %}
+
+<article id="{{ post.id | slugify }}" class="full-width v-rhythm-{{ sp }}">
+  <header class="v-rhythm-{{ sp }}">
     <time class="fs-smaller text-light" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %-d, %Y" }}</time>
-    <h{{ h }} class="margin-0-b">
-      <a class="no-decoration" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+    <h{{ h }} class="margin-0-b theme-link">
+    {{ post.title }}
     </h{{ h }}>
     {% if include.author and post.author %}
       <p>by {{ post.author }}</p>
     {% endif %}
     {% if post.header.image %}
       {% assign image = post.header.image | prepend: site.baseurl %}
-      <div class="aspect-16-9 expand-children margin-s-t overflow-h">
+      <div class="aspect-16-9 expand-children">
         <img class="object-fit-cover {% if post.header.fit and post.header.fit != '' %} object-pos-{{ post.header.fit }} {% endif %}"
-            src="{{ image }}" alt=""
-            srcset="{% include gulp-srcset.liquid src=image width=post.header.width %}"
-            sizes="(max-width: 840px) 100vw, 720px">
+           src="{{ image }}" alt=""
+           srcset="{% include gulp-srcset.liquid src=image width=post.header.width %}"
+           sizes="{{ sizes }}">
       </div>
     {% endif %}
   </header>
-  {% if include.excerpt_length %}
-    {{ post.excerpt | truncate: include.excerpt_length }}
-  {% else %}
-    {{ post.excerpt }}
-  {% endif %}
+  <div class="v-rhythm-{{ sp }} {% if include.fade %} fade-bottom {% endif %}">
+    {% if include.excerpt %}
+      {{ include.excerpt }}
+    {% else %}
+      {{ post.excerpt }}
+    {% endif %}
+  </div>
+  <a class="block pseudo-fill-parent" href="{{ post.url | prepend: site.baseurl }}">
+    <div class="h-line-basic border-light">Read More</div>
+  </a>
 </article>
 
 {% assign post = global_scope_post %}
 {% assign h = global_scope_h %}
+{% assign sp = global_scope_sp %}
+{% assign sizes = global_scope_sizes %}
+{% assign image = global_scope_image %}
