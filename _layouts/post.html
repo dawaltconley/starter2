@@ -42,7 +42,7 @@ layout: default
       <div class="v-rhythm fs-smaller">
         {% for post in site.posts limit: 6 %}
           {% unless post.id == page.id %}
-            {% include post-preview.html post=post heading=3 excerpt_length=220 %}
+            {% include post-preview.html post=post heading=3 excerpt_length=220 author=true %}
           {% endunless %}
         {% endfor %}
       </div>
