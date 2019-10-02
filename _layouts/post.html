@@ -42,7 +42,10 @@ layout: default
       <div class="v-rhythm fs-smaller">
         {% for post in site.posts limit: 6 %}
           {% unless post.id == page.id %}
-            {% include post-preview.html post=post heading=3 excerpt_length=220 author=true %}
+            {% assign excerpt = post.excerpt | truncate: 200 %}
+            <article class="relative full-width">
+              {% include post-preview.html post=post excerpt=excerpt heading=3 author=true spacing='s' %}
+            </article>
           {% endunless %}
         {% endfor %}
       </div>
