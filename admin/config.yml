@@ -68,6 +68,18 @@ collections:
             hint: >
               The width, in pixels, of the uploaded image.
               This allows better loading on multiple devices.
+          - label: Crop
+            name: fit
+            required: false
+            widget: select
+            default: cc
+            options: {% assign horizontal = 'left center right' | split: ' ' %}{% assign vertical = 'top center bottom' | split: ' ' %}{% for x in horizontal %}{% for y in vertical %}
+              - label: "{{ x }} {{ y }}"
+                value: {{ x | slice: 0 }}{{ y | slice: 0 }}{% endfor %}{% endfor %}
+            hint: >
+              Some images will be cropped for previews.
+              This tells the browser which part of the image to
+              center (keep visible) during the crop.
           - label: Caption
             name: caption
             required: false
