@@ -2,7 +2,7 @@
  * Transforms
  */
 
-.hw-accel { // use the transform include to ensure that hw-accel is not overwritten by other transform classes
+.hw-accel, .hw-accel-deep, .hw-accel-deep * { // use the transform include to ensure that hw-accel is not overwritten by other transform classes
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
 }
