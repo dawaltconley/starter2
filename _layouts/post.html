@@ -19,7 +19,12 @@ layout: default
               srcset="{% include gulp-srcset.liquid src=image width=page.header.width %}"
               sizes="(max-width: 840px) 100vw, 720px"
               data-preview-asset="header.image">
-          <figcaption class="margin-s-t text-left" data-preview-widget="header.caption">{{ page.header.caption | markdownify }}</figcaption>
+          {% if page.header.caption %}
+            {% assign capt_length = page.header.caption | size %}
+            {% if capt_length > 0 %}
+              <figcaption class="margin-s-t text-left" data-preview-widget="header.caption">{{ page.header.caption | markdownify }}</figcaption>
+            {% endif %}
+          {% endif %}
         </figure>
       {% endif %}
     </header>
