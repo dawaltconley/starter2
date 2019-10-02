@@ -9,7 +9,7 @@
 {% endif %}
 
 <article id="{{ post.id | slugify }}" class="full-width">
-  <header class="margin-s-b">
+  <header class="margin-s-b v-rhythm-s">
     <time class="fs-smaller text-light" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %-d, %Y" }}</time>
     <h{{ h }} class="margin-0-b">
       <a class="no-decoration" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
