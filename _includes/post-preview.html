@@ -8,7 +8,7 @@
   {% assign h = 2 %}
 {% endif %}
 
-<article id="{{ post.id | slugify }}">
+<article id="{{ post.id | slugify }}" class="full-width">
   <header class="margin-s-b">
     <time class="fs-smaller text-light" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %-d, %Y" }}</time>
     <h{{ h }} class="margin-0-b">
