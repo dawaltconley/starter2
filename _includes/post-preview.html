@@ -17,6 +17,15 @@
     {% if include.author and post.author %}
       <p>by {{ post.author }}</p>
     {% endif %}
+    {% if post.header.image %}
+      {% assign image = post.header.image | prepend: site.baseurl %}
+      <div class="aspect-16-9 expand-children margin-s-t overflow-h">
+        <img class="object-fit-cover {% if post.header.fit and post.header.fit != '' %} object-pos-{{ post.header.fit }} {% endif %}"
+            src="{{ image }}" alt=""
+            srcset="{% include gulp-srcset.liquid src=image width=post.header.width %}"
+            sizes="(max-width: 840px) 100vw, 720px">
+      </div>
+    {% endif %}
   </header>
   {% if include.excerpt_length %}
     {{ post.excerpt | truncate: include.excerpt_length }}
