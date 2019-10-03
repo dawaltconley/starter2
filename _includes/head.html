@@ -33,9 +33,9 @@
   <meta property="og:title" content="{{ title }}">
   <meta property="og:description" content="{{ description }}">
 
-  {% if page.collection.og_image %}
+  {% if page.og_image %}
     <meta property="og:image" content="{{ page.og_image | prepend: site_url }}">
-  {% elsif page.og_image %}
+  {% elsif page.collection.og_image %}
     <meta property="og:image" content="{{ page.collection.og_image | prepend: site_url }}">
   {% elsif site.og_image %}
     <meta property="og:image" content="{{ site.og_image | prepend: site_url }}">
