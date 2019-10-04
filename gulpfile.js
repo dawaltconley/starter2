@@ -118,8 +118,9 @@ class ImageType {
         this.tasks = [ this.clean ]
 
         const ready = new Promise(resolve => { this.ready = resolve })
-        this.task = gulp.task(name, cb =>
-            ready.then(() => gulp.series(this.tasks)(cb)))
+        this.task = gulp.task(name, cb => {
+            ready.then(() => gulp.series(this.tasks)(cb))
+        })
     }
 
     clean (cb) {
