@@ -105,6 +105,10 @@ gulp.task('js', gulp.parallel(
  * Images
  */
 
+const readFile = file => new Promise((resolve, reject) =>
+    fs.readFile(file, (err, data) =>
+        err ? reject(err) : resolve(data)))
+
 class ImageType {
     constructor (name, dir) {
         this.name = name
@@ -112,6 +116,10 @@ class ImageType {
         this.clean = this.clean.bind(this)
         this.clean.displayName = `${name}-clean`
         this.tasks = [ this.clean ]
+
+        const ready = new Promise(resolve => { this.ready = resolve })
+        this.task = gulp.task(name, cb =>
+            ready.then(() => gulp.series(this.tasks)(cb)))
     }
 
     clean (cb) {
@@ -143,29 +151,32 @@ const pictures = new ImageType('pictures', './_site/assets/gulp-pictures/')
 const srcset = new ImageType('srcset', './_site/assets/gulp-srcset/')
 const backgrounds = new ImageType('backgrounds', './_site/assets/gulp-backgrounds/')
 
-const imageSizes = YAML.safeLoad(fs.readFileSync('_data/devices.yml', 'utf8'))
-imageSizes['dp'].forEach(bp => {
-    imageSizes['dppx'].forEach(d => {
-        srcset.addTask({
-            width: bp.x * d,
-            filter: 'Catrom'
-        }, `-${Math.round(bp.x * d)}w`)
+readFile('_data/devices.yml').then(data => {
+    const imageSizes = YAML.safeLoad(data);
+    imageSizes['dp'].forEach(bp => {
+        imageSizes['dppx'].forEach(d => {
+            srcset.addTask({
+                width: bp.x * d,
+                filter: 'Catrom'
+            }, `-${Math.round(bp.x * d)}w`)
 
-        pictures.addTask({
-            width: bp.x * d,
-            height: bp.y * d,
-            filter: 'Catrom'
-        }, `-${bp.x}x${bp.y}-${d}x`)
+            pictures.addTask({
+                width: bp.x * d,
+                height: bp.y * d,
+                filter: 'Catrom'
+            }, `-${bp.x}x${bp.y}-${d}x`)
 
-        backgrounds.addTask({
-            width: (bp.x * d),
-            height: (bp.y * d),
-            cover: true,
-            upscale: false,
-            filter: 'Catrom',
-            interlace: jekyllEnv === 'production' ? true : false
-        }, `-${bp.x}x${bp.y}-${d}x`)
-    })
+            backgrounds.addTask({
+                width: (bp.x * d),
+                height: (bp.y * d),
+                cover: true,
+                upscale: false,
+                filter: 'Catrom',
+                interlace: jekyllEnv === 'production' ? true : false
+            }, `-${bp.x}x${bp.y}-${d}x`)
+        })
+    });
+    [ srcset, pictures, backgrounds ].forEach(i => i.ready());
 })
 
 gulp.task('image-min', cb => {
@@ -179,12 +190,6 @@ gulp.task('image-min', cb => {
         gulp.dest('./_site/assets')
     ], cb)
 })
-
-gulp.task('pictures', gulp.series(pictures.tasks))
-
-gulp.task('srcset', gulp.series(srcset.tasks))
-
-gulp.task('backgrounds', gulp.series(backgrounds.tasks))
 
 gulp.task('images', gulp.series(
     'image-min',
