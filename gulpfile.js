@@ -179,6 +179,49 @@ readFile('_data/devices.yml').then(data => {
     [ srcset, pictures, backgrounds ].forEach(i => i.ready());
 })
 
+gulp.task('og-images', async cb => {
+    let posts = await readFile('_site/posts.json')
+    posts = JSON.parse(posts)
+        .filter(p => p.image)
+    if (!posts.length) return
+    const gravity = {
+        lt: 'NorthWest',
+        lc: 'West',
+        lb: 'SouthWest',
+        ct: 'North',
+        cc: 'Center',
+        cb: 'South',
+        rt: 'NorthEast',
+        rc: 'East',
+        rb: 'SouthEast'
+    }
+    const ogTasks = []
+    for (let g in gravity) {
+        const images = posts
+            .filter(({ imagePosition:pos }) =>
+                pos === g || pos === '' && g === 'cc')
+            .map(p => './_site' + p.image)
+        if (!images.length) continue
+        const task = cb => {
+            pump([
+                gulp.src(images),
+                imageResize({
+                    width: 1200,
+                    height: 630,
+                    crop: true,
+                    gravity: gravity[g],
+                    upscale: true
+                }),
+                rename({ suffix: `-${g}` }),
+                gulp.dest('./_site/assets/og-images')
+            ], cb)
+        }
+        task.displayName = `og-images-${g}`
+        ogTasks.push(task)
+    }
+    return gulp.series(ogTasks)(cb)
+})
+
 gulp.task('image-min', cb => {
     pump([
         gulp.src([
@@ -193,7 +236,7 @@ gulp.task('image-min', cb => {
 
 gulp.task('images', gulp.series(
     'image-min',
-    gulp.parallel('pictures', 'srcset', 'backgrounds')
+    gulp.parallel('pictures', 'srcset', 'backgrounds', 'og-images')
 ))
 
 /*
