@@ -18,6 +18,8 @@
         },
         "url": "{{ post.url | prepend: site.baseurl}}",
         "excerpt": "{{ post.excerpt | markdownify | strip_html | strip_newlines | escape }}",
+        "image": "{{ post.header.image }}",
+        "imagePosition": "{{ post.header.fit }}",
         "imageCaption": "{{ post.header.caption | markdownify | strip_html | strip_newlines | escape }}",
         "id": "{{ post.id | slugify }}"
     }{% unless forloop.last %},

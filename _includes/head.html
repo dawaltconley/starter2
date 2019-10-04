@@ -35,6 +35,15 @@
 
   {% if page.og_image %}
     <meta property="og:image" content="{{ page.og_image | prepend: site_url }}">
+  {% elsif jekyll.environment == 'production' or jekyll.environment == 'gulp' and page.header.image %}
+    {% assign file_name = page.header.image | split: '/' | last %}
+    {% if page.header.fit %}
+      {% assign suffix = page.header.fit | prepend: '-' %}
+    {% else  %}
+      {% assign suffix = '-cc' %}
+    {% endif %}
+    {% capture file_name %}{% include file-suffix.liquid file_name=file_name suffix=suffix %}{% endcapture %}
+    <meta property="og:image" content="{{ site.baseurl }}/assets/og-images/{{ file_name }}">
   {% elsif page.collection.og_image %}
     <meta property="og:image" content="{{ page.collection.og_image | prepend: site_url }}">
   {% elsif site.og_image %}
