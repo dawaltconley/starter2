@@ -2,7 +2,6 @@ const gulp = require('gulp')
 const concat = require('gulp-concat')
 const uglify = require('gulp-uglify')
 const rename = require('gulp-rename')
-const clean = require('gulp-clean')
 const imageResize = require('gulp-image-resize')
 const imageMin = require('gulp-imagemin')
 const postcss = require('gulp-postcss')
@@ -15,6 +14,7 @@ const YAML = require('js-yaml')
 const fs = require('fs')
 const path = require('path')
 const globby = require('globby')
+const del = require('del')
 
 /*
  * Jekyll
@@ -70,16 +70,11 @@ gulp.task('js-concat', cb => {
     ], cb)
 })
 
-gulp.task('js-clean', cb => {
-    pump([
-        gulp.src([
-            '_site/js/polyfills',
-            '_site/js/lib',
-            '_site/js/main.js'
-        ], { read: false, allowEmpty: true }),
-        clean()
-    ], cb)
-})
+gulp.task('js-clean', () => del([
+    '_site/js/polyfills',
+    '_site/js/lib',
+    '_site/js/main.js'
+]))
 
 gulp.task('js-uglify', cb => {
     pump([
@@ -142,12 +137,15 @@ class ImageType {
         })
     }
 
-    clean (cb) {
-        pump([
-            gulp.src(`${this.dir}/responsive/*`),
-            clean(),
-            gulp.dest(this.dir)
-        ], cb)
+    clean () {
+        return new Promise(resolve => {
+            console.log('moving...')
+            gulp.src(`${this.dir}/responsive/*`)
+                .pipe(gulp.dest(this.dir))
+                .on('end', resolve)
+        }).then(() => {
+            console.log('deleting')
+            return del(`${this.dir}/responsive`) })
     }
 
     addTask (settings, suffix) {
