@@ -36,8 +36,8 @@ gulp.task('build', cb => jekyllBuild(jekyllEnv, cb))
  */
 
 gulp.task('css', cb => {
-    const normalize = gulp.src('./node_modules/normalize.css/normalize.css')
-    const main = gulp.src('./_site/css/main.css')
+    const normalize = gulp.src('node_modules/normalize.css/normalize.css')
+    const main = gulp.src('_site/css/main.css')
         .pipe(postcss([
             autoprefixer(),
             flexbugs()
@@ -45,7 +45,7 @@ gulp.task('css', cb => {
 
     return merge(normalize, main)
         .pipe(concat('main.css'))
-        .pipe(gulp.dest('./_site/css'))
+        .pipe(gulp.dest('_site/css'))
 })
 
 /*
@@ -55,23 +55,23 @@ gulp.task('css', cb => {
 gulp.task('js-concat', cb => {
     pump([
         gulp.src([
-            './_site/js/polyfills/*.js',
-            './_site/js/lib/*.js',
-            './_site/js/main.js',
-            '!./_site/**/*.min.js',
-            '!./_site/**/*.map'
+            '_site/js/polyfills/*.js',
+            '_site/js/lib/*.js',
+            '_site/js/main.js',
+            '!_site/**/*.min.js',
+            '!_site/**/*.map'
         ], { allowEmpty: true }),
         concat('all.js'),
-        gulp.dest('./_site/js')
+        gulp.dest('_site/js')
     ], cb)
 })
 
 gulp.task('js-clean', cb => {
     pump([
         gulp.src([
-            './_site/js/polyfills',
-            './_site/js/lib',
-            './_site/js/main.js'
+            '_site/js/polyfills',
+            '_site/js/lib',
+            '_site/js/main.js'
         ], { read: false, allowEmpty: true }),
         clean()
     ], cb)
@@ -80,19 +80,19 @@ gulp.task('js-clean', cb => {
 gulp.task('js-uglify', cb => {
     pump([
         gulp.src([
-            './_site/js/**/*.js',
-            '!./_site/**/*.min.js',
-            '!./_site/**/*.map'
+            '_site/js/**/*.js',
+            '!_site/**/*.min.js',
+            '!_site/**/*.map'
         ]),
         uglify(),
-        gulp.dest('./_site/js')
+        gulp.dest('_site/js')
     ], cb)
 })
 
 gulp.task('js-yaml', cb => {
     pump([
-        gulp.src('./node_modules/js-yaml/dist/js-yaml.min.js'),
-        gulp.dest('./_site/admin/js')
+        gulp.src('node_modules/js-yaml/dist/js-yaml.min.js'),
+        gulp.dest('_site/admin/js')
     ], cb)
 })
 
@@ -148,9 +148,9 @@ class ImageType {
     }
 }
 
-const pictures = new ImageType('pictures', './_site/assets/gulp-pictures/')
-const srcset = new ImageType('srcset', './_site/assets/gulp-srcset/')
-const backgrounds = new ImageType('backgrounds', './_site/assets/gulp-backgrounds/')
+const pictures = new ImageType('pictures', '_site/assets/gulp-pictures/')
+const srcset = new ImageType('srcset', '_site/assets/gulp-srcset/')
+const backgrounds = new ImageType('backgrounds', '_site/assets/gulp-backgrounds/')
 
 readFile('_data/devices.yml').then(data => {
     const imageSizes = YAML.safeLoad(data);
@@ -201,7 +201,7 @@ gulp.task('og-images', async cb => {
         const images = posts
             .filter(({ imagePosition:pos }) =>
                 pos === g || pos === '' && g === 'cc')
-            .map(p => './_site' + p.image)
+            .map(p => '_site' + p.image)
         if (!images.length) continue
         const task = cb => {
             pump([
@@ -214,7 +214,7 @@ gulp.task('og-images', async cb => {
                     upscale: true
                 }),
                 rename({ suffix: `-${g}` }),
-                gulp.dest('./_site/assets/og-images')
+                gulp.dest('_site/assets/og-images')
             ], cb)
         }
         task.displayName = `og-images-${g}`
@@ -226,9 +226,9 @@ gulp.task('og-images', async cb => {
 gulp.task('image-min', cb => {
     pump([
         gulp.src([
-            './_site/assets/**/*',
-            '!./_site/assets/**/*.svg',
-            '!./_site/assets/test/*'
+            '_site/assets/**/*',
+            '!_site/assets/**/*.svg',
+            '!_site/assets/test/*'
         ]),
         imageMin(),
         gulp.dest('./_site/assets')
