@@ -46,6 +46,8 @@ exclude:
   - "node_modules"
   - "gulpfile.js"
   - "assets/test"
+keep_files:
+  - "assets"
 
 plugins:
   - liquid-md5

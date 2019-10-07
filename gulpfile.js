@@ -13,6 +13,8 @@ const merge = require('merge-stream')
 const child = require('child_process')
 const YAML = require('js-yaml')
 const fs = require('fs')
+const path = require('path')
+const globby = require('globby')
 
 /*
  * Jekyll
@@ -21,12 +23,14 @@ const fs = require('fs')
 const jekyllEnv = process.env.CONTEXT === 'production' ? 'production' : 'gulp'
 
 const jekyllBuild = (env = 'development', cb) => {
-    const eachLine = (buffer, callback) => buffer.toString().split('\n').filter(s => s).forEach(callback)
-    const childEnv = { ...process.env, JEKYLL_ENV: env }
-    const build = child.spawn('bundle', ['exec', 'jekyll', 'build'], { env: childEnv })
-    build.on('close', cb)
-    build.stdout.on('data', data => eachLine(data, l => console.log(l)))
-    build.stderr.on('data', data => eachLine(data, l => console.error(l)))
+    assetsGlob.then(() => {
+        const eachLine = (buffer, callback) => buffer.toString().split('\n').filter(s => s).forEach(callback)
+        const childEnv = { ...process.env, JEKYLL_ENV: env }
+        const build = child.spawn('bundle', ['exec', 'jekyll', 'build'], { env: childEnv })
+        build.on('close', cb)
+        build.stdout.on('data', data => eachLine(data, l => console.log(l)))
+        build.stderr.on('data', data => eachLine(data, l => console.error(l)))
+    })
 }
 
 gulp.task('build', cb => jekyllBuild(jekyllEnv, cb))
@@ -105,6 +109,8 @@ gulp.task('js', gulp.parallel(
  * Images
  */
 
+const assetsGlob = globby('_site/assets/**/*')
+
 const readFile = file => new Promise((resolve, reject) =>
     fs.readFile(file, (err, data) =>
         err ? reject(err) : resolve(data)))
@@ -113,13 +119,26 @@ class ImageType {
     constructor (name, dir) {
         this.name = name
         this.dir = dir
+        this.glob = [
+            `${this.dir}/*`,
+            `!${this.dir}/responsive`
+        ]
         this.clean = this.clean.bind(this)
         this.clean.displayName = `${name}-clean`
         this.tasks = [ this.clean ]
 
-        const ready = new Promise(resolve => { this.ready = resolve })
+        const ready = new Promise(resolve => this.ready = resolve)
         this.task = gulp.task(name, cb => {
-            ready.then(() => gulp.series(this.tasks)(cb))
+            Promise.all([ globby(this.glob), assetsGlob, ready ])
+                .then(([ newAssets, oldAssets ]) => {
+                    this.glob = newAssets.filter(img =>
+                        oldAssets.indexOf(path.normalize(img)) < 0)
+                    console.log(this.glob)
+                    if (this.glob.length)
+                        return gulp.series(this.tasks)(cb)
+                    else
+                        return cb()
+                })
         })
     }
 
@@ -134,10 +153,7 @@ class ImageType {
     addTask (settings, suffix) {
         const task = cb => {
             pump([
-                gulp.src([
-                    `${this.dir}/*`,
-                    `!${this.dir}/responsive`
-                ]),
+                gulp.src(this.glob),
                 imageResize(settings),
                 rename({ suffix: suffix }),
                 gulp.dest(`${this.dir}/responsive`)
@@ -181,10 +197,18 @@ readFile('_data/devices.yml').then(data => {
 })
 
 gulp.task('og-images', async cb => {
-    let posts = await readFile('_site/posts.json')
-    posts = JSON.parse(posts)
+    let ogImages = await readFile('_site/posts.json')
+    ogImages = JSON.parse(ogImages)
         .filter(p => p.image)
-    if (!posts.length) return
+    ogImages.forEach(i => {
+        let image = i.image.split(path.sep)
+        image = [ '_site', ...image ]
+        i.image = path.join(...image)
+    })
+    const oldAssets = await assetsGlob.then(oldAssets => {
+        ogImages = ogImages.filter(i => oldAssets.indexOf(i.image) < 0)
+    })
+    if (!ogImages.length) return
     const gravity = {
         lt: 'NorthWest',
         lc: 'West',
@@ -198,10 +222,10 @@ gulp.task('og-images', async cb => {
     }
     const ogTasks = []
     for (let g in gravity) {
-        const images = posts
+        const images = ogImages
             .filter(({ imagePosition:pos }) =>
                 pos === g || pos === '' && g === 'cc')
-            .map(p => '_site' + p.image)
+            .map(p => p.image)
         if (!images.length) continue
         const task = cb => {
             pump([
@@ -224,15 +248,17 @@ gulp.task('og-images', async cb => {
 })
 
 gulp.task('image-min', cb => {
-    pump([
-        gulp.src([
-            '_site/assets/**/*',
-            '!_site/assets/**/*.svg',
-            '!_site/assets/test/*'
-        ]),
-        imageMin(),
-        gulp.dest('./_site/assets')
-    ], cb)
+    assetsGlob.then(oldAssets => {
+        pump([
+            gulp.src([
+                '_site/assets/**/*',
+                '!_site/assets/**/*.svg',
+                '!_site/assets/test/*'
+            ], { ignore: oldAssets }),
+            imageMin(),
+            gulp.dest('_site/assets')
+        ], cb)
+    })
 })
 
 gulp.task('images', gulp.series(
