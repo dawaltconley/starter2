@@ -162,9 +162,9 @@ class ImageType {
     }
 }
 
-const pictures = new ImageType('pictures', '_site/assets/gulp-pictures/')
-const srcset = new ImageType('srcset', '_site/assets/gulp-srcset/')
-const backgrounds = new ImageType('backgrounds', '_site/assets/gulp-backgrounds/')
+const pictures = new ImageType('pictures', '_site/assets/gulp-pictures')
+const srcset = new ImageType('srcset', '_site/assets/gulp-srcset')
+const backgrounds = new ImageType('backgrounds', '_site/assets/gulp-backgrounds')
 
 readFile('_data/devices.yml').then(data => {
     const imageSizes = YAML.safeLoad(data);
