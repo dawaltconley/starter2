@@ -128,7 +128,6 @@ class ImageType {
                 .then(([ newAssets, oldAssets ]) => {
                     this.glob = newAssets.filter(img =>
                         oldAssets.indexOf(path.normalize(img)) < 0)
-                    console.log(this.glob)
                     if (this.glob.length)
                         return gulp.series(this.tasks)(cb)
                     else
@@ -139,13 +138,11 @@ class ImageType {
 
     clean () {
         return new Promise(resolve => {
-            console.log('moving...')
             gulp.src(`${this.dir}/responsive/*`)
                 .pipe(gulp.dest(this.dir))
                 .on('end', resolve)
-        }).then(() => {
-            console.log('deleting')
-            return del(`${this.dir}/responsive`) })
+        }).then(() =>
+            del(`${this.dir}/responsive`))
     }
 
     addTask (settings, suffix) {
