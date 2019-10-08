@@ -14,8 +14,7 @@
     "merge-stream": "^1.0.1",
     "normalize.css": "^8.0.1",
     "npm": "^6.11.3",
-    "postcss-flexbugs-fixes": "^4.1.0",
-    "pump": "^2.0.1"
+    "postcss-flexbugs-fixes": "^4.1.0"
   },
   "devDependencies": {
     "sass-color-helpers": "^2.1.1"

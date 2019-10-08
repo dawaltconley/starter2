@@ -7,7 +7,7 @@ const imageMin = require('gulp-imagemin')
 const postcss = require('gulp-postcss')
 const autoprefixer = require('autoprefixer')
 const flexbugs = require('postcss-flexbugs-fixes')
-const pump = require('pump')
+const { pipeline } = require('stream')
 const merge = require('merge-stream')
 const child = require('child_process')
 const YAML = require('js-yaml')
@@ -56,19 +56,17 @@ gulp.task('css', cb => {
  * Javascript
  */
 
-gulp.task('js-concat', cb => {
-    pump([
-        gulp.src([
-            '_site/js/polyfills/*.js',
-            '_site/js/lib/*.js',
-            '_site/js/main.js',
-            '!_site/**/*.min.js',
-            '!_site/**/*.map'
-        ], { allowEmpty: true }),
-        concat('all.js'),
-        gulp.dest('_site/js')
-    ], cb)
-})
+gulp.task('js-concat', () => pipeline(
+    gulp.src([
+        '_site/js/polyfills/*.js',
+        '_site/js/lib/*.js',
+        '_site/js/main.js',
+        '!_site/**/*.min.js',
+        '!_site/**/*.map'
+    ], { allowEmpty: true }),
+    concat('all.js'),
+    gulp.dest('_site/js')
+))
 
 gulp.task('js-clean', () => del([
     '_site/js/polyfills',
@@ -76,24 +74,20 @@ gulp.task('js-clean', () => del([
     '_site/js/main.js'
 ]))
 
-gulp.task('js-uglify', cb => {
-    pump([
-        gulp.src([
-            '_site/js/**/*.js',
-            '!_site/**/*.min.js',
-            '!_site/**/*.map'
-        ]),
-        uglify(),
-        gulp.dest('_site/js')
-    ], cb)
-})
+gulp.task('js-uglify', () => pipeline(
+    gulp.src([
+        '_site/js/**/*.js',
+        '!_site/**/*.min.js',
+        '!_site/**/*.map'
+    ]),
+    uglify(),
+    gulp.dest('_site/js')
+))
 
-gulp.task('js-yaml', cb => {
-    pump([
-        gulp.src('node_modules/js-yaml/dist/js-yaml.min.js'),
-        gulp.dest('_site/admin/js')
-    ], cb)
-})
+gulp.task('js-yaml', () => pipeline(
+    gulp.src('node_modules/js-yaml/dist/js-yaml.min.js'),
+    gulp.dest('_site/admin/js')
+))
 
 gulp.task('js', gulp.parallel(
     'js-yaml',
@@ -146,14 +140,12 @@ class ImageType {
     }
 
     addTask (settings, suffix) {
-        const task = cb => {
-            pump([
-                gulp.src(this.glob),
-                imageResize(settings),
-                rename({ suffix: suffix }),
-                gulp.dest(`${this.dir}/responsive`)
-            ], cb)
-        }
+        const task = () => pipeline(
+            gulp.src(this.glob),
+            imageResize(settings),
+            rename({ suffix: suffix }),
+            gulp.dest(`${this.dir}/responsive`)
+        )
         task.displayName = this.name + suffix
         this.tasks.splice(-1, 0, task) // add second to last in task list; before the cleaning task
     }
@@ -191,10 +183,10 @@ readFile('_data/devices.yml').then(data => {
     [ srcset, pictures, backgrounds ].forEach(i => i.ready());
 })
 
-gulp.task('og-images', async cb => {
+gulp.task('og-images', async () => {
     let ogImages = await readFile('_site/posts.json')
     ogImages = JSON.parse(ogImages)
-        .filter(p => p.image)
+        .filter(i => i.image)
     ogImages.forEach(i => {
         let image = i.image.split(path.sep)
         image = [ '_site', ...image ]
@@ -222,39 +214,35 @@ gulp.task('og-images', async cb => {
                 pos === g || pos === '' && g === 'cc')
             .map(p => p.image)
         if (!images.length) continue
-        const task = cb => {
-            pump([
-                gulp.src(images),
-                imageResize({
-                    width: 1200,
-                    height: 630,
-                    crop: true,
-                    gravity: gravity[g],
-                    upscale: true
-                }),
-                rename({ suffix: `-${g}` }),
-                gulp.dest('_site/assets/og-images')
-            ], cb)
-        }
+        const task = () => pipeline(
+            gulp.src(images),
+            imageResize({
+                width: 1200,
+                height: 630,
+                crop: true,
+                gravity: gravity[g],
+                upscale: true
+            }),
+            rename({ suffix: `-${g}` }),
+            gulp.dest('_site/assets/og-images')
+        )
         task.displayName = `og-images-${g}`
         ogTasks.push(task)
     }
-    return gulp.series(ogTasks)(cb)
+    return gulp.series(ogTasks)()
 })
 
-gulp.task('image-min', cb => {
-    assetsGlob.then(oldAssets => {
-        pump([
-            gulp.src([
-                '_site/assets/**/*',
-                '!_site/assets/**/*.svg',
-                '!_site/assets/test/*'
-            ], { ignore: oldAssets }),
-            imageMin(),
-            gulp.dest('_site/assets')
-        ], cb)
-    })
-})
+gulp.task('image-min', cb => assetsGlob
+    .then(oldAssets => pipeline(
+        gulp.src([
+            '_site/assets/**/*',
+            '!_site/assets/**/*.svg',
+            '!_site/assets/test/*'
+        ], { ignore: oldAssets }),
+        imageMin(),
+        gulp.dest('_site/assets'))
+    )
+)
 
 gulp.task('images', gulp.series(
     'image-min',
