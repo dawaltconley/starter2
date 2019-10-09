@@ -15,6 +15,7 @@ const fs = require('fs')
 const path = require('path')
 const globby = require('globby')
 const del = require('del')
+const S3 = require('aws-sdk/clients/s3')
 const util = require('util')
 
 const readFile = util.promisify(fs.readFile)
@@ -38,6 +39,35 @@ const jekyllBuild = (env = 'development', cb) => {
 }
 
 gulp.task('build', cb => jekyllBuild(jekyllEnv, cb))
+
+/*
+ * AWS
+ */
+
+const s3 = new S3({ apiVersion: '2006-03-01' })
+const listObjects = params => new Promise((resolve, reject) =>
+    s3.listObjects(params, (e, d) => e ? reject(e) : resolve(d)))
+
+
+const bucketName = readFile('.aws-bucket', { encoding: 'utf8' })
+    .then(b => b.trim())
+
+const listBucketAssets = async dir => {
+    const params = {
+        Bucket: await bucketName,
+        Prefix: dir.replace(/^(_site)?\//, '').trim()
+    }
+    let response = await listObjects(params)
+    let assets = response.Contents
+    while (response.IsTruncated) {
+        response = await listObjects({ ...params, Marker: assets[assets.length - 1].Key })
+        assets = [ ...assets, ...response.Contents ]
+    }
+    return assets.map(a => // this includes a LastModified key, which can be used to update same-name assets
+        path.join('_site', ...a.Key.split('/')))
+}
+
+const bucketAssets = jekyllEnv === 'production' ? listBucketAssets('assets') : []
 
 /*
  * CSS
@@ -103,7 +133,8 @@ gulp.task('js', gulp.parallel(
  */
 
 const assetsGlob = globby('_site/assets/**/*')
-
+const ignoreAssets = Promise.all([ assetsGlob, bucketAssets ])
+    .then(assets => [].concat(...assets))
 
 class ImageType {
     constructor (name, dir) {
@@ -118,11 +149,12 @@ class ImageType {
         this.tasks = [ this.clean ]
 
         const ready = new Promise(resolve => this.ready = resolve)
+
         this.task = gulp.task(name, cb => {
-            Promise.all([ globby(this.glob), assetsGlob, ready ])
-                .then(([ newAssets, oldAssets ]) => {
-                    this.glob = newAssets.filter(img =>
-                        oldAssets.indexOf(path.normalize(img)) < 0)
+            Promise.all([ globby(this.glob), ignoreAssets, ready ])
+                .then(([ newAssets, ignoreAssets ]) => {
+                    this.glob = newAssets.filter(a =>
+                        ignoreAssets.indexOf(path.normalize(a)) < 0)
                     if (this.glob.length)
                         return gulp.series(this.tasks)(cb)
                     else
@@ -199,9 +231,9 @@ gulp.task('og-images', cb => {
     }
 
     Promise.all([
-        assetsGlob,
+        ignoreAssets,
         readFile('_site/posts.json')
-    ]).then(([ oldAssets, ...ogImages ]) => {
+    ]).then(([ ignoreAssets, ...ogImages ]) => {
         ogImages = ogImages.map(data => JSON.parse(data))
         ogImages = [].concat.apply(...ogImages)
             .filter(i => i.image)
@@ -210,7 +242,7 @@ gulp.task('og-images', cb => {
             image = [ '_site', ...image ]
             i.image = path.join(...image)
         })
-        ogImages = ogImages.filter(i => oldAssets.indexOf(i.image) < 0)
+        ogImages = ogImages.filter(i => ignoreAssets.indexOf(i.image) < 0)
         if (!ogImages.length) return cb()
 
         for (let g in gravity) {
@@ -240,13 +272,13 @@ gulp.task('og-images', cb => {
     })
 })
 
-gulp.task('image-min', () => assetsGlob
-    .then(oldAssets => pipePromise(
+gulp.task('image-min', () => ignoreAssets
+    .then(ignore => pipePromise(
         gulp.src([
             '_site/assets/**/*',
             '!_site/assets/**/*.svg',
             '!_site/assets/test/*'
-        ], { ignore: oldAssets }),
+        ], { ignore: ignore }),
         imageMin(),
         gulp.dest('_site/assets'))
     )
