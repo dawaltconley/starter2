@@ -35,7 +35,7 @@ phases:
     commands:
       - npm run build
       - aws s3 sync _site/ s3://$bucket_name --exclude 'assets/*' --cache-control 'max-age=3600'
-      - aws s3 sync _site/ s3://$bucket_name --exclude '*' --include 'assets/*' --cache-control 'max-age=2419200'
+      - aws s3 sync _site/ s3://$bucket_name --exclude '*' --include 'assets/*' --cache-control 'max-age=31536000'
 
 cache:
   paths:
