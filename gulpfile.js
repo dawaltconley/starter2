@@ -184,19 +184,8 @@ readFile('_data/devices.yml').then(data => {
     [ srcset, pictures, backgrounds ].forEach(i => i.ready());
 })
 
-gulp.task('og-images', async () => {
-    let ogImages = await readFile('_site/posts.json')
-    ogImages = JSON.parse(ogImages)
-        .filter(i => i.image)
-    ogImages.forEach(i => {
-        let image = i.image.split(path.sep)
-        image = [ '_site', ...image ]
-        i.image = path.join(...image)
-    })
-    const oldAssets = await assetsGlob.then(oldAssets => {
-        ogImages = ogImages.filter(i => oldAssets.indexOf(i.image) < 0)
-    })
-    if (!ogImages.length) return
+gulp.task('og-images', cb => {
+    const ogTasks = []
     const gravity = {
         lt: 'NorthWest',
         lc: 'West',
@@ -208,29 +197,47 @@ gulp.task('og-images', async () => {
         rc: 'East',
         rb: 'SouthEast'
     }
-    const ogTasks = []
-    for (let g in gravity) {
-        const images = ogImages
-            .filter(({ imagePosition:pos }) =>
-                pos === g || pos === '' && g === 'cc')
-            .map(p => p.image)
-        if (!images.length) continue
-        const task = () => pipeline(
-            gulp.src(images),
-            imageResize({
-                width: 1200,
-                height: 630,
-                crop: true,
-                gravity: gravity[g],
-                upscale: true
-            }),
-            rename({ suffix: `-${g}` }),
-            gulp.dest('_site/assets/og-images')
-        )
-        task.displayName = `og-images-${g}`
-        ogTasks.push(task)
-    }
-    return gulp.series(ogTasks)()
+
+    Promise.all([
+        assetsGlob,
+        readFile('_site/posts.json')
+    ]).then(([ oldAssets, ...ogImages ]) => {
+        ogImages = ogImages.map(data => JSON.parse(data))
+        ogImages = [].concat.apply(...ogImages)
+            .filter(i => i.image)
+        ogImages.forEach(i => {
+            let image = i.image.split(path.sep)
+            image = [ '_site', ...image ]
+            i.image = path.join(...image)
+        })
+        ogImages = ogImages.filter(i => oldAssets.indexOf(i.image) < 0)
+        if (!ogImages.length) return cb()
+
+        for (let g in gravity) {
+            const images = ogImages
+                .filter(({ imagePosition:pos }) =>
+                    pos === g || pos === '' && g === 'cc')
+                .map(p => p.image)
+            if (!images.length) continue
+            const task = cb => pipeline(
+                gulp.src(images),
+                imageResize({
+                    width: 1200,
+                    height: 630,
+                    crop: true,
+                    gravity: gravity[g],
+                    upscale: true
+                }),
+                rename({ suffix: `-${g}` }),
+                gulp.dest('_site/assets/og-images'),
+                cb
+            )
+            task.displayName = `og-images-${g}`
+            ogTasks.push(task)
+        }
+
+        return gulp.series(ogTasks)(cb)
+    })
 })
 
 gulp.task('image-min', () => assetsGlob
