@@ -15,6 +15,10 @@ const fs = require('fs')
 const path = require('path')
 const globby = require('globby')
 const del = require('del')
+const util = require('util')
+
+const readFile = util.promisify(fs.readFile)
+const pipePromise = util.promisify(pipeline)
 
 /*
  * Jekyll
@@ -56,7 +60,7 @@ gulp.task('css', cb => {
  * Javascript
  */
 
-gulp.task('js-concat', () => pipeline(
+gulp.task('js-concat', () => pipePromise(
     gulp.src([
         '_site/js/polyfills/*.js',
         '_site/js/lib/*.js',
@@ -74,7 +78,7 @@ gulp.task('js-clean', () => del([
     '_site/js/main.js'
 ]))
 
-gulp.task('js-uglify', () => pipeline(
+gulp.task('js-uglify', () => pipePromise(
     gulp.src([
         '_site/js/**/*.js',
         '!_site/**/*.min.js',
@@ -84,7 +88,7 @@ gulp.task('js-uglify', () => pipeline(
     gulp.dest('_site/js')
 ))
 
-gulp.task('js-yaml', () => pipeline(
+gulp.task('js-yaml', () => pipePromise(
     gulp.src('node_modules/js-yaml/dist/js-yaml.min.js'),
     gulp.dest('_site/admin/js')
 ))
@@ -100,9 +104,6 @@ gulp.task('js', gulp.parallel(
 
 const assetsGlob = globby('_site/assets/**/*')
 
-const readFile = file => new Promise((resolve, reject) =>
-    fs.readFile(file, (err, data) =>
-        err ? reject(err) : resolve(data)))
 
 class ImageType {
     constructor (name, dir) {
@@ -140,7 +141,7 @@ class ImageType {
     }
 
     addTask (settings, suffix) {
-        const task = () => pipeline(
+        const task = () => pipePromise(
             gulp.src(this.glob),
             imageResize(settings),
             rename({ suffix: suffix }),
@@ -232,8 +233,8 @@ gulp.task('og-images', async () => {
     return gulp.series(ogTasks)()
 })
 
-gulp.task('image-min', cb => assetsGlob
-    .then(oldAssets => pipeline(
+gulp.task('image-min', () => assetsGlob
+    .then(oldAssets => pipePromise(
         gulp.src([
             '_site/assets/**/*',
             '!_site/assets/**/*.svg',
