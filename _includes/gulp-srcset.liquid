@@ -20,18 +20,18 @@
     {% assign src = include.src %}
     {% if jekyll.environment == 'production' or jekyll.environment == 'gulp' %}
 
-        {% if include.width %}
+        {% if include.width and include.width != '' %}
             {% assign width = include.width | replace: 'px', '' | replace: 'w', '' | plus: 0 %}
         {% else %}
             {% assign width = nil %}
         {% endif %}
 
-        {% if include.bp_list %}
+        {% if include.bp_list and include.bp_list != '' %}
             {% assign bp_list = include.bp_list %}
         {% else %}
             {% assign bp_list = site.data.devices.dp %}
         {% endif %}
-        {% if include.densities %}
+        {% if include.densities and include.bg=p_densities != '' %}
             {% assign densities = include.densities %}
         {% else %}
             {% assign densities = site.data.devices.dppx %}
@@ -66,10 +66,9 @@
         {% endfor %}
 
         {% if width %}
-            {% capture srcset %}{{ srcset }}, {{ src }} {{ width }}w{% endcapture %}
+            {% capture srcset %}{% if srcset != '' %}{{ srcset }}, {% endif %}{{ src }} {{ width }}w{% endcapture %}
         {% endif %}
         {% assign return = srcset %}
-
     {% else %}
         {% assign return = src | append: ' 1w' %}
     {% endif %}
