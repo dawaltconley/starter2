@@ -176,11 +176,10 @@ class ImageType {
     }
 
     clean () {
-        return new Promise(resolve => {
-            gulp.src(`${this.dir}/responsive/*`)
-                .pipe(gulp.dest(this.dir))
-                .on('end', resolve)
-        }).then(() =>
+        return pipePromise(
+            gulp.src(`${this.dir}/responsive/*`),
+            gulp.dest(this.dir)
+        ).then(() =>
             del(`${this.dir}/responsive`))
     }
 
