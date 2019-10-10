@@ -12,12 +12,12 @@
 {% if jekyll.environment == 'production' or jekyll.environment == 'gulp' %}
     {% assign src = img | split: 'src="' | last | split: '"' | first %}
     <picture>
-        {% if include.bp_list %}
+        {% if include.bp_list and include.bp_list != '' %}
             {% assign bp_list = include.bp_list %}
         {% else %}
             {% assign bp_list = site.data.devices.dp | reverse %}
         {% endif %}
-        {% if include.densities %}
+        {% if include.densities and include.densities != '' %}
             {% assign densities = include.densities %}
         {% else %}
             {% assign densities = site.data.devices.dppx | reverse %}
