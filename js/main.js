@@ -251,16 +251,16 @@
     function onResponse(request, callback) {
         request.onload = function () {
             if (this.status >= 200 && this.status < 400) {
-                callback(this.response);
+                callback(null, this.response);
             } else {
                 // server error
-                callback(null, this.response);
+                callback(this.response, null);
             }
         }
 
         request.onerror = function () {
             // error handling
-            callback(null, this.response);
+            callback(this.response, null);
         }
     }
 
@@ -984,7 +984,7 @@ var forms = toArray(document.querySelectorAll('form[data-content-type="applicati
     Search.prototype.configure = function () {
         var cb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
         var self = this;
-        getData(this.file, function (r) {
+        getData(this.file, function (e, r) {
             self.data = JSON.parse(r);
             self.fuse = new Fuse(self.data, self.options);
             cb();
