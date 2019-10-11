@@ -896,8 +896,8 @@ function CommentForm (e) {
         self.loading();
         if (self.remember && self.remember.checked)
             self.saveData();
-        self.sendJSON(function (r, e) {
-            if (e) {
+        self.sendJSON(function (e, r) {
+            if (e || e === "") {
                 self.error();
             } else {
                 self.post();
