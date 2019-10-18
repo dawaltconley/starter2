@@ -56,6 +56,12 @@ const listObjects = params => new Promise((resolve, reject) =>
     s3.listObjects(params, (e, d) => e ? reject(e) : resolve(d)))
 
 const bucketName = readFile('.aws-bucket', { encoding: 'utf8' })
+    .catch(e => {
+        if (e.code === 'ENOENT' && buildContext !== 'aws')
+            return ''
+        else
+            throw e
+    })
     .then(b => b.trim())
 
 const listBucketAssets = async dir => {
