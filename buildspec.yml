@@ -1,0 +1,40 @@
+version: 0.2
+
+env:
+  variables:
+    CONTEXT: production
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 10
+      ruby: 2.6
+    commands:
+      # variables
+      - src=$PWD
+      - bucket_name=$(cat .aws-bucket)
+      - gm_version="1.3.26"
+      - gm="GraphicsMagick-$gm_version"
+      - cd ..
+      # install gm
+      - curl -L https://sourceforge.net/projects/graphicsmagick/files/graphicsmagick/$gm_version/$gm.tar.gz > gm.tgz;
+      - tar xzf gm.tgz;
+      - cd $gm;
+      - ./configure --prefix=$PWD;
+      - make install;
+      - export PATH=$PATH:$PWD/bin;
+      # install site dependencies
+      - cd $src
+      - npm install
+      - gem install bundler
+      - bundle install
+  build:
+    commands:
+      - npm run build
+      - aws s3 sync _site/ s3://$bucket_name --exclude 'assets/*' --cache-control 'max-age=3600'
+      - aws s3 sync _site/ s3://$bucket_name --exclude '*' --include 'assets/*' --cache-control 'max-age=2419200'
+
+cache:
+  paths:
+    - _site/assets/**/*
+    - node_modules/**/*
