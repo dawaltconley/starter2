@@ -21,6 +21,12 @@ const util = require('util')
 const readFile = util.promisify(fs.readFile)
 const pipePromise = util.promisify(pipeline)
 
+let buildContext
+if (process.env.NETLIFY)
+    buildContext = 'netlify'
+else if (process.env.CODEBUILD_BUILD_ID)
+    buildContext = 'aws'
+
 /*
  * Jekyll
  */
@@ -45,9 +51,9 @@ gulp.task('build', cb => jekyllBuild(jekyllEnv, cb))
  */
 
 const s3 = new S3({ apiVersion: '2006-03-01' })
+
 const listObjects = params => new Promise((resolve, reject) =>
     s3.listObjects(params, (e, d) => e ? reject(e) : resolve(d)))
-
 
 const bucketName = readFile('.aws-bucket', { encoding: 'utf8' })
     .then(b => b.trim())
@@ -67,7 +73,7 @@ const listBucketAssets = async dir => {
         path.join('_site', ...a.Key.split('/')))
 }
 
-const bucketAssets = jekyllEnv === 'production' ? listBucketAssets('assets') : []
+const bucketAssets = buildContext === 'aws' && jekyllEnv === 'production' ? listBucketAssets('assets') : []
 
 /*
  * CSS
