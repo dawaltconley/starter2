@@ -1,6 +1,9 @@
 ---
 ---
 
+{% assign horizontal = 'left center right' | split: ' ' %}
+{% assign vertical = 'top center bottom' | split: ' ' %}
+
 # https://www.netlifycms.org/docs/configuration-options/
 
 backend:
@@ -73,7 +76,7 @@ collections:
             required: false
             widget: select
             default: cc
-            options: {% assign horizontal = 'left center right' | split: ' ' %}{% assign vertical = 'top center bottom' | split: ' ' %}{% for x in horizontal %}{% for y in vertical %}
+            options: {% for x in horizontal %}{% for y in vertical %}
               - label: "{{ x }} {{ y }}"
                 value: {{ x | slice: 0 }}{{ y | slice: 0 }}{% endfor %}{% endfor %}
             hint: >
