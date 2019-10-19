@@ -33,12 +33,17 @@
   <meta property="og:title" content="{{ title }}">
   <meta property="og:description" content="{{ description }}">
 
+  {% assign og = false %}
+  {% if page.header.image %}
+    {% assign og = page.header %}
+  {% endif %}
+
   {% if page.og_image %}
     <meta property="og:image" content="{{ page.og_image | prepend: site_url }}">
-  {% elsif jekyll.environment == 'production' or jekyll.environment == 'gulp' and page.header.image %}
-    {% assign file_name = page.header.image | split: '/' | last %}
-    {% if page.header.fit %}
-      {% assign suffix = page.header.fit | prepend: '-' %}
+  {% elsif jekyll.environment == 'production' or jekyll.environment == 'gulp' and og %}
+    {% assign file_name = og.image | split: '/' | last %}
+    {% if og.fit %}
+      {% assign suffix = og.fit | prepend: '-' %}
     {% else  %}
       {% assign suffix = '-cc' %}
     {% endif %}
