@@ -2,14 +2,32 @@
  * Images
  */
 
-img.object-fit-cover {
-    object-fit: cover;
-    font-family: 'object-fit: cover;'
+img.object-fit {
+    @each $fit in $object-fit-values {
+        &-#{$fit} {
+            object-fit: $fit;
+            font-family: "object-fit: #{$fit};";
+        }
+    }
 }
 
-img.object-fit-contain {
-    object-fit: contain;
-    font-family: 'object-fit: contain;'
+@if $object-position-classes {
+    img.object-pos {
+        @each $x in (left, center, right) {
+            @each $y in (top, center, bottom) {
+                &-#{str-slice($x, 1, 1)}#{str-slice($y, 1, 1)} {
+                    $position: $x $y;
+                    object-position: $position;
+
+                    @each $fit in $object-fit-values {
+                        &.object-fit-#{$fit} {
+                            font-family: "object-fit: #{$fit}; object-position: #{$position};";
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 .bg-img {

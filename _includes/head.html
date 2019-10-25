@@ -33,9 +33,23 @@
   <meta property="og:title" content="{{ title }}">
   <meta property="og:description" content="{{ description }}">
 
-  {% if page.collection.og_image %}
+  {% assign og = false %}
+  {% if page.header.image %}
+    {% assign og = page.header %}
+  {% endif %}
+
+  {% if page.og_image %}
     <meta property="og:image" content="{{ page.og_image | prepend: site_url }}">
-  {% elsif page.og_image %}
+  {% elsif og and jekyll.environment == 'production' or jekyll.environment == 'gulp' %}
+    {% assign file_name = og.image | split: '/' | last %}
+    {% if og.fit %}
+      {% assign suffix = og.fit | prepend: '-' %}
+    {% else  %}
+      {% assign suffix = '-cc' %}
+    {% endif %}
+    {% capture file_name %}{% include file-suffix.liquid file_name=file_name suffix=suffix %}{% endcapture %}
+    <meta property="og:image" content="{{ site.baseurl }}/assets/og-images/{{ file_name }}">
+  {% elsif page.collection.og_image %}
     <meta property="og:image" content="{{ page.collection.og_image | prepend: site_url }}">
   {% elsif site.og_image %}
     <meta property="og:image" content="{{ site.og_image | prepend: site_url }}">

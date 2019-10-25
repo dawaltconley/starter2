@@ -75,6 +75,9 @@ $borders: (
 
 $z-range: -9, 9;
 
+$object-fit-values: cover;
+$object-position-classes: true;
+
 $transitions: (
     "short":    .25s,
     "default": .3s,

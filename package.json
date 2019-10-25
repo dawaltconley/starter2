@@ -1,20 +1,21 @@
 {
   "dependencies": {
     "autoprefixer": "^7.2.6",
+    "aws-sdk": "^2.544.0",
+    "del": "^5.1.0",
+    "globby": "^10.0.1",
     "gulp": "^4.0.2",
-    "gulp-clean": "^0.4.0",
     "gulp-concat": "^2.6.1",
     "gulp-image-resize": "^0.13.1",
-    "gulp-imagemin": "^6.0.0",
+    "gulp-imagemin": "^6.1.1",
     "gulp-postcss": "^7.0.1",
     "gulp-rename": "^1.4.0",
     "gulp-uglify": "^3.0.2",
     "js-yaml": "^3.13.1",
     "merge-stream": "^1.0.1",
     "normalize.css": "^8.0.1",
-    "npm": "^6.9.0",
-    "postcss-flexbugs-fixes": "^4.1.0",
-    "pump": "^2.0.1"
+    "npm": "^6.11.3",
+    "postcss-flexbugs-fixes": "^4.1.0"
   },
   "devDependencies": {
     "sass-color-helpers": "^2.1.1"

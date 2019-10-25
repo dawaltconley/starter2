@@ -1,6 +1,9 @@
 ---
 ---
 
+{% assign horizontal = 'left center right' | split: ' ' %}
+{% assign vertical = 'top center bottom' | split: ' ' %}
+
 # https://www.netlifycms.org/docs/configuration-options/
 
 backend:
@@ -41,6 +44,12 @@ collections:
         name: body
         widget: markdown
         default: New day, new post!
+        hint: >
+          Write <!-- more --> where you want to end the article excerpt.
+          Otherwise, this defaults to the first full paragraph.
+          You can include an embedded YouTube or Vimeo video in the article
+          by writing, on its own line, {% raw %}{% include video link="https://example.link/video"
+          caption="optional video caption" %}{% endraw %}
       - label: Post Image
         name: header
         widget: object
@@ -62,6 +71,18 @@ collections:
             hint: >
               The width, in pixels, of the uploaded image.
               This allows better loading on multiple devices.
+          - label: Crop
+            name: fit
+            required: false
+            widget: select
+            default: cc
+            options: {% for x in horizontal %}{% for y in vertical %}
+              - label: "{{ x }} {{ y }}"
+                value: {{ x | slice: 0 }}{{ y | slice: 0 }}{% endfor %}{% endfor %}
+            hint: >
+              Some images will be cropped for previews.
+              This tells the browser which part of the image to
+              center (keep visible) during the crop.
           - label: Caption
             name: caption
             required: false

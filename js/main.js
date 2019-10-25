@@ -251,16 +251,16 @@
     function onResponse(request, callback) {
         request.onload = function () {
             if (this.status >= 200 && this.status < 400) {
-                callback(this.response);
+                callback(null, this.response);
             } else {
                 // server error
-                callback(null, this.response);
+                callback(this.response, null);
             }
         }
 
         request.onerror = function () {
             // error handling
-            callback(null, this.response);
+            callback(this.response, null);
         }
     }
 
@@ -354,6 +354,18 @@
     yearsToUpdate.forEach(function (y) {
         y.innerText = currentYear;
     });
+
+    if (location.hash) {
+        var detailsElements = toArray(document.querySelectorAll("details"));
+        for (var i = 0; i < detailsElements.length; i++) {
+            var details = detailsElements[i];
+            var element = details.querySelector(location.hash.replace(/\//g, '\\/'));
+            if (element) {
+                details.setAttribute("open", "");
+                location.hash = location.hash
+            }
+        }
+    }
 
 /*
  * Classes
@@ -884,8 +896,8 @@ function CommentForm (e) {
         self.loading();
         if (self.remember && self.remember.checked)
             self.saveData();
-        self.sendJSON(function (r, e) {
-            if (e) {
+        self.sendJSON(function (e, r) {
+            if (e || e === "") {
                 self.error();
             } else {
                 self.post();
@@ -972,7 +984,7 @@ var forms = toArray(document.querySelectorAll('form[data-content-type="applicati
     Search.prototype.configure = function () {
         var cb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
         var self = this;
-        getData(this.file, function (r) {
+        getData(this.file, function (e, r) {
             self.data = JSON.parse(r);
             self.fuse = new Fuse(self.data, self.options);
             cb();

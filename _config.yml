@@ -13,6 +13,8 @@ copyright:
   date: 2019-05-31T17:24:00-4:00 # date the site was created
   owner: Site Owner # owner of the site
 
+# Configuration
+
 timezone: America/New_York # used for liquid-generated datetimes
 auto_scroll: false # enables smooth scrolling for all same-page links using zenscroll
 native_scroll: false # enables smooth scrolling by the scroll-behavior property, for all browsers that support it
@@ -44,6 +46,8 @@ exclude:
   - "node_modules"
   - "gulpfile.js"
   - "assets/test"
+keep_files:
+  - "assets"
 
 plugins:
   - liquid-md5

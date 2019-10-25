@@ -19,7 +19,12 @@ layout: default
               srcset="{% include gulp-srcset.liquid src=image width=page.header.width %}"
               sizes="(max-width: 840px) 100vw, 720px"
               data-preview-asset="header.image">
-          <figcaption class="margin-s-t text-left" data-preview-widget="header.caption">{{ page.header.caption | markdownify }}</figcaption>
+          {% if page.header.caption %}
+            {% assign capt_length = page.header.caption | size %}
+            {% if capt_length > 0 %}
+              <figcaption class="margin-s-t text-left" data-preview-widget="header.caption">{{ page.header.caption | markdownify }}</figcaption>
+            {% endif %}
+          {% endif %}
         </figure>
       {% endif %}
     </header>
@@ -37,7 +42,10 @@ layout: default
       <div class="v-rhythm fs-smaller">
         {% for post in site.posts limit: 6 %}
           {% unless post.id == page.id %}
-            {% include post-preview.html post=post heading=3 excerpt_length=220 %}
+            {% assign excerpt = post.excerpt | truncate: 200 %}
+            <article class="relative full-width">
+              {% include post-preview.html post=post excerpt=excerpt heading=3 author=true spacing='s' %}
+            </article>
           {% endunless %}
         {% endfor %}
       </div>

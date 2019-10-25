@@ -10,7 +10,7 @@
   {% if include.for %}
     <input type="hidden" name="replyTo" value="{{ include.for }}">
   {% endif %}
-  <textarea class="block full-width" name="comment" placeholder="Leave a {{ type }}..." required maxlength="{{ include.maxlength }}"></textarea>
+  <textarea class="block full-width" name="comment" placeholder="Leave a {{ type }}..." required {% if include.maxlength %} maxlength="{{ include.maxlength }}" {% endif %}></textarea>
   <div class="flex-row-gt-mobile flex-align-center h-rhythm-s v-rhythm-s h-rhythm-0-lt-mobile v-rhythm-0-gt-mobile">
     <input type="text" class="full-width" name="name" placeholder="Name" required>
     <input type="text" class="full-width" name="email" placeholder="Email" required>
