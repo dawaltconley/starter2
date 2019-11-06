@@ -113,14 +113,14 @@
 .indented-comment {
     margin-left: $default-spacing * 2;
 
-    & .indented-comment .indented-comment .indented-comment { // stop indenting after 3 levels
+    & & & & { // stop indenting after 3 levels
         margin-left: 0;
     }
 
     @media screen and (max-width: map-get($bp, laptop)) {
         margin-left: $default-spacing;
 
-        & .indented-comment .indented-comment { // stop indenting after 2 levels
+        & & & { // stop indenting after 2 levels
             margin-left: 0;
         }
     }
