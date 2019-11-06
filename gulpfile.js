@@ -79,7 +79,11 @@ const listBucketAssets = async dir => {
         path.join('_site', ...a.Key.split('/')))
 }
 
-const bucketAssets = buildContext === 'aws' && jekyllEnv === 'production' ? listBucketAssets('assets') : []
+const bucketAssets = buildContext === 'aws'
+    && jekyllEnv === 'production'
+    && process.env['FORCE_UPDATE_ASSETS'] !== 'true'
+        ? listBucketAssets('assets')
+        : []
 
 /*
  * CSS
