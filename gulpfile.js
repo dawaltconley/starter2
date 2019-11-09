@@ -7,6 +7,7 @@ const imageMin = require('gulp-imagemin')
 const postcss = require('gulp-postcss')
 const autoprefixer = require('autoprefixer')
 const flexbugs = require('postcss-flexbugs-fixes')
+const uncss = require('postcss-uncss')
 const { pipeline } = require('stream')
 const merge = require('merge-stream')
 const child = require('child_process')
@@ -93,6 +94,11 @@ gulp.task('css', cb => {
     const normalize = gulp.src('node_modules/normalize.css/normalize.css')
     const main = gulp.src('_site/css/main.css')
         .pipe(postcss([
+            uncss({
+                htmlroot: '_site',
+                html: [ '_site/**/*.html' ],
+                ignore: [ /.*-js/, 'hidden' ]
+            }),
             autoprefixer(),
             flexbugs()
         ]))
@@ -310,5 +316,8 @@ gulp.task('images', gulp.series(
 
 gulp.task('default', gulp.series(
     'build',
-    gulp.parallel('css', 'js', 'images')
+    gulp.parallel(
+        gulp.series('js', 'css'),
+        'images'
+    )
 ))
