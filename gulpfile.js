@@ -93,7 +93,11 @@ const bucketAssets = buildContext === 'aws'
 gulp.task('css', cb => {
     const normalize = gulp.src('node_modules/normalize.css/normalize.css')
     const main = gulp.src('_site/css/main.css')
-        .pipe(postcss([
+
+    return pipeline(
+        merge(normalize, main),
+        concat('main.css'),
+        postcss([
             uncss({
                 htmlroot: '_site',
                 html: [ '_site/**/*.html' ],
@@ -101,11 +105,9 @@ gulp.task('css', cb => {
             }),
             autoprefixer(),
             flexbugs()
-        ]))
-
-    return merge(normalize, main)
-        .pipe(concat('main.css'))
-        .pipe(gulp.dest('_site/css'))
+        ]),
+        gulp.dest('_site/css')
+    )
 })
 
 /*
