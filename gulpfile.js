@@ -8,6 +8,7 @@ const postcss = require('gulp-postcss')
 const autoprefixer = require('autoprefixer')
 const flexbugs = require('postcss-flexbugs-fixes')
 const uncss = require('postcss-uncss')
+const cssnano = require('cssnano')
 const { pipeline } = require('stream')
 const merge = require('merge-stream')
 const child = require('child_process')
@@ -104,7 +105,8 @@ gulp.task('css', cb => {
                 ignore: [ /.*-js/, 'hidden' ]
             }),
             autoprefixer(),
-            flexbugs()
+            flexbugs(),
+            cssnano()
         ]),
         gulp.dest('_site/css')
     )
