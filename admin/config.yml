@@ -45,16 +45,16 @@ collections:
         widget: markdown
         default: New day, new post!
         hint: >
-          Write <!-- more --> where you want to end the article excerpt.
+          Write <!-- more --> where you want to end the post excerpt.
           Otherwise, this defaults to the first full paragraph.
           You can include an embedded YouTube or Vimeo video in the article
-          by writing, on its own line, {% raw %}{% include video link="https://example.link/video"
+          by writing, on its own line, {% raw %}{% include video.html link="https://example.link/video"
           caption="optional video caption" %}{% endraw %}
       - label: Post Image
         name: header
         widget: object
         hint: >
-          The main image for the article. Will appear at the
+          The main image for the post. Will appear at the
           top of the body and will be featured in previews
           and thumbnails.
         fields:
