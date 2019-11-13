@@ -7,6 +7,8 @@ const imageMin = require('gulp-imagemin')
 const postcss = require('gulp-postcss')
 const autoprefixer = require('autoprefixer')
 const flexbugs = require('postcss-flexbugs-fixes')
+const uncss = require('postcss-uncss')
+const cssnano = require('cssnano')
 const { pipeline } = require('stream')
 const merge = require('merge-stream')
 const child = require('child_process')
@@ -79,7 +81,11 @@ const listBucketAssets = async dir => {
         path.join('_site', ...a.Key.split('/')))
 }
 
-const bucketAssets = buildContext === 'aws' && jekyllEnv === 'production' ? listBucketAssets('assets') : []
+const bucketAssets = buildContext === 'aws'
+    && jekyllEnv === 'production'
+    && process.env['FORCE_UPDATE_ASSETS'] !== 'true'
+        ? listBucketAssets('assets')
+        : []
 
 /*
  * CSS
@@ -88,14 +94,22 @@ const bucketAssets = buildContext === 'aws' && jekyllEnv === 'production' ? list
 gulp.task('css', cb => {
     const normalize = gulp.src('node_modules/normalize.css/normalize.css')
     const main = gulp.src('_site/css/main.css')
-        .pipe(postcss([
-            autoprefixer(),
-            flexbugs()
-        ]))
 
-    return merge(normalize, main)
-        .pipe(concat('main.css'))
-        .pipe(gulp.dest('_site/css'))
+    return pipeline(
+        merge(normalize, main),
+        concat('main.css'),
+        postcss([
+            uncss({
+                htmlroot: '_site',
+                html: [ '_site/**/*.html' ],
+                ignore: [ /.*-js/, 'hidden' ]
+            }),
+            autoprefixer(),
+            flexbugs(),
+            cssnano()
+        ]),
+        gulp.dest('_site/css')
+    )
 })
 
 /*
@@ -306,5 +320,8 @@ gulp.task('images', gulp.series(
 
 gulp.task('default', gulp.series(
     'build',
-    gulp.parallel('css', 'js', 'images')
+    gulp.parallel(
+        gulp.series('js', 'css'),
+        'images'
+    )
 ))

@@ -11,7 +11,7 @@
     var win = page;
 
     if (!page || window.getComputedStyle(page).getPropertyValue("perspective") === "none") {
-        page = document.scrollingElement ? document.scrollingElement : getScrollableChild(document.documentElement);
+        page = document.scrollingElement || getScrollableChild(document.documentElement) || document.documentElement;
         win = window;
     }
 
