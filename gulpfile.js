@@ -8,6 +8,7 @@ const postcss = require('gulp-postcss')
 const autoprefixer = require('autoprefixer')
 const flexbugs = require('postcss-flexbugs-fixes')
 const uncss = require('postcss-uncss')
+const mqPacker = require('css-mqpacker')
 const cssnano = require('cssnano')
 const { pipeline } = require('stream')
 const merge = require('merge-stream')
@@ -99,6 +100,7 @@ gulp.task('css', cb => {
         merge(normalize, main),
         concat('main.css'),
         postcss([
+            mqPacker(),
             uncss({
                 htmlroot: '_site',
                 html: [ '_site/**/*.html' ],

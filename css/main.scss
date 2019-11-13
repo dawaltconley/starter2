@@ -43,6 +43,10 @@ $device-dppx:           ({% if jekyll.environment == 'production' or jekyll.envi
     "functions/manifest",
     "mixins/manifest";
 
+{% if jekyll.environment == 'production' or jekyll.environment == 'gulp' %}
+    @import "mq-sort";
+{% endif %}
+
 @import
     "base",
     "themes",
