@@ -1255,6 +1255,10 @@ var forms = toArray(document.querySelectorAll('form[data-content-type="applicati
         window.addEventListener("load", playAnimations);
     }
 
+    {% if site.bg_testing or jekyll.environment == 'development' %}
+      {% include bg-testing.js %}
+    {% endif %}
+
 {% unless jekyll.environment == "development" %}
 })();
 {% endunless %}
