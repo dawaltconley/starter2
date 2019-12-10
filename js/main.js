@@ -1251,6 +1251,10 @@ var forms = toArray(document.querySelectorAll('form[data-content-type="applicati
         });
     }
 
+    if (animatedElements.length) {
+        window.addEventListener("load", playAnimations);
+    }
+
 {% unless jekyll.environment == "development" %}
 })();
 {% endunless %}
