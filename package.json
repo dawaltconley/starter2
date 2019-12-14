@@ -16,7 +16,7 @@
     "js-yaml": "^3.13.1",
     "merge-stream": "^1.0.1",
     "normalize.css": "^8.0.1",
-    "npm": "^6.13.0",
+    "npm": "^6.13.4",
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-uncss": "^0.17.0",
     "uncss": "^0.17.2"
