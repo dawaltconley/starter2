@@ -150,6 +150,7 @@ collections:
                 name: date
                 widget: datetime
                 format: "YYYY-MM-DDTHH:mm:ssZ"
+                timeFormat: false
                 hint: >
                   Usually the date the site was created,
                   unless otherwise renewed.
