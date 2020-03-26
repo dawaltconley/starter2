@@ -70,7 +70,7 @@ class DefaultTemplate extends React.Component {
                 } = attribs
                 if (field) {
                     const update = () => this.props.entry.getIn(['data', ...field.split('.')])
-                    if (update() !== undefined)
+                    if (update() !== null)
                         return h(ChildPreview, { name: name, attribs: attribs, update: update, dateFormat: date })
                 }
                 if (widget) {
